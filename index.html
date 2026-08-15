@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
 <meta name="theme-color" content="#0f1b16">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
 <title>رفيق القرآن - المراجعة الذكية</title>
 
 <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
@@ -92,7 +90,6 @@
       opacity: 0;
       transform: translateY(5px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -179,12 +176,6 @@
 
   button:active {
     transform: scale(0.98);
-  }
-
-  button:disabled {
-    opacity: 0.55;
-    cursor: not-allowed;
-    transform: none !important;
   }
 
   .action-btn {
@@ -283,16 +274,17 @@
     border-radius: 10px;
     margin-bottom: 10px;
     border-right: 3px solid transparent;
+    position: relative;
   }
 
   .item.icu {
     border-right-color: var(--danger);
-    background: rgba(244, 67, 54, 0.05);
+    background: rgba(244,67,54,0.05);
   }
 
   .item.due-review {
     border-right-color: var(--warning);
-    background: rgba(255, 152, 0, 0.05);
+    background: rgba(255,152,0,0.05);
   }
 
   .item-header {
@@ -312,7 +304,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
   }
 
   .app-links {
@@ -332,6 +324,12 @@
     background: var(--card-bg);
   }
 
+  .app-links a:hover {
+    color: var(--primary);
+    border-color: var(--primary);
+  }
+
+  /* Counter */
   .rep-counter-container {
     display: flex;
     flex-direction: column;
@@ -366,6 +364,7 @@
     color: #fff;
   }
 
+  /* Review Buttons */
   .q-btns {
     display: grid;
     gap: 6px;
@@ -384,6 +383,7 @@
     cursor: pointer;
   }
 
+  /* 7-day tracker */
   .phase-tracker {
     display: flex;
     gap: 4px;
@@ -396,7 +396,6 @@
     border: 1px solid var(--primary);
     border-radius: 3px;
     background: transparent;
-    transition: background 0.3s;
   }
 
   .t-box.done {
@@ -411,19 +410,11 @@
     font-family: monospace;
     margin: 10px 0;
     letter-spacing: 2px;
-    direction: ltr;
-    unicode-bidi: isolate;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-  }
 
-  .timer-display .time-part,
-  .timer-display .time-separator {
+    /* IMPORTANT: prevent RTL from reversing MM:SS */
     direction: ltr;
     unicode-bidi: isolate;
-    display: inline-block;
+    text-align: center;
   }
 
   body.focus-mode .bottom-nav {
@@ -449,55 +440,23 @@
     min-height: 80vh;
   }
 
-  .timer-presets {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 8px;
-    margin-bottom: 10px;
-  }
-
-  .timer-preset {
-    background: var(--border);
-    color: var(--text);
-    border: 1px solid transparent;
-    padding: 11px 8px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 13px;
-  }
-
-  .timer-preset.active {
-    border-color: var(--primary);
-    color: var(--primary);
-    background: rgba(201,168,106,0.12);
-  }
-
-  .custom-timer-box {
+  .timer-custom-row {
     display: flex;
     gap: 8px;
-    margin-bottom: 18px;
-    align-items: stretch;
+    margin-top: 8px;
   }
 
-  .custom-timer-box input {
+  .timer-custom-row input {
     margin: 0;
     flex: 1;
-    text-align: center;
   }
 
-  .custom-timer-box button {
-    flex: 0 0 110px;
+  .timer-custom-row button {
+    flex: 0.45;
+    margin: 0;
   }
 
-  .timer-help {
-    text-align: center;
-    color: var(--secondary);
-    font-size: 11px;
-    margin-top: -4px;
-    margin-bottom: 12px;
-  }
-
+  /* Stats */
   .stats-grid {
     display: flex;
     text-align: center;
@@ -543,13 +502,14 @@
     transition: width 0.5s ease;
   }
 
+  /* Empty states */
   .empty-state {
     text-align: center;
     padding: 20px;
     font-size: 13px;
     line-height: 1.8;
     color: var(--secondary);
-    background: rgba(201, 168, 106, 0.05);
+    background: rgba(201,168,106,0.05);
     border: 1px dashed var(--border);
     border-radius: 10px;
   }
@@ -559,7 +519,7 @@
   }
 
   .phase-badge {
-    background: rgba(201, 168, 106, 0.1);
+    background: rgba(201,168,106,0.1);
     border: 1px solid var(--primary);
     color: var(--primary);
     font-size: 10px;
@@ -569,56 +529,102 @@
     display: inline-block;
   }
 
+  /* ---------------- GLOW SYSTEM ---------------- */
+
   @keyframes goldenGlow {
     0% {
-      box-shadow: 0 0 0 rgba(201,168,106,0);
-      text-shadow: none;
+      box-shadow:
+        0 0 0 rgba(201,168,106,0),
+        inset 0 0 0 rgba(201,168,106,0);
       border-color: var(--border);
     }
 
-    35% {
+    25% {
       box-shadow:
-        0 0 12px rgba(201,168,106,.65),
-        0 0 28px rgba(201,168,106,.22);
-      text-shadow: 0 0 9px rgba(201,168,106,.65);
+        0 0 10px rgba(201,168,106,.55),
+        0 0 28px rgba(201,168,106,.25),
+        inset 0 0 18px rgba(201,168,106,.08);
+      border-color: var(--primary);
+    }
+
+    55% {
+      box-shadow:
+        0 0 18px rgba(201,168,106,.75),
+        0 0 42px rgba(201,168,106,.35),
+        inset 0 0 24px rgba(201,168,106,.10);
       border-color: var(--primary);
     }
 
     100% {
-      box-shadow: 0 0 0 rgba(201,168,106,0);
-      text-shadow: none;
+      box-shadow:
+        0 0 0 rgba(201,168,106,0),
+        inset 0 0 0 rgba(201,168,106,0);
       border-color: var(--border);
+    }
+  }
+
+  @keyframes goldenGlowText {
+    0% {
+      color: inherit;
+      text-shadow: none;
+    }
+
+    30% {
+      color: #e5c883;
+      text-shadow:
+        0 0 5px rgba(201,168,106,.55),
+        0 0 14px rgba(201,168,106,.45);
+    }
+
+    60% {
+      color: #f1d99b;
+      text-shadow:
+        0 0 8px rgba(201,168,106,.8),
+        0 0 22px rgba(201,168,106,.5);
+    }
+
+    100% {
+      color: inherit;
+      text-shadow: none;
     }
   }
 
   @keyframes celebrateGlow {
     0% {
-      box-shadow: 0 0 0 rgba(201,168,106,0);
-      border-color: var(--border);
+      box-shadow:
+        0 0 0 rgba(201,168,106,0);
       transform: scale(1);
     }
 
     30% {
       box-shadow:
-        0 0 20px rgba(201,168,106,.8),
-        0 0 40px rgba(201,168,106,.4);
-      border-color: var(--primary);
+        0 0 18px rgba(201,168,106,.8),
+        0 0 45px rgba(201,168,106,.35),
+        inset 0 0 20px rgba(201,168,106,.08);
+      transform: scale(1.015);
+    }
+
+    60% {
+      box-shadow:
+        0 0 28px rgba(201,168,106,.95),
+        0 0 65px rgba(201,168,106,.45),
+        inset 0 0 28px rgba(201,168,106,.12);
       transform: scale(1.02);
     }
 
     100% {
-      box-shadow: 0 0 0 rgba(201,168,106,0);
-      border-color: var(--border);
+      box-shadow:
+        0 0 0 rgba(201,168,106,0);
       transform: scale(1);
     }
   }
 
   .golden-glow {
-    animation: goldenGlow .75s ease-out;
+    animation: goldenGlow .9s ease-out;
   }
 
   .golden-glow-text {
-    animation: goldenGlow .7s ease-out;
+    animation: goldenGlowText .9s ease-out;
   }
 
   .celebrate-glow {
@@ -626,11 +632,43 @@
     position: relative;
     z-index: 10;
   }
+
+  .item.golden-glow .glow-target {
+    animation: goldenGlowText .9s ease-out;
+  }
+
+  .item.golden-glow .phase-badge,
+  .item.celebrate-glow .phase-badge,
+  .item.golden-glow .rep-btn,
+  .item.celebrate-glow .rep-btn {
+    border-color: var(--primary);
+    animation: goldenGlowText .9s ease-out;
+  }
+
+  .item.celebrate-glow {
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(201,168,106,.12),
+        transparent 72%
+      );
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 </head>
 
 <body>
 
+<!-- Navigation -->
 <div class="bottom-nav">
   <div class="nav-item active" onclick="switchTab('view-home', this)">
     <div class="nav-icon">📅</div>خطة اليوم
@@ -677,7 +715,7 @@
   </div>
 </div>
 
-<!-- Comeback Modal -->
+<!-- Comeback -->
 <div class="modal-overlay" id="comebackModal">
   <div class="modal-content" style="text-align:center;">
     <div style="font-size:50px; margin-bottom:10px;">🌱</div>
@@ -698,13 +736,10 @@
   </div>
 </div>
 
-<!-- Add New Modal -->
+<!-- Add New -->
 <div class="modal-overlay" id="addModal">
   <div class="modal-content">
-
-    <button class="close-modal" onclick="closeModal('addModal')">
-      ✖
-    </button>
+    <button class="close-modal" onclick="closeModal('addModal')">✖</button>
 
     <h2 style="color:var(--primary); margin-top:0;">
       ➕ حفظ جديد للنهاردة
@@ -745,17 +780,13 @@
     >
       إضافة لخطة اليوم
     </button>
-
   </div>
 </div>
 
-<!-- Add Old Modal -->
+<!-- Add Old -->
 <div class="modal-overlay" id="addOldModal">
   <div class="modal-content">
-
-    <button class="close-modal" onclick="closeModal('addOldModal')">
-      ✖
-    </button>
+    <button class="close-modal" onclick="closeModal('addOldModal')">✖</button>
 
     <h2 style="color:var(--primary); margin-top:0;">
       📚 إضافة محفوظ سابق
@@ -778,32 +809,40 @@
     >
       إضافة للمخزون
     </button>
-
   </div>
 </div>
 
 <!-- Hadr Modal -->
 <div class="modal-overlay" id="hadrModal">
   <div class="modal-content" style="text-align:center;">
-
     <h2 style="color:var(--primary); margin-top:0;">
       ⏱️ مؤقت الحَدْر
     </h2>
 
-    <div style="font-size:14px; color:var(--secondary); margin-bottom:15px;">
+    <div style="
+      font-size:14px;
+      color:var(--secondary);
+      margin-bottom:15px;
+    ">
       استخدم هذا المؤقت لضبط إيقاع قراءتك السريعة لهذا الورد:
     </div>
 
     <div
       id="hadrTarget"
       class="quran-font"
-      style="font-size:24px!important; color:var(--text); margin-bottom:20px;"
+      style="
+        font-size:24px!important;
+        color:var(--text);
+        margin-bottom:20px;
+      "
     ></div>
 
-    <div class="timer-display" style="color:var(--warning);">
-      <span id="hadrMinutes" class="time-part">02</span>
-      <span class="time-separator">:</span>
-      <span id="hadrSeconds" class="time-part">00</span>
+    <div
+      class="timer-display"
+      id="hadrTimerDisplay"
+      style="color:var(--warning);"
+    >
+      02:00
     </div>
 
     <button
@@ -816,23 +855,23 @@
 
     <button
       class="action-btn"
-      style="width:100%; margin-top:10px; background:transparent;"
+      style="
+        width:100%;
+        margin-top:10px;
+        background:transparent;
+      "
       onclick="closeHadr()"
     >
       إلغاء
     </button>
-
   </div>
 </div>
 
-<!-- Guide Modal -->
+<!-- Guide -->
 <div class="modal-overlay" id="guideModal">
   <div class="modal-content">
 
-    <button
-      class="close-modal"
-      onclick="closeModal('guideModal')"
-    >
+    <button class="close-modal" onclick="closeModal('guideModal')">
       ✖
     </button>
 
@@ -845,89 +884,105 @@
       💡 دليلي للحفظ والإتقان
     </h2>
 
+    <p style="
+      font-size:13px;
+      color:var(--secondary);
+      line-height:1.9;
+      margin-top:0;
+    ">
+      هذه هي <b style="color:var(--primary);">المنهجية التي اتبعتها شخصيًا في حفظ القرآن</b>،
+      وقد ساعدتني بشكل كبير بفضل الله. ليست هذه الطريقة الوحيدة الصحيحة،
+      فإن كانت لديك منهجية أخرى مناسبة لك وتساعدك على الحفظ والإتقان، فلا بأس باتباعها.
+    </p>
+
+    <h3 style="
+      font-size:15px;
+      color:var(--text);
+      margin-bottom:8px;
+    ">
+      الخطوات التي اتبعتها:
+    </h3>
+
+    <div style="
+      font-size:13px;
+      color:var(--secondary);
+      line-height:2;
+    ">
+
+      <b>1. الضبط والتجويد:</b>
+      يجب تعلُّم التجويد، وإن لم تكن قد تعلّمتَه بعد
+      فيُفضّل قبل بداية الحفظ الاستماع إلى الشيخ
+      <b>الحصري</b>
+      لضبط مخارج الحروف والتشكيل، خصوصًا في بداية رحلتك.
+      فالحفظ الخاطئ قد يرهقك لاحقًا.
+
+      <br><br>
+
+      <b>2. التثبيت والتربيط:</b>
+      الاستماع إلى مقاطع للتثبيت والتربيط والمتشابهات.
+      وفي حالتي كنت أستمع إلى مقاطع
+      <b>الأستاذة أمل ثابت</b>
+      لتثبيت الآيات وربطها والتركيز على المواضع المتشابهة.
+
+      <br><br>
+
+      <b>3. السلاسة والانطلاق:</b>
+      الترديد مع شيخ متقن.
+      وفي حالتي كان
+      <b>الشيخ فارس عباد</b>
+      سببًا - بفضل الله - في تسهيل الحفظ والتجويد والقراءة الصحيحة،
+      كما ساعدني الترديد معه على تعويد اللسان على تلاوة القرآن بسلاسة وانطلاق.
+
+      <br><br>
+
+      <b>4. بناء العضلة (التكرار غيبًا):</b>
+      استخدم عداد التكرار
+      <b>(10 مرات كحد أدنى)</b>
+      لترسيخ الورد غيبًا.
+
+      ويمكنك أيضًا استخدام
+      <a
+        href="https://tarteel.ai/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          color:var(--primary);
+          font-weight:bold;
+          text-decoration:underline;
+        "
+      >
+        تطبيق ترتيل 🎤
+      </a>
+      للتسميع واكتشاف الأخطاء،
+      لكنه خيار إضافي وليس شرطًا.
+
+      <br><br>
+
+      <b>5. التثبيت القريب (7 أيام):</b>
+      مراجعة الورد الجديد لمدة أسبوع متتالي.
+      وسيظهر لك التطبيق 7 مربعات لمتابعة اكتمال أيام التثبيت.
+
+    </div>
+
+    <h3 style="
+      font-size:15px;
+      color:var(--text);
+      margin-top:20px;
+      margin-bottom:8px;
+    ">
+      📌 مهام يومية مهمة:
+    </h3>
+
     <div style="
       font-size:13px;
       color:var(--secondary);
       line-height:1.9;
-      background:rgba(201,168,106,0.05);
-      border:1px dashed var(--primary);
-      border-radius:10px;
-      padding:12px;
-      margin-bottom:18px;
     ">
-      <b style="color:var(--primary);">ملاحظة:</b>
-      هذه هي المنهجية التي اتبعتها شخصيًا في حفظ القرآن،
-      ووجدت فيها نفعًا كبيرًا بفضل الله.
-      وليست طريقة إلزامية؛ فإذا كانت لديك منهجية أخرى مناسبة لك،
-      فلا بأس، فالمهم أن تكون صحيحة وتساعدك على الضبط والمداومة.
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-bottom:8px;">
-      1. الضبط والتجويد — الأساس
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      يجب تعلُّم التجويد قدر الإمكان، وقبل بداية الحفظ يُفضَّل
-      الاستماع إلى الشيخ <b>الحصري</b> لضبط مخارج الحروف والتشكيل،
-      خصوصًا إذا لم تكن قد تعلّمت التجويد بعد.
-      فالحفظ على قراءة خاطئة قد يرهقك لاحقًا عند تصحيحها.
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
-      2. التثبيت والتربيط
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      الاستماع إلى مقاطع تساعد على <b>التثبيت والتربيط والمتشابهات</b>.
-      وفي منهجيتي الشخصية، كنت أستمع إلى مقاطع
-      <b>الأستاذة أمل ثابت</b> لتثبيت الآيات وربطها بما يشابهها،
-      والتركيز على المتشابهات.
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
-      3. السلاسة والانطلاق
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      الترديد مع شيخ متقن.
-      وفي تجربتي الشخصية، حفظت بالسماع والترديد مع
-      <b>الشيخ فارس عباد</b> عدة أجزاء، وكان ذلك سببًا
-      — بفضل الله — في تسهيل الحفظ والتجويد بالنسبة لي،
-      وتعويد اللسان على التلاوة الصحيحة والانطلاق في القراءة بسلاسة.
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
-      4. بناء العضلة — التكرار غيبًا
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      بعد إتقان الورد، استخدم <b>عداد التكرار</b> لتكراره غيبًا
-      <b>10 مرات على الأقل</b> لترسيخه وتقوية استدعائه من الذاكرة.
+      • تعلُّم التجويد وتطبيقه خطوة بخطوة.
       <br>
-      <span style="color:var(--info);">
-        خيار إضافي: يمكنك استخدام <b>تطبيق ترتيل 🎤</b>
-        للتسميع واكتشاف الأخطاء، لكنه ليس شرطًا.
-      </span>
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
-      5. التثبيت القريب — 7 أيام
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      راجع الورد الجديد لمدة <b>أسبوع متتالي</b>،
-      وسيساعدك التطبيق على تتبع أيام التثبيت السبعة
-      من خلال المربعات الموجودة بجانب الورد.
-    </div>
-
-    <h3 style="font-size:15px; color:var(--text); margin-top:20px; margin-bottom:8px;">
-      📌 أركان مهمة في رحلة الحفظ
-    </h3>
-
-    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
-      • <b>تعلم التجويد:</b> خطوة بخطوة حتى تكون القراءة صحيحة.<br>
-      • <b>التثبيت والتربيط:</b> الاهتمام بالروابط والمتشابهات بين الآيات.<br>
-      • <b>فهم الآيات:</b> قراءة تفسير ولو لآية واحدة يوميًا؛ فالفهم يساعد على رسوخ المعنى والحفظ.
+      • التثبيت والتربيط وربط أواخر الآيات ببدايات ما يليها.
+      <br>
+      • فهم الآيات وقراءة تفسير ولو لآية واحدة يوميًا؛ فالفهم يساعد على ترسيخ الحفظ.
     </div>
 
     <div style="
@@ -956,22 +1011,17 @@
         "أَحَبُّ الأَعْمَالِ إلى اللهِ أدْوَمُهَا وإنْ قَلَّ"
       </div>
     </div>
-
   </div>
 </div>
 
 <div class="wrap">
 
-<!-- =========================
-     HOME
-========================= -->
+<!-- ================= HOME ================= -->
 
 <div id="view-home" class="view active">
 
   <div class="header-row">
-
     <div>
-
       <h1>
         خطة اليوم يا
         <span id="displayUserName"></span>
@@ -979,10 +1029,12 @@
       </h1>
 
       <div
-        style="font-size:12px; color:var(--secondary);"
+        style="
+          font-size:12px;
+          color:var(--secondary);
+        "
         id="dateHeader"
       ></div>
-
     </div>
 
     <button
@@ -991,11 +1043,9 @@
     >
       🌓
     </button>
-
   </div>
 
-  <!-- SESSION -->
-
+  <!-- Focus -->
   <div id="session-container">
 
     <h2 style="
@@ -1010,70 +1060,70 @@
       class="timer-display"
       id="mainTimerDisplay"
     >
-      <span id="mainMinutes" class="time-part">00</span>
-      <span class="time-separator">:</span>
-      <span id="mainSeconds" class="time-part">00</span>
+      00:00
     </div>
 
-    <div class="timer-presets">
+    <div style="
+      display:flex;
+      gap:8px;
+      justify-content:center;
+      margin-bottom:15px;
+      flex-wrap:wrap;
+    ">
 
       <button
-        class="timer-preset"
-        onclick="setMainTimer(15, this)"
+        class="action-btn"
+        onclick="setMainTimer(15)"
       >
         15 دقيقة
       </button>
 
       <button
-        class="timer-preset"
-        onclick="setMainTimer(30, this)"
+        class="action-btn"
+        onclick="setMainTimer(30)"
       >
         30 دقيقة
       </button>
 
       <button
-        class="timer-preset"
-        onclick="setMainTimer(45, this)"
+        class="action-btn"
+        onclick="setMainTimer(45)"
       >
         45 دقيقة
       </button>
 
       <button
-        class="timer-preset"
-        onclick="setMainTimer(60, this)"
+        class="action-btn"
+        onclick="setMainTimer(60)"
       >
         60 دقيقة
       </button>
 
     </div>
 
-    <div class="custom-timer-box">
+    <div class="timer-custom-row">
 
       <input
         type="number"
         id="customTimerInput"
         min="1"
-        max="180"
-        step="1"
-        placeholder="مثال: 25"
+        max="240"
+        placeholder="مدة مخصصة بالدقائق"
       >
 
       <button
         class="action-btn"
         onclick="setCustomTimer()"
       >
-        ⏱️ مدة مخصصة
+        تخصيص
       </button>
 
-    </div>
-
-    <div class="timer-help">
-      من 1 إلى 180 دقيقة
     </div>
 
     <div style="
       display:flex;
       gap:10px;
+      margin-top:15px;
       margin-bottom:20px;
     ">
 
@@ -1081,14 +1131,16 @@
         class="main-btn"
         id="btnMainTimer"
         onclick="startMainTimer()"
-        disabled
       >
-        ▶ اختر مدة أولًا
+        ▶ ابدأ المؤقت
       </button>
 
       <button
         class="action-btn"
-        style="background:var(--danger); color:#fff;"
+        style="
+          background:var(--danger);
+          color:#fff;
+        "
         onclick="toggleFocusMode()"
       >
         ✖ إنهاء الجلسة
@@ -1102,15 +1154,15 @@
       font-size:13px;
       line-height:1.8;
     ">
-      اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.
+      اقرأ أورادك المطلوبة اليوم،
+      واستخدم عداد التكرار لتقوية الحفظ.
       <br>
       بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
     </div>
 
   </div>
 
-  <!-- HOME CONTENT -->
-
+  <!-- Home Content -->
   <div id="home-content">
 
     <button
@@ -1134,8 +1186,7 @@
       💡 دليلي للحفظ والإتقان
     </button>
 
-    <!-- NEW -->
-
+    <!-- New Memorization -->
     <div class="card">
 
       <div style="
@@ -1172,8 +1223,7 @@
 
     </div>
 
-    <!-- DUE -->
-
+    <!-- Due -->
     <div
       class="card"
       style="border-color:var(--warning);"
@@ -1201,13 +1251,9 @@
     </div>
 
   </div>
-
 </div>
 
-
-<!-- =========================
-     POOL
-========================= -->
+<!-- ================= POOL ================= -->
 
 <div id="view-pool" class="view">
 
@@ -1229,23 +1275,19 @@
 
   </div>
 
-  <p
-    style="
-      font-size:12px;
-      color:var(--secondary);
-      margin-bottom:15px;
-    "
-  >
+  <p style="
+    font-size:12px;
+    color:var(--secondary);
+    margin-bottom:15px;
+  ">
     يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.
   </p>
 
-  <div
-    style="
-      display:flex;
-      gap:10px;
-      margin-bottom:15px;
-    "
-  >
+  <div style="
+    display:flex;
+    gap:10px;
+    margin-bottom:15px;
+  ">
 
     <input
       type="text"
@@ -1257,7 +1299,10 @@
 
     <button
       class="action-btn"
-      style="flex:0.4; margin:0;"
+      style="
+        flex:0.4;
+        margin:0;
+      "
       onclick="openHadrTest()"
     >
       ⏱️ مؤقت حَدْر
@@ -1273,15 +1318,13 @@
     "
   >
 
-    <h3
-      style="
-        color:var(--danger);
-        font-size:14px;
-        display:flex;
-        align-items:center;
-        gap:6px;
-      "
-    >
+    <h3 style="
+      color:var(--danger);
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    ">
       🏥 العناية المركزة
     </h3>
 
@@ -1292,7 +1335,6 @@
   <div class="card">
 
     <h2 style="margin-bottom:15px;">
-
       كافة الأوراد
 
       <span
@@ -1301,7 +1343,6 @@
       >
         0
       </span>
-
     </h2>
 
     <div id="poolList"></div>
@@ -1320,13 +1361,9 @@
     </button>
 
   </div>
-
 </div>
 
-
-<!-- =========================
-     PROGRESS
-========================= -->
+<!-- ================= PROGRESS ================= -->
 
 <div id="view-spiritual" class="view">
 
@@ -1338,7 +1375,6 @@
   >
 
     <div class="stat-box">
-
       <div
         class="stat-num"
         id="statStreak"
@@ -1349,11 +1385,9 @@
       <div class="stat-lbl">
         أيام التزام 🔥
       </div>
-
     </div>
 
     <div class="stat-box">
-
       <div
         class="stat-num"
         id="statTotalAdded"
@@ -1364,7 +1398,6 @@
       <div class="stat-lbl">
         إجمالي الأوراد 📋
       </div>
-
     </div>
 
     <div
@@ -1384,7 +1417,6 @@
       </div>
 
     </div>
-
   </div>
 
   <div
@@ -1429,9 +1461,7 @@
     style="border-right:3px solid var(--primary);"
   >
 
-    <h2>
-      📖 غريب القرآن
-    </h2>
+    <h2>📖 غريب القرآن</h2>
 
     <div
       style="
@@ -1465,9 +1495,7 @@
 
   <div class="card">
 
-    <h2>
-      ⚖️ تذكرة الدار الآخرة
-    </h2>
+    <h2>⚖️ تذكرة الدار الآخرة</h2>
 
     <div
       style="
@@ -1490,8 +1518,7 @@
       "
     >
       • <b>القيام:</b>
-      أعظم تثبيت للحفظ أن تصلي ركعتين
-      في جوف الليل بما حفظته.
+      أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.
     </div>
 
     <div
@@ -1505,13 +1532,9 @@
     ></div>
 
   </div>
-
 </div>
 
-
-<!-- =========================
-     SETTINGS
-========================= -->
+<!-- ================= SETTINGS ================= -->
 
 <div id="view-settings" class="view">
 
@@ -1524,6 +1547,7 @@
       border-color:var(--danger);
     "
   >
+
     <div
       style="
         color:var(--danger);
@@ -1537,33 +1561,20 @@
       لتجنب فقدانها عند مسح السجل،
       يرجى أخذ نسخة احتياطية بشكل دوري.
     </div>
+
   </div>
 
   <div class="card">
 
-    <h2>
-      🎛️ نظام المراجعة بعد أول أسبوع
-    </h2>
+    <h2>🎛️ نظام المراجعة (بعد أول أسبوع)</h2>
 
-    <p
-      style="
-        font-size:12px;
-        color:var(--secondary);
-        line-height:1.8;
-      "
-    >
-      النظام الأسبوعي هو الطريقة الافتراضية والبسيطة:
-      بعد انتهاء أسبوع التثبيت، يظهر لك الورد للمراجعة مرة كل أسبوع.
-
-      <br><br>
-
-      <b style="color:var(--primary);">
-        خيار أنكي اختياري فقط:
-      </b>
-
-      إذا كنت تحب المراجعة المتباعدة بشكل أكثر ديناميكية،
-      يمكنك تفعيله ليختار التطبيق الفاصل الزمني بناءً على تقييمك.
-      وإذا لم تفعّله، فأنت لا تفوّت أي جزء أساسي من التطبيق.
+    <p style="
+      font-size:12px;
+      color:var(--secondary);
+    ">
+      النظام الأسبوعي هو الإعداد الافتراضي والأبسط.
+      وإذا أحببت تجربة المراجعة المتباعدة الذكية،
+      يمكنك اختيار نظام أنكي من هنا في أي وقت.
     </p>
 
     <select
@@ -1572,11 +1583,11 @@
     >
 
       <option value="weekly">
-        النظام التقليدي — مراجعة أسبوعية
+        النظام التقليدي — مراجعة ثابتة كل أسبوع
       </option>
 
       <option value="anki">
-        أنكي — مراجعة متباعدة اختيارية
+        نظام أنكي — مراجعة متباعدة ذكية بـ 4 خيارات
       </option>
 
     </select>
@@ -1585,42 +1596,44 @@
 
   <div class="card">
 
-    <h2>
-      👤 الملف الشخصي
-    </h2>
+    <h2>👤 الملف الشخصي</h2>
 
-    <div style="display:flex; gap:10px;">
+    <div style="
+      display:flex;
+      gap:10px;
+    ">
 
       <input
         type="text"
         id="settingsNameInput"
-        style="margin:0; flex:1;"
+        style="
+          margin:0;
+          flex:1;
+        "
       >
 
       <button
         class="action-btn"
-        style="flex:0.5; margin:0;"
+        style="
+          flex:0.5;
+          margin:0;
+        "
         onclick="updateUserName()"
       >
         تحديث
       </button>
 
     </div>
-
   </div>
 
   <div class="card">
 
-    <h2>
-      🎯 إعداد هدف الحفظ
-    </h2>
+    <h2>🎯 إعداد هدف الحفظ</h2>
 
-    <p
-      style="
-        font-size:12px;
-        color:var(--secondary);
-      "
-    >
+    <p style="
+      font-size:12px;
+      color:var(--secondary);
+    ">
       الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.
     </p>
 
@@ -1652,57 +1665,60 @@
       id="customGoal"
       style="display:none;"
       placeholder="أدخل العدد المستهدف"
-      min="1"
     >
 
   </div>
 
   <div class="card">
 
-    <h2>
-      📱 إدارة البيانات والتصدير
-    </h2>
+    <h2>📱 إدارة البيانات والتصدير</h2>
 
-    <label
-      style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        font-size:14px;
-        margin-bottom:15px;
-        border-bottom:1px solid var(--border);
-        padding-bottom:10px;
-      "
-    >
-      المؤثرات الصوتية (أصوات رقمية)
+    <label style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:14px;
+      margin-bottom:15px;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    ">
+
+      المؤثرات الصوتية
 
       <input
         type="checkbox"
         id="soundModeCheck"
         onchange="toggleSound()"
-        style="width:18px;height:18px;"
+        style="
+          width:18px;
+          height:18px;
+        "
       >
+
     </label>
 
-    <label
-      style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-        font-size:14px;
-        margin-bottom:15px;
-        border-bottom:1px solid var(--border);
-        padding-bottom:10px;
-      "
-    >
-      وضع توفير البطارية (بدون تأثيرات)
+    <label style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:14px;
+      margin-bottom:15px;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    ">
+
+      وضع توفير البطارية
 
       <input
         type="checkbox"
         id="liteModeCheck"
         onchange="toggleLiteMode()"
-        style="width:18px;height:18px;"
+        style="
+          width:18px;
+          height:18px;
+        "
       >
+
     </label>
 
     <button
@@ -1716,7 +1732,10 @@
       📊 استخراج كجدول (Excel)
     </button>
 
-    <div style="display:flex; gap:10px;">
+    <div style="
+      display:flex;
+      gap:10px;
+    ">
 
       <button
         class="action-btn"
@@ -1733,6 +1752,7 @@
           line-height:20px;
         "
       >
+
         📤 استرجاع نسخة
 
         <input
@@ -1742,21 +1762,20 @@
           style="display:none;"
           onchange="importData(event)"
         >
+
       </label>
 
     </div>
 
   </div>
-
 </div>
 
 </div>
-
 
 <script>
 
 /* =========================================================
-   DATA
+   APP DATA
 ========================================================= */
 
 const STORAGE_KEY = 'hifz-core-v4';
@@ -1775,228 +1794,115 @@ let poolVisibleCount = 20;
 
 
 /* =========================================================
-   AUDIO
+   AUDIO ENGINE
+   Lightweight system-like digital feedback
 ========================================================= */
+
+const AudioContextClass =
+  window.AudioContext || window.webkitAudioContext;
 
 let audioCtx = null;
 
 function getAudioContext() {
-
-  if (audioCtx) return audioCtx;
-
-  const AudioContextClass =
-    window.AudioContext ||
-    window.webkitAudioContext;
-
   if (!AudioContextClass) return null;
 
-  try {
-    audioCtx =
-      new AudioContextClass();
-  } catch (e) {
-    audioCtx = null;
+  if (!audioCtx) {
+    audioCtx = new AudioContextClass();
+  }
+
+  if (audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
   }
 
   return audioCtx;
+}
+
+function playTone(freq, duration, volume, type = 'sine') {
+
+  if (!appData.soundEnabled) return;
+
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime);
+
+  gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    volume,
+    ctx.currentTime + 0.012
+  );
+
+  gain.gain.exponentialRampToValueAtTime(
+    0.0001,
+    ctx.currentTime + duration
+  );
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start();
+  osc.stop(ctx.currentTime + duration + 0.02);
 }
 
 function playSound(type) {
 
   if (!appData.soundEnabled) return;
 
-  const ctx = getAudioContext();
+  switch(type) {
 
-  if (!ctx) return;
+    case 'click':
+      // Very short tactile confirmation.
+      playTone(170, 0.055, 0.055, 'sine');
+      break;
 
-  if (ctx.state === 'suspended') {
-    ctx.resume().catch(() => {});
-  }
+    case 'ding':
+      // Soft two-step confirmation, not a musical melody.
+      playTone(520, 0.11, 0.07, 'sine');
 
-  const osc =
-    ctx.createOscillator();
+      setTimeout(() => {
+        playTone(760, 0.16, 0.055, 'sine');
+      }, 75);
 
-  const gainNode =
-    ctx.createGain();
+      break;
 
-  osc.connect(gainNode);
-  gainNode.connect(ctx.destination);
+    case 'graduate':
+      // Three quick system-like confirmation tones.
+      playTone(430, 0.10, 0.065, 'sine');
 
-  const now =
-    ctx.currentTime;
+      setTimeout(() => {
+        playTone(610, 0.11, 0.06, 'sine');
+      }, 90);
 
-  try {
+      setTimeout(() => {
+        playTone(820, 0.18, 0.055, 'sine');
+      }, 190);
 
-    if (type === 'click') {
+      break;
 
-      osc.type = 'sine';
+    case 'pop':
+      playTone(260, 0.075, 0.045, 'sine');
+      break;
 
-      osc.frequency.setValueAtTime(
-        250,
-        now
-      );
+    case 'timer':
+      // Calm end-of-timer alert.
+      playTone(480, 0.18, 0.065, 'sine');
 
-      osc.frequency.exponentialRampToValueAtTime(
-        50,
-        now + 0.05
-      );
+      setTimeout(() => {
+        playTone(680, 0.28, 0.055, 'sine');
+      }, 150);
 
-      gainNode.gain.setValueAtTime(
-        0.35,
-        now
-      );
-
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 0.05
-      );
-
-      osc.start(now);
-      osc.stop(now + 0.05);
-
-    } else if (type === 'ding') {
-
-      osc.type = 'triangle';
-
-      osc.frequency.setValueAtTime(
-        800,
-        now
-      );
-
-      gainNode.gain.setValueAtTime(
-        0.22,
-        now
-      );
-
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 0.4
-      );
-
-      osc.start(now);
-      osc.stop(now + 0.4);
-
-    } else if (type === 'graduate') {
-
-      osc.type = 'sine';
-
-      osc.frequency.setValueAtTime(
-        600,
-        now
-      );
-
-      osc.frequency.setValueAtTime(
-        900,
-        now + 0.15
-      );
-
-      gainNode.gain.setValueAtTime(
-        0.3,
-        now
-      );
-
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 0.15
-      );
-
-      const osc2 =
-        ctx.createOscillator();
-
-      const gain2 =
-        ctx.createGain();
-
-      osc2.type = 'sine';
-
-      osc2.connect(gain2);
-      gain2.connect(ctx.destination);
-
-      osc2.frequency.setValueAtTime(
-        900,
-        now + 0.15
-      );
-
-      gain2.gain.setValueAtTime(
-        0,
-        now
-      );
-
-      gain2.gain.setValueAtTime(
-        0.3,
-        now + 0.15
-      );
-
-      gain2.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 0.5
-      );
-
-      osc2.start(now + 0.15);
-      osc2.stop(now + 0.5);
-
-      osc.start(now);
-      osc.stop(now + 0.15);
-
-    } else if (type === 'pop') {
-
-      osc.type = 'sine';
-
-      osc.frequency.setValueAtTime(
-        400,
-        now
-      );
-
-      osc.frequency.exponentialRampToValueAtTime(
-        100,
-        now + 0.1
-      );
-
-      gainNode.gain.setValueAtTime(
-        0.4,
-        now
-      );
-
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 0.1
-      );
-
-      osc.start(now);
-      osc.stop(now + 0.1);
-
-    } else if (type === 'gong') {
-
-      osc.type = 'sine';
-
-      osc.frequency.setValueAtTime(
-        400,
-        now
-      );
-
-      gainNode.gain.setValueAtTime(
-        0.35,
-        now
-      );
-
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        now + 1.5
-      );
-
-      osc.start(now);
-      osc.stop(now + 1.5);
-    }
-
-  } catch (e) {
-    // Audio failure should never break the app.
+      break;
   }
 }
 
 function toggleSound() {
 
   appData.soundEnabled =
-    document.getElementById(
-      'soundModeCheck'
-    ).checked;
+    document.getElementById('soundModeCheck').checked;
 
   saveData();
 
@@ -2011,66 +1917,66 @@ function toggleSound() {
 ========================================================= */
 
 const quranSurahs = [
-  "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام",
-  "الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد",
-  "إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
-  "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء",
-  "النمل","القصص","العنكبوت","الروم","لقمان","السجدة",
-  "الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
-  "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
-  "محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم",
-  "القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر",
-  "الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق",
-  "التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن",
-  "المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ",
-  "النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق",
-  "البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
-  "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر",
-  "البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر",
-  "الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون",
-  "النصر","المسد","الإخلاص","الفلق","الناس"
+"الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام",
+"الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد",
+"إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
+"الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء",
+"النمل","القصص","العنكبوت","الروم","لقمان","السجدة",
+"الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
+"فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
+"محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم",
+"القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر",
+"الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق",
+"التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن",
+"المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ",
+"النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق",
+"البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+"الشمس","الليل","الضحى","الشرح","التين","العلق","القدر",
+"البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر",
+"الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون",
+"النصر","المسد","الإخلاص","الفلق","الناس"
 ];
 
 const gharibDict = [
   {
-    w: "غاسقٍ إذا وقب",
-    m: "الليل إذا أظلم ودخل في كل شيء",
-    s: "التفسير الميسر"
+    w:"غاسقٍ إذا وقب",
+    m:"الليل إذا أظلم ودخل في كل شيء",
+    s:"التفسير الميسر"
   },
   {
-    w: "الصَّمَد",
-    m: "السيد الذي يُقصد في الحوائج كلها",
-    s: "التفسير الميسر"
+    w:"الصَّمَد",
+    m:"السيد الذي يُقصد في الحوائج كلها",
+    s:"التفسير الميسر"
   },
   {
-    w: "الفَلَق",
-    m: "الصبح الذي ينفلق عنه الليل",
-    s: "المعجم الوجيز"
+    w:"الفَلَق",
+    m:"الصبح الذي ينفلق عنه الليل",
+    s:"المعجم الوجيز"
   },
   {
-    w: "أبابيل",
-    m: "جماعات متتابعة",
-    s: "المعجم الوجيز"
+    w:"أبابيل",
+    m:"جماعات متتابعة",
+    s:"المعجم الوجيز"
   },
   {
-    w: "سجِّيل",
-    m: "طين متحجر أو طبقات من طين محروق",
-    s: "التفسير الميسر"
+    w:"سجِّيل",
+    m:"طين متحجر أو طبقات من طين محروق",
+    s:"التفسير الميسر"
   },
   {
-    w: "القارِعَة",
-    m: "القيامة التي تقرع القلوب بأهوالها",
-    s: "التفسير الميسر"
+    w:"القارِعَة",
+    m:"القيامة التي تقرع القلوب بأهوالها",
+    s:"التفسير الميسر"
   },
   {
-    w: "المُطَفِّفِين",
-    m: "الذين ينقصون المكيال والميزان",
-    s: "التفسير الميسر"
+    w:"المُطَفِّفِين",
+    m:"الذين ينقصون المكيال والميزان",
+    s:"التفسير الميسر"
   },
   {
-    w: "كَبَد",
-    m: "مشقة وتعب في مكابدة الدنيا",
-    s: "التفسير الميسر"
+    w:"كَبَد",
+    m:"مشقة وتعب في مكابدة الدنيا",
+    s:"التفسير الميسر"
   }
 ];
 
@@ -2089,304 +1995,87 @@ const duas = [
 
 function getLocalDateStr(dateObj = new Date()) {
 
-  const year =
-    dateObj.getFullYear();
-
-  const month =
-    String(
-      dateObj.getMonth() + 1
-    ).padStart(2,'0');
-
-  const day =
-    String(
-      dateObj.getDate()
-    ).padStart(2,'0');
-
-  return `${year}-${month}-${day}`;
-}
-
-function parseDateOnly(dateStr) {
-
-  if (
-    typeof dateStr !== 'string' ||
-    !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)
-  ) {
-    return null;
-  }
-
-  const [y,m,d] =
-    dateStr.split('-').map(Number);
-
-  const result =
-    new Date(
-      y,
-      m - 1,
-      d
-    );
-
-  return Number.isNaN(
-    result.getTime()
-  )
-    ? null
-    : result;
-}
-
-function daysBetween(a,b) {
-
-  const start =
-    parseDateOnly(a);
-
-  const end =
-    parseDateOnly(b);
-
-  if (!start || !end) return 0;
-
-  return Math.round(
-    (
-      end.getTime() -
-      start.getTime()
-    ) / 86400000
+  const d = new Date(
+    dateObj.getTime() -
+    (dateObj.getTimezoneOffset() * 60000)
   );
+
+  return d.toISOString().slice(0,10);
 }
 
 function getDayOfYear(dateObj = new Date()) {
 
-  const start =
-    new Date(
-      dateObj.getFullYear(),
-      0,
-      1
-    );
-
-  const current =
-    new Date(
-      dateObj.getFullYear(),
-      dateObj.getMonth(),
-      dateObj.getDate()
-    );
-
-  return Math.floor(
-    (
-      current.getTime() -
-      start.getTime()
-    ) / 86400000
+  const start = new Date(
+    dateObj.getFullYear(),
+    0,
+    0
   );
+
+  const diff = dateObj - start;
+
+  return Math.floor(diff / 86400000);
 }
 
-const todayStr = () =>
-  getLocalDateStr();
+const todayStr = () => getLocalDateStr();
+
+const daysBetween = (a,b) =>
+  Math.floor(
+    (new Date(b) - new Date(a)) / 86400000
+  );
 
 const escapeHtml = s => {
 
-  const d =
-    document.createElement('div');
+  const d = document.createElement('div');
 
-  d.textContent =
-    String(s ?? '');
+  d.textContent = s;
 
   return d.innerHTML;
 };
-
-function normalizeEntry(e) {
-
-  if (!e || typeof e !== 'object') {
-    return null;
-  }
-
-  if (
-    typeof e.id !== 'string' ||
-    e.id.trim() === ''
-  ) {
-    e.id =
-      Date.now().toString() +
-      Math.random().toString(36).slice(2);
-  }
-
-  e.label =
-    typeof e.label === 'string'
-      ? e.label
-      : '';
-
-  e.note =
-    typeof e.note === 'string'
-      ? e.note
-      : '';
-
-  e.isICU =
-    Boolean(e.isICU);
-
-  e.date =
-    typeof e.date === 'string'
-      ? e.date
-      : todayStr();
-
-  e.nextReviewDate =
-    typeof e.nextReviewDate === 'string'
-      ? e.nextReviewDate
-      : todayStr();
-
-  e.interval =
-    Number.isFinite(Number(e.interval))
-      ? Number(e.interval)
-      : 0;
-
-  e.ease =
-    Number.isFinite(Number(e.ease))
-      ? Number(e.ease)
-      : 2.5;
-
-  e.srsLevel =
-    Number.isFinite(Number(e.srsLevel))
-      ? Number(e.srsLevel)
-      : 0;
-
-  e.reviewCount =
-    Number.isFinite(Number(e.reviewCount))
-      ? Number(e.reviewCount)
-      : 0;
-
-  e.hasBeenEvaluated =
-    Boolean(e.hasBeenEvaluated);
-
-  e.sessionReps =
-    Number.isFinite(Number(e.sessionReps))
-      ? Number(e.sessionReps)
-      : 0;
-
-  e.lastRepDate =
-    typeof e.lastRepDate === 'string'
-      ? e.lastRepDate
-      : todayStr();
-
-  if (!Array.isArray(e.phaseDays)) {
-    e.phaseDays = [];
-  }
-
-  return e;
-}
-
-function normalizeAppData(data) {
-
-  const base = {
-    userName: '',
-    entries: [],
-    streak: 0,
-    lastActive: '',
-    goal: 604,
-    evalMode: 'weekly',
-    soundEnabled: true
-  };
-
-  if (!data || typeof data !== 'object') {
-    return base;
-  }
-
-  const normalized = {
-    ...base,
-    ...data
-  };
-
-  normalized.userName =
-    typeof normalized.userName === 'string'
-      ? normalized.userName
-      : '';
-
-  normalized.entries =
-    Array.isArray(normalized.entries)
-      ? normalized.entries
-          .map(normalizeEntry)
-          .filter(Boolean)
-      : [];
-
-  normalized.streak =
-    Number.isFinite(Number(normalized.streak))
-      ? Number(normalized.streak)
-      : 0;
-
-  normalized.lastActive =
-    typeof normalized.lastActive === 'string'
-      ? normalized.lastActive
-      : '';
-
-  normalized.goal =
-    Number.isFinite(Number(normalized.goal)) &&
-    Number(normalized.goal) > 0
-      ? Number(normalized.goal)
-      : 604;
-
-  normalized.evalMode =
-    normalized.evalMode === 'anki'
-      ? 'anki'
-      : 'weekly';
-
-  normalized.soundEnabled =
-    normalized.soundEnabled !== false;
-
-  return normalized;
-}
 
 
 /* =========================================================
    GLOW
 ========================================================= */
 
-function getEntryElement(id) {
-
-  const safeId =
-    String(id)
-      .replace(/\\/g, '\\\\')
-      .replace(/"/g, '\\"');
-
-  return document.querySelector(
-    `[data-entry-id="${safeId}"]`
-  );
-}
-
-function flashEntry(id, textGlow = false) {
+function flashEntry(id, textGlow = true) {
 
   requestAnimationFrame(() => {
 
     const el =
-      getEntryElement(id);
+      document.querySelector(
+        `[data-entry-id="${CSS.escape(id)}"]`
+      );
 
     if (!el) return;
 
-    el.classList.remove(
-      'golden-glow'
-    );
+    el.classList.remove('golden-glow');
 
     void el.offsetWidth;
 
-    el.classList.add(
-      'golden-glow'
-    );
+    el.classList.add('golden-glow');
 
     if (textGlow) {
 
-      const t =
-        el.querySelector(
-          '.glow-target'
-        );
+      const target =
+        el.querySelector('.glow-target');
 
-      if (t) {
+      if (target) {
 
-        t.classList.remove(
+        target.classList.remove(
           'golden-glow-text'
         );
 
-        void t.offsetWidth;
+        void target.offsetWidth;
 
-        t.classList.add(
+        target.classList.add(
           'golden-glow-text'
         );
       }
     }
 
     setTimeout(() => {
-      el.classList.remove(
-        'golden-glow'
-      );
-    }, 850);
+      el.classList.remove('golden-glow');
+    }, 950);
   });
 }
 
@@ -2395,52 +2084,40 @@ function flashCelebrate(id) {
   requestAnimationFrame(() => {
 
     const el =
-      getEntryElement(id);
+      document.querySelector(
+        `[data-entry-id="${CSS.escape(id)}"]`
+      );
 
     if (!el) return;
 
-    el.classList.remove(
-      'celebrate-glow'
-    );
+    el.classList.remove('celebrate-glow');
 
     void el.offsetWidth;
 
-    el.classList.add(
-      'celebrate-glow'
-    );
+    el.classList.add('celebrate-glow');
 
     setTimeout(() => {
-      el.classList.remove(
-        'celebrate-glow'
-      );
-    }, 1200);
+      el.classList.remove('celebrate-glow');
+    }, 1250);
   });
 }
 
 function flashStreak() {
 
   const el =
-    document.getElementById(
-      'statStreak'
-    );
+    document.getElementById('statStreak');
 
   if (!el) return;
 
-  el.classList.remove(
-    'golden-glow-text'
-  );
+  el.classList.remove('golden-glow-text');
 
   void el.offsetWidth;
 
-  el.classList.add(
-    'golden-glow-text'
-  );
+  el.classList.add('golden-glow-text');
 
   setTimeout(() => {
-    el.classList.remove(
-      'golden-glow-text'
-    );
-  }, 850);
+    el.classList.remove('golden-glow-text');
+  }, 900);
 }
 
 
@@ -2455,110 +2132,98 @@ function loadData() {
     localStorage.getItem('hifz-theme') || 'dark'
   );
 
-  const lite =
-    localStorage.getItem('hifz-lite') === 'true';
+  if (localStorage.getItem('hifz-lite') === 'true') {
 
-  document.body.classList.toggle(
-    'lite-mode',
-    lite
-  );
+    document.body.classList.add('lite-mode');
 
-  const liteToggle =
     document.getElementById(
       'liteModeCheck'
-    );
-
-  if (liteToggle) {
-    liteToggle.checked = lite;
+    ).checked = true;
   }
 
   const saved =
-    localStorage.getItem(
-      STORAGE_KEY
-    );
+    localStorage.getItem(STORAGE_KEY);
 
   if (saved) {
 
     try {
 
-      appData =
-        normalizeAppData(
-          JSON.parse(saved)
-        );
+      const parsed =
+        JSON.parse(saved);
 
-    } catch (e) {
+      appData = {
+        ...appData,
+        ...parsed
+      };
 
-      appData =
-        normalizeAppData(null);
-    }
+      if (!appData.evalMode) {
+        appData.evalMode = 'weekly';
+      }
 
-  } else {
+      if (
+        appData.soundEnabled === undefined
+      ) {
+        appData.soundEnabled = true;
+      }
 
-    appData =
-      normalizeAppData(appData);
+    } catch(e) {}
   }
 
-  const soundToggle =
-    document.getElementById(
-      'soundModeCheck'
-    );
+  document.getElementById(
+    'soundModeCheck'
+  ).checked = appData.soundEnabled;
 
-  if (soundToggle) {
-    soundToggle.checked =
-      appData.soundEnabled;
-  }
-
-  const today =
-    todayStr();
+  const today = todayStr();
 
   appData.entries.forEach(e => {
 
-    if (
-      e.lastRepDate !== today
-    ) {
-      e.sessionReps = 0;
+    if (e.phaseDays === undefined) {
+
+      e.phaseDays = [];
+
+      const count =
+        e.dailyPhaseReps ||
+        (e.hasBeenEvaluated ? 7 : 0);
+
+      for (
+        let i = 0;
+        i < count;
+        i++
+      ) {
+        e.phaseDays.push(
+          'old_day_' + i
+        );
+      }
     }
 
-    if (
-      e.phaseDays.length > 7
-    ) {
-      e.phaseDays =
-        e.phaseDays.slice(0,7);
+    if (e.lastRepDate !== today) {
+      e.sessionReps = 0;
     }
   });
 
   if (!appData.userName) {
 
-    openModal(
-      'welcomeModal'
-    );
+    openModal('welcomeModal');
 
   } else {
 
     updateNameDisplays();
   }
 
-  const now =
-    new Date();
+  const now = new Date();
 
-  const dateHeader =
-    document.getElementById(
-      'dateHeader'
+  document.getElementById(
+    'dateHeader'
+  ).textContent =
+    now.toLocaleDateString(
+      'ar-EG',
+      {
+        weekday:'long',
+        year:'numeric',
+        month:'long',
+        day:'numeric'
+      }
     );
-
-  if (dateHeader) {
-
-    dateHeader.textContent =
-      now.toLocaleDateString(
-        'ar-EG',
-        {
-          weekday:'long',
-          year:'numeric',
-          month:'long',
-          day:'numeric'
-        }
-      );
-  }
 
   const dayIndex =
     getDayOfYear(now);
@@ -2568,232 +2233,132 @@ function loadData() {
       dayIndex % gharibDict.length
     ];
 
-  const wordEl =
-    document.getElementById(
-      'gharibWord'
-    );
+  document.getElementById(
+    'gharibWord'
+  ).textContent = dailyWord.w;
 
-  const meaningEl =
-    document.getElementById(
-      'gharibMeaning'
-    );
+  document.getElementById(
+    'gharibMeaning'
+  ).textContent = dailyWord.m;
 
-  const sourceEl =
-    document.getElementById(
-      'gharibSource'
-    );
+  document.getElementById(
+    'gharibSource'
+  ).textContent =
+    `(المصدر: ${dailyWord.s})`;
 
-  const duaEl =
-    document.getElementById(
-      'dailyDua'
-    );
-
-  if (wordEl)
-    wordEl.textContent =
-      dailyWord.w;
-
-  if (meaningEl)
-    meaningEl.textContent =
-      dailyWord.m;
-
-  if (sourceEl)
-    sourceEl.textContent =
-      `(المصدر: ${dailyWord.s})`;
-
-  if (duaEl)
-    duaEl.textContent =
-      duas[
-        dayIndex % duas.length
-      ];
+  document.getElementById(
+    'dailyDua'
+  ).textContent =
+    duas[
+      dayIndex % duas.length
+    ];
 
   const ts =
     document.getElementById(
       'trackSelect'
     );
 
-  const customGoal =
+  if (
+    [30,48,604].includes(
+      appData.goal
+    )
+  ) {
+
+    ts.value = appData.goal;
+
+  } else {
+
+    ts.value = '999';
+
     document.getElementById(
       'customGoal'
-    );
+    ).style.display = 'block';
 
-  if (ts) {
-
-    if (
-      [30,48,604].includes(
-        appData.goal
-      )
-    ) {
-
-      ts.value =
-        String(appData.goal);
-
-      if (customGoal) {
-        customGoal.style.display =
-          'none';
-      }
-
-    } else {
-
-      ts.value = '999';
-
-      if (customGoal) {
-
-        customGoal.style.display =
-          'block';
-
-        customGoal.value =
-          appData.goal;
-      }
-    }
-  }
-
-  const evalModeSelect =
     document.getElementById(
-      'evalModeSelect'
-    );
-
-  if (evalModeSelect) {
-
-    evalModeSelect.value =
-      appData.evalMode;
+      'customGoal'
+    ).value = appData.goal;
   }
+
+  document.getElementById(
+    'evalModeSelect'
+  ).value = appData.evalMode;
 
   checkComeback();
-
   renderAll();
 }
 
 function saveData() {
 
-  try {
-
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(appData)
-    );
-
-    return true;
-
-  } catch (e) {
-
-    console.error(
-      'تعذر حفظ البيانات:',
-      e
-    );
-
-    alert(
-      'تعذر حفظ البيانات على هذا المتصفح. تأكد من وجود مساحة تخزين كافية.'
-    );
-
-    return false;
-  }
+  localStorage.setItem(
+    STORAGE_KEY,
+    JSON.stringify(appData)
+  );
 }
 
 
 /* =========================================================
-   USER
+   PROFILE
 ========================================================= */
 
 function saveNewUser() {
 
-  const input =
+  const nm =
     document.getElementById(
       'onboardName'
-    );
-
-  const nm =
-    input
-      ? input.value.trim()
-      : '';
+    ).value.trim();
 
   if (!nm) {
-
-    alert(
-      'من فضلك أدخل اسمك'
-    );
-
+    alert("من فضلك أدخل اسمك");
     return;
   }
 
-  appData.userName =
-    nm;
+  appData.userName = nm;
 
   saveData();
 
-  closeModal(
-    'welcomeModal'
-  );
+  closeModal('welcomeModal');
 
   updateNameDisplays();
-
-  renderAll();
 }
 
 function updateUserName() {
 
-  const input =
+  const nm =
     document.getElementById(
       'settingsNameInput'
-    );
+    ).value.trim();
 
-  const nm =
-    input
-      ? input.value.trim()
-      : '';
+  if (nm) {
 
-  if (!nm) return;
+    appData.userName = nm;
 
-  appData.userName =
-    nm;
+    saveData();
 
-  saveData();
+    updateNameDisplays();
 
-  updateNameDisplays();
-
-  alert(
-    'تم الحفظ!'
-  );
+    alert("تم الحفظ!");
+  }
 }
 
 function updateNameDisplays() {
 
-  const nameEl =
-    document.getElementById(
-      'displayUserName'
-    );
+  document.getElementById(
+    'displayUserName'
+  ).textContent =
+    appData.userName || 'صديقي';
 
-  const settingsEl =
-    document.getElementById(
-      'settingsNameInput'
-    );
-
-  if (nameEl) {
-
-    nameEl.textContent =
-      appData.userName ||
-      'صديقي';
-  }
-
-  if (settingsEl) {
-
-    settingsEl.value =
-      appData.userName;
-  }
+  document.getElementById(
+    'settingsNameInput'
+  ).value =
+    appData.userName;
 }
 
 function changeEvalMode() {
 
-  const select =
+  appData.evalMode =
     document.getElementById(
       'evalModeSelect'
-    );
-
-  if (!select) return;
-
-  appData.evalMode =
-    select.value === 'anki'
-      ? 'anki'
-      : 'weekly';
+    ).value;
 
   saveData();
 
@@ -2802,16 +2367,14 @@ function changeEvalMode() {
 
 
 /* =========================================================
-   STREAK
+   COMEBACK / STREAK
 ========================================================= */
 
 function checkComeback() {
 
-  const today =
-    todayStr();
+  const today = todayStr();
 
-  if (!appData.lastActive)
-    return;
+  if (!appData.lastActive) return;
 
   const diff =
     daysBetween(
@@ -2821,12 +2384,8 @@ function checkComeback() {
 
   if (diff > 1) {
 
-    if (
-      appData.streak > 0
-    ) {
-      openModal(
-        'comebackModal'
-      );
+    if (appData.streak > 0) {
+      openModal('comebackModal');
     }
 
     appData.streak = 0;
@@ -2837,25 +2396,21 @@ function checkComeback() {
 
 function updateActive() {
 
-  const today =
-    todayStr();
+  const today = todayStr();
 
   if (
     appData.lastActive === today
-  ) {
-    return;
-  }
+  ) return;
 
-  const prev =
+  const previousStreak =
     appData.streak;
 
-  const diff =
+  if (
     daysBetween(
       appData.lastActive,
       today
-    );
-
-  if (diff === 1) {
+    ) === 1
+  ) {
 
     appData.streak++;
 
@@ -2864,13 +2419,13 @@ function updateActive() {
     appData.streak = 1;
   }
 
-  appData.lastActive =
-    today;
+  appData.lastActive = today;
 
   saveData();
 
   if (
-    appData.streak > prev
+    appData.streak >
+    previousStreak
   ) {
     flashStreak();
   }
@@ -2883,76 +2438,43 @@ function updateActive() {
 
 function switchTab(tabId, element) {
 
-  document.querySelectorAll(
-    '.view'
-  ).forEach(v =>
-    v.classList.remove(
-      'active'
-    )
-  );
-
-  document.querySelectorAll(
-    '.nav-item'
-  ).forEach(n =>
-    n.classList.remove(
-      'active'
-    )
-  );
-
-  const target =
-    document.getElementById(
-      tabId
+  document
+    .querySelectorAll('.view')
+    .forEach(v =>
+      v.classList.remove('active')
     );
 
-  if (target) {
-    target.classList.add(
-      'active'
+  document
+    .querySelectorAll('.nav-item')
+    .forEach(n =>
+      n.classList.remove('active')
     );
-  }
+
+  document
+    .getElementById(tabId)
+    .classList.add('active');
 
   if (element) {
-    element.classList.add(
-      'active'
-    );
+    element.classList.add('active');
   }
 
-  if (
-    document.body.classList.contains(
-      'focus-mode'
-    )
-  ) {
-    stopMainTimer();
-    document.body.classList.remove(
-      'focus-mode'
-    );
-  }
-
-  window.scrollTo(
-    0,
-    0
+  document.body.classList.remove(
+    'focus-mode'
   );
+
+  window.scrollTo(0,0);
 }
 
 function openModal(id) {
 
-  const el =
-    document.getElementById(id);
-
-  if (el) {
-    el.style.display =
-      'flex';
-  }
+  document.getElementById(id)
+    .style.display = 'flex';
 }
 
 function closeModal(id) {
 
-  const el =
-    document.getElementById(id);
-
-  if (el) {
-    el.style.display =
-      'none';
-  }
+  document.getElementById(id)
+    .style.display = 'none';
 }
 
 function toggleTheme() {
@@ -2977,13 +2499,10 @@ function toggleTheme() {
 
 function toggleLiteMode() {
 
-  const el =
+  const isLite =
     document.getElementById(
       'liteModeCheck'
-    );
-
-  const isLite =
-    el ? el.checked : false;
+    ).checked;
 
   document.body.classList.toggle(
     'lite-mode',
@@ -2992,347 +2511,35 @@ function toggleLiteMode() {
 
   localStorage.setItem(
     'hifz-lite',
-    String(isLite)
+    isLite
   );
 }
 
 function toggleFocusMode() {
 
-  const entering =
-    !document.body.classList.contains(
-      'focus-mode'
-    );
-
-  if (!entering) {
-
-    stopMainTimer();
-
-    document.body.classList.remove(
-      'focus-mode'
-    );
-
-    return;
-  }
-
-  document.body.classList.add(
+  document.body.classList.toggle(
     'focus-mode'
   );
 
-  updateMainTimerButton();
-}
-
-
-/* =========================================================
-   MAIN TIMER
-========================================================= */
-
-let mTimerInterval = null;
-let mTimeLeft = 0;
-let mTimerRunning = false;
-
-function updateTimerDisplay(
-  minutesEl,
-  secondsEl,
-  totalSeconds
-) {
-
   if (
-    !minutesEl ||
-    !secondsEl
-  ) return;
-
-  const safe =
-    Math.max(
-      0,
-      Number(totalSeconds) || 0
-    );
-
-  const minutes =
-    Math.floor(
-      safe / 60
-    );
-
-  const seconds =
-    safe % 60;
-
-  minutesEl.textContent =
-    String(minutes)
-      .padStart(2,'0');
-
-  secondsEl.textContent =
-    String(seconds)
-      .padStart(2,'0');
-}
-
-function updateMTimerDisplay() {
-
-  updateTimerDisplay(
-    document.getElementById(
-      'mainMinutes'
-    ),
-    document.getElementById(
-      'mainSeconds'
-    ),
-    mTimeLeft
-  );
-}
-
-function updateHadrTimerDisplay() {
-
-  updateTimerDisplay(
-    document.getElementById(
-      'hadrMinutes'
-    ),
-    document.getElementById(
-      'hadrSeconds'
-    ),
-    hTimeLeft
-  );
-}
-
-function clearTimerPresetSelection() {
-
-  document.querySelectorAll(
-    '.timer-preset'
-  ).forEach(btn =>
-    btn.classList.remove(
-      'active'
+    !document.body.classList.contains(
+      'focus-mode'
     )
-  );
-}
+  ) {
 
-function updateMainTimerButton() {
+    clearInterval(
+      mTimerInterval
+    );
 
-  const btn =
     document.getElementById(
       'btnMainTimer'
-    );
+    ).textContent =
+      "▶ ابدأ المؤقت";
 
-  if (!btn) return;
+    mTimeLeft = 0;
 
-  if (mTimerRunning) {
-
-    btn.disabled = true;
-
-    btn.textContent =
-      '⏳ يتم الحفظ والمراجعة...';
-
-  } else if (mTimeLeft > 0) {
-
-    btn.disabled = false;
-
-    btn.textContent =
-      '▶ بدء المؤقت';
-
-  } else {
-
-    btn.disabled = true;
-
-    btn.textContent =
-      '▶ اختر مدة أولًا';
+    updateMTimerDisplay();
   }
-}
-
-function setMainTimer(
-  mins,
-  buttonEl = null
-) {
-
-  if (mTimerRunning)
-    return;
-
-  const n =
-    Number(mins);
-
-  if (
-    !Number.isFinite(n) ||
-    n < 1 ||
-    n > 180
-  ) {
-    return;
-  }
-
-  const safeMinutes =
-    Math.floor(n);
-
-  mTimeLeft =
-    safeMinutes * 60;
-
-  clearTimerPresetSelection();
-
-  if (buttonEl) {
-    buttonEl.classList.add(
-      'active'
-    );
-  }
-
-  const customInput =
-    document.getElementById(
-      'customTimerInput'
-    );
-
-  if (customInput) {
-    customInput.value = '';
-  }
-
-  updateMTimerDisplay();
-  updateMainTimerButton();
-}
-
-function setCustomTimer() {
-
-  if (mTimerRunning)
-    return;
-
-  const input =
-    document.getElementById(
-      'customTimerInput'
-    );
-
-  if (!input)
-    return;
-
-  const minutes =
-    Math.floor(
-      Number(input.value)
-    );
-
-  if (
-    !Number.isFinite(minutes) ||
-    minutes < 1 ||
-    minutes > 180
-  ) {
-
-    alert(
-      'اكتب مدة صحيحة من 1 إلى 180 دقيقة.'
-    );
-
-    return;
-  }
-
-  mTimeLeft =
-    minutes * 60;
-
-  clearTimerPresetSelection();
-
-  updateMTimerDisplay();
-
-  updateMainTimerButton();
-}
-
-function startMainTimer() {
-
-  if (mTimerRunning)
-    return;
-
-  if (mTimeLeft <= 0) {
-
-    alert(
-      'اختر مدة المؤقت أولًا.'
-    );
-
-    return;
-  }
-
-  mTimerRunning = true;
-
-  updateMainTimerButton();
-
-  clearInterval(
-    mTimerInterval
-  );
-
-  mTimerInterval =
-    setInterval(() => {
-
-      if (mTimeLeft > 0) {
-
-        mTimeLeft--;
-
-        updateMTimerDisplay();
-
-      } else {
-
-        finishMainTimer();
-      }
-
-    }, 1000);
-}
-
-function stopMainTimer() {
-
-  clearInterval(
-    mTimerInterval
-  );
-
-  mTimerInterval =
-    null;
-
-  mTimerRunning =
-    false;
-
-  mTimeLeft =
-    0;
-
-  updateMTimerDisplay();
-  updateMainTimerButton();
-}
-
-function finishMainTimer() {
-
-  clearInterval(
-    mTimerInterval
-  );
-
-  mTimerInterval =
-    null;
-
-  mTimerRunning =
-    false;
-
-  mTimeLeft =
-    0;
-
-  updateMTimerDisplay();
-  updateMainTimerButton();
-
-  const timerEl =
-    document.getElementById(
-      'mainTimerDisplay'
-    );
-
-  if (timerEl) {
-
-    timerEl.classList.remove(
-      'golden-glow-text'
-    );
-
-    void timerEl.offsetWidth;
-
-    timerEl.classList.add(
-      'golden-glow-text'
-    );
-  }
-
-  playSound('gong');
-
-  setTimeout(() => {
-
-    if (timerEl) {
-      timerEl.classList.remove(
-        'golden-glow-text'
-      );
-    }
-
-    alert(
-      'انتهت الجلسة! قم بتقييم مراجعاتك الآن.'
-    );
-
-    document.body.classList.remove(
-      'focus-mode'
-    );
-
-  }, 600);
 }
 
 
@@ -3342,114 +2549,84 @@ function finishMainTimer() {
 
 function addEntry() {
 
-  const labelInput =
+  const label =
     document.getElementById(
       'newEntry'
-    );
-
-  const noteInput =
-    document.getElementById(
-      'newNote'
-    );
-
-  const icuInput =
-    document.getElementById(
-      'icuCheckbox'
-    );
-
-  if (!labelInput)
-    return;
-
-  const label =
-    labelInput.value.trim();
+    ).value.trim();
 
   const note =
-    noteInput
-      ? noteInput.value.trim()
-      : '';
+    document.getElementById(
+      'newNote'
+    ).value.trim();
 
   const isICU =
-    icuInput
-      ? icuInput.checked
-      : false;
+    document.getElementById(
+      'icuCheckbox'
+    ).checked;
 
   if (!label) {
-
-    alert(
-      'اكتب الورد أولًا.'
-    );
-
-    labelInput.focus();
-
+    alert('اكتب الورد أولاً');
     return;
   }
 
   const newId =
-    Date.now().toString() +
-    Math.random()
-      .toString(36)
-      .slice(2);
+    Date.now().toString();
 
-  const entry = {
+  appData.entries.push({
+
     id: newId,
     label,
     note,
     isICU,
 
     date: todayStr(),
+
     nextReviewDate: todayStr(),
 
     quality: null,
+
     interval: 0,
+
     ease: 2.5,
+
     srsLevel: 0,
+
     reviewCount: 0,
 
     hasBeenEvaluated: false,
 
     sessionReps: 0,
+
     lastRepDate: todayStr(),
 
     phaseDays: []
-  };
 
-  appData.entries.push(
-    entry
-  );
+  });
 
-  /*
-    IMPORTANT:
-    Save immediately.
-    This fixes the previous bug where
-    updateActive() could return without saving
-    if the user had already been active today.
-  */
-  saveData();
+  document.getElementById(
+    'newEntry'
+  ).value = '';
+
+  document.getElementById(
+    'newNote'
+  ).value = '';
+
+  document.getElementById(
+    'icuCheckbox'
+  ).checked = false;
+
+  closeModal('addModal');
 
   updateActive();
 
-  if (labelInput)
-    labelInput.value = '';
-
-  if (noteInput)
-    noteInput.value = '';
-
-  if (icuInput)
-    icuInput.checked = false;
-
-  closeModal(
-    'addModal'
-  );
+  saveData();
 
   renderAll();
 
   playSound('pop');
 
   setTimeout(() => {
-    flashEntry(
-      newId,
-      false
-    );
+    flashEntry(newId, true);
   }, 50);
 }
 
@@ -3460,33 +2637,20 @@ function addEntry() {
 
 function addOldEntry() {
 
-  const input =
+  const label =
     document.getElementById(
       'oldEntry'
-    );
-
-  if (!input)
-    return;
-
-  const label =
-    input.value.trim();
+    ).value.trim();
 
   if (!label) {
 
-    alert(
-      'اكتب اسم الورد أولًا.'
-    );
-
-    input.focus();
+    alert('اكتب الورد أولاً');
 
     return;
   }
 
   const newId =
-    Date.now().toString() +
-    Math.random()
-      .toString(36)
-      .slice(2);
+    Date.now().toString();
 
   appData.entries.push({
 
@@ -3496,69 +2660,69 @@ function addOldEntry() {
     isICU: false,
 
     date: todayStr(),
+
     nextReviewDate: todayStr(),
 
     quality: null,
+
     interval: 0,
+
     ease: 2.5,
+
     srsLevel: 0,
+
     reviewCount: 0,
 
     hasBeenEvaluated: false,
 
     sessionReps: 0,
+
     lastRepDate: todayStr(),
 
-    phaseDays: [
-      '1','2','3','4','5','6','7'
-    ]
+    phaseDays:
+      ['1','2','3','4','5','6','7']
+
   });
 
-  saveData();
+  document.getElementById(
+    'oldEntry'
+  ).value = '';
+
+  closeModal('addOldModal');
 
   updateActive();
 
-  input.value = '';
-
-  closeModal(
-    'addOldModal'
-  );
+  saveData();
 
   renderAll();
 
   playSound('pop');
 
   setTimeout(() => {
-    flashEntry(
-      newId,
-      false
-    );
+    flashEntry(newId, true);
   }, 50);
 }
 
 
 /* =========================================================
-   REMOVE ENTRY
+   REMOVE
 ========================================================= */
 
 function removeEntry(id) {
 
   if (
-    !confirm(
-      'تأكيد الحذف؟'
-    )
+    confirm('تأكيد الحذف؟')
   ) {
-    return;
+
+    appData.entries =
+      appData.entries.filter(
+        e => e.id !== id
+      );
+
+    saveData();
+
+    renderAll();
   }
-
-  appData.entries =
-    appData.entries.filter(
-      e => e.id !== id
-    );
-
-  saveData();
-
-  renderAll();
 }
 
 
@@ -3573,101 +2737,81 @@ function addRep(id) {
       x => x.id === id
     );
 
-  if (!e)
-    return;
+  if (!e) return;
+
+  const today = todayStr();
+
+  if (e.lastRepDate !== today) {
+    e.sessionReps = 0;
+  }
 
   e.sessionReps =
-    Math.max(
-      0,
-      Number(e.sessionReps) || 0
-    ) + 1;
+    (e.sessionReps || 0) + 1;
 
-  e.lastRepDate =
-    todayStr();
+  e.lastRepDate = today;
 
   saveData();
 
   renderAll();
 
-  if (
-    e.sessionReps === 10
-  ) {
+  if (e.sessionReps === 10) {
 
     playSound('ding');
 
-    flashCelebrate(
-      id
-    );
+    setTimeout(() => {
+      flashCelebrate(id);
+    }, 50);
 
   } else {
 
     playSound('click');
 
-    flashEntry(
-      id,
-      true
-    );
+    setTimeout(() => {
+      flashEntry(id, true);
+    }, 50);
   }
 }
 
 
 /* =========================================================
-   REVIEW
+   REVIEW / SRS
 ========================================================= */
 
-function reviewEntry(
-  id,
-  q
-) {
+function reviewEntry(id, q) {
 
   const e =
     appData.entries.find(
       x => x.id === id
     );
 
-  if (!e)
-    return;
+  if (!e) return;
 
-  e.interval =
-    Number.isFinite(
-      Number(e.interval)
-    )
-      ? Number(e.interval)
-      : 0;
+  if (
+    e.interval === undefined
+  ) e.interval = 0;
 
-  e.ease =
-    Number.isFinite(
-      Number(e.ease)
-    )
-      ? Number(e.ease)
-      : 2.5;
+  if (
+    e.ease === undefined
+  ) e.ease = 2.5;
 
-  e.srsLevel =
-    Number.isFinite(
-      Number(e.srsLevel)
-    )
-      ? Number(e.srsLevel)
-      : 0;
+  if (
+    e.srsLevel === undefined
+  ) e.srsLevel = 0;
 
-  e.reviewCount =
-    Number.isFinite(
-      Number(e.reviewCount)
-    )
-      ? Number(e.reviewCount)
-      : 0;
+  if (
+    e.reviewCount === undefined
+  ) e.reviewCount = 0;
 
-  if (!Array.isArray(e.phaseDays)) {
-    e.phaseDays = [];
-  }
+  if (
+    e.phaseDays === undefined
+  ) e.phaseDays = [];
 
-  const today =
-    todayStr();
+  const today = todayStr();
 
-  let successful =
-    false;
+  let successful = false;
+  let graduated = false;
 
-  let graduated =
-    false;
+  /* -------- 7-day phase -------- */
 
   if (
     e.phaseDays.length < 7
@@ -3676,22 +2820,8 @@ function reviewEntry(
     if (q === 'daily_pass') {
 
       if (
-        !e.phaseDays.includes(
-          today
-        )
+        e.phaseDays.includes(today)
       ) {
-
-        e.phaseDays.push(
-          today
-        );
-
-        if (
-          e.phaseDays.length === 7
-        ) {
-          graduated = true;
-        }
-
-      } else {
 
         alert(
           'لقد قمت بتسجيل مراجعة هذا الورد لليوم بالفعل! عُد غداً.'
@@ -3700,11 +2830,17 @@ function reviewEntry(
         return;
       }
 
-      e.interval =
-        1;
+      e.phaseDays.push(today);
 
-      successful =
-        true;
+      if (
+        e.phaseDays.length === 7
+      ) {
+        graduated = true;
+      }
+
+      e.interval = 1;
+
+      successful = true;
 
     } else if (
       q === 'daily_fail'
@@ -3712,55 +2848,51 @@ function reviewEntry(
 
       e.phaseDays = [];
 
-      e.interval =
-        1;
+      e.interval = 1;
     }
 
-    e.hasBeenEvaluated =
-      true;
+    e.hasBeenEvaluated = true;
 
-    e.reviewCount +=
-      1;
+    e.reviewCount += 1;
 
-  } else {
+  }
 
-    e.hasBeenEvaluated =
-      true;
+  /* -------- Long-term phase -------- */
 
-    e.reviewCount +=
-      1;
+  else {
+
+    e.hasBeenEvaluated = true;
+
+    e.reviewCount += 1;
 
     if (
-      appData.evalMode ===
-      'weekly'
+      appData.evalMode === 'weekly'
     ) {
 
       if (
         q === 'weekly_pass'
       ) {
 
-        e.interval =
-          7;
+        e.interval = 7;
 
-        successful =
-          true;
+        successful = true;
 
       } else if (
         q === 'weekly_fail'
       ) {
 
-        e.interval =
-          1;
+        e.interval = 1;
       }
 
     } else {
+
+      /* Anki-like mode */
 
       if (q === 4) {
 
         e.srsLevel++;
 
-        e.ease +=
-          0.15;
+        e.ease += 0.15;
 
         e.interval =
           e.srsLevel === 1
@@ -3774,12 +2906,9 @@ function reviewEntry(
                 )
               );
 
-        successful =
-          true;
+        successful = true;
 
-      } else if (
-        q === 3
-      ) {
+      } else if (q === 3) {
 
         e.srsLevel++;
 
@@ -3794,12 +2923,9 @@ function reviewEntry(
                 )
               );
 
-        successful =
-          true;
+        successful = true;
 
-      } else if (
-        q === 2
-      ) {
+      } else if (q === 2) {
 
         e.ease =
           Math.max(
@@ -3811,15 +2937,13 @@ function reviewEntry(
           Math.max(
             1,
             Math.round(
-              (e.interval || 1) *
-              1.2
+              (e.interval || 1) * 1.2
             )
           );
 
       } else {
 
-        e.srsLevel =
-          0;
+        e.srsLevel = 0;
 
         e.ease =
           Math.max(
@@ -3827,28 +2951,23 @@ function reviewEntry(
             e.ease - 0.2
           );
 
-        e.interval =
-          1;
+        e.interval = 1;
       }
     }
   }
 
-  const d =
-    new Date();
+  const d = new Date();
 
   d.setDate(
-    d.getDate() +
-    e.interval
+    d.getDate() + e.interval
   );
 
   e.nextReviewDate =
     getLocalDateStr(d);
 
-  e.quality =
-    q;
+  e.quality = q;
 
-  e.sessionReps =
-    0;
+  e.sessionReps = 0;
 
   if (
     e.isICU &&
@@ -3865,9 +2984,7 @@ function reviewEntry(
         'أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟'
       )
     ) {
-
-      e.isICU =
-        false;
+      e.isICU = false;
     }
   }
 
@@ -3879,22 +2996,19 @@ function reviewEntry(
 
   if (graduated) {
 
-    playSound(
-      'graduate'
-    );
+    playSound('graduate');
 
-    flashCelebrate(id);
+    setTimeout(() => {
+      flashCelebrate(id);
+    }, 50);
 
   } else if (successful) {
 
-    playSound(
-      'ding'
-    );
+    playSound('ding');
 
-    flashEntry(
-      id,
-      false
-    );
+    setTimeout(() => {
+      flashEntry(id, true);
+    }, 50);
   }
 }
 
@@ -3905,12 +3019,9 @@ function reviewEntry(
 
 function getSmartLinks(label) {
 
-  const text =
-    String(label || '')
-      .trim();
+  let text = label.trim();
 
-  let qLink =
-    '';
+  let qLink = '';
 
   const pMatch =
     text.match(
@@ -3927,8 +3038,7 @@ function getSmartLinks(label) {
 
   } else {
 
-    let fSurah =
-      -1;
+    let fSurah = -1;
 
     for (
       let i = 0;
@@ -3940,20 +3050,18 @@ function getSmartLinks(label) {
         quranSurahs[i];
 
       if (
-        s === 'ص' ||
-        s === 'ق'
+        s === "ص" ||
+        s === "ق"
       ) {
 
         if (
           text === s ||
           text.includes(
-            'سورة ' + s
+            "سورة " + s
           )
         ) {
 
-          fSurah =
-            i + 1;
-
+          fSurah = i + 1;
           break;
         }
 
@@ -3961,16 +3069,12 @@ function getSmartLinks(label) {
         text.includes(s)
       ) {
 
-        fSurah =
-          i + 1;
-
+        fSurah = i + 1;
         break;
       }
     }
 
-    if (
-      fSurah !== -1
-    ) {
+    if (fSurah !== -1) {
 
       const aMatch =
         text.match(
@@ -4004,7 +3108,7 @@ function getSmartLinks(label) {
       </a>
 
       <a
-        href="https://app.tarteel.ai"
+        href="https://tarteel.ai/"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -4017,14 +3121,186 @@ function getSmartLinks(label) {
 
 
 /* =========================================================
-   HADR
+   MAIN TIMER
 ========================================================= */
 
-let hTimerInterval =
-  null;
+let mTimerInterval = null;
+let mTimeLeft = 0;
 
-let hTimeLeft =
-  120;
+function updateMTimerDisplay() {
+
+  const minutes =
+    Math.floor(
+      mTimeLeft / 60
+    );
+
+  const seconds =
+    mTimeLeft % 60;
+
+  document.getElementById(
+    'mainTimerDisplay'
+  ).textContent =
+    `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+}
+
+function setMainTimer(mins) {
+
+  clearInterval(mTimerInterval);
+
+  mTimeLeft =
+    Math.max(
+      1,
+      Math.floor(mins * 60)
+    );
+
+  updateMTimerDisplay();
+
+  flashTimerDisplay();
+}
+
+function setCustomTimer() {
+
+  const input =
+    document.getElementById(
+      'customTimerInput'
+    );
+
+  const mins =
+    Number(input.value);
+
+  if (
+    !Number.isFinite(mins) ||
+    mins < 1 ||
+    mins > 240
+  ) {
+
+    alert(
+      'اكتب مدة صحيحة من 1 إلى 240 دقيقة.'
+    );
+
+    return;
+  }
+
+  setMainTimer(mins);
+
+  input.value = '';
+}
+
+function flashTimerDisplay() {
+
+  const el =
+    document.getElementById(
+      'mainTimerDisplay'
+    );
+
+  if (!el) return;
+
+  el.classList.remove(
+    'golden-glow-text'
+  );
+
+  void el.offsetWidth;
+
+  el.classList.add(
+    'golden-glow-text'
+  );
+
+  setTimeout(() => {
+    el.classList.remove(
+      'golden-glow-text'
+    );
+  }, 900);
+}
+
+function startMainTimer() {
+
+  if (mTimeLeft <= 0) {
+
+    alert(
+      'اختر المدة أولاً'
+    );
+
+    return;
+  }
+
+  const btn =
+    document.getElementById(
+      'btnMainTimer'
+    );
+
+  btn.textContent =
+    "⏳ المؤقت يعمل...";
+
+  clearInterval(mTimerInterval);
+
+  mTimerInterval =
+    setInterval(() => {
+
+      if (mTimeLeft > 0) {
+
+        mTimeLeft--;
+
+        updateMTimerDisplay();
+
+      } else {
+
+        clearInterval(
+          mTimerInterval
+        );
+
+        mTimerInterval = null;
+
+        btn.textContent =
+          "▶ ابدأ المؤقت";
+
+        mTimeLeft = 0;
+
+        updateMTimerDisplay();
+
+        playSound('timer');
+
+        const timerEl =
+          document.getElementById(
+            'mainTimerDisplay'
+          );
+
+        timerEl.classList.remove(
+          'golden-glow-text'
+        );
+
+        void timerEl.offsetWidth;
+
+        timerEl.classList.add(
+          'golden-glow-text'
+        );
+
+        setTimeout(() => {
+
+          timerEl.classList.remove(
+            'golden-glow-text'
+          );
+
+          alert(
+            'انتهت الجلسة! قم بتقييم مراجعاتك الآن.'
+          );
+
+          document.body.classList.remove(
+            'focus-mode'
+          );
+
+        }, 700);
+      }
+
+    }, 1000);
+}
+
+
+/* =========================================================
+   HADAR TIMER
+========================================================= */
+
+let hTimerInterval = null;
+let hTimeLeft = 120;
 
 function openHadrTest() {
 
@@ -4049,8 +3325,7 @@ function openHadrTest() {
   const target =
     pool[
       Math.floor(
-        Math.random() *
-        pool.length
+        Math.random() * pool.length
       )
     ];
 
@@ -4059,56 +3334,51 @@ function openHadrTest() {
   ).textContent =
     target.label;
 
-  hTimeLeft =
-    120;
+  hTimeLeft = 120;
 
-  updateHadrTimerDisplay();
+  document.getElementById(
+    'hadrTimerDisplay'
+  ).textContent =
+    '02:00';
 
-  const btn =
-    document.getElementById(
-      'hadrBtn'
-    );
-
-  if (btn) {
-    btn.style.display =
-      'block';
-  }
+  document.getElementById(
+    'hadrBtn'
+  ).style.display =
+    'block';
 
   clearInterval(
     hTimerInterval
   );
 
-  openModal(
-    'hadrModal'
-  );
+  openModal('hadrModal');
 }
 
 function startHadr() {
 
-  clearInterval(
-    hTimerInterval
-  );
-
-  const btn =
-    document.getElementById(
-      'hadrBtn'
-    );
-
-  if (btn) {
-    btn.style.display =
-      'none';
-  }
+  document.getElementById(
+    'hadrBtn'
+  ).style.display =
+    'none';
 
   hTimerInterval =
     setInterval(() => {
 
-      if (
-        hTimeLeft > 0
-      ) {
+      if (hTimeLeft > 0) {
 
         hTimeLeft--;
 
-        updateHadrTimerDisplay();
+        const minutes =
+          Math.floor(
+            hTimeLeft / 60
+          );
+
+        const seconds =
+          hTimeLeft % 60;
+
+        document.getElementById(
+          'hadrTimerDisplay'
+        ).textContent =
+          `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
 
       } else {
 
@@ -4116,12 +3386,7 @@ function startHadr() {
           hTimerInterval
         );
 
-        hTimerInterval =
-          null;
-
-        playSound(
-          'gong'
-        );
+        playSound('timer');
 
         alert(
           'انتهى الوقت المخصص. ⏱️'
@@ -4130,7 +3395,7 @@ function startHadr() {
         closeHadr();
       }
 
-    }, 1000);
+    },1000);
 }
 
 function closeHadr() {
@@ -4138,9 +3403,6 @@ function closeHadr() {
   clearInterval(
     hTimerInterval
   );
-
-  hTimerInterval =
-    null;
 
   closeModal(
     'hadrModal'
@@ -4154,49 +3416,27 @@ function closeHadr() {
 
 function changeTrack() {
 
-  const select =
+  const val =
     document.getElementById(
       'trackSelect'
-    );
+    ).value;
 
-  const custom =
+  if (val === '999') {
+
     document.getElementById(
       'customGoal'
-    );
+    ).style.display =
+      'block';
 
-  if (!select)
-    return;
+  } else {
 
-  const val =
-    select.value;
-
-  if (
-    val === '999'
-  ) {
-
-    if (custom) {
-      custom.style.display =
-        'block';
-    }
-
-    return;
-  }
-
-  if (custom) {
-    custom.style.display =
+    document.getElementById(
+      'customGoal'
+    ).style.display =
       'none';
-  }
-
-  const goal =
-    Number(val);
-
-  if (
-    Number.isFinite(goal) &&
-    goal > 0
-  ) {
 
     appData.goal =
-      goal;
+      parseInt(val);
 
     saveData();
 
@@ -4204,52 +3444,27 @@ function changeTrack() {
   }
 }
 
-const customGoalInput =
-  document.getElementById(
-    'customGoal'
-  );
+document.getElementById(
+  'customGoal'
+).addEventListener(
+  'change',
+  e => {
 
-if (customGoalInput) {
+    appData.goal =
+      parseInt(
+        e.target.value
+      ) || 604;
 
-  customGoalInput.addEventListener(
-    'change',
-    e => {
+    saveData();
 
-      const value =
-        Number(e.target.value);
-
-      if (
-        !Number.isFinite(value) ||
-        value < 1
-      ) {
-
-        e.target.value =
-          appData.goal;
-
-        return;
-      }
-
-      appData.goal =
-        Math.floor(value);
-
-      saveData();
-
-      renderAll();
-    }
-  );
-}
+    renderAll();
+  }
+);
 
 
 /* =========================================================
-   EXPORT CSV
+   EXPORT
 ========================================================= */
-
-function csvEscape(value) {
-
-  return `"${String(value ?? '')
-    .replace(/"/g, '""')
-    .replace(/\r?\n/g, ' ')}"`;
-}
 
 function exportCSV() {
 
@@ -4259,106 +3474,48 @@ function exportCSV() {
   appData.entries.forEach(e => {
 
     csv +=
-      [
-        e.label,
-        e.note,
-        e.date,
-        e.isICU
-          ? 'نعم'
-          : 'لا',
-        e.nextReviewDate,
-        e.reviewCount || 0
-      ]
-      .map(csvEscape)
-      .join(',') +
-      '\n';
+      `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`;
   });
 
   const link =
     document.createElement('a');
 
-  const blob =
-    new Blob(
-      [csv],
-      {
-        type:
-          'text/csv;charset=utf-8;'
-      }
-    );
-
   link.href =
     URL.createObjectURL(
-      blob
+      new Blob(
+        [csv],
+        {
+          type:
+            'text/csv;charset=utf-8;'
+        }
+      )
     );
 
   link.download =
     `حفظي_${todayStr()}.csv`;
 
-  document.body.appendChild(
-    link
-  );
-
   link.click();
 
-  link.remove();
-
   setTimeout(() => {
-    URL.revokeObjectURL(
-      link.href
-    );
+    URL.revokeObjectURL(link.href);
   }, 1000);
 }
 
-
-/* =========================================================
-   EXPORT JSON
-========================================================= */
-
 function exportData() {
-
-  const json =
-    JSON.stringify(
-      appData,
-      null,
-      2
-    );
-
-  const blob =
-    new Blob(
-      [json],
-      {
-        type:
-          'application/json;charset=utf-8'
-      }
-    );
-
-  const url =
-    URL.createObjectURL(
-      blob
-    );
 
   const link =
     document.createElement('a');
 
   link.href =
-    url;
+    'data:application/json;charset=utf-8,' +
+    encodeURIComponent(
+      JSON.stringify(appData)
+    );
 
   link.download =
     `backup_${todayStr()}.json`;
 
-  document.body.appendChild(
-    link
-  );
-
   link.click();
-
-  link.remove();
-
-  setTimeout(() => {
-    URL.revokeObjectURL(
-      url
-    );
-  }, 1000);
 }
 
 
@@ -4369,98 +3526,103 @@ function exportData() {
 function importData(e) {
 
   const file =
-    e.target.files &&
     e.target.files[0];
 
-  if (!file)
-    return;
+  if (!file) return;
 
   const reader =
     new FileReader();
 
-  reader.onload =
-    evt => {
+  reader.onload = evt => {
 
-      try {
+    try {
 
-        const data =
-          JSON.parse(
-            evt.target.result
-          );
+      const data =
+        JSON.parse(
+          evt.target.result
+        );
 
-        if (
-          !data ||
-          !Array.isArray(
-            data.entries
-          )
-        ) {
+      if (
+        data.entries &&
+        confirm(
+          'استبدال البيانات الحالية؟'
+        )
+      ) {
 
-          alert(
-            'ملف النسخة الاحتياطية غير صالح.'
-          );
+        appData = {
 
-          return;
-        }
+          userName:
+            data.userName || '',
 
-        if (
-          !confirm(
-            'استبدال البيانات الحالية؟'
-          )
-        ) {
-          return;
-        }
+          entries:
+            Array.isArray(
+              data.entries
+            )
+              ? data.entries
+              : [],
 
-        appData =
-          normalizeAppData(
-            data
-          );
+          streak:
+            Number.isFinite(
+              data.streak
+            )
+              ? data.streak
+              : 0,
+
+          lastActive:
+            data.lastActive || '',
+
+          goal:
+            Number.isFinite(
+              data.goal
+            )
+              ? data.goal
+              : 604,
+
+          evalMode:
+            data.evalMode ||
+            'weekly',
+
+          soundEnabled:
+            data.soundEnabled !== undefined
+              ? data.soundEnabled
+              : true
+        };
 
         saveData();
 
         loadData();
 
         alert(
-          'تم استرجاع النسخة الاحتياطية بنجاح!'
+          'تم بنجاح!'
         );
-
-      } catch (err) {
-
-        console.error(
-          err
-        );
-
-        alert(
-          'ملف النسخة الاحتياطية تالف أو غير صالح.'
-        );
-
-      } finally {
-
-        e.target.value =
-          '';
       }
-    };
 
-  reader.readAsText(
-    file
-  );
+    } catch(err) {
+
+      alert(
+        'ملف تالف'
+      );
+    }
+  };
+
+  reader.readAsText(file);
+
+  e.target.value = '';
 }
 
 
 /* =========================================================
-   RENDERING
+   RENDER
 ========================================================= */
 
 function getEvaluatedCount() {
 
   return appData.entries.filter(
-    e =>
-      e.hasBeenEvaluated
+    e => e.hasBeenEvaluated
   ).length;
 }
 
 function renderItemHTML(e) {
-
-  normalizeEntry(e);
 
   const isICU =
     e.isICU
@@ -4469,84 +3631,65 @@ function renderItemHTML(e) {
 
   const noteHtml =
     e.note
-      ? `
-        <div class="note-txt">
-          📌 ${escapeHtml(e.note)}
-        </div>
-      `
+      ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>`
       : '';
-
-  const today =
-    todayStr();
 
   const isDue =
     (
-      typeof e.nextReviewDate === 'string' &&
-      e.nextReviewDate <= today &&
-      e.hasBeenEvaluated
-    );
+      e.nextReviewDate <=
+      todayStr()
+    ) &&
+    e.hasBeenEvaluated;
 
   const dueCls =
     isDue
       ? 'due-review'
       : '';
 
-  const phaseCount =
-    Math.min(
-      7,
-      Array.isArray(e.phaseDays)
-        ? e.phaseDays.length
-        : 0
-    );
-
-  let metaText =
-    '';
-
   if (
-    !e.hasBeenEvaluated
+    e.phaseDays === undefined
   ) {
+    e.phaseDays = [];
+  }
 
-    metaText = `
-      <span
-        style="
-          color:var(--primary);
-          font-weight:bold;
-        "
-      >
+  const phaseCount =
+    e.phaseDays.length;
+
+  let metaText = '';
+
+  if (!e.hasBeenEvaluated) {
+
+    metaText =
+      `<span style="
+        color:var(--primary);
+        font-weight:bold;
+      ">
         ✨ ورد جديد (كرر ثم قيّم)
-      </span>
-    `;
+      </span>`;
 
   } else if (isDue) {
 
-    metaText = `
-      <span
-        style="
-          color:var(--warning);
-          font-weight:bold;
-        "
-      >
+    metaText =
+      `<span style="
+        color:var(--warning);
+        font-weight:bold;
+      ">
         ⏰ مستحق للمراجعة (كرر ثم قيّم)
-      </span>
-    `;
+      </span>`;
 
   } else {
 
     metaText =
-      `المراجعة القادمة: ${escapeHtml(e.nextReviewDate)}`;
+      `المراجعة القادمة: ${e.nextReviewDate}`;
   }
 
   const reps =
-    Math.max(
-      0,
-      Number(e.sessionReps) || 0
-    );
+    e.sessionReps || 0;
 
   const isDone =
     reps >= 10;
 
-  let evaluationSection =
-    '';
+  let evaluationSection = '';
 
   if (
     !e.hasBeenEvaluated ||
@@ -4559,24 +3702,19 @@ function renderItemHTML(e) {
 
       evaluationSection = `
 
-        <div
-          style="
-            font-size:11px;
-            text-align:center;
-            margin-top:10px;
-            color:var(--primary);
-            font-weight:bold;
-          "
-        >
+        <div style="
+          font-size:11px;
+          text-align:center;
+          margin-top:10px;
+          color:var(--primary);
+          font-weight:bold;
+        ">
           📍 التقييم اليومي لفترة التثبيت:
         </div>
 
         <div
           class="q-btns"
-          style="
-            grid-template-columns:
-            1fr 1fr;
-          "
+          style="grid-template-columns:1fr 1fr;"
         >
 
           <button
@@ -4621,23 +3759,18 @@ function renderItemHTML(e) {
 
         evaluationSection = `
 
-          <div
-            style="
-              font-size:11px;
-              text-align:center;
-              margin-top:10px;
-              color:var(--secondary);
-            "
-          >
+          <div style="
+            font-size:11px;
+            text-align:center;
+            margin-top:10px;
+            color:var(--secondary);
+          ">
             التقييم الأسبوعي لتحديد الموعد القادم:
           </div>
 
           <div
             class="q-btns"
-            style="
-              grid-template-columns:
-              1fr 1fr;
-            "
+            style="grid-template-columns:1fr 1fr;"
           >
 
             <button
@@ -4677,14 +3810,12 @@ function renderItemHTML(e) {
 
         evaluationSection = `
 
-          <div
-            style="
-              font-size:11px;
-              text-align:center;
-              margin-top:10px;
-              color:var(--secondary);
-            "
-          >
+          <div style="
+            font-size:11px;
+            text-align:center;
+            margin-top:10px;
+            color:var(--secondary);
+          ">
             التقييم لجدولة الموعد القادم:
           </div>
 
@@ -4692,7 +3823,7 @@ function renderItemHTML(e) {
             class="q-btns"
             style="
               grid-template-columns:
-              1fr 1fr 1fr 1fr;
+              repeat(2,1fr);
             "
           >
 
@@ -4762,8 +3893,7 @@ function renderItemHTML(e) {
     }
   }
 
-  let boxesHtml =
-    '';
+  let boxesHtml = '';
 
   for (
     let i = 0;
@@ -4784,17 +3914,16 @@ function renderItemHTML(e) {
     phaseCount < 7
 
       ? `
-        <div
-          style="
-            display:flex;
-            flex-direction:column;
-            gap:4px;
-            align-items:flex-end;
-          "
-        >
+        <div style="
+          display:flex;
+          flex-direction:column;
+          gap:4px;
+          align-items:flex-end;
+        ">
 
           <span class="phase-badge">
-            تثبيت (يوم ${phaseCount}/7)
+            تثبيت
+            (يوم ${phaseCount}/7)
           </span>
 
           <div class="phase-tracker">
@@ -4813,13 +3942,9 @@ function renderItemHTML(e) {
           "
         >
           استدامة
-          (
-          ${
-            appData.evalMode === 'weekly'
-              ? 'أسبوعي'
-              : 'أنكي'
-          }
-          )
+          (${appData.evalMode === 'weekly'
+            ? 'أسبوعي'
+            : 'أنكي'})
         </span>
       `;
 
@@ -4827,14 +3952,16 @@ function renderItemHTML(e) {
 
     <div
       class="item ${isICU} ${dueCls}"
-      data-entry-id="${escapeHtml(e.id)}"
+      data-entry-id="${e.id}"
     >
 
       <div class="item-header">
 
         <div class="item-title">
 
-          <div class="quran-font glow-target">
+          <div
+            class="quran-font glow-target"
+          >
             ${escapeHtml(e.label)}
           </div>
 
@@ -4845,9 +3972,7 @@ function renderItemHTML(e) {
         <button
           class="del"
           onclick="
-            removeEntry(
-              '${escapeHtml(e.id)}'
-            )
+            removeEntry('${e.id}')
           "
         >
           ✕
@@ -4873,22 +3998,18 @@ function renderItemHTML(e) {
 
         <div class="rep-counter-row">
 
-          <span
-            style="
-              font-size:12px;
-              font-weight:bold;
-              color:var(--text);
-            "
-          >
+          <span style="
+            font-size:12px;
+            font-weight:bold;
+            color:var(--text);
+          ">
             الهدف: 10 تكرارات غيباً
           </span>
 
           <button
             class="rep-btn ${isDone ? 'done' : ''}"
             onclick="
-              addRep(
-                '${escapeHtml(e.id)}'
-              )
+              addRep('${e.id}')
             "
           >
             📿 كررت غيباً (${reps})
@@ -4896,12 +4017,10 @@ function renderItemHTML(e) {
 
         </div>
 
-        <div
-          style="
-            font-size:11px;
-            color:var(--secondary);
-          "
-        >
+        <div style="
+          font-size:11px;
+          color:var(--secondary);
+        ">
           💡 يُفضّل أن يبدأ التكرار
           <b>بعد</b>
           إتقان الورد.
@@ -4912,28 +4031,28 @@ function renderItemHTML(e) {
       ${evaluationSection}
 
     </div>
+
   `;
 }
 
+
+/* =========================================================
+   POOL
+========================================================= */
+
 function loadMorePool() {
 
-  poolVisibleCount +=
-    20;
+  poolVisibleCount += 20;
 
   renderPool();
 }
 
 function renderPool() {
 
-  const search =
+  const q =
     document.getElementById(
       'searchInput'
-    );
-
-  const q =
-    search
-      ? search.value.trim().toLowerCase()
-      : '';
+    ).value.trim().toLowerCase();
 
   let pool =
     [...appData.entries];
@@ -4950,32 +4069,10 @@ function renderPool() {
   }
 
   pool.sort(
-    (a,b) => {
-
-      const aDate =
-        parseDateOnly(
-          a.nextReviewDate
-        );
-
-      const bDate =
-        parseDateOnly(
-          b.nextReviewDate
-        );
-
-      if (!aDate && !bDate)
-        return 0;
-
-      if (!aDate)
-        return 1;
-
-      if (!bDate)
-        return -1;
-
-      return (
-        aDate.getTime() -
-        bDate.getTime()
-      );
-    }
+    (a,b) =>
+      a.nextReviewDate.localeCompare(
+        b.nextReviewDate
+      )
   );
 
   const list =
@@ -4983,11 +4080,7 @@ function renderPool() {
       'poolList'
     );
 
-  if (!list)
-    return;
-
-  list.innerHTML =
-    '';
+  list.innerHTML = '';
 
   const visiblePool =
     pool.slice(
@@ -5000,46 +4093,30 @@ function renderPool() {
   ) {
 
     list.innerHTML =
-      `
-        <div class="empty-state">
-          لا يوجد أوراد في المخزون حتى الآن.
-        </div>
-      `;
+      `<div class="empty-state">
+        لا يوجد أوراد في المخزون حتى الآن.
+      </div>`;
 
   } else {
 
-    visiblePool.forEach(
-      e => {
+    visiblePool.forEach(e => {
 
-        list.innerHTML +=
-          renderItemHTML(e);
-      }
-    );
+      list.innerHTML +=
+        renderItemHTML(e);
+    });
   }
 
-  const total =
-    document.getElementById(
-      'poolTotalCount'
-    );
+  document.getElementById(
+    'poolTotalCount'
+  ).textContent =
+    pool.length;
 
-  if (total) {
-    total.textContent =
-      pool.length;
-  }
-
-  const loadMore =
-    document.getElementById(
-      'loadMoreBtn'
-    );
-
-  if (loadMore) {
-
-    loadMore.style.display =
-      pool.length >
-      poolVisibleCount
-        ? 'block'
-        : 'none';
-  }
+  document.getElementById(
+    'loadMoreBtn'
+  ).style.display =
+    pool.length > poolVisibleCount
+      ? 'block'
+      : 'none';
 }
 
 
@@ -5055,57 +4132,27 @@ function renderAll() {
   const evaluatedCount =
     getEvaluatedCount();
 
-  /*
-    IMPORTANT:
-    The old version crashed here because
-    statStreak and statEvaluated were removed
-    from the Home UI but renderAll still tried
-    to access them.
-  */
+  document.getElementById(
+    'statStreak'
+  ).textContent =
+    appData.streak;
 
-  const statStreak =
-    document.getElementById(
-      'statStreak'
-    );
+  document.getElementById(
+    'statEvaluated'
+  ).textContent =
+    evaluatedCount;
 
-  if (statStreak) {
-    statStreak.textContent =
-      appData.streak;
-  }
+  document.getElementById(
+    'statTotalAdded'
+  ).textContent =
+    appData.entries.length;
 
-  const statEvaluated =
-    document.getElementById(
-      'statEvaluated'
-    );
+  document.getElementById(
+    'statEvaluated2'
+  ).textContent =
+    evaluatedCount;
 
-  if (statEvaluated) {
-    statEvaluated.textContent =
-      evaluatedCount;
-  }
-
-  const statTotalAdded =
-    document.getElementById(
-      'statTotalAdded'
-    );
-
-  if (statTotalAdded) {
-    statTotalAdded.textContent =
-      appData.entries.length;
-  }
-
-  const statEvaluated2 =
-    document.getElementById(
-      'statEvaluated2'
-    );
-
-  if (statEvaluated2) {
-    statEvaluated2.textContent =
-      evaluatedCount;
-  }
-
-  /* -----------------------------------
-     NEW TODAY
-  ----------------------------------- */
+  /* -------- New Today -------- */
 
   const newToday =
     appData.entries.filter(
@@ -5119,42 +4166,37 @@ function renderAll() {
       'memorizeTodayList'
     );
 
-  if (newTodayList) {
+  const newTodayEmptyState =
+    appData.entries.length === 0
 
-    const empty =
-      appData.entries.length === 0
+      ? `
+        📖 ابدأ أول ورد لك اليوم.
+        <br>
+        اضغط <b>(+ أضف)</b>
+        للبدء في الحفظ.
+      `
 
-        ? `
-          📖 ابدأ أول ورد لك اليوم.
-          <br>
-          اضغط <b>(+ أضف)</b>
-          للبدء في الحفظ.
-        `
+      : `
+        📖 لا يوجد حفظ جديد اليوم.
+        <br>
+        اضغط <b>(+ أضف)</b>
+        لإضافة ورد جديد.
+      `;
 
-        : `
-          📖 لا يوجد حفظ جديد اليوم.
-          <br>
-          اضغط <b>(+ أضف)</b>
-          لإضافة ورد جديد.
-        `;
+  newTodayList.innerHTML =
+    newToday.length
+      ? ''
+      : `<div class="empty-state">
+          ${newTodayEmptyState}
+        </div>`;
 
-    newTodayList.innerHTML =
-      newToday.length
-        ? ''
-        : `<div class="empty-state">${empty}</div>`;
+  newToday.forEach(e => {
 
-    newToday.forEach(
-      e => {
+    newTodayList.innerHTML +=
+      renderItemHTML(e);
+  });
 
-        newTodayList.innerHTML +=
-          renderItemHTML(e);
-      }
-    );
-  }
-
-  /* -----------------------------------
-     DUE TODAY
-  ----------------------------------- */
+  /* -------- Due Today -------- */
 
   const dueToday =
     appData.entries.filter(
@@ -5166,56 +4208,45 @@ function renderAll() {
         e.isICU
     );
 
-  const statDue =
-    document.getElementById(
-      'statDueToday'
-    );
+  document.getElementById(
+    'statDueToday'
+  ).textContent =
+    dueToday.length;
 
-  if (statDue) {
-
-    statDue.textContent =
-      dueToday.length;
-  }
-
-  const dueList =
+  const dList =
     document.getElementById(
       'dueTodayList'
     );
 
-  if (dueList) {
+  const reviewEmptyState =
+    appData.entries.length === 0
 
-    const empty =
-      appData.entries.length === 0
+      ? `
+        📖 لا توجد أوراد بعد.
+        <br>
+        أضف أول ورد لك للبدء.
+      `
 
-        ? `
-          📖 لا توجد أوراد بعد.
-          <br>
-          أضف أول ورد لك للبدء.
-        `
+      : `
+        🎉 خلصت مراجعات اليوم!
+        <br>
+        يمكنك إضافة ورد جديد للحفظ.
+      `;
 
-        : `
-          🎉 خلصت مراجعات اليوم!
-          <br>
-          يمكنك إضافة ورد جديد للحفظ.
-        `;
+  dList.innerHTML =
+    dueToday.length
+      ? ''
+      : `<div class="empty-state">
+          ${reviewEmptyState}
+        </div>`;
 
-    dueList.innerHTML =
-      dueToday.length
-        ? ''
-        : `<div class="empty-state">${empty}</div>`;
+  dueToday.forEach(e => {
 
-    dueToday.forEach(
-      e => {
+    dList.innerHTML +=
+      renderItemHTML(e);
+  });
 
-        dueList.innerHTML +=
-          renderItemHTML(e);
-      }
-    );
-  }
-
-  /* -----------------------------------
-     ICU
-  ----------------------------------- */
+  /* -------- ICU -------- */
 
   const icuEntries =
     appData.entries.filter(
@@ -5227,106 +4258,69 @@ function renderAll() {
       'icuContainer'
     );
 
-  if (icuContainer) {
+  if (
+    icuEntries.length > 0
+  ) {
 
-    if (
-      icuEntries.length > 0
-    ) {
+    icuContainer.style.display =
+      'block';
 
-      icuContainer.style.display =
-        'block';
+    const icuList =
+      document.getElementById(
+        'icuList'
+      );
 
-      const icuList =
-        document.getElementById(
-          'icuList'
-        );
+    icuList.innerHTML = '';
 
-      if (icuList) {
+    icuEntries.forEach(e => {
 
-        icuList.innerHTML =
-          '';
+      icuList.innerHTML +=
+        renderItemHTML(e);
+    });
 
-        icuEntries.forEach(
-          e => {
+  } else {
 
-            icuList.innerHTML +=
-              renderItemHTML(e);
-          }
-        );
-      }
-
-    } else {
-
-      icuContainer.style.display =
-        'none';
-    }
+    icuContainer.style.display =
+      'none';
   }
 
   renderPool();
 
-  /* -----------------------------------
-     GOAL
-  ----------------------------------- */
+  /* -------- Progress -------- */
 
-  const goalText =
-    document.getElementById(
-      'goalTextVal'
-    );
-
-  if (goalText) {
-
-    goalText.textContent =
-      `${appData.goal} ورد (باعتبار الورد صفحة)`;
-  }
-
-  const progress =
-    document.getElementById(
-      'trackProgress'
-    );
-
-  const trackText =
-    document.getElementById(
-      'trackText'
-    );
-
-  const safeGoal =
-    appData.goal > 0
-      ? appData.goal
-      : 604;
+  document.getElementById(
+    'goalTextVal'
+  ).textContent =
+    `${appData.goal} ورد (باعتبار الورد صفحة)`;
 
   const pct =
-    Math.min(
-      (
-        evaluatedCount /
-        safeGoal
-      ) * 100,
-      100
-    );
+    appData.goal > 0
+      ? Math.min(
+          (evaluatedCount /
+            appData.goal) * 100,
+          100
+        )
+      : 0;
 
-  if (progress) {
+  document.getElementById(
+    'trackProgress'
+  ).style.width =
+    `${pct}%`;
 
-    progress.style.width =
-      `${pct}%`;
-  }
-
-  if (trackText) {
-
-    trackText.textContent =
-      `تم تقييم ${evaluatedCount} أوراد من أصل ${safeGoal} (${pct.toFixed(1)}%)`;
-  }
+  document.getElementById(
+    'trackText'
+  ).textContent =
+    `تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
 }
 
 
 /* =========================================================
-   INITIAL STATE
+   START
 ========================================================= */
-
-updateMTimerDisplay();
-updateHadrTimerDisplay();
-updateMainTimerButton();
 
 loadData();
 
 </script>
+
 </body>
 </html>
