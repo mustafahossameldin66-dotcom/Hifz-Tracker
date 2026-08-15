@@ -30,38 +30,56 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; padding-bottom: 86px; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; padding-bottom: 86px; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; min-height: 100vh;}
 
 /* =========================================
    GRAPHICS MODES ENGINE 🚀
 ========================================= */
-/* LEVEL 1: SIMPLE (DEFAULT) */
-body.mode-1 { --card-radius: 8px; --card-shadow: none; --transition-speed: 0s; --btn-radius: 8px; }
+
+/* LEVEL 1: SIMPLE (MOBILE - FAST) */
+body.mode-1 { --card-radius: 12px; --transition-speed: 0s; }
 body.mode-1 * { animation-duration: 0s !important; transition-duration: 0s !important; }
-body.mode-1 .card, body.mode-1 .item { border: 1px solid var(--border); border-radius: var(--card-radius); box-shadow: none; background: var(--card); }
-body.mode-1 .main { box-shadow: none; border-radius: var(--btn-radius); }
+body.mode-1 .card, body.mode-1 .item { border: 1px solid var(--border); border-radius: var(--card-radius); background: var(--card); box-shadow: none; }
 
-/* LEVEL 2: BALANCED */
-body.mode-2 { --card-radius: 16px; --card-shadow: 0 4px 15px rgba(0,0,0,0.1); --transition-speed: 0.2s; --btn-radius: 12px; }
-[data-theme=light] body.mode-2 { --card-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-body.mode-2 .card, body.mode-2 .item { border-radius: var(--card-radius); box-shadow: var(--card-shadow); transition: transform var(--transition-speed); background: var(--card); }
-body.mode-2 .card:hover { transform: translateY(-2px); }
-body.mode-2 .main { border-radius: var(--btn-radius); transition: filter var(--transition-speed), transform 0.1s; }
+/* LEVEL 2: BALANCED (TABLET - ELEGANT) */
+body.mode-2 { --card-radius: 16px; --transition-speed: 0.2s; }
+body.mode-2 { background: radial-gradient(circle at top right, #112218, var(--bg)); background-attachment: fixed; }
+[data-theme=light] body.mode-2 { background: radial-gradient(circle at top right, #e6efe9, var(--bg)); }
+body.mode-2 .card, body.mode-2 .item { border-radius: var(--card-radius); background: var(--card); box-shadow: 0 6px 20px rgba(0,0,0,0.15); transition: transform var(--transition-speed); border: 1px solid var(--border); }
+[data-theme=light] body.mode-2 .card, [data-theme=light] body.mode-2 .item { box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
 
-/* LEVEL 3: ULTRA */
-body.mode-3 { --card-radius: 20px; --card-shadow: 0 10px 30px rgba(0,0,0,0.4); --transition-speed: 0.3s; --btn-radius: 14px; }
-[data-theme=light] body.mode-3 { --card-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-body.mode-3 { background: linear-gradient(135deg, var(--bg) 0%, #0d1712 50%, var(--bg) 100%); background-size: 200% 200%; animation: bgShift 15s ease infinite; }
-[data-theme=light] body.mode-3 { background: linear-gradient(135deg, #f4f7f5 0%, #e6efe9 50%, #f4f7f5 100%); background-size: 200% 200%; }
-body.mode-3 .card, body.mode-3 .item { border-radius: var(--card-radius); box-shadow: var(--card-shadow); backdrop-filter: blur(12px); background: rgba(18, 30, 24, 0.85); border: 1px solid rgba(212,175,55,0.15); transition: all var(--transition-speed); }
-[data-theme=light] body.mode-3 .card, [data-theme=light] body.mode-3 .item { background: rgba(255, 255, 255, 0.85); }
-body.mode-3 .card:hover { transform: translateY(-4px) scale(1.01); box-shadow: 0 15px 40px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.4); }
-body.mode-3 .main { box-shadow: 0 0 15px rgba(212,175,55,0.4); border-radius: var(--btn-radius); transition: all var(--transition-speed); }
-body.mode-3 .main:hover { box-shadow: 0 0 25px rgba(212,175,55,0.7); transform: translateY(-2px); filter: brightness(1.1); }
-@keyframes bgShift { 0% {background-position: 0% 50%} 50% {background-position: 100% 50%} 100% {background-position: 0% 50%} }
+/* LEVEL 3: ULTRA (LAPTOP - GLASSMORPHISM & ANIMATIONS) */
+body.mode-3 { --card-radius: 20px; --transition-speed: 0.3s; }
+body.mode-3 {
+  background: linear-gradient(-45deg, #0a110e, #13241b, #0a1410, #1b2e22);
+  background-size: 400% 400%;
+  animation: bgUltra 15s ease infinite;
+}
+[data-theme=light] body.mode-3 { background: linear-gradient(-45deg, #f4f7f5, #e0e9e4, #f0f4f2, #d5e0da); background-size: 400% 400%; }
+body.mode-3::before {
+  content: ""; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(212,175,55,0.04) 0%, transparent 50%);
+  animation: glowRotate 30s linear infinite; z-index: -1; pointer-events: none;
+}
+body.mode-3 .card, body.mode-3 .item {
+  background: rgba(18, 30, 24, 0.5); /* Glass effect */
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(212,175,55,0.2);
+  border-radius: var(--card-radius);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: all var(--transition-speed);
+}
+[data-theme=light] body.mode-3 .card, [data-theme=light] body.mode-3 .item { background: rgba(255, 255, 255, 0.6); box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+body.mode-3 .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.5); }
+body.mode-3 .main { box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: all 0.3s; }
+body.mode-3 .main:hover { box-shadow: 0 0 25px rgba(212,175,55,0.6); transform: translateY(-2px); }
+
+@keyframes bgUltra { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+@keyframes glowRotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+
 
 /* TYPOGRAPHY & LAYOUT */
-.wrap { max-width: 620px; margin: auto; padding: 20px 16px; }
+.wrap { max-width: 620px; margin: auto; padding: 20px 16px; position: relative; z-index: 1;}
 h1 { font: 700 24px 'Amiri', serif; color: var(--gold); margin: 0; }
 .quran { font: 700 21px/1.9 'Amiri', serif; }
 .sub, .small { font-size: 12px; color: var(--muted); }
@@ -71,9 +89,9 @@ h1 { font: 700 24px 'Amiri', serif; color: var(--gold); margin: 0; }
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; }
 
 /* CARDS & ITEMS */
-.card { padding: 20px; margin-bottom: 16px; border: 1px solid var(--border); }
+.card { padding: 20px; margin-bottom: 16px; }
 .card h2 { color: var(--gold); font-size: 17px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
-.item { padding: 17px; margin-bottom: 12px; position: relative; overflow: hidden; border: 1px solid var(--border); }
+.item { padding: 17px; margin-bottom: 12px; position: relative; overflow: hidden; }
 .item:before { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 4px; background: transparent; }
 .item.icu { background: var(--dangerDim); border-color: rgba(181,75,75,.3); }
 .item.icu:before { background: var(--danger); }
@@ -85,12 +103,12 @@ h1 { font: 700 24px 'Amiri', serif; color: var(--gold); margin: 0; }
 .note-txt { font-size: 12px; color: var(--muted); margin-top: 4px; }
 
 /* INPUTS & BUTTONS */
-input, select { width: 100%; padding: 13px 14px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; font: inherit; outline: none; transition: border-color 0.2s; }
+input, select { width: 100%; padding: 13px 14px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 10px; font: inherit; outline: none; }
 input:focus, select:focus { border-color: var(--gold); }
 button { font: inherit; border: 0; cursor: pointer; outline: none; }
-.main { width: 100%; padding: 14px; background: var(--gold); color: #0a110e; font-weight: 800; cursor: pointer; }
-.main:disabled { opacity: 0.7; cursor: not-allowed; box-shadow: none !important; transform: none !important; }
-.action { padding: 11px 13px; border-radius: 12px; background: var(--border); color: var(--text); font-weight: 700; cursor: pointer; }
+.main { width: 100%; padding: 14px; background: var(--gold); color: #0a110e; font-weight: 800; border-radius: 12px;}
+.main:disabled { opacity: 0.7; cursor: not-allowed; }
+.action { padding: 11px 13px; border-radius: 12px; background: var(--border); color: var(--text); font-weight: 700; transition: background .2s; }
 .action:hover { background: var(--goldDim); color: var(--gold); }
 .huge { font-size: 17px; padding: 18px; background: linear-gradient(135deg, var(--gold), #a6854b); margin-bottom: 16px; }
 
@@ -134,62 +152,35 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 .close-modal { position: absolute; top: 12px; left: 12px; background: var(--dangerDim); color: var(--danger); width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; border: none; }
 .fab { position: fixed; z-index: 1200; left: 14px; bottom: 95px; padding: 9px 12px; border-radius: 999px; background: var(--card); color: var(--gold); border: 1px solid var(--gold); font-weight: 800; box-shadow: 0 5px 15px rgba(0,0,0,.2); }
 
-/* GAMIFICATION & RECORDING */
-.record-btn { width: 70px; height: 70px; border-radius: 50%; background: var(--dangerDim); color: var(--danger); font-size: 28px; border: 2px solid var(--danger); cursor: pointer; margin: 20px auto; display: flex; align-items: center; justify-content: center; transition: all .2s; }
-.record-btn.recording { animation: pulse 1.5s infinite; background: var(--danger); color: #fff; }
-@keyframes pulse { 0%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,.7)} 70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(181,75,75,0)} 100%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,0)} }
-.badge-card { display: inline-flex; align-items: center; gap: 8px; background: var(--input); border: 1px solid var(--border); padding: 10px 14px; border-radius: 12px; margin: 4px; color: var(--muted); font-weight: 800; opacity: 0.5; filter: grayscale(1); }
-.badge-card.unlocked { opacity: 1; filter: grayscale(0); background: var(--goldDim); border-color: var(--gold); color: var(--gold); }
-.badge-icon { font-size: 24px; }
+/* TIME PLANNER TABS */
+.plan-tabs { display: flex; gap: 6px; background: var(--input); padding: 6px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; overflow-x: auto; white-space: nowrap; }
+.plan-tab { flex: 1; padding: 8px; text-align: center; font-size: 13px; font-weight: 800; color: var(--muted); border-radius: 8px; cursor: pointer; border: none; background: transparent; transition: 0.2s; }
+.plan-tab.active { background: var(--card); color: var(--gold); border: 1px solid var(--goldDim); box-shadow: 0 2px 10px rgba(0,0,0,.1); }
+.plan-grid { display: grid; grid-template-columns: 1fr; gap: 12px; animation: fadeIn 0.3s ease; }
+@media(min-width: 600px) { .plan-grid { grid-template-columns: 1fr 1fr; } }
+.plan-box { padding: 14px; border-radius: 14px; border: 1px solid var(--border); background: var(--input); }
+.plan-box h3 { margin: 0 0 10px 0; font-size: 15px; display: flex; align-items: center; gap: 6px; }
 
 /* FOCUS MODE */
 .focus-mode .nav, .focus-mode .header, .focus-mode #homeContent, .focus-mode .fab { display: none !important; }
 .focus-mode #focusView { display: block !important; }
 #focusView { display: none; }
 
-/* CHARTS & CALENDAR */
-.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
-.cal-cell { min-height: 70px; border: 1px solid var(--border); border-radius: 10px; padding: 6px; font-size: 10px; display: flex; flex-direction: column; gap: 2px; }
-.cal-cell.head { min-height: auto; border: none; text-align: center; color: var(--muted); font-weight: 800; }
-.cal-cell.empty { opacity: 0.3; }
-.day-num { font-weight: 900; }
-.day-mark { font-size: 9px; }
-.day-green { background: var(--greenDim) !important; }
-.day-yellow { background: var(--yellowDim) !important; }
-.day-red { background: var(--redDim) !important; }
-.chart-wrap { height: 280px; position: relative; }
-canvas { width: 100%; height: 100%; display: block; }
-.plant { font-size: 90px; line-height: 1; display: inline-block; }
-.plant.sad { filter: saturate(.2); transform: rotate(-5deg) scale(.92); }
-.plant.good { transform: scale(1.08); }
-
 /* EXTRA WIDGETS */
 .add-section { padding: 14px; border: 1px solid var(--border); border-radius: 14px; background: var(--input); margin: 12px 0; }
 .unit-grid { display: grid; grid-template-columns: .85fr 1.35fr; gap: 8px; }
 .gharib-card { position: relative; overflow: hidden; }
 .gharib-card:after { content: 'غريب'; position: absolute; left: -26px; top: 18px; transform: rotate(-35deg); font-size: 10px; font-weight: 900; color: var(--gold); background: var(--goldDim); border: 1px solid var(--gold); padding: 4px 28px; }
-.splash-status { margin-top: 10px; padding: 8px 10px; border: 1px dashed var(--border); border-radius: 10px; background: var(--input); font-size: 11px; color: var(--muted); line-height: 1.7; }
-.splash-audio-progress { height: 4px; background: var(--border); border-radius: 50px; overflow: hidden; margin-top: 14px; }
-.splash-audio-progress div { height: 100%; width: 0; background: var(--gold); transition: width .15s linear; }
+.record-btn { width: 70px; height: 70px; border-radius: 50%; background: var(--dangerDim); color: var(--danger); font-size: 28px; border: 2px solid var(--danger); cursor: pointer; margin: 20px auto; display: flex; align-items: center; justify-content: center; }
+.record-btn.recording { animation: pulse 1.5s infinite; background: var(--danger); color: #fff; }
+@keyframes pulse { 0%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,.7)} 70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(181,75,75,0)} 100%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,0)} }
 
-/* GLOW HIGHLIGHTS */
-@keyframes goldenGlow{0%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}40%{box-shadow:0 8px 30px rgba(212,175,55,.28);border-color:var(--gold)}100%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}}
-@keyframes celebrateGlow{0%{transform:scale(1)}40%{transform:scale(1.015) translateY(-3px);box-shadow:0 10px 38px rgba(212,175,55,.38);border-color:var(--gold)}100%{transform:scale(1)}}
-.golden-glow { animation: goldenGlow 1s cubic-bezier(.16,1,.3,1); position: relative; z-index: 5; }
-.celebrate-glow { animation: celebrateGlow 1.35s cubic-bezier(.16,1,.3,1); position: relative; z-index: 10; }
-
-#printSheet { display: none; }
-@media print {
-  @page { size: A4 portrait; margin: 10mm; }
-  body { background: #fff !important; color: #111 !important; padding: 0 !important; font-size: 10px; }
-  body > * { display: none !important; }
-  #printSheet { display: block !important; width: 100% !important; }
-}
-
+/* RESPONSIVE DESKTOP */
 @media(min-width:992px){
   body { padding-bottom: 0; display: flex; }
   .nav { top: 0; right: 0; left: auto; bottom: 0; width: 260px; height: 100vh; flex-direction: column; justify-content: flex-start; padding: 28px 15px; gap: 8px; border-top: none; border-left: 1px solid var(--border); }
   .nav-item { flex: none; width: 100%; padding: 13px; text-align: right; font-size: 14px; border-radius: 10px; display: flex; gap: 12px; align-items: center; }
+  .nav .active { background: var(--goldDim); border: 1px solid rgba(212,175,55,.25); }
   .nav .ico { display: inline; font-size: 20px; margin: 0; }
   .wrap { width: calc(100% - 260px); max-width: 1100px; margin: 0; margin-right: 260px; padding: 35px 40px; }
   .desktop { display: grid; grid-template-columns: 1.25fr .95fr; gap: 24px; align-items: start; }
@@ -207,13 +198,7 @@ canvas { width: 100%; height: 100%; display: block; }
     <div class="small" id="splashRef" style="margin-top:8px"></div>
     <audio id="splashAudio" controls preload="none" style="width:100%;margin-top:14px"></audio>
     <button class="action" id="playAyahBtn" style="width:100%;margin-top:8px;border:1px solid var(--gold);color:var(--gold);background:var(--goldDim)" onclick="playDailyAyah(event)">▶ تشغيل آية اليوم</button>
-    <div class="splash-audio-progress"><div id="splashAudioProgress"></div></div>
-    <div class="splash-status" id="splashStatus">ستُغلق هذه الشاشة تلقائيًا عند انتهاء التلاوة، أو اضغط بالخارج للتخطي.</div>
-    <div style="margin-top:20px;padding-top:18px;border-top:1px dashed rgba(212,175,55,.35)">
-      <div style="font-size:35px">🤲</div>
-      <div class="quran" style="color:var(--gold);font-size:19px!important">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div>
-      <div style="font:15px 'Amiri',serif;margin-top:10px;line-height:1.95">نسأل الله أن يجعلها خالصةً لوجهه الكريم، وأن ينفع بها وينفعنا بها.<br>وأرجو الدعاء لأخي بتفريج الكرب، وكشف الهم، والشفاء العاجل، وأن يردّه إلينا سالمًا معافى، وأن يكتب الله له الفرج والطمأنينة والعافية.</div>
-    </div>
+    <div class="splash-status" id="splashStatus">ستُغلق هذه الشاشة تلقائيًا عند انتهاء التلاوة.</div>
     <div class="small" style="margin-top:14px">(اضغط خارج البطاقة لتخطي الشاشة)</div>
   </div>
 </div>
@@ -222,7 +207,7 @@ canvas { width: 100%; height: 100%; display: block; }
 <!-- NAV (5 Tabs) -->
 <div class="nav">
   <div class="nav-item active" onclick="switchTab('home',this)"><span class="ico">📅</span>خطة اليوم</div>
-  <div class="nav-item" onclick="switchTab('schedule',this)"><span class="ico">📚</span>الجدول والمخزون</div>
+  <div class="nav-item" onclick="switchTab('schedule',this)"><span class="ico">🧭</span>الخطط والمخزون</div>
   <div class="nav-item" onclick="switchTab('spiritual',this)"><span class="ico">💡</span>زاد الحافظ</div>
   <div class="nav-item" onclick="switchTab('progress',this)"><span class="ico">📊</span>التقدم والأثر</div>
   <div class="nav-item" onclick="switchTab('settings',this)"><span class="ico">⚙️</span>الإعدادات</div>
@@ -230,69 +215,26 @@ canvas { width: 100%; height: 100%; display: block; }
 
 <!-- MODALS -->
 <div class="modal" id="welcomeModal"><div class="box" style="text-align:center"><div style="font-size:48px">📖</div><h2 style="color:var(--gold);margin:0">أهلاً بك في رفيق القرآن</h2><p class="small">بياناتك محفوظة محليًا على هذا المتصفح. اكتب اسمك للبدء.</p><input id="onboardName" placeholder="أدخل اسمك الكريم" style="text-align:center"><button class="main" onclick="saveWelcomeName()">ابدأ رحلتك</button></div></div>
-<div class="modal" id="comebackModal"><div class="box" style="text-align:center"><button class="close-modal" onclick="closeModal('comebackModal')">✕</button><div style="font-size:48px">🌱</div><h2 style="color:var(--gold);margin:0">عودًا حميدًا!</h2><p>فاتتك جلسة؟ لا بأس. المهم ألا تتوقف. عُد اليوم، والنبتة لا تبدأ من الصفر.</p><button class="main" onclick="closeModal('comebackModal')">بسم الله</button></div></div>
-
-<!-- YOUTUBE TAJWEED MODAL -->
-<div class="modal" id="tajweedModal">
-  <div class="box" style="padding:10px; max-width:600px;">
-    <button class="close-modal" onclick="closeTajweed()" style="top:-10px;left:-10px;z-index:100">✕</button>
-    <div id="ytContainer" style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;">
-      <iframe id="ytIframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen allow="autoplay"></iframe>
-    </div>
-    <div style="margin-top:18px;text-align:center;font-size:13px;color:var(--muted);padding:0 10px;">
-      ⚠️ في حال لم يعمل الفيديو داخل التطبيق، ابحث في يوتيوب عن:<br>
-      <b id="ytSearchHint" style="color:var(--info);font-size:15px;display:block;margin:6px 0;user-select:all;"></b>
-      <a id="ytExternalLink" href="#" target="_blank" style="display:inline-block;margin-top:10px;padding:10px 16px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid var(--info);border-radius:8px;text-decoration:none;font-weight:900;">
-        🔗 افتح الفيديو مباشرة في تطبيق يوتيوب
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- RECORDER MODAL -->
-<div class="modal" id="recordModal">
-  <div class="box" style="text-align:center">
-    <button class="close-modal" onclick="closeRecordModal()">✕</button>
-    <h2 style="color:var(--danger);margin-top:0">🎤 اختبر نفسك (بدون إنترنت)</h2>
-    <div class="small">سجّل مراجعتك للورد: <b id="recordTarget" style="color:var(--text)"></b></div>
-    <button class="record-btn" id="recordBtn" onclick="toggleRecord()">🎤</button>
-    <div id="recordStatus" class="sub" style="margin-bottom:15px">اضغط للبدء (البيانات لا تخرج من هاتفك)</div>
-    <div id="playbackContainer" style="display:none;margin-top:10px">
-      <audio id="playbackAudio" controls style="width:100%"></audio>
-      <div class="small" style="margin-top:8px">استمع لتلاوتك، ثم قارنها بالمصحف.</div>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="sadaqahModal"><div class="box"><button class="close-modal" onclick="closeModal('sadaqahModal')">✕</button><h2 style="color:var(--gold);margin-top:0">🤲 صدقة جارية ودعاء</h2><div class="card" style="background:var(--goldDim);border-color:var(--gold)"><div class="quran" style="font-size:19px!important">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div><div style="font-family:'Amiri',serif;font-size:15px;margin-top:10px;line-height:1.95">نسأل الله أن يجعلها خالصةً لوجهه الكريم، وأن ينفع بها وينفعنا بها.<br><br>وأرجو الدعاء لأخي بتفريج الكرب، وكشف الهم، والشفاء العاجل، وأن يردّه إلينا سالمًا معافى، وأن يكتب الله له الفرج والطمأنينة والعافية.</div></div><div class="small" style="background:var(--input);padding:10px;border-radius:10px;border:1px dashed var(--border)">هذا العداد للتذكير وتنظيم الذكر فقط؛ الأجر والقبول والحساب عند الله وحده، وأهم ما نرجوه الإخلاص.</div><h3 style="color:var(--gold);margin-top:20px">🌿 أذكار</h3><div id="adhkarList"></div><button class="action" style="width:100%;margin-top:10px;color:var(--gold);border:1px solid var(--gold);background:var(--goldDim)" onclick="resetAdhkar()">🔄 تصفير العدادات</button></div></div>
-<div class="modal" id="addModal"><div class="box"><button class="close-modal" onclick="closeModal('addModal')">✕</button><h2 style="color:var(--gold);margin:0">➕ إضافة ورد جديد</h2><div class="small" style="margin-top:4px">أدخل الورد كما ستتذكره أنت؛ التطبيق يحاول تحديد الآيات وحساب الحروف تلقائيًا عند توفر الإنترنت.</div><div class="add-section"><div class="add-section-title">📖 بيانات الورد</div><label class="small">اسم الورد</label><input id="newLabel" placeholder="مثال: البقرة ص 48 أو البقرة آية 255"><label class="small">ملاحظة شخصية (اختياري)</label><input id="newNote" placeholder="موضع صعب، متشابهات، اكتب أحكام آيتك هنا..." style="margin-bottom:0"></div><div class="add-section"><div class="add-section-title">🔢 تقدير الحروف عند تعذر الحساب الآلي</div><div class="unit-grid"><div><label class="small">العدد</label><input id="unitCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="unitType" style="margin-bottom:0"><option value="500">صفحة ≈ 500 حرف</option><option value="50">آية ≈ 50 حرف</option><option value="35">سطر ≈ 35 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="10000">جزء ≈ 10000 حرف</option></select></div></div><div class="input-help">هذه القيم تقريبية فقط؛ عند نجاح الحساب من بيانات المصحف سيُستخدم العدد الفعلي وتظهر علامة 🎯.</div></div><div class="add-section" style="border-color:rgba(181,75,75,.35);background:var(--dangerDim)"><label style="display:flex;align-items:center;gap:10px;color:var(--danger);font-weight:900;margin:0"><input id="icuCheckbox" type="checkbox" style="width:19px;height:19px;accent-color:var(--danger);margin:0"> 🏥 عناية مركزة — للآيات أو الأوراد شديدة الصعوبة</label></div><button class="main" id="addBtn" onclick="addEntry()">➕ إضافة لخطة اليوم</button></div></div>
-<div class="modal" id="oldModal"><div class="box"><button class="close-modal" onclick="closeModal('oldModal')">✕</button><h2 style="color:var(--gold);margin:0">📚 إضافة محفوظ سابق</h2><div class="small" style="margin-top:4px">سيبدأ مباشرة من مرحلة الاستدامة والمراجعة، دون أسبوع التثبيت الأول.</div><div class="add-section"><div class="add-section-title">📖 بيانات المحفوظ</div><label class="small">اسم الورد المحفوظ</label><input id="oldLabel" placeholder="مثال: جزء عم أو الكهف ص 295"><div class="input-help">يُفضّل إدخال اسم سورة/آية/صفحة واضحة حتى يتمكن التطبيق من حساب الحروف آليًا.</div></div><div class="add-section"><div class="add-section-title">🔢 تقدير احتياطي للحروف</div><div class="unit-grid"><div><label class="small">العدد</label><input id="oldCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="oldType" style="margin-bottom:0"><option value="10000">جزء ≈ 10000 حرف</option><option value="500">صفحة ≈ 500 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="50">آية ≈ 50 حرف</option></select></div></div></div><button class="main" id="oldBtn" onclick="addOldEntry()">📚 إضافة للمخزون</button></div></div>
-<div class="modal" id="guideModal"><div class="box"><button class="close-modal" onclick="closeModal('guideModal')">✕</button><h2 style="color:var(--gold);margin-top:0;border-bottom:1px solid var(--border);padding-bottom:10px">💡 دليلي للحفظ والإتقان</h2><p class="small">هذه هي <b style="color:var(--gold)">المنهجية التي اتبعتها شخصيًا</b> في حفظ القرآن، وليست الطريقة الوحيدة الصحيحة.</p><div style="font-size:13px;line-height:1.95"><b>1. الضبط والتجويد:</b> تعلُّم التجويد أساسي، والاستماع إلى الشيخ <b>الحصري</b> يكون بجانب تعلُّم التجويد لضبط المخارج والتشكيل والقراءة الصحيحة.<br><br><b>2. التثبيت والتربيط:</b> في تجربتي كنت أستمع إلى مقاطع <b>الأستاذة أمل ثابت</b> لتثبيت الآيات وربطها والتركيز على المتشابهات.<br><br><b>3. السلاسة والانطلاق:</b> في تجربتي كان الترديد مع <b>الشيخ فارس عباد</b> مفيدًا لتعويد اللسان على الانطلاق والقراءة السلسة.<br><br><b>4. بناء العضلة:</b> التكرار غيبًا <b>10 مرات كحد أدنى</b>. ويمكن استخدام تطبيق ترتيل 🎤 للتسميع واكتشاف الأخطاء.<br><br><b>5. التثبيت القريب:</b> مراجعة الورد الجديد 7 أيام متتالية. انقطاع السلسلة يعيد مرحلة التثبيت للبداية.<br><br><b>6. الاستدامة:</b> المراجعة غيبًا مرة أسبوعيًا كحد أدنى. والتكرار الإضافي للورد القديم اختياري لزيادة التثبيت ومضاعفة الحسنات.</div></div></div>
-<div class="modal" id="hadrModal"><div class="box" style="text-align:center"><button class="close-modal" onclick="closeHadr()">✕</button><h2 style="color:var(--gold);margin-top:0">⏱️ مؤقت الحَدْر</h2><div class="small">اضبط إيقاع القراءة السريعة لورد متقن.</div><div id="hadrTarget" class="quran-font" style="margin:20px 0;font-size:22px!important;color:var(--text)"></div><div class="timer" id="hadrDisplay">02:00</div><button class="main" id="hadrBtn" style="margin-top:15px" onclick="startHadr()">بدء المؤقت ▶</button></div></div>
-<div class="modal" id="groupModal"><div class="box"><button class="close-modal" onclick="closeModal('groupModal')">✕</button><h2 style="color:var(--gold);margin-top:0">🏆 المجموعات والـLeaderboard</h2><p class="small">أنشئ لوحة خاصة وأضف روابط مشاركة أصدقائك أو أطفالك.</p><label class="small">اسم اللوحة</label><input id="boardName" placeholder="مثال: حلقة الفجر"><label class="small">رابط مشارك</label><input id="boardLink" placeholder="الصق رابط إحصائية الشخص"><button class="main" onclick="addLeader()">➕ إضافة المشارك</button><div id="leaderBoards" style="margin-top:16px"></div></div></div>
-<div class="modal" id="printModal"><div class="box"><button class="close-modal" onclick="closeModal('printModal')">✕</button><h2 style="color:var(--gold);margin-top:0">🖨️ تجهيز النسخة الورقية</h2><div class="card"><label class="row" style="margin-bottom:10px"><input type="checkbox" id="printColor" checked style="width:18px;height:18px"><span>ألوان التطبيق الأساسية</span></label><label class="row" style="margin-top:8px"><input type="checkbox" id="printFull" checked style="width:18px;height:18px"><span>اطبع الخطة + التقويم + التقييم + الأوراد + صفحات المراجعة</span></label></div><div class="row"><button class="main" onclick="printNow('color')">🖨️ طباعة ملونة</button><button class="action" onclick="printNow('bw')">🖨️ أبيض وأسود</button></div></div></div>
-
-<!-- PRINT SHEET -->
-<div id="printSheet"></div>
+<div class="modal" id="addModal"><div class="box"><button class="close-modal" onclick="closeModal('addModal')">✕</button><h2 style="color:var(--gold);margin:0">➕ إضافة ورد جديد</h2><div class="add-section"><label class="small">اسم الورد</label><input id="newLabel" placeholder="مثال: البقرة ص 48"><label class="small">ملاحظة شخصية (اختياري)</label><input id="newNote" placeholder="ملاحظاتك..." style="margin-bottom:0"></div><div class="add-section"><div class="unit-grid"><div><label class="small">العدد</label><input id="unitCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="unitType" style="margin-bottom:0"><option value="500">صفحة ≈ 500 حرف</option><option value="50">آية ≈ 50 حرف</option><option value="10000">جزء ≈ 10000 حرف</option></select></div></div></div><div class="add-section" style="border-color:rgba(181,75,75,.35);background:var(--dangerDim)"><label style="display:flex;align-items:center;gap:10px;color:var(--danger);font-weight:900;margin:0"><input id="icuCheckbox" type="checkbox" style="width:19px;height:19px;accent-color:var(--danger);margin:0"> 🏥 عناية مركزة — للآيات الصعبة</label></div><button class="main" id="addBtn" onclick="addEntry()">➕ إضافة لخطة اليوم</button></div></div>
+<div class="modal" id="oldModal"><div class="box"><button class="close-modal" onclick="closeModal('oldModal')">✕</button><h2 style="color:var(--gold);margin:0">📚 إضافة محفوظ سابق</h2><div class="add-section"><label class="small">اسم الورد المحفوظ</label><input id="oldLabel" placeholder="مثال: جزء عم"></div><div class="add-section"><div class="unit-grid"><div><label class="small">العدد</label><input id="oldCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="oldType" style="margin-bottom:0"><option value="10000">جزء ≈ 10000 حرف</option><option value="500">صفحة ≈ 500 حرف</option></select></div></div></div><button class="main" id="oldBtn" onclick="addOldEntry()">📚 إضافة للمخزون</button></div></div>
+<div class="modal" id="sadaqahModal"><div class="box"><button class="close-modal" onclick="closeModal('sadaqahModal')">✕</button><h2 style="color:var(--gold);margin-top:0">🤲 أذكار وصدقة جارية</h2><div class="card" style="background:var(--goldDim);border-color:var(--gold)"><div class="quran" style="font-size:19px!important">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div></div><div id="adhkarList"></div></div></div>
+<div class="modal" id="tajweedModal"><div class="box" style="padding:10px; max-width:600px;"><button class="close-modal" onclick="closeTajweed()" style="top:-10px;left:-10px;z-index:100">✕</button><div id="ytContainer" style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;"><iframe id="ytIframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen allow="autoplay"></iframe></div><div style="margin-top:18px;text-align:center;font-size:13px;color:var(--muted);padding:0 10px;">⚠️ للبحث اليدوي في يوتيوب:<br><b id="ytSearchHint" style="color:var(--info);font-size:15px;display:block;margin:6px 0;user-select:all;"></b><a id="ytExternalLink" href="#" target="_blank" style="display:inline-block;margin-top:10px;padding:10px 16px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid var(--info);border-radius:8px;text-decoration:none;font-weight:900;">🔗 افتح في تطبيق يوتيوب</a></div></div></div>
+<div class="modal" id="recordModal"><div class="box" style="text-align:center"><button class="close-modal" onclick="closeRecordModal()">✕</button><h2 style="color:var(--danger);margin-top:0">🎤 اختبر نفسك (بدون إنترنت)</h2><div class="small">سجّل مراجعتك للورد: <b id="recordTarget" style="color:var(--text)"></b></div><button class="record-btn" id="recordBtn" onclick="toggleRecord()">🎤</button><div id="recordStatus" class="sub" style="margin-bottom:15px">اضغط للبدء</div><div id="playbackContainer" style="display:none;margin-top:10px"><audio id="playbackAudio" controls style="width:100%"></audio></div></div></div>
 
 <div class="wrap">
-  <!-- 1. TAB: HOME (SUPER CLEAN) -->
+  <!-- 1. TAB: HOME (CLEAN & DIRECT) -->
   <section id="home" class="view active">
     <div class="header">
       <div>
         <h1>خطة اليوم يا <span id="displayName">صديقي</span> 📅</h1>
         <div class="sub" id="todayLabel"></div>
       </div>
-      <button class="action" style="width:44px;height:44px;border-radius:50%;font-size:20px;padding:0" onclick="toggleTheme()">🌓</button>
     </div>
-
     <div id="homeContent">
-      <!-- REST DAY BANNER -->
       <div class="card" id="restDayBanner" style="display:none;background:var(--successDim);border-color:var(--success)">
         <h2 style="color:var(--success);margin:0;font-size:18px">☕ يوم راحة!</h2>
-        <p class="small" style="color:var(--text);margin-top:8px">اليوم مخصص للراحة أو قراءة الكهف. المراجعة الخفيفة تكفي لعدم انقطاع السلسلة والحفاظ على الشغف.</p>
+        <p class="small" style="color:var(--text);margin-top:8px">اليوم مخصص للراحة وقراءة الكهف. مراجعة خفيفة تكفي لعدم انقطاع السلسلة.</p>
       </div>
-
       <button class="main huge" onclick="toggleFocus()">▶ ابدأ جلسة المراجعة والتركيز</button>
       
       <div class="card">
@@ -318,52 +260,51 @@ canvas { width: 100%; height: 100%; display: block; }
         <h2 style="justify-content:center;font-size:24px;margin-bottom:20px">⏱️ جلسة التركيز</h2>
         <div class="timer" id="mainTimer" style="font-size:64px;margin-bottom:20px">00:00</div>
         <div class="row" style="max-width:400px;margin:0 auto 12px">
-          <button class="action" onclick="setTimer(15)">15 د</button>
-          <button class="action" onclick="setTimer(30)">30 د</button>
-          <button class="action" onclick="setTimer(45)">45 د</button>
-          <button class="action" onclick="setTimer(60)">60 د</button>
+          <button class="action" onclick="setTimer(15)">15 د</button><button class="action" onclick="setTimer(30)">30 د</button>
+          <button class="action" onclick="setTimer(45)">45 د</button><button class="action" onclick="setTimer(60)">60 د</button>
         </div>
         <div class="row" style="max-width:400px;margin:0 auto 24px">
           <input type="number" id="customTimer" min="1" max="240" placeholder="دقائق مخصصة" style="margin:0">
           <button class="action" style="flex:.4" onclick="setCustomTimer()">تخصيص</button>
         </div>
         <div class="row" style="max-width:400px;margin:0 auto 16px">
-          <button class="main" id="mainTimerBtn" onclick="startTimer()">▶ ابدأ المؤقت</button>
+          <button class="main" id="mainTimerBtn" onclick="startTimer()">▶ ابدأ</button>
           <button class="action" style="background:var(--danger);color:#fff;border:none" onclick="stopFocus()">✖ إنهاء</button>
         </div>
-        <div class="sub">استخدم العداد أثناء الحفظ والمراجعة، وبعد الانتهاء قيّم أدائك في أورادك بالأسفل.</div>
       </div>
     </div>
   </section>
 
-  <!-- 2. TAB: SCHEDULE & POOL -->
+  <!-- 2. TAB: SCHEDULE & PLANNING (المخطط الزمني) -->
   <section class="view" id="schedule">
     <div class="header">
       <div>
-        <h1>📚 الجدول والمخزون</h1>
-        <div class="sub" style="margin-top:4px">تخطيط وتتبع الأوراد والمراجعات</div>
-      </div>
-      <button class="action" style="flex:none;padding:10px 14px;background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="openModal('oldModal')">+ محفوظ سابق</button>
-    </div>
-
-    <!-- FORECAST & COMPASS -->
-    <div class="desktop">
-      <div class="card" style="border-color:var(--info)">
-        <h2 style="color:var(--info)">🔮 الأوراد القادمة (خلال 7 أيام)</h2>
-        <div class="small" style="margin-bottom:14px">تجهّز نفسياً للمراجعات القادمة للحفاظ على مسارك.</div>
-        <div id="weeklyList"></div>
-      </div>
-      <div class="card" style="text-align:center;border-color:var(--gold);background:linear-gradient(145deg, rgba(212,175,55,0.05), var(--card))">
-        <div style="font-size:40px;margin-bottom:10px">🧭</div>
-        <h2 style="justify-content:center;color:var(--gold)">بوصلة الختمة الذكية</h2>
-        <div id="forecastData" style="font-size:14px;line-height:1.8;margin-top:14px"></div>
+        <h1>🧭 التخطيط والمخزون</h1>
+        <div class="sub" style="margin-top:4px">راقب إنجازك وخطط لمستقبلك</div>
       </div>
     </div>
 
-    <div class="row" style="margin-bottom:16px; margin-top:16px;">
+    <!-- TIME PLANNER -->
+    <div class="card" style="border-color:var(--info);">
+      <h2 style="color:var(--info); margin-bottom:14px;">🕰️ كشف حساب الحفظ</h2>
+      
+      <div class="plan-tabs">
+        <button class="plan-tab active" onclick="switchPlan('day', this)">اليوم</button>
+        <button class="plan-tab" onclick="switchPlan('week', this)">الأسبوع</button>
+        <button class="plan-tab" onclick="switchPlan('month', this)">الشهر</button>
+        <button class="plan-tab" onclick="switchPlan('year', this)">السنة</button>
+      </div>
+
+      <div class="plan-grid" id="planGrid">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+
+    <div class="row" style="margin-bottom:16px;">
       <input id="searchInput" placeholder="ابحث في أورادك المكتملة..." style="margin:0">
-      <button class="action" style="flex:.35;margin:0" onclick="openHadr()">⏱️ حَدْر</button>
+      <button class="action" style="flex:.35;margin:0; background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="openModal('oldModal')">+ ورد سابق</button>
     </div>
+    
     <div class="card" id="icuCard" style="display:none;border-color:var(--danger);background:var(--dangerDim)">
       <h3 style="color:var(--danger);margin:0 0 14px">🏥 العناية المركزة</h3>
       <div id="icuList"></div>
@@ -391,8 +332,8 @@ canvas { width: 100%; height: 100%; display: block; }
       <div>
         <!-- TAJWEED WIDGET -->
         <div class="card gharib-card" style="border-right:4px solid var(--info)">
-          <h2>🎙️ لمحة تجويدية مجمعة</h2>
-          <div class="small" style="margin-bottom:8px">خطوات عملية للتطبيق مع <b>الشيخ فارس عنتر</b></div>
+          <h2>🎙️ كبسولة التجويد</h2>
+          <div class="small" style="margin-bottom:8px">تطبيق عملي خطوة بخطوة مع <b>الشيخ فارس عنتر</b></div>
           <div id="tajweedTitle" style="font-weight:900;color:var(--info);font-size:15px;margin-bottom:6px"></div>
           <div id="tajweedRule" class="small" style="line-height:1.8;margin-bottom:12px;color:var(--text)"></div>
           <button class="action" style="width:100%;color:var(--info);border:1px solid var(--info);background:rgba(33,150,243,.1)" onclick="openTajweed()">▶️ شاهد التطبيق العملي</button>
@@ -401,7 +342,6 @@ canvas { width: 100%; height: 100%; display: block; }
         <!-- GHARIB WIDGET -->
         <div class="card gharib-card" style="border-right:4px solid var(--gold)">
           <h2>📖 غريب القرآن اليومي</h2>
-          <div class="small" style="margin-bottom:2px">كلمة ومعناها لتوسيع الفهم أثناء رحلة الحفظ</div>
           <div class="gharib-word" id="gharibWord"></div>
           <div class="gharib-meaning" id="gharibMeaning"></div>
           <div class="gharib-source" id="gharibSource"></div>
@@ -415,8 +355,6 @@ canvas { width: 100%; height: 100%; display: block; }
           <div style="font-size:14px">• <b>القيام:</b> صلِّ ركعتين في جوف الليل بما حفظته.</div>
           <div class="quran-font" id="dailyDua" style="color:var(--gold);text-align:center;border-top:1px solid var(--border);margin-top:14px;padding-top:12px;font-size:16px!important"></div>
         </div>
-        
-        <button class="action" style="width:100%;margin-bottom:16px;padding:16px;font-size:15px;background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="openModal('guideModal')">💡 دليلي للحفظ والإتقان</button>
       </div>
     </div>
   </section>
@@ -425,40 +363,23 @@ canvas { width: 100%; height: 100%; display: block; }
   <section class="view" id="progress">
     <div class="header">
       <div>
-        <h1>📊 التقدم والأثر الروحي</h1>
+        <h1>📊 التقدم والأثر</h1>
         <div class="sub" style="margin-top:4px">شاهد رحلتك بالأرقام</div>
       </div>
-      <button class="action" style="flex:none;padding:10px 16px" onclick="openPrintPreview()">🖨️ طباعة</button>
     </div>
 
-    <!-- BADGES SECTION -->
     <div class="card" style="border-color:var(--gold)">
       <h2 style="color:var(--gold)">🎖️ أوسمة الإنجازات</h2>
-      <div class="sub" style="margin-bottom:12px">أوسمة تفتح تلقائياً مع تقدمك في الرحلة.</div>
-      <div id="badgesContainer"></div>
+      <div id="badgesContainer" style="display:flex;flex-wrap:wrap;gap:8px;"></div>
     </div>
 
     <div class="card" style="background:linear-gradient(135deg,var(--card),rgba(212,175,55,.05));border-color:var(--gold)">
-      <h2 style="justify-content:center;color:var(--text)">💰 بنك الحسنات والمضاعفة</h2>
+      <h2 style="justify-content:center;color:var(--text)">💰 بنك الحسنات</h2>
       <div class="hasanat" id="hasanat">0</div>
       <div style="text-align:center;margin-bottom:16px">
         <div style="display:inline-block;padding:6px 16px;background:var(--card);border:1px solid var(--goldDim);border-radius:20px;font-size:13px;color:var(--gold);font-weight:700">
           إجمالي الحروف المقروءة: <span id="letters">0</span> حرف
         </div>
-      </div>
-      <div style="background:var(--card);padding:10px;border-radius:10px;font-size:12px;color:var(--muted);text-align:center;display:flex;justify-content:center;gap:10px;margin-bottom:16px">
-        <span id="exactStat">0 ورد بدقة 🎯</span> | <span id="approxStat">0 ورد تقريبًا 📊</span>
-      </div>
-      <div class="sub" style="text-align:center;background:var(--input);padding:10px;border-radius:10px;border:1px dashed var(--border)">
-        هذا تقدير حسابي؛ <b style="color:var(--gold)">الحساب والأجر والقبول عند الله وحده، وأهم ما نرجوه الإخلاص وحسن النية.</b>
-      </div>
-    </div>
-
-    <div class="card" style="border-right:4px solid var(--success)">
-      <h2 style="color:var(--success)">🌱 رحلة الاستمرارية</h2>
-      <div class="plant-wrap">
-        <div class="plant" id="plantEmoji">🌱</div>
-        <div id="plantText" style="font-weight:800;color:var(--text);margin-top:8px"></div>
       </div>
     </div>
 
@@ -467,56 +388,12 @@ canvas { width: 100%; height: 100%; display: block; }
       <div class="stat"><div class="stat-num" id="entriesStat">0</div><div class="stat-label">إجمالي الأوراد 📋</div></div>
       <div class="stat" style="border-color:var(--gold);background:var(--goldDim)"><div class="stat-num" id="evalStat">0</div><div class="stat-label" style="color:var(--text)">أوراد مُقيّمة 📚</div></div>
       <div class="stat"><div class="stat-num" id="activeDaysStat">0</div><div class="stat-label">أيام نشاط 📅</div></div>
-      <div class="stat"><div class="stat-num" id="focusStat">0</div><div class="stat-label">دقائق تركيز ⏱️</div></div>
     </div>
-
-    <div class="card" style="background:var(--goldDim);border-color:var(--gold)">
+    
+    <div class="card" style="margin-top:16px; background:var(--goldDim);border-color:var(--gold)">
       <h2 style="justify-content:center" id="goalTitle">الهدف</h2>
       <div class="progressBox"><div id="goalProgress" class="progress"></div></div>
       <div class="sub" style="text-align:center;margin-top:8px;font-weight:700;color:var(--text)" id="goalText"></div>
-    </div>
-
-    <div class="desktop">
-      <div>
-        <div class="card">
-          <div class="calendar-head">
-            <h2 style="margin:0">🗓️ تقويم المتابعة</h2>
-            <div class="row" style="max-width:180px">
-              <button class="action" onclick="changeMonth(-1)">‹</button>
-              <div style="flex:1;text-align:center;font-weight:800;font-size:13px" id="calTitle"></div>
-              <button class="action" onclick="changeMonth(1)">›</button>
-            </div>
-          </div>
-          <div id="calendar"></div>
-          <div class="legend">
-            <span><i class="lgdot lg-green"></i>ممتاز</span>
-            <span><i class="lgdot lg-yellow"></i>متذبذب</span>
-            <span><i class="lgdot lg-red"></i>توقف</span>
-            <span><i class="lgdot lg-white"></i>لا بيانات</span>
-          </div>
-        </div>
-      </div>
-      <div>
-        <div class="card">
-          <h2>📈 منحنى النشاط (30 يوم)</h2>
-          <div class="chart-wrap"><canvas id="activityChart"></canvas></div>
-        </div>
-        <div class="card">
-          <h2>🧠 قراءة سلوكية</h2>
-          <div class="period-grid">
-            <div class="period-card"><b>🟢 أفضل فترة</b><span class="sub" id="bestPeriod">—</span></div>
-            <div class="period-card"><b>🟡 أكثر تذبذبًا</b><span class="sub" id="volatilePeriod">—</span></div>
-            <div class="period-card"><b>🔴 أضعف فترة</b><span class="sub" id="worstPeriod">—</span></div>
-            <div class="period-card"><b>🚀 بداية الرحلة</b><span class="sub" id="startPeriod">—</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card" style="border-right:4px solid var(--info)">
-      <h2 style="color:var(--info)">👥 المجموعات والـLeaderboard</h2>
-      <p class="sub">أنشئ لوحات متعددة، أضف روابط مشاركة، واحذف اللاعبين أو اللوحات وقتما تشاء.</p>
-      <button class="action" style="width:100%;background:rgba(33,150,243,.1);color:var(--info);border:1px solid var(--info)" onclick="openModal('groupModal')">🏆 عرض لوحات الصدارة</button>
     </div>
   </section>
 
@@ -525,30 +402,22 @@ canvas { width: 100%; height: 100%; display: block; }
     <div class="header"><h1>⚙️ الإعدادات والنظام</h1></div>
     <div class="card" style="background:var(--dangerDim);border-color:var(--danger)">
       <div style="color:var(--danger);font-weight:800;text-align:center;font-size:13.5px">
-        ⚠️ بياناتك محليّة على هذا المتصفح. خذ نسخة احتياطية دوريًا، أو استخدم نسخة الطباعة عند الحاجة.
+        ⚠️ بياناتك محليّة على هذا المتصفح. خذ نسخة احتياطية دوريًا.
       </div>
     </div>
     <div class="desktop">
       <div>
-        <!-- NEW GRAPHICS MODE SELECTOR -->
+        <!-- GRAPHICS ENGINE SETTING -->
         <div class="card" style="border-color:var(--gold); border-width: 2px;">
           <h2>✨ مستوى الجرافيك والأداء</h2>
-          <p class="sub">اختر ما يناسب جهازك. (الافتراضي هو الأبسط للتركيز وتوفير البطارية).</p>
+          <p class="sub" style="margin-bottom:12px;">اختر ما يناسب جهازك. (المستوى 1 لتوفير البطارية والسرعة).</p>
           <select id="graphicsModeSelect" onchange="changeGraphicsMode()" style="font-weight:bold; border-color:var(--gold)">
-            <option value="1">🟢 المستوى 1: بسيط وسريع (للموبايل وللتركيز التام)</option>
-            <option value="2">🟡 المستوى 2: متوازن (ظلال أنيقة للتابلت)</option>
-            <option value="3">🔴 المستوى 3: قمة الروقان (مؤثرات وزجاج للكمبيوتر)</option>
+            <option value="1">🟢 المستوى 1: مسطح وسريع (موبايل)</option>
+            <option value="2">🟡 المستوى 2: متوازن بظلال (تابلت)</option>
+            <option value="3">🔴 المستوى 3: زجاج متحرك وإضاءة (كمبيوتر)</option>
           </select>
         </div>
 
-        <div class="card">
-          <h2>🎛️ نظام المراجعة بعد التثبيت</h2>
-          <select id="evalMode" onchange="changeEvalMode()">
-            <option value="weekly">النظام التقليدي — مراجعة ثابتة كل أسبوع</option>
-            <option value="anki">نظام أنكي — مراجعة متباعدة ذكية</option>
-          </select>
-        </div>
-        
         <div class="card">
           <h2>👤 الملف الشخصي</h2>
           <div class="row">
@@ -559,51 +428,46 @@ canvas { width: 100%; height: 100%; display: block; }
         
         <div class="card">
           <h2>🌴 أيام الراحة (Rest Days)</h2>
-          <p class="sub" style="margin-bottom:12px">اختر أياماً لا ترغب بإضافة حفظ جديد فيها، ليقوم التطبيق بتهيئتك للمراجعة الخفيفة فقط.</p>
+          <p class="sub" style="margin-bottom:12px">اختر أياماً لا ترغب بإضافة حفظ جديد فيها.</p>
           <div style="display:flex;flex-wrap:wrap;gap:8px" id="restDaysContainer"></div>
           <button class="action" style="width:100%;margin-top:10px" onclick="saveRestDays()">💾 حفظ أيام الراحة</button>
         </div>
       </div>
       <div>
         <div class="card">
-          <h2>🔗 رابط مشاركة إحصائيتك</h2>
-          <input id="profileLink" readonly placeholder="اضغط إنشاء رابط">
-          <div class="row">
-            <button class="action" style="background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="createProfileLink()">🔗 إنشاء</button>
-            <button class="action" onclick="copyProfileLink()">📋 نسخ</button>
-          </div>
-        </div>
-
-        <div class="card">
           <h2>🎯 مسار الحفظ (الهدف)</h2>
           <select id="goalSelect" onchange="changeGoal()">
             <option value="604,صفحة">🏆 الختمة الكاملة (604 صفحة)</option>
             <option value="48,صفحة">🌸 الزهراوين (48 صفحة)</option>
             <option value="34,صفحة">🌙 الحواميم (34 صفحة)</option>
-            <option value="27,صفحة">✨ الطواسين (27 صفحة)</option>
             <option value="23,صفحة">📖 جزء عم (23 صفحة)</option>
             <option value="custom">⚙️ مسار حر</option>
           </select>
           <div id="customGoalBox" style="display:none;background:var(--input);padding:14px;border-radius:12px;margin-top:12px;border:1px dashed var(--border)">
             <div class="row">
-              <input type="number" id="customGoalNum" placeholder="العدد">
-              <input id="customGoalUnit" placeholder="الوحدة (آية، صفحة...)">
+              <input type="number" id="customGoalNum" placeholder="العدد"><input id="customGoalUnit" placeholder="الوحدة">
             </div>
             <button class="action" style="width:100%;margin-top:10px" onclick="saveCustomGoal()">حفظ التخصيص</button>
           </div>
         </div>
+        
+        <div class="card">
+          <h2>🎛️ نظام المراجعة</h2>
+          <select id="evalMode" onchange="changeEvalMode()">
+            <option value="weekly">النظام التقليدي — مراجعة أسبوعية</option>
+            <option value="anki">نظام أنكي — مراجعة متباعدة</option>
+          </select>
+        </div>
 
         <div class="card">
-          <h2>💾 إدارة البيانات والصوت</h2>
+          <h2>💾 إدارة البيانات</h2>
           <label class="row" style="justify-content:space-between;border-bottom:1px solid var(--border);padding-bottom:12px;margin-bottom:14px;font-weight:800">
             المؤثرات الصوتية<input id="soundToggle" type="checkbox" style="width:20px;height:20px;accent-color:var(--gold)" onchange="toggleSound()">
           </label>
-          <button class="action" style="width:100%;margin-bottom:12px" onclick="exportCSV()">📊 استخراج كجدول (Excel)</button>
           <div class="row">
-            <button class="action" style="background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="exportJSON()">📥 أخذ نسخة</button>
-            <label class="action" style="margin:0;line-height:22px;text-align:center">📤 استرجاع<input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)"></label>
+            <button class="action" style="flex:1;background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="exportJSON()">📥 أخذ نسخة</button>
+            <label class="action" style="flex:1;margin:0;line-height:22px;text-align:center">📤 استرجاع<input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)"></label>
           </div>
-          <button class="action" style="width:100%;margin-top:10px;background:var(--goldDim);color:var(--gold);border:1px solid var(--gold)" onclick="openPrintPreview()">🖨️ فتح النسخة الورقية</button>
         </div>
       </div>
     </div>
@@ -612,50 +476,31 @@ canvas { width: 100%; height: 100%; display: block; }
 
 <script>
 'use strict';
-const STORAGE_KEY='rafiq-quran-master-v9',LEGACY_KEYS=['rafiq-quran-master-v8','rafiq-quran-master-v7','rafiq-quran-master-v6','rafiq-quran-master-v5','rafiq-quran-master-v4'],ADHKAR_KEY='rafiq-adhkar-v9',SPLASH_KEY='rafiq-splash-day-v9',LEADER_KEY='rafiq-leaderboards-v9';
-// Added graphicsLevel (1=Simple, 2=Balanced, 3=Ultra)
+const STORAGE_KEY='rafiq-quran-master-v10',ADHKAR_KEY='rafiq-adhkar-v10',SPLASH_KEY='rafiq-splash-day-v10';
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,graphicsLevel:1,firstDate:'',totalFocusMinutes:0,restDays:[5]};
-let data=structuredClone(DEFAULT),poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,hadrTimer=null,hadrLeft=120,adhkarProgress={},splashTimeout=null;
+let data=structuredClone(DEFAULT),poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,adhkarProgress={};
 
 const surahNames=['الفاتحة','البقرة','آل عمران','النساء','المائدة','الأنعام','الأعراف','الأنفال','التوبة','يونس','هود','يوسف','الرعد','إبراهيم','الحجر','النحل','الإسراء','الكهف','مريم','طه','الأنبياء','الحج','المؤمنون','النور','الفرقان','الشعراء','النمل','القصص','العنكبوت','الروم','لقمان','السجدة','الأحزاب','سبأ','فاطر','يس','الصافات','ص','الزمر','غافر','فصلت','الشورى','الزخرف','الدخان','الجاثية','الأحقاف','محمد','الفتح','الحجرات','ق','الذاريات','الطور','النجم','القمر','الرحمن','الواقعة','الحديد','المجادلة','الحشر','الممتحنة','الصف','الجمعة','المنافقون','التغابن','الطلاق','التحريم','الملك','القلم','الحاقة','المعارج','نوح','الجن','المزمل','المدثر','القيامة','الإنسان','المرسلات','النبأ','النازعات','عبس','التكوير','الانفطار','المطففين','الانشقاق','البروج','الطارق','الأعلى','الغاشية','الفجر','البلد','الشمس','الليل','الضحى','الشرح','التين','العلق','القدر','البينة','الزلزلة','العاديات','القارعة','التكاثر','العصر','الهمزة','الفيل','قريش','الماعون','الكوثر','الكافرون','النصر','المسد','الإخلاص','الفلق','الناس'];
-const gharib=[['غاسق إذا وقب','الليل إذا أظلم ودخل في كل شيء','التفسير الميسر'],['الصمد','السيد الذي يُقصد في الحوائج كلها','التفسير الميسر'],['الفلق','الصبح الذي ينفلق عنه الليل','المعجم الوجيز'],['أبابيل','جماعات متتابعة','المعجم الوجيز'],['سِجِّيل','طين متحجر أو طين محروق','التفسير الميسر'],['القارعة','القيامة التي تقرع القلوب بأهوالها','التفسير الميسر'],['المطففين','الذين ينقصون المكيال والميزان','التفسير الميسر'],['كبد','مشقة وتعب','التفسير الميسر']];
-const duas=['يا مقلب القلوب ثبت قلبي على دينك','اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعًا لأصحابه','خيركم من تعلم القرآن وعلمه','اللهم إني أسألك الفردوس الأعلى','اللهم أعني على ذكرك وشكرك وحسن عبادتك'];
-const adhkarList=[['subhanallah','سبحان الله',10],['alhamdulillah','الحمد لله',10],['allahuakbar','الله أكبر',10],['istighfar','أستغفر الله',10],['tahlil','لا إله إلا الله',10]];
+const gharib=[['غاسق إذا وقب','الليل إذا أظلم ودخل في كل شيء','التفسير الميسر'],['الصمد','السيد الذي يُقصد في الحوائج كلها','التفسير الميسر'],['الفلق','الصبح الذي ينفلق عنه الليل','المعجم الوجيز'],['أبابيل','جماعات متتابعة','المعجم الوجيز']];
+const duas=['يا مقلب القلوب ثبت قلبي على دينك','اللهم أعني على ذكرك وشكرك وحسن عبادتك'];
+const adhkarList=[['subhanallah','سبحان الله',10],['alhamdulillah','الحمد لله',10],['istighfar','أستغفر الله',10]];
 
-const dailyAyahs=[
-{s:9,a:104,text:'أَلَمْ يَعْلَمُوا أَنَّ اللَّهَ هُوَ يَقْبَلُ التَّوْبَةَ عَنْ عِبَادِهِ وَيَأْخُذُ الصَّدَقَاتِ وَأَنَّ اللَّهَ هُوَ التَّوَّابُ الرَّحِيمُ',ref:'التوبة: 104',base:'Fares_Abbad_64kbps',name:'فارس عباد'},
-{s:9,a:102,text:'وَآخَرُونَ اعْتَرَفُوا بِذُنُوبِهِمْ خَلَطُوا عَمَلًا صَالِحًا وَآخَرَ سَيِّئًا عَسَى اللَّهُ أَنْ يَتُوبَ عَلَيْهِمْ إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ',ref:'التوبة: 102',base:'Minshawy_Murattal_128kbps',name:'المنشاوي'},
-{s:4,a:40,text:'إِنَّ اللَّهَ لَا يَظْلِمُ مِثْقَالَ ذَرَّةٍ وَإِنْ تَكُ حَسَنَةً يُضَاعِفْهَا وَيُؤْتِ مِنْ لَدُنْهُ أَجْرًا عَظِيمًا',ref:'النساء: 40',base:'Fares_Abbad_64kbps',name:'فارس عباد'},
-{s:39,a:53,text:'قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَى أَنْفُسِهِمْ لَا تَقْنَطُوا مِنْ رَحْمَةِ اللَّهِ',ref:'الزمر: 53',base:'Yasser_Ad-Dussary_128kbps',name:'ياسر الدوسري'},
-{s:94,a:5,text:'فَإِنَّ مَعَ الْعُسْرِ يُسْرًا',ref:'الشرح: 5',base:'Minshawy_Murattal_128kbps',name:'المنشاوي'}
-];
+const dailyAyahs=[{s:9,a:104,text:'أَلَمْ يَعْلَمُوا أَنَّ اللَّهَ هُوَ يَقْبَلُ التَّوْبَةَ...',ref:'التوبة: 104',base:'Fares_Abbad_64kbps',name:'فارس عباد'}];
 
 const tajweedData = [
   { title: "الإظهار الحلقي (نون ساكنة/تنوين)", rule: "إذا جاءت النون الساكنة أو التنوين وبعدها حرف حلقي (أ، هـ، ع، ح، غ، خ)، انطق النون بوضوح تام دون أي غنة زائدة.", yt: "sLv9OMs3o3U", search: "الإظهار الحلقي فارس عنتر" },
-  { title: "الإدغام بغنة", rule: "إذا جاءت النون الساكنة أو التنوين وبعدها (ي، ن، م، و)، أدخل الحرف الأول في الثاني مع إخراج غنة مقدارها حركتين.", yt: "3GQpo8vZacQ", search: "الإدغام بغنة فارس عنتر" },
-  { title: "الإدغام بغير غنة", rule: "إذا جاءت النون الساكنة أو التنوين وبعدها حرف (ل، ر)، أدخل الحرف الأول في الثاني وانطقه مشدداً (بلا غنة تماماً).", yt: "T7UWcKiUVFI", search: "الإدغام بغير غنة فارس عنتر" },
-  { title: "الإقلاب", rule: "إذا جاءت النون الساكنة أو التنوين وبعدها حرف (ب)، تقلب النون ميماً مخفاة مع إخراج غنة مقدارها حركتين.", yt: "G-_nbY1vCHE", search: "الإقلاب فارس عنتر" },
-  { title: "الإخفاء الحقيقي", rule: "حالة وسط بين الإظهار والإدغام (إخفاء النون عند باقي الحروف) مع بقاء الغنة حركتين وتفخيمها أو ترقيقها حسب الحرف.", yt: "sLv9OMs3o3U", search: "الإخفاء الحقيقي فارس عنتر" },
   { title: "الإخفاء الشفوي (ميم ساكنة)", rule: "إذا جاءت ميم ساكنة وبعدها حرف (ب)، اقفل شفتيك بخفة بدون كزّ، وأخرج غنة من الأنف مقدارها حركتين.", yt: "NE2cc2NxO0E", search: "الإخفاء الشفوي فارس عنتر" },
-  { title: "الإدغام الشفوي (ميم ساكنة)", rule: "إذا جاءت ميم ساكنة وبعدها (م) متحركة، تنطق ميماً واحدة مشددة مع إخراج غنة حركتين.", yt: "5C-lHXTkL5A", search: "إدغام المتماثلين الصغير فارس عنتر" },
-  { title: "الإظهار الشفوي (ميم ساكنة)", rule: "انطق الميم الساكنة بوضوح بدون غنة إذا جاء بعدها أي حرف عدا (م، ب). واحذر من إخفائها عند الفاء والواو.", yt: "hgfSoHakyWI", search: "الإظهار الشفوي فارس عنتر" },
-  { title: "القلقلة (قطب جد)", rule: "رجة أو اضطراب في مخرج الحرف الساكن (ق، ط، ب، ج، د) حتى يظهر صوته بوضوح تام وتكون أقوى عند الوقف.", yt: "EHU9AjqvAP8", search: "القلقلة فارس عنتر" },
-  { title: "المد الطبيعي (الأصلي)", rule: "حركتان فقط للألف الساكنة المفتوح ما قبلها، والواو المضموم ما قبلها، والياء المكسور ما قبلها.", yt: "F1LP-8LOlRw", search: "المد الطبيعي فارس عنتر" },
-  { title: "المد المتصل (الواجب)", rule: "إذا جاء حرف المد وبعده همزة في كلمة واحدة (مثل: السَّمَاء)، يمد بمقدار 4 أو 5 حركات وجوباً.", yt: "F1LP-8LOlRw", search: "المد المتصل فارس عنتر" },
-  { title: "المد المنفصل (الجائز)", rule: "إذا جاء حرف المد في آخر الكلمة والهمزة في بداية الكلمة التي تليها (مثل: إِنَّا أَعْطَيْنَاكَ)، يمد 2 أو 4 أو 5 حركات.", yt: "F1LP-8LOlRw", search: "المد المنفصل فارس عنتر" },
-  { title: "المد اللازم", rule: "إذا جاء بعد حرف المد حرف ساكن سكوناً أصلياً في نفس الكلمة (مثل: الضَّالِّين)، يمد 6 حركات لزوماً.", yt: "T7UWcKiUVFI", search: "المد اللازم فارس عنتر" }
+  { title: "القلقلة (قطب جد)", rule: "رجة أو اضطراب في مخرج الحرف الساكن (ق، ط، ب، ج، د) حتى يظهر صوته بوضوح تام ותكون أقوى عند الوقف.", yt: "EHU9AjqvAP8", search: "القلقلة فارس عنتر" },
+  { title: "المد الطبيعي (الأصلي)", rule: "حركتان فقط للألف الساكنة المفتوح ما قبلها، والواو المضموم ما قبلها، والياء المكسور ما قبلها.", yt: "F1LP-8LOlRw", search: "المد الطبيعي فارس عنتر" }
 ];
 
 const BADGES = [
-  { id: 'start', name: 'خطوة الألف ميل', icon: '🌱', condition: (s) => s.evaluated > 0, desc: 'بدأت رحلتك وقيّمت أول ورد' },
-  { id: 'juz30', name: 'جزء عم', icon: '🌟', condition: (s) => s.evaluated >= 23, desc: 'أتممت حفظ جزء كامل (23 صفحة)' },
-  { id: 'zahrawan', name: 'الزهراوين', icon: '🌸', condition: (s) => s.evaluated >= 48, desc: 'حفظت البقرة وآل عمران (48 صفحة)' },
-  { id: 'streak7', name: 'شعلة الأسبوع', icon: '🔥', condition: (s) => s.streak >= 7, desc: 'التزمت لمدة 7 أيام متتالية' },
-  { id: 'streak30', name: 'جبل الالتزام', icon: '⛰️', condition: (s) => s.streak >= 30, desc: 'التزمت لمدة 30 يوم متتالية' }
+  { id: 'start', name: 'خطوة الألف ميل', icon: '🌱', condition: (s) => s.evaluated > 0, desc: 'قيّمت أول ورد' },
+  { id: 'juz30', name: 'جزء عم', icon: '🌟', condition: (s) => s.evaluated >= 23, desc: 'حفظ جزء كامل' },
+  { id: 'streak7', name: 'شعلة الأسبوع', icon: '🔥', condition: (s) => s.streak >= 7, desc: 'التزام 7 أيام' }
 ];
 
 let mediaRecorder; let audioChunks = []; let recordAudioUrl = null;
-
 const dateKey=(d=new Date())=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};const today=(d=new Date())=>dateKey(d);const doy=d=>Math.floor((new Date(d)-new Date(new Date(d).getFullYear(),0,0))/86400000);const dayDiff=(a,b)=>Math.floor((new Date(b)-new Date(a))/86400000);const esc=s=>{const x=document.createElement('div');x.textContent=s??'';return x.innerHTML};const formatN=n=>Number(n||0).toLocaleString('en-US');
 
 /* AUDIO */
@@ -664,21 +509,18 @@ function tone(f,d=.1,v=.15){if(!data.soundEnabled)return;const c=audioContext();
 function uiSound(k){if(!data.soundEnabled)return;if(k==='click')tone(180,.06,.10);if(k==='ok'){tone(550,.1,.12);setTimeout(()=>tone(800,.14,.10),80)}if(k==='done'){tone(450,.1,.15);setTimeout(()=>tone(650,.1,.15),90);setTimeout(()=>tone(880,.16,.25),200)}}
 
 /* STORAGE & MODES */
-function normalizeEntry(e){if(!e||typeof e!=='object')return null;const legacyTotal=Number.isFinite(e.totalReps)?e.totalReps:0;const legacyReviews=Number.isFinite(e.reviewReads)?e.reviewReads:(Number.isFinite(e.reviewCount)?e.reviewCount:0);const legacyManual=Number.isFinite(e.manualReps)?e.manualReps:Math.max(0,legacyTotal-legacyReviews);return{id:String(e.id||`${Date.now()}-${Math.random().toString(36).slice(2,8)}`),label:String(e.label||'ورد'),note:String(e.note||''),isICU:!!e.isICU,date:e.date||today(),nextReviewDate:e.nextReviewDate||today(),quality:e.quality??null,interval:Number.isFinite(e.interval)?e.interval:0,ease:Number.isFinite(e.ease)?e.ease:2.5,srsLevel:Number.isFinite(e.srsLevel)?e.srsLevel:0,reviewCount:Number.isFinite(e.reviewCount)?e.reviewCount:0,hasBeenEvaluated:!!e.hasBeenEvaluated,sessionReps:Number.isFinite(e.sessionReps)?e.sessionReps:0,totalReps:legacyTotal,baseLetters:Number.isFinite(e.baseLetters)&&e.baseLetters>0?e.baseLetters:500,isExactLetters:!!e.isExactLetters,lastRepDate:e.lastRepDate||today(),phaseDays:Array.isArray(e.phaseDays)?e.phaseDays:[],manualReps:legacyManual,reviewReads:legacyReviews}}
-function normalize(x){const d=structuredClone(DEFAULT);if(!x||typeof x!=='object')return d;d.userName=String(x.userName||'');d.entries=Array.isArray(x.entries)?x.entries.map(normalizeEntry).filter(Boolean):[];d.dailyLog=x.dailyLog&&typeof x.dailyLog==='object'?x.dailyLog:{};d.streak=Number.isFinite(x.streak)?x.streak:0;d.lastActive=String(x.lastActive||'');d.goal=Number.isFinite(x.goal)&&x.goal>0?x.goal:604;d.goalUnit=String(x.goalUnit||'صفحة');d.evalMode=x.evalMode==='anki'?'anki':'weekly';d.soundEnabled=x.soundEnabled!==false;d.graphicsLevel=Number.isFinite(x.graphicsLevel)?x.graphicsLevel:1;if(x.lite===true)d.graphicsLevel=1;d.firstDate=String(x.firstDate||'');d.totalFocusMinutes=Number.isFinite(x.totalFocusMinutes)?x.totalFocusMinutes:0;d.restDays=Array.isArray(x.restDays)?x.restDays:[5];return d}
-function loadData(){try{let raw=localStorage.getItem(STORAGE_KEY);if(!raw){for(const key of LEGACY_KEYS){raw=localStorage.getItem(key);if(raw)break}}data=raw?normalize(JSON.parse(raw)):structuredClone(DEFAULT)}catch{data=structuredClone(DEFAULT)}try{adhkarProgress=JSON.parse(localStorage.getItem(ADHKAR_KEY)||'{}')}catch{adhkarProgress={}}adhkarList.forEach(([id])=>{if(!Number.isFinite(adhkarProgress[id]))adhkarProgress[id]=0});const t=today();data.entries.forEach(e=>{if(e.lastRepDate!==t)e.sessionReps=0;if(e.phaseDays.length===0&&e.hasBeenEvaluated)e.phaseDays=['legacy1','legacy2','legacy3','legacy4','legacy5','legacy6','legacy7']});ensureFirstDate()}
+function normalizeEntry(e){if(!e||typeof e!=='object')return null;return{id:String(e.id||Date.now()),label:String(e.label||'ورد'),note:String(e.note||''),isICU:!!e.isICU,date:e.date||today(),nextReviewDate:e.nextReviewDate||today(),quality:e.quality??null,interval:Number.isFinite(e.interval)?e.interval:0,ease:Number.isFinite(e.ease)?e.ease:2.5,srsLevel:Number.isFinite(e.srsLevel)?e.srsLevel:0,reviewCount:Number.isFinite(e.reviewCount)?e.reviewCount:0,hasBeenEvaluated:!!e.hasBeenEvaluated,sessionReps:Number.isFinite(e.sessionReps)?e.sessionReps:0,totalReps:Number.isFinite(e.totalReps)?e.totalReps:0,baseLetters:Number.isFinite(e.baseLetters)?e.baseLetters:500,isExactLetters:!!e.isExactLetters,lastRepDate:e.lastRepDate||today(),phaseDays:Array.isArray(e.phaseDays)?e.phaseDays:[]}}
+function normalize(x){const d=structuredClone(DEFAULT);if(!x||typeof x!=='object')return d;d.userName=String(x.userName||'');d.entries=Array.isArray(x.entries)?x.entries.map(normalizeEntry).filter(Boolean):[];d.dailyLog=x.dailyLog||{};d.streak=Number.isFinite(x.streak)?x.streak:0;d.lastActive=String(x.lastActive||'');d.goal=Number.isFinite(x.goal)?x.goal:604;d.goalUnit=String(x.goalUnit||'صفحة');d.evalMode=x.evalMode==='anki'?'anki':'weekly';d.soundEnabled=x.soundEnabled!==false;d.graphicsLevel=Number.isFinite(x.graphicsLevel)?x.graphicsLevel:1;d.restDays=Array.isArray(x.restDays)?x.restDays:[5];return d}
+function loadData(){try{let raw=localStorage.getItem(STORAGE_KEY);data=raw?normalize(JSON.parse(raw)):structuredClone(DEFAULT)}catch{data=structuredClone(DEFAULT)}try{adhkarProgress=JSON.parse(localStorage.getItem(ADHKAR_KEY)||'{}')}catch{adhkarProgress={}}const t=today();data.entries.forEach(e=>{if(e.lastRepDate!==t)e.sessionReps=0});}
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}function saveAdhkar(){localStorage.setItem(ADHKAR_KEY,JSON.stringify(adhkarProgress))}
-function ensureFirstDate(){if(!data.firstDate){const dates=data.entries.map(e=>e.date).filter(Boolean).sort();data.firstDate=dates[0]||today()}}
 
 /* GLOW */
 function reflow(el){if(el) void el.offsetWidth;}
-function glowEntry(id,celebrate=false){requestAnimationFrame(()=>{const el=document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);if(!el||data.graphicsLevel===1)return;const cls=celebrate?'celebrate-glow':'golden-glow';el.classList.remove('golden-glow','celebrate-glow');reflow(el);el.classList.add(cls);const text=el.querySelector('.quran-font');if(text){text.classList.remove('golden-glow-text');reflow(text);text.classList.add('golden-glow-text');setTimeout(()=>text.classList.remove('golden-glow-text'),1000);}setTimeout(()=>el.classList.remove(cls),celebrate?1350:1000);});}
-function glowStreak(){const el=document.getElementById('streakStat');if(!el||data.graphicsLevel===1)return;el.classList.remove('golden-glow-text');reflow(el);el.classList.add('golden-glow-text');setTimeout(()=>el.classList.remove('golden-glow-text'),1000);}
-function flashDhikr(id,celebrate=false){requestAnimationFrame(()=>{const el=document.querySelector(`[data-dhikr-id="${CSS.escape(id)}"]`);if(!el||data.graphicsLevel===1)return;const cls=celebrate?'celebrate-glow':'golden-glow';el.classList.remove('golden-glow','celebrate-glow');reflow(el);el.classList.add(cls);const text=el.querySelector('.glow-target');if(text){text.classList.remove('golden-glow-text');reflow(text);text.classList.add('golden-glow-text');setTimeout(()=>text.classList.remove('golden-glow-text'),1000);}setTimeout(()=>el.classList.remove(cls),celebrate?1350:1000);});}
+function glowEntry(id,celebrate=false){requestAnimationFrame(()=>{const el=document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);if(!el||data.graphicsLevel===1)return;const cls=celebrate?'celebrate-glow':'golden-glow';el.classList.remove('golden-glow','celebrate-glow');reflow(el);el.classList.add(cls);setTimeout(()=>el.classList.remove(cls),celebrate?1350:1000);});}
 
 /* UI & TABS */
 function openModal(id){document.getElementById(id)?.classList.add('show')}function closeModal(id){document.getElementById(id)?.classList.remove('show')}
-function toggleTheme(){const n=document.body.dataset.theme==='light'?'dark':'light';document.body.dataset.theme=n;localStorage.setItem('rafiq-theme',n);if(document.getElementById('progress').classList.contains('active'))drawChart()}
+function toggleTheme(){const n=document.body.dataset.theme==='light'?'dark':'light';document.body.dataset.theme=n;localStorage.setItem('rafiq-theme',n);}
 function toggleSound(){data.soundEnabled=document.getElementById('soundToggle').checked;save();if(data.soundEnabled)uiSound('ok')}
 function changeGraphicsMode(){data.graphicsLevel=parseInt(document.getElementById('graphicsModeSelect').value)||1;applyGraphicsMode();save();}
 function applyGraphicsMode(){document.body.className=`mode-${data.graphicsLevel}`;}
@@ -688,20 +530,78 @@ function switchTab(id,el){
   document.getElementById(id)?.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   el?.classList.add('active');
-  document.body.classList.remove('focus-mode');
   if(id==='progress')renderProgress();
   if(id==='settings')renderRestDaysSettings();
-  if(id==='schedule'){ renderWeekly(); renderForecast(); }
+  if(id==='schedule'){ renderPlan('day'); }
   window.scrollTo(0,0);
 }
 
-/* DAILY SPLASH */
-function currentAyah(){return dailyAyahs[doy(new Date())%dailyAyahs.length]}
-function ayahAudioUrl(item){const s=String(item.s).padStart(3,'0'),a=String(item.a).padStart(3,'0');return`https://everyayah.com/data/${item.base}/${s}${a}.mp3`.replace(/\s+/g,'')}
-function setSplashStatus(text){const el=document.getElementById('splashStatus');if(el)el.textContent=text}
-function playDailyAyah(ev){if(ev)ev.stopPropagation();const audio=document.getElementById('splashAudio'),btn=document.getElementById('playAyahBtn');if(!audio)return;audio.play().then(()=>{if(btn)btn.textContent='🔊 التلاوة تعمل الآن';setSplashStatus('استمع حتى نهاية الآية؛ ستغلق الشاشة تلقائيًا بعد انتهاء التلاوة.');}).catch(()=>{if(btn)btn.textContent='▶ اضغط للتشغيل';setSplashStatus('المتصفح منع التشغيل التلقائي. اضغط «تشغيل آية اليوم» لبدء التلاوة.');});}
-function showDailySplash(){const t=today();if(localStorage.getItem(SPLASH_KEY)===t)return;const item=currentAyah();const overlay=document.getElementById('dailySplash');const audio=document.getElementById('splashAudio');const btn=document.getElementById('playAyahBtn');const progress=document.getElementById('splashAudioProgress');document.getElementById('splashAyah').textContent=item.text;document.getElementById('splashRef').textContent=`${item.ref} — بصوت ${item.name}`;audio.src=ayahAudioUrl(item);audio.currentTime=0;audio.onended=()=>{closeDailySplash()};audio.onerror=()=>{setSplashStatus('تعذر تحميل التلاوة الآن. يمكنك الضغط على تشغيل مرة أخرى أو تخطي الشاشة.');if(btn)btn.textContent='▶ حاول التشغيل مرة أخرى';};audio.ontimeupdate=()=>{if(progress&&Number.isFinite(audio.duration)&&audio.duration>0) progress.style.width=`${Math.min(100,audio.currentTime/audio.duration*100)}%`;};overlay.classList.add('show');localStorage.setItem(SPLASH_KEY,t);setSplashStatus('استمع حتى نهاية الآية؛ ستغلق الشاشة تلقائيًا بعد انتهاء التلاوة.');if(btn)btn.textContent='▶ تشغيل آية اليوم';if(progress)progress.style.width='0%';setTimeout(()=>{playDailyAyah();},300);}
-function closeDailySplash(){const overlay=document.getElementById('dailySplash'),audio=document.getElementById('splashAudio'),progress=document.getElementById('splashAudioProgress');if(audio){audio.pause();try{audio.currentTime=0}catch{}audio.onended=null;audio.onerror=null;audio.ontimeupdate=null}if(progress)progress.style.width='0%';if(overlay)overlay.classList.remove('show');}
+/* 🕰️ TIME PLANNER LOGIC */
+function switchPlan(period, btn) {
+  document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPlan(period);
+}
+
+function renderPlan(period) {
+  const grid = document.getElementById('planGrid');
+  const t = today();
+  let daysLookback = 0; let daysLookahead = 0; let titleTo = ''; let titleDone = ''; let goalFraction = 0;
+  
+  if(period === 'day') { daysLookback = 0; daysLookahead = 0; titleTo="مطلوب اليوم"; titleDone="إنجاز اليوم"; goalFraction = Math.ceil(data.goal / 365); }
+  else if(period === 'week') { daysLookback = 7; daysLookahead = 7; titleTo="خطة الأسبوع"; titleDone="حصاد الأسبوع"; goalFraction = Math.ceil(data.goal / 52); }
+  else if(period === 'month') { daysLookback = 30; daysLookahead = 30; titleTo="خطة الشهر"; titleDone="حصاد الشهر"; goalFraction = Math.ceil(data.goal / 12); }
+  else if(period === 'year') { daysLookback = 365; daysLookahead = 365; titleTo="خطة السنة"; titleDone="حصاد السنة"; goalFraction = data.goal; }
+
+  // Calculate To-Do
+  let dueCount = 0; let newCount = 0;
+  const dAhead = new Date(); dAhead.setDate(dAhead.getDate() + daysLookahead);
+  const targetDateStr = dateKey(dAhead);
+  
+  data.entries.forEach(e => {
+    if(!e.hasBeenEvaluated) newCount++;
+    else if(e.nextReviewDate <= targetDateStr) dueCount++;
+  });
+
+  // Calculate Done
+  let doneSave = 0; let doneRev = 0; let doneRep = 0;
+  for(let i=0; i<=daysLookback; i++){
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const log = data.dailyLog[dateKey(d)];
+    if(log) { doneSave += log.save||0; doneRev += log.review||0; doneRep += log.rep||0; }
+  }
+
+  grid.innerHTML = `
+    <div class="plan-box" style="border-top: 4px solid var(--warning)">
+      <h3 style="color:var(--warning)">🎯 ${titleTo}</h3>
+      <div class="small" style="margin-bottom:8px">ما يجب عليك إنجازه للالتزام بمسارك:</div>
+      <div style="font-size:14px; margin-bottom:4px">• <b>مراجعات مجدولة:</b> ${dueCount} ورد</div>
+      <div style="font-size:14px; margin-bottom:4px">• <b>أوراد قيد التثبيت:</b> ${newCount} ورد</div>
+      <div style="font-size:14px; margin-bottom:4px; color:var(--muted)">• <b>هدف تقريبي مقترح:</b> حفظ ${goalFraction} ${data.goalUnit}</div>
+    </div>
+    <div class="plan-box" style="border-top: 4px solid var(--success)">
+      <h3 style="color:var(--success)">🏆 ${titleDone}</h3>
+      <div class="small" style="margin-bottom:8px">ما أتممته بفضل الله وتوفيقه:</div>
+      <div style="font-size:14px; margin-bottom:4px">• <b>حفظ جديد أُضيف:</b> ${doneSave} ورد</div>
+      <div style="font-size:14px; margin-bottom:4px">• <b>مراجعات أُنجزت:</b> ${doneRev} ورد</div>
+      <div style="font-size:14px; margin-bottom:4px">• <b>تكرارات (غيباً):</b> ${doneRep} مرة</div>
+    </div>
+  `;
+}
+
+/* FORECASTING */
+function renderForecast(){
+  const evalCount = data.entries.filter(e=>e.hasBeenEvaluated).length;
+  const activeDays = Object.keys(data.dailyLog).length;
+  const box = document.getElementById('forecastData');
+  if (activeDays < 3 || evalCount === 0) { box.innerHTML = 'استمر لعدة أيام ليتعلم الذكاء الاصطناعي معدلك ويحسب موعد الختمة.'; return; }
+  const rate = evalCount / activeDays;
+  const remaining = data.goal - evalCount;
+  if (remaining <= 0) { box.innerHTML = '🎉 لقد أتممت هدفك! ما شاء الله.'; return; }
+  const daysLeft = Math.ceil(remaining / rate);
+  const finishDate = new Date(); finishDate.setDate(finishDate.getDate() + daysLeft);
+  box.innerHTML = `بناءً على نشاطك (<b>${rate.toFixed(2)} ${data.goalUnit}/يوم</b>)، ستُتم هدفك في: <br><span style="font-size:24px;color:var(--gold);font-weight:900;display:block;margin-top:10px;">${finishDate.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</span>`;
+}
 
 /* WIDGETS & TAJWEED */
 function loadWidgets(){
@@ -709,8 +609,6 @@ function loadWidgets(){
   const g = gharib[di%gharib.length];
   document.getElementById('gharibWord').textContent=g[0];
   document.getElementById('gharibMeaning').textContent=g[1];
-  document.getElementById('gharibSource').textContent=`(المصدر: ${g[2]})`;
-  document.getElementById('dailyDua').textContent=duas[di%duas.length];
   
   const tj = tajweedData[di%tajweedData.length];
   document.getElementById('tajweedTitle').textContent = tj.title;
@@ -727,74 +625,21 @@ function openTajweed(){
   document.getElementById('ytExternalLink').href = `https://youtu.be/${ytId}`;
   openModal('tajweedModal');
 }
-function closeTajweed(){
-  document.getElementById('ytIframe').src = '';
-  closeModal('tajweedModal');
-}
-
-/* FORECASTING & WEEKLY */
-function renderForecast(){
-  const evalCount = data.entries.filter(e=>e.hasBeenEvaluated).length;
-  const activeDays = Object.keys(data.dailyLog).length;
-  const box = document.getElementById('forecastData');
-  if (activeDays < 3 || evalCount === 0) {
-      box.innerHTML = 'استمر لعدة أيام حتى تتمكن خوارزمية التطبيق من حساب معدل حفظك وتوقع موعد ختمتك.'; return;
-  }
-  const rate = evalCount / activeDays;
-  const remaining = data.goal - evalCount;
-  if (remaining <= 0) { box.innerHTML = '🎉 لقد أتممت هدفك! ما شاء الله تبارك الرحمن.'; return; }
-  const daysLeft = Math.ceil(remaining / rate);
-  const finishDate = new Date();
-  finishDate.setDate(finishDate.getDate() + daysLeft);
-  const dateStr = finishDate.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' });
-  box.innerHTML = `بناءً على معدل نشاطك الحالي (<b>${rate.toFixed(2)} ${data.goalUnit} / يوم نشط</b>)، يتوقع الذكاء الاصطناعي أن تُتم هدفك بإذن الله في: <br><span style="font-size:26px;color:var(--gold);font-weight:900;display:block;margin-top:14px;border-top:1px dashed var(--border);padding-top:14px">${dateStr}</span>`;
-}
-
-function renderWeekly(){
-  const t = today();
-  const next7Days = new Date(); next7Days.setDate(next7Days.getDate() + 7);
-  const t7 = today(next7Days);
-  const weekly = data.entries.filter(e => e.hasBeenEvaluated && e.nextReviewDate > t && e.nextReviewDate <= t7);
-  weekly.sort((a,b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
-  const box = document.getElementById('weeklyList');
-  if(!weekly.length){
-    box.innerHTML = '<div class="sub" style="text-align:center">لا يوجد مراجعات مجدولة في الأيام السبعة القادمة.</div>'; return;
-  }
-  box.innerHTML = weekly.map(e => `<div style="padding:10px;border-bottom:1px solid var(--border);font-size:13px"><b style="color:var(--gold)">${esc(e.label)}</b> - موعدها: ${e.nextReviewDate}</div>`).join('');
-}
-
-/* BADGES GAMIFICATION */
-function renderBadges(){
-  const box = document.getElementById('badgesContainer');
-  if(!box) return;
-  const stats = { evaluated: data.entries.filter(e=>e.hasBeenEvaluated).length, streak: data.streak };
-  box.innerHTML = BADGES.map(b => {
-      const unlocked = b.condition(stats);
-      return `<div class="badge-card ${unlocked ? 'unlocked' : ''}">
-                <div class="badge-icon">${b.icon}</div>
-                <div><div style="font-size:13px">${b.name}</div><div style="font-size:10px;font-weight:normal">${b.desc}</div></div>
-              </div>`;
-  }).join('');
-}
+function closeTajweed(){ document.getElementById('ytIframe').src = ''; closeModal('tajweedModal'); }
 
 /* AUDIO RECORDER */
 function openRecorder(label){
   document.getElementById('recordTarget').textContent = label;
   document.getElementById('playbackContainer').style.display = 'none';
-  const btn = document.getElementById('recordBtn');
-  btn.classList.remove('recording'); btn.innerHTML = '🎤';
-  document.getElementById('recordStatus').textContent = 'اضغط للبدء (البيانات لا تخرج من هاتفك)';
+  const btn = document.getElementById('recordBtn'); btn.classList.remove('recording'); btn.innerHTML = '🎤';
   if(recordAudioUrl) URL.revokeObjectURL(recordAudioUrl);
   openModal('recordModal');
 }
 function closeRecordModal(){if(mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); closeModal('recordModal');}
 async function toggleRecord(){
   const btn = document.getElementById('recordBtn');
-  const status = document.getElementById('recordStatus');
   if (mediaRecorder && mediaRecorder.state === "recording") {
-      mediaRecorder.stop();
-      btn.classList.remove('recording'); btn.innerHTML = '🎤';
-      status.textContent = 'تم التسجيل. استمع بالأسفل.'; return;
+      mediaRecorder.stop(); btn.classList.remove('recording'); btn.innerHTML = '🎤'; return;
   }
   try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -809,68 +654,62 @@ async function toggleRecord(){
       };
       audioChunks = []; mediaRecorder.start();
       btn.classList.add('recording'); btn.innerHTML = '⏹';
-      status.textContent = 'جاري التسجيل... (اضغط للإيقاف)';
-  } catch(e) { alert('تعذر الوصول للميكروفون. تأكد من إعطاء الصلاحيات للمتصفح.'); }
+  } catch(e) { alert('تأكد من إعطاء صلاحية الميكروفون للمتصفح.'); }
 }
 
 /* ACTIVITY */
 function logActivity(type,amount=1){const t=today();if(!data.dailyLog[t])data.dailyLog[t]={save:0,review:0,rep:0,focus:0};data.dailyLog[t][type]=(data.dailyLog[t][type]||0)+amount}
-function markActive(){const t=today();if(data.lastActive===t)return false;const previous=data.streak||0;data.streak=!data.lastActive?1:(dayDiff(data.lastActive,t)===1?data.streak+1:1);data.lastActive=t;ensureFirstDate();save();const increased=data.streak>previous;if(increased)setTimeout(glowStreak,100);return increased;}
-function dayScore(dt){const x=data.dailyLog[dt]||{};return(x.save||0)*3+(x.review||0)*2+(x.rep||0)*.15+(x.focus||0)*.04}
-function checkComeback(){if(!data.lastActive)return;const diff=dayDiff(data.lastActive,today());if(diff>1&&data.streak>0){openModal('comebackModal');data.streak=0;save()}}
+function markActive(){
+  const t=today();if(data.lastActive===t)return;
+  data.streak=!data.lastActive?1:(dayDiff(data.lastActive,t)===1?data.streak+1:1);
+  data.lastActive=t;save();
+}
 
 /* ADHKAR */
-function renderAdhkar(){const box=document.getElementById('adhkarList');if(!box)return;box.innerHTML='';adhkarList.forEach(([id,text,target])=>{const c=adhkarProgress[id]||0,done=c>=target;box.innerHTML+=`<div class="item" data-dhikr-id="${id}" style="padding:14px;margin-bottom:10px"><div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="quran-font glow-target" style="font-size:18px!important">${esc(text)}</div><div style="color:var(--gold);font-weight:900">${formatN(c)} / ${target}</div></div><div class="row"><button class="action" style="flex:1;${done?'background:var(--successDim);color:var(--success);border:1px solid var(--success)':''}" onclick="incDhikr('${id}')">${done?'✅ تم':'📿 كرر'}</button><button class="action" style="flex:.25" onclick="resetDhikr('${id}')">↺</button></div></div>`});}
-function incDhikr(id){adhkarProgress[id]=(adhkarProgress[id]||0)+1;const target = adhkarList.find(x => x[0] === id)[2];const isDone = (adhkarProgress[id] === target);saveAdhkar();renderAdhkar();if(isDone) { uiSound('done'); setTimeout(() => flashDhikr(id, true), 50); } else { uiSound('click'); setTimeout(() => flashDhikr(id, false), 50); }}
-function resetDhikr(id){adhkarProgress[id]=0;saveAdhkar();renderAdhkar()}
-function resetAdhkar(){if(!confirm('تصفير جميع عدادات الأذكار؟'))return;adhkarList.forEach(([id])=>adhkarProgress[id]=0);saveAdhkar();renderAdhkar()}
+function renderAdhkar(){const box=document.getElementById('adhkarList');if(!box)return;box.innerHTML='';adhkarList.forEach(([id,text,target])=>{const c=adhkarProgress[id]||0,done=c>=target;box.innerHTML+=`<div class="item" data-dhikr-id="${id}" style="padding:14px;margin-bottom:10px"><div class="row" style="justify-content:space-between;margin-bottom:10px"><div class="quran-font glow-target" style="font-size:18px!important">${esc(text)}</div><div style="color:var(--gold);font-weight:900">${formatN(c)} / ${target}</div></div><div class="row"><button class="action" style="flex:1;${done?'background:var(--successDim);color:var(--success);border:1px solid var(--success)':''}" onclick="incDhikr('${id}')">${done?'✅ تم':'📿 كرر'}</button></div></div>`});}
+function incDhikr(id){adhkarProgress[id]=(adhkarProgress[id]||0)+1;saveAdhkar();renderAdhkar();uiSound(adhkarProgress[id]===adhkarList.find(x=>x[0]===id)[2]?'done':'click');}
+function resetAdhkar(){if(!confirm('تصفير العدادات؟'))return;adhkarList.forEach(([id])=>adhkarProgress[id]=0);saveAdhkar();renderAdhkar()}
 function openSadaqah(){renderAdhkar();openModal('sadaqahModal')}
 
 /* EXACT LETTERS */
-async function exactLetters(label){try{let url='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)url=`https://api.alquran.cloud/v1/page/${p[1]}/quran-uthmani`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);if(a)url=`https://api.alquran.cloud/v1/ayah/${s}:${a[1]}/quran-uthmani`;}}if(!url)return null;const ac=new AbortController(),tm=setTimeout(()=>ac.abort(),7000),r=await fetch(url,{signal:ac.signal});clearTimeout(tm);if(!r.ok)return null;const j=await r.json();let txt='';if(j?.data?.ayahs)txt=j.data.ayahs.map(a=>a.text).join('');else if(j?.data?.text)txt=j.data.text;return(txt.replace(/[^\u0621-\u064A]/g,'').length)||null}catch{return null}}
+async function exactLetters(label){try{let url='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)url=`https://api.alquran.cloud/v1/page/${p[1]}/quran-uthmani`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);if(a)url=`https://api.alquran.cloud/v1/ayah/${s}:${a[1]}/quran-uthmani`;}}if(!url)return null;const r=await fetch(url);if(!r.ok)return null;const j=await r.json();let txt='';if(j?.data?.ayahs)txt=j.data.ayahs.map(a=>a.text).join('');else if(j?.data?.text)txt=j.data.text;return(txt.replace(/[^\u0621-\u064A]/g,'').length)||null}catch{return null}}
 
 /* ENTRIES */
-function newEntryObj(label,note,icu,skip,letters,exact){return{id:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,label,note,isICU:!!icu,date:today(),nextReviewDate:today(),quality:null,interval:0,ease:2.5,srsLevel:0,reviewCount:0,hasBeenEvaluated:false,sessionReps:0,totalReps:0,baseLetters:letters,isExactLetters:exact,lastRepDate:today(),phaseDays:skip?['legacy1','legacy2','legacy3','legacy4','legacy5','legacy6','legacy7']:[],manualReps:0,reviewReads:0}}
-
+function newEntryObj(label,note,icu,skip,letters,exact){return{id:`${Date.now()}`,label,note,isICU:!!icu,date:today(),nextReviewDate:today(),quality:null,interval:0,ease:2.5,srsLevel:0,reviewCount:0,hasBeenEvaluated:false,sessionReps:0,totalReps:0,baseLetters:letters,isExactLetters:exact,lastRepDate:today(),phaseDays:skip?['skip']:[],manualReps:0,reviewReads:0}}
 async function addEntry(){
   const label=document.getElementById('newLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');
-  const btn=document.getElementById('addBtn');btn.disabled=true;btn.textContent='جاري الحساب ⏳...';
+  const btn=document.getElementById('addBtn');btn.disabled=true;btn.textContent='جاري الحساب...';
   try{
     let letters=await exactLetters(label),exact=letters!==null;
-    if(letters===null){letters=(parseInt(document.getElementById('unitCount').value)||1)*(parseInt(document.getElementById('unitType').value)||500)}
+    if(letters===null)letters=(parseInt(document.getElementById('unitCount').value)||1)*(parseInt(document.getElementById('unitType').value)||500);
     const e=newEntryObj(label,document.getElementById('newNote').value.trim(),document.getElementById('icuCheckbox').checked,false,letters,exact);
-    data.entries.push(e);logActivity('save');markActive();ensureFirstDate();save();renderAll();
-    closeModal('addModal');document.getElementById('newLabel').value='';document.getElementById('newNote').value='';document.getElementById('icuCheckbox').checked=false;
+    data.entries.push(e);logActivity('save');markActive();save();renderAll();closeModal('addModal');document.getElementById('newLabel').value='';
     uiSound('click'); setTimeout(()=>glowEntry(e.id,false),80);
   }finally{btn.disabled=false;btn.textContent='➕ إضافة لخطة اليوم'}
 }
-
 async function addOldEntry(){
-  const label=document.getElementById('oldLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');
-  const btn=document.getElementById('oldBtn');btn.disabled=true;btn.textContent='جاري الحساب ⏳...';
+  const label=document.getElementById('oldLabel').value.trim();if(!label)return alert('اكتب الورد');
+  const btn=document.getElementById('oldBtn');btn.disabled=true;
   try{
     let letters=await exactLetters(label),exact=letters!==null;
     if(letters===null)letters=(parseInt(document.getElementById('oldCount').value)||1)*(parseInt(document.getElementById('oldType').value)||500);
     const e=newEntryObj(label,'',false,true,letters,exact);
-    data.entries.push(e);logActivity('save');markActive();ensureFirstDate();save();renderAll();
-    closeModal('oldModal');document.getElementById('oldLabel').value='';
+    data.entries.push(e);logActivity('save');markActive();save();renderAll();closeModal('oldModal');document.getElementById('oldLabel').value='';
     uiSound('click'); setTimeout(()=>glowEntry(e.id,false),80);
   }finally{btn.disabled=false;btn.textContent='📚 إضافة للمخزون'}
 }
-
 function removeEntry(id){if(confirm('تأكيد حذف الورد؟')){data.entries=data.entries.filter(e=>e.id!==id);save();renderAll()}}
 
 /* REVIEW */
-function guardedReview(id,q){const e=data.entries.find(x=>x.id===id);if(!e)return;const phase = e.phaseDays?.length || 0;if(phase < 7 && (e.sessionReps||0)<10 && q!=='fail'){const ok=confirm('لم تُكمل 10 تكرارات غيبًا. هل تريد التقييم الآن؟');if(!ok)return;}reviewEntry(id,q);}
+function guardedReview(id,q){const e=data.entries.find(x=>x.id===id);if(!e)return;if(e.phaseDays?.length < 7 && (e.sessionReps||0)<10 && q!=='fail'){if(!confirm('لم تُكمل 10 تكرارات غيبًا. هل تقيم الآن؟'))return;}reviewEntry(id,q);}
 function reviewEntry(id,q){
   const e=data.entries.find(x=>x.id===id);if(!e)return;const t=today();
-  if(!Array.isArray(e.phaseDays))e.phaseDays=[];let success=false,graduated=false;
+  if(!Array.isArray(e.phaseDays))e.phaseDays=[];let success=false;
   if(e.phaseDays.length<7){
-    if(e.phaseDays.length){const last=e.phaseDays.at(-1);if(String(last).startsWith('20')&&dayDiff(last,t)>1){e.phaseDays=[];alert('⚠️ انقطعت سلسلة التثبيت المتتالية. يبدأ الورد من اليوم الأول.')}}
-    if(q==='pass'){if(e.phaseDays.includes(t))return alert('سجلت المراجعة اليوم بالفعل.');e.phaseDays.push(t);e.interval=1;success=true;if(e.phaseDays.length===7)graduated=true}else{e.phaseDays=[];e.interval=1}
-    e.hasBeenEvaluated=true;e.reviewCount=(e.reviewCount||0)+1;e.reviewReads=(e.reviewReads||0)+1;e.totalReps=(e.manualReps||0)+e.reviewReads;
+    if(q==='pass'){e.phaseDays.push(t);e.interval=1;success=true;}else{e.phaseDays=[];e.interval=1}
+    e.hasBeenEvaluated=true;e.reviewCount++;e.reviewReads++;e.totalReps=(e.manualReps||0)+e.reviewReads;
   }else{
-    e.hasBeenEvaluated=true;e.reviewCount=(e.reviewCount||0)+1;e.reviewReads=(e.reviewReads||0)+1;e.totalReps=(e.manualReps||0)+e.reviewReads;
+    e.hasBeenEvaluated=true;e.reviewCount++;e.reviewReads++;e.totalReps=(e.manualReps||0)+e.reviewReads;
     if(data.evalMode==='weekly'){e.interval=q==='pass'?7:1;success=q==='pass'}
     else{
       if(q===4){e.srsLevel++;e.ease+=.15;e.interval=e.srsLevel===1?4:Math.max(1,Math.round((e.interval||1)*e.ease*1.3));success=true}
@@ -879,54 +718,35 @@ function reviewEntry(id,q){
       else{e.srsLevel=0;e.ease=Math.max(1.3,e.ease-.2);e.interval=1}
     }
   }
-  const d=new Date();d.setDate(d.getDate()+e.interval);e.nextReviewDate=today(d);e.quality=q;e.sessionReps=0;
-  if(e.isICU&&success&&confirm('أحسنت! إخراجه من العناية المركزة؟'))e.isICU=false;
+  const d=new Date();d.setDate(d.getDate()+e.interval);e.nextReviewDate=today(d);e.sessionReps=0;
   logActivity('review',1);markActive();save();renderAll();
-  if(graduated){ uiSound('done'); setTimeout(()=>glowEntry(id,true),80); }
-  else if(success){ uiSound('ok'); setTimeout(()=>glowEntry(id,false),80); }
-  else{ uiSound('click'); }
+  uiSound(success?'ok':'click'); setTimeout(()=>glowEntry(id,success),80);
 }
-
 function addRep(id){
   const e=data.entries.find(x=>x.id===id),t=today();if(!e)return;
   if(e.lastRepDate!==t)e.sessionReps=0;e.sessionReps++;e.manualReps=(e.manualReps||0)+1;e.totalReps=(e.manualReps||0)+(e.reviewReads||0);e.lastRepDate=t;
   logActivity('rep',1);markActive();save();renderAll();
-  if(e.sessionReps===10){ uiSound('done'); setTimeout(()=>glowEntry(id,true),80); }
-  else{ uiSound('click'); setTimeout(()=>glowEntry(id,false),80); }
+  uiSound(e.sessionReps===10?'done':'click'); setTimeout(()=>glowEntry(id,e.sessionReps===10),80);
 }
 
-/* SMART LINKS */
-function smartLinks(label){let path='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)path=`page/${p[1]}`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);path=a?`${s}/${a[1]}`:`${s}`}else path=`search?q=${encodeURIComponent(label)}`}return`<div class="links"><a class="link" target="_blank" rel="noopener noreferrer" href="https://quran.com/${path}">📖 المصحف</a><a class="link" target="_blank" rel="noopener noreferrer" href="https://app.tarteel.ai/">🎤 ترتيل</a></div>`}
-
+function smartLinks(label){let path='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)path=`page/${p[1]}`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);path=a?`${s}/${a[1]}`:`${s}`}else path=`search?q=${encodeURIComponent(label)}`}return`<div class="links"><a target="_blank" href="https://quran.com/${path}">📖 المصحف</a><a target="_blank" href="https://app.tarteel.ai/">🎤 ترتيل</a></div>`}
 function entryHTML(e){
   const due=e.hasBeenEvaluated&&e.nextReviewDate<=today(),phase=e.phaseDays?.length||0,reps=e.sessionReps||0;
   const isOldSkipped = (phase >= 7 && !e.hasBeenEvaluated); 
   let ev='';
   if(!e.hasBeenEvaluated||due){
-    if(phase<7)ev=`<div class="sub" style="text-align:center;margin-top:8px;color:var(--gold);font-weight:800">📍 التقييم اليومي لفترة التثبيت</div><div class="qbtns"><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}','pass')">✅ أتممت اليوم</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="reviewEntry('${e.id}','fail')">🔄 لم أتقنها</button></div>`;
-    else if(data.evalMode==='weekly')ev=`<div class="sub" style="text-align:center;margin-top:8px">التقييم الأسبوعي لتحديد موعد المراجعة القادمة</div><div class="qbtns"><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}','pass')">✅ ممتازة (المراجعة القادمة بعد 7 أيام)</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="reviewEntry('${e.id}','fail')">🔴 أعد غدًا</button></div>`;
-    else ev=`<div class="sub" style="text-align:center;margin-top:8px">تقييم ذكي لجدولة الموعد القادم</div><div class="qbtns anki-btns"><button style="color:var(--info);border-color:var(--info)" onclick="guardedReview('${e.id}',4)">🔵 سهل</button><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}',3)">🟢 تذكرته</button><button style="background:var(--yellowDim);border-color:var(--warning);color:var(--warning)" onclick="guardedReview('${e.id}',2)">🟡 بصعوبة</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="guardedReview('${e.id}',1)">🔴 نسيت</button></div>`;
+    if(phase<7)ev=`<div class="sub" style="text-align:center;margin-top:8px;">📍 التقييم اليومي لفترة التثبيت</div><div class="qbtns"><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}','pass')">✅ أتممت اليوم</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="reviewEntry('${e.id}','fail')">🔄 لم أتقنها</button></div>`;
+    else if(data.evalMode==='weekly')ev=`<div class="qbtns"><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}','pass')">✅ ممتازة (موعد بعد 7 أيام)</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="reviewEntry('${e.id}','fail')">🔴 أعد غدًا</button></div>`;
+    else ev=`<div class="qbtns"><button style="color:var(--info);border-color:var(--info)" onclick="guardedReview('${e.id}',4)">🔵 سهل</button><button style="background:var(--successDim);border-color:var(--success);color:var(--success)" onclick="guardedReview('${e.id}',3)">🟢 تذكرته</button><button style="background:var(--yellowDim);border-color:var(--warning);color:var(--warning)" onclick="guardedReview('${e.id}',2)">🟡 بصعوبة</button><button style="background:var(--dangerDim);border-color:var(--danger);color:var(--danger)" onclick="guardedReview('${e.id}',1)">🔴 نسيت</button></div>`;
   }
   const dots=Array.from({length:7},(_,i)=>`<span class="t-box ${i<phase?'done':''}"></span>`).join('');
-  let metaText = '';
-  if (!e.hasBeenEvaluated) {
-      if (isOldSkipped) metaText = `<span style="color:var(--warning);font-weight:800">⏰ مراجعة مبدئية لتحديد المستوى</span>`;
-      else metaText = `<span style="color:var(--gold);font-weight:800">✨ ورد جديد</span>`;
-  } else if (due) {
-      metaText = `<span style="color:var(--warning);font-weight:800">⏰ مستحق للمراجعة</span>`;
-  } else {
-      metaText = `المراجعة القادمة: ${esc(e.nextReviewDate)}`;
-  }
-  let repLabel = (phase < 7 && !e.hasBeenEvaluated) ? 'الهدف: 10 تكرارات غيبًا' : 'تكرار إضافي (اختياري)';
-  let repHint = (phase < 7 && !e.hasBeenEvaluated) ? `إجمالي التكرارات: ${e.totalReps||0}` : `المراجعة غيبًا مرة أسبوعيًا كحد أدنى. (إجمالي: ${e.totalReps||0})`;
-
+  let metaText = !e.hasBeenEvaluated ? (isOldSkipped ? `<span style="color:var(--warning);font-weight:800">⏰ مراجعة لتحديد المستوى</span>` : `<span style="color:var(--gold);font-weight:800">✨ ورد جديد</span>`) : (due ? `<span style="color:var(--warning);font-weight:800">⏰ مستحق للمراجعة</span>` : `المراجعة القادمة: ${esc(e.nextReviewDate)}`);
   const encLabel = encodeURIComponent(e.label);
   const searchUrl = `https://www.youtube.com/results?search_query=تطبيق+أحكام+التجويد+${encLabel}`;
 
-  return`<div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}" data-entry-id="${e.id}"><div class="item-header"><div class="item-title"><div class="quran-font glow-target">${esc(e.label)} ${e.isExactLetters?'<span title="حروف النص محسوبة آليًا" style="font-size:12px">🎯</span>':''}</div>${e.note?`<div class="note-txt">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:6px"><button class="action" style="padding:4px 8px;font-size:14px;background:var(--dangerDim);color:var(--danger);border:1px solid rgba(181,75,75,0.3)" onclick="openRecorder('${esc(e.label.replace(/'/g,"\\'") )}')" title="اختبر نفسك بالصوت">🎤</button><button class="action" style="padding:4px 8px;font-size:14px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid rgba(33,150,243,.3)" onclick="window.open('${searchUrl}', '_blank')" title="استخراج أحكام هذا الورد">🔍</button><button class="action" style="background:transparent;padding:4px" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker" style="margin-top:0">${phase<7?`<span class="phase-badge">تثبيت ${phase}/7</span>${dots}`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success);background:var(--successDim)">استدامة</span>`}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:13px;font-weight:800">${repLabel}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}')">📿 كررت (${reps})</button></div><div class="note-txt">${repHint}</div></div>${ev}</div>`
+  return`<div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}" data-entry-id="${e.id}"><div class="item-header"><div class="item-title"><div class="quran-font glow-target" style="font-size:18px">${esc(e.label)} ${e.isExactLetters?'🎯':''}</div>${e.note?`<div class="note-txt">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:6px"><button class="action" style="padding:4px 8px;font-size:14px;background:var(--dangerDim);color:var(--danger);border:1px solid rgba(181,75,75,0.3)" onclick="openRecorder('${esc(e.label.replace(/'/g,"\\'") )}')" title="اختبر نفسك">🎤</button><button class="action" style="padding:4px 8px;font-size:14px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid rgba(33,150,243,.3)" onclick="window.open('${searchUrl}', '_blank')" title="استخراج أحكام الورد">🔍</button><button class="action" style="background:transparent;padding:4px" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker" style="margin-top:0">${phase<7?`<span class="phase-badge">تثبيت ${phase}/7</span>${dots}`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success);background:var(--successDim)">استدامة</span>`}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:13px;font-weight:800">${phase<7&&!e.hasBeenEvaluated?'الهدف: 10 تكرارات غيبًا':'تكرار إضافي'}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}')">📿 كررت (${reps})</button></div></div>${ev}</div>`
 }
 
-/* RENDER HOME/POOL */
 function renderPool(){const q=(document.getElementById('searchInput')?.value||'').trim().toLowerCase();let arr=[...data.entries];if(q)arr=arr.filter(e=>e.label.toLowerCase().includes(q));arr.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));document.getElementById('poolCount').textContent=arr.length;document.getElementById('poolList').innerHTML=arr.slice(0,poolVisible).map(entryHTML).join('');document.getElementById('moreBtn').style.display=arr.length>poolVisible?'block':'none'}
 function loadMore(){poolVisible+=20;renderPool()}
 
@@ -934,145 +754,51 @@ function renderAll(){
   const t=today(), newOnes=data.entries.filter(e=>e.date===t&&!e.hasBeenEvaluated), due=data.entries.filter(e=>(e.hasBeenEvaluated&&e.nextReviewDate<=t)||e.isICU), icu=data.entries.filter(e=>e.isICU);
   const todayIdx = new Date().getDay();
   if(data.restDays && data.restDays.includes(todayIdx)){ document.getElementById('restDayBanner').style.display = 'block'; } else { document.getElementById('restDayBanner').style.display = 'none'; }
-  document.getElementById('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join('<div></div>'):'<div class="sub" style="text-align:center">📖 لا يوجد حفظ جديد اليوم.</div>';
+  document.getElementById('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="sub" style="text-align:center">📖 لا يوجد حفظ جديد اليوم.</div>';
   document.getElementById('dueCount').textContent=due.length;
-  document.getElementById('dueList').innerHTML=due.length?due.map(entryHTML).join('<div></div>'):'<div class="sub" style="text-align:center">🎉 خلصت مراجعات اليوم!</div>';
+  document.getElementById('dueList').innerHTML=due.length?due.map(entryHTML).join(''):'<div class="sub" style="text-align:center">🎉 خلصت مراجعات اليوم!</div>';
   document.getElementById('icuCard').style.display=icu.length?'block':'none';
   document.getElementById('icuList').innerHTML=icu.map(entryHTML).join('');
   renderPool();
   if(document.getElementById('progress').classList.contains('active')) renderProgress();
+  if(document.getElementById('schedule').classList.contains('active')){ renderPlan('day'); renderForecast(); }
 }
 
-/* PROGRESS */
 function renderProgress(){
   const ev=data.entries.filter(e=>e.hasBeenEvaluated).length;
-  const activeDays=Object.keys(data.dailyLog).length;
-  const activeEl=document.getElementById('activeDaysStat');if(activeEl) activeEl.textContent=activeDays;
-  const focusEl=document.getElementById('focusStat');if(focusEl) focusEl.textContent=Math.round(data.totalFocusMinutes||0);
   document.getElementById('streakStat').textContent=data.streak;
   document.getElementById('entriesStat').textContent=data.entries.length;
   document.getElementById('evalStat').textContent=ev;
   const pct=data.goal?Math.min(100,ev/data.goal*100):0;
   document.getElementById('goalProgress').style.width=pct+'%';
   document.getElementById('goalTitle').textContent=`الهدف: ${data.goal} ${data.goalUnit}`;
-  document.getElementById('goalText').textContent=`تم إنجاز ${ev} من أصل ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;
-  let letters=0,ex=0,ap=0;data.entries.forEach(e=>{letters+=(e.baseLetters||500)*(e.totalReps||0);e.isExactLetters?ex++:ap++});
-  document.getElementById('letters').textContent=formatN(letters);document.getElementById('hasanat').textContent=formatN(letters*10);document.getElementById('exactStat').textContent=`تم حساب ${ex} ورد بدقة 🎯`;document.getElementById('approxStat').textContent=`و ${ap} ورد تقريبًا 📊`;
-  renderPlant();renderCalendar();drawChart();renderPeriods();renderBoards();renderBadges();
+  document.getElementById('goalText').textContent=`إنجاز ${ev} من ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;
+  let letters=0; data.entries.forEach(e=>{letters+=(e.baseLetters||500)*(e.totalReps||0);});
+  document.getElementById('letters').textContent=formatN(letters);document.getElementById('hasanat').textContent=formatN(letters*10);
+  renderBadges();
 }
 
-function renderPlant(){const dates=Object.keys(data.dailyLog).sort();const last=dates.at(-1);const gap=last?dayDiff(last,today()):0;const avg=dates.length?dates.reduce((s,d)=>s+dayScore(d),0)/dates.length:0;const p=document.getElementById('plantEmoji'),txt=document.getElementById('plantText');p.className='plant';if(!dates.length){p.textContent='🌱';txt.textContent='بداية الرحلة'}else if(gap>=3){p.textContent='🥀';p.classList.add('sad');txt.textContent='النبتة تذبل من الانقطاع، عُد لتسقيها!'}else if(avg>7){p.textContent='🌳';p.classList.add('good');txt.textContent='شجرة راسخة بفضل الاستمرارية'}else if(avg>3){p.textContent='🌿';txt.textContent='تنمو بثبات'}else{p.textContent='🌱';txt.textContent='برعم ينمو'}}
-function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth();document.getElementById('calTitle').textContent=new Date(y,m,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();let h='<div class="cal-grid">';['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'].forEach(x=>h+=`<div class="cal-cell head">${x}</div>`);for(let i=0;i<first;i++)h+='<div class="cal-cell empty"></div>';for(let d=1;d<=days;d++){const dt=dateKey(new Date(y,m,d)),sc=dayScore(dt),log=data.dailyLog[dt];let cls='day-white',mark='—';if(sc>=6){cls='day-green';mark='✅'}else if(sc>0){cls='day-yellow';mark='•'}else if(dt<today()&&(data.firstDate&&dt>=data.firstDate)){cls='day-red';mark='✖'}h+=`<div class="cal-cell ${cls}" title="${dt}"><div class="day-num">${d}</div><div class="day-mark">${mark}</div><div class="day-mark">${log?`ح ${log.save||0} • م ${log.review||0} • ت ${log.rep||0}`:''}</div></div>`;}h+='</div>';document.getElementById('calendar').innerHTML=h}
-function changeMonth(delta){calendarDate.setMonth(calendarDate.getMonth()+delta);renderCalendar()}
-function drawChart(){const c=document.getElementById('activityChart');if(!c)return;const r=c.parentElement.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(300,r.width),h=Math.max(220,r.height);c.width=w*dpr;c.height=h*dpr;const ctx=c.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const days=[];const now=new Date();for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);days.push(today(d))}const vals=days.map(dayScore),max=Math.max(10,...vals);ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--border');ctx.lineWidth=1;for(let i=0;i<5;i++){const y=15+i*(h-35)/4;ctx.beginPath();ctx.moveTo(35,y);ctx.lineTo(w-10,y);ctx.stroke()}ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()})}
-function rollingPeriods(){const dates=Object.keys(data.dailyLog).sort();if(!dates.length)return [];const periods=[];const end=new Date(dates[dates.length-1]);for(let i=0;i<Math.max(1,Math.ceil(dayDiff(dates[0],dates[dates.length-1])/7));i++){const s=new Date(dates[0]);s.setDate(s.getDate()+i*7);const e=new Date(s);e.setDate(e.getDate()+6);let total=0,count=0,nonzero=0;for(let d=new Date(s);d<=e;d.setDate(d.getDate()+1)){const dt=today(d);const score=dayScore(dt);total+=score;count++;if(score>0)nonzero++}periods.push({s:today(s),e:today(e),avg:count?total/count:0,spread:nonzero})}return periods}
-function renderPeriods(){const periods=rollingPeriods();if(!periods.length){['bestPeriod','worstPeriod','volatilePeriod','startPeriod'].forEach(id=>document.getElementById(id).textContent='لا توجد بيانات بعد');return}const best=[...periods].sort((a,b)=>b.avg-a.avg)[0],worst=[...periods].sort((a,b)=>a.avg-b.avg)[0],vol=[...periods].sort((a,b)=>Math.abs(a.spread-3.5)-Math.abs(b.spread-3.5))[0];document.getElementById('bestPeriod').textContent=`${best.s} ← ${best.e} • متوسط ${best.avg.toFixed(1)}`;document.getElementById('worstPeriod').textContent=`${worst.s} ← ${worst.e} • متوسط ${worst.avg.toFixed(1)}`;document.getElementById('volatilePeriod').textContent=`${vol.s} ← ${vol.e} • ${vol.spread} أيام نشطة من 7`;document.getElementById('startPeriod').textContent=data.firstDate||'—'}
-
-/* LEADERBOARDS */
-function myProfile(){const letters=data.entries.reduce((s,e)=>s+(e.baseLetters||500)*(e.totalReps||0),0);const evalCount=data.entries.filter(e=>e.hasBeenEvaluated).length;return{name:data.userName||'مستخدم',streak:data.streak||0,entries:data.entries.length,evaluated:evalCount,letters,activity:Object.keys(data.dailyLog).length,created:new Date().toISOString()}}
-function createProfileLink(){const raw=JSON.stringify(myProfile()),encoded=btoa(unescape(encodeURIComponent(raw))),url=location.href.split('#')[0]+'#profile='+encoded;document.getElementById('profileLink').value=url}
-async function copyProfileLink(){const v=document.getElementById('profileLink').value;if(!v){createProfileLink();return}try{await navigator.clipboard.writeText(v);alert('تم النسخ ✅')}catch{alert('انسخ الرابط يدويًا.')}}
-function parseProfileLink(url){try{const m=(url||'').match(/#profile=([^&]+)/);if(!m)return null;return JSON.parse(decodeURIComponent(escape(atob(m[1]))))}catch{return null}}
-function boardsState(){try{return JSON.parse(localStorage.getItem(LEADER_KEY)||'{}')}catch{return{}}}function saveBoards(x){localStorage.setItem(LEADER_KEY,JSON.stringify(x))}
-function addLeader(){const board=document.getElementById('boardName').value.trim()||'لوحتي',link=document.getElementById('boardLink').value.trim(),p=parseProfileLink(link);if(!p)return alert('الرابط غير صالح.');const all=boardsState();all[board]=Array.isArray(all[board])?all[board]:[];all[board]=all[board].filter(x=>x.name!==p.name);all[board].push(p);saveBoards(all);renderBoards();document.getElementById('boardLink').value=''}
-function renderBoards(){const box=document.getElementById('leaderBoards');if(!box)return;const all=boardsState();box.innerHTML='';Object.entries(all).forEach(([name,list])=>{const sortedList=[...list].sort((a,b)=>(b.evaluated+b.streak*2+b.activity)-(a.evaluated+a.streak*2+a.activity));const card=document.createElement('div');card.className='card';let h=`<div class="row"><h3 style="margin:0;flex:1;color:var(--info)">🏆 ${esc(name)}</h3><button class="action" style="background:var(--dangerDim);color:var(--danger)" onclick="deleteBoard('${encodeURIComponent(name)}')">حذف اللوحة</button></div>`;sortedList.forEach((p,i)=>{h+=`<div class="leader-row"><div class="rank">#${i+1}</div><div class="lead-info"><b>${esc(p.name)}</b><div class="meta">أوراد ${p.entries} • تقييم ${p.evaluated} • 🔥 ${p.streak}</div></div><div class="lead-score">${formatN(p.letters)}</div><button class="action" style="padding:6px 8px;background:var(--dangerDim);color:var(--danger)" onclick="removePlayer('${encodeURIComponent(name)}','${encodeURIComponent(p.name)}')">✕</button></div>`});card.innerHTML=h;box.appendChild(card)})}
-function deleteBoard(name){const key=decodeURIComponent(name),all=boardsState();if(confirm(`حذف لوحة ${key}؟`)){delete all[key];saveBoards(all);renderBoards()}}
-function removePlayer(bn,pn){bn=decodeURIComponent(bn);pn=decodeURIComponent(pn);const b=boardsState();if(!b[bn])return;b[bn]=b[bn].filter(x=>x.name!==pn);if(!b[bn].length)delete b[bn];saveBoards(b);renderBoards()}
-
-/* TIMERS */
-function setTimer(m){clearInterval(timer);timeLeft=Math.max(1,Math.round(m*60));updTimer()}
-function setCustomTimer(){const m=Number(document.getElementById('customTimer').value);if(!Number.isFinite(m)||m<1||m>240)return alert('من 1 إلى 240 دقيقة.');setTimer(m);document.getElementById('customTimer').value=''}
-function updTimer(){document.getElementById('mainTimer').textContent=`${String(Math.floor(timeLeft/60)).padStart(2,'0')}:${String(timeLeft%60).padStart(2,'0')}`}
-function toggleFocus(){document.body.classList.toggle('focus-mode');if(!document.body.classList.contains('focus-mode')){clearInterval(timer);timeLeft=0;updTimer();document.getElementById('mainTimerBtn').textContent='▶ ابدأ المؤقت'}else window.scrollTo(0,0)}
-function stopFocus(){document.body.classList.remove('focus-mode');clearInterval(timer);timeLeft=0;updTimer();document.getElementById('mainTimerBtn').textContent='▶ ابدأ المؤقت'}
-function startTimer(){if(timeLeft<=0)return alert('اختر المدة');document.getElementById('mainTimerBtn').textContent='⏳ يعمل...';clearInterval(timer);const start=Date.now();timer=setInterval(()=>{timeLeft--;updTimer();if(timeLeft<=0){clearInterval(timer);const ms=Math.max(1,Math.round((Date.now()-start)/60000));data.totalFocusMinutes+=ms;logActivity('focus',ms);markActive();save();uiSound('done');alert('انتهت الجلسة!');stopFocus()}},1000)}
-
-function openHadr(){const p=data.entries.filter(e=>e.hasBeenEvaluated&&!e.isICU);if(!p.length)return alert('أضف أورادًا محفوظة أولاً.');document.getElementById('hadrTarget').textContent=p[Math.floor(Math.random()*p.length)].label;hadrLeft=120;document.getElementById('hadrDisplay').textContent='02:00';document.getElementById('hadrBtn').style.display='block';clearInterval(hadrTimer);openModal('hadrModal')}
-function startHadr(){document.getElementById('hadrBtn').style.display='none';clearInterval(hadrTimer);hadrTimer=setInterval(()=>{hadrLeft--;document.getElementById('hadrDisplay').textContent=`${String(Math.floor(hadrLeft/60)).padStart(2,'0')}:${String(hadrLeft%60).padStart(2,'0')}`;if(hadrLeft<=0){clearInterval(hadrTimer);uiSound('done');alert('انتهى الوقت. ⏱️');closeHadr()}},1000)}
-function closeHadr(){clearInterval(hadrTimer);document.getElementById('hadrBtn').style.display='block';closeModal('hadrModal')}
-
-/* SETTINGS */
-function updateName(){const n=document.getElementById('nameInput').value.trim();if(!n)return;data.userName=n;save();updateTopStats();alert('تم الحفظ!')}
-function saveWelcomeName(){const n=document.getElementById('onboardName').value.trim();if(!n)return alert('اكتب اسمك');data.userName=n;markActive();ensureFirstDate();save();closeModal('welcomeModal');updateTopStats();if(localStorage.getItem(SPLASH_KEY)!==today())setTimeout(showDailySplash,150)}
+/* SETTINGS & UTILS */
+function updateName(){data.userName=document.getElementById('nameInput').value.trim();save();updateTopStats();alert('تم!')}
+function saveWelcomeName(){data.userName=document.getElementById('onboardName').value.trim();markActive();save();closeModal('welcomeModal');updateTopStats();}
 function changeEvalMode(){data.evalMode=document.getElementById('evalMode').value;save();renderAll()}
-function changeGoal(){const v=document.getElementById('goalSelect').value,b=document.getElementById('customGoalBox');if(v==='custom')b.style.display='block';else{b.style.display='none';const parts=v.split(',');data.goal=Number(parts[0]);data.goalUnit=parts[1]||'صفحة';save();renderProgress()}}
-function saveCustomGoal(){const n=+document.getElementById('customGoalNum').value,u=document.getElementById('customGoalUnit').value.trim();if(!n||!u)return alert('أدخل العدد والوحدة');data.goal=n;data.goalUnit=u;save();document.getElementById('goalSelect').value='custom';renderProgress();alert('تم الحفظ!')}
-
-/* REST DAYS SETTINGS */
-function renderRestDaysSettings(){
-  const days = ['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-  let html = '';
-  days.forEach((d, i) => {
-      const checked = data.restDays && data.restDays.includes(i) ? 'checked' : '';
-      html += `<label style="background:var(--input);padding:6px 10px;border-radius:8px;border:1px solid var(--border);display:flex;gap:6px;align-items:center"><input type="checkbox" class="rest-cb" value="${i}" ${checked}> ${d}</label>`;
-  });
-  document.getElementById('restDaysContainer').innerHTML = html;
-}
-function saveRestDays(){
-  const cbs = document.querySelectorAll('.rest-cb:checked');
-  data.restDays = Array.from(cbs).map(cb => parseInt(cb.value));
-  save();
-  renderAll();
-  alert('تم حفظ أيام الراحة بنجاح!');
-}
-
-function exportJSON(){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data));a.download=`Rafiq_Backup_${today()}.json`;a.click()}
-function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=x=>{try{const imported=JSON.parse(x.target.result);if(imported.entries&&confirm('استبدال البيانات الحالية بالنسخة الاحتياطية؟')){data=normalize(imported);ensureFirstDate();save();location.reload()}}catch{alert('ملف غير صالح.')}};r.readAsText(f);e.target.value=''}
-function exportCSV(){const csvEsc=s=>`"${String(s??'').replaceAll('"','""')}"`;let c='\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية,المراجعة القادمة,التكرارات اليدوية,مراجعات مسجلة,إجمالي القراءات\n';data.entries.forEach(e=>{c+=`${csvEsc(e.label)},${csvEsc(e.note)},${csvEsc(e.date)},${e.isICU?'نعم':'لا'},${csvEsc(e.nextReviewDate)},${e.manualReps||0},${e.reviewReads||0},${e.totalReps||0}\n`});const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv;charset=utf-8'}));a.download=`Rafiq_${today()}.csv`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}
-function updateTopStats(){
-  document.getElementById('displayName').textContent=data.userName||'صديقي';
-  document.getElementById('nameInput').value=data.userName||'';
-  document.getElementById('evalMode').value=data.evalMode;
-  document.getElementById('soundToggle').checked=data.soundEnabled;
-  document.getElementById('graphicsModeSelect').value=data.graphicsLevel||1;
-  document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-}
-
-/* SWIPE LOGIC */
-let touchStartX=0,touchStartY=0;
-document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;touchStartY=e.changedTouches[0].screenY},{passive:true});
-document.addEventListener('touchend',e=>{
-  if(document.querySelector('.modal.show')||document.getElementById('dailySplash').classList.contains('show')||document.body.classList.contains('focus-mode'))return;
-  let dX=e.changedTouches[0].screenX-touchStartX, dY=e.changedTouches[0].screenY-touchStartY;
-  if(Math.abs(dY)>60||Math.abs(dX)<60)return;
-  const tabs=['home','schedule','spiritual','progress','settings'], activeTab=document.querySelector('.view.active').id;
-  let idx=tabs.indexOf(activeTab);
-  if(dX>0)idx--;else idx++;
-  if(idx>=0&&idx<tabs.length)switchTab(tabs[idx],document.querySelectorAll('.nav-item')[idx]);
-},{passive:true});
-
-/* PRINT */
-function buildPrint(){
-  const box=document.getElementById('printSheet');
-  const todayText=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-  let h=`<div class="print-page"><div class="print-title">رفيق القرآن — المراجعة الذكية</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'_________')} &nbsp;|&nbsp; <b>الهدف:</b> ${data.goal} ${esc(data.goalUnit)} &nbsp;|&nbsp; <b>التاريخ:</b> ${todayText}</div><div class="print-box"><b>صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</b><br>نسأل الله أن يجعلها خالصةً لوجهه الكريم، وأن ينفع بها وينفعنا بها.<br>وأرجو الدعاء لأخي بتفريج الكرب، وكشف الهم، والشفاء العاجل، وأن يردّه إلينا سالمًا معافى، وأن يكتب الله له الفرج والطمأنينة والعافية.</div><div class="print-box"><b>النية:</b> هذا العمل لله وحده، نرجو الإخلاص والقبول، والأجر عند الله.</div><div class="print-grid"><div class="print-box"><b>حفظ جديد</b><div class="print-lines"></div></div><div class="print-box"><b>مراجعات مستحقة</b><div class="print-lines"></div></div></div><div class="print-box"><b>أذكار</b><br>${adhkarList.map(x=>`<span class="print-check"></span> ${esc(x[1])} (${x[2]})`).join(' &nbsp; ')}</div></div>`;
-  if(document.getElementById('printFull').checked){
-    h+=`<div class="print-page"><div class="print-title">🗓️ تقويم المتابعة</div><table class="print-table"><tr><th>الأحد</th><th>الاثنين</th><th>الثلاثاء</th><th>الأربعاء</th><th>الخميس</th><th>الجمعة</th><th>السبت</th></tr>${Array.from({length:5},()=>`<tr>${Array.from({length:7},()=>`<td style="height:90px"><b>__/__</b><br><span class="print-check"></span> حفظ<br><span class="print-check"></span> مراجعة<br><span class="print-check"></span> تكرار<br><span class="print-check"></span> تجويد<br><span class="print-check"></span> قيام</td>`).join('')}</tr>`).join('')}</table><div class="print-box" style="margin-top:8px">🟩 ممتاز &nbsp; 🟨 متذبذب &nbsp; 🟥 توقف &nbsp; ⬜ لا بيانات</div></div>`;
-    h+=`<div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table class="print-table"><tr><th>الورد</th><th>10 تكرارات</th><th>يوم 1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.length?data.entries.slice(0,20).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join(''):`<tr><td colspan="10">أضف أورادك هنا بالقلم.</td></tr>`}</table></div>`;
-    h+=`<div class="print-page"><div class="print-title">🧠 جلسة المراجعة</div><div class="print-box"><b>قبل البداية:</b> ☐ نية &nbsp; ☐ وضوء &nbsp; ☐ تجويد &nbsp; ☐ تركيز</div>${Array.from({length:8},(_,i)=>`<div class="print-box print-keep"><b>ورد ${i+1}:</b> __________________________<br>☐ 1 ☐ 2 ☐ 3 ☐ 4 ☐ 5 ☐ 6 ☐ 7 ☐ 8 ☐ 9 ☐ 10 &nbsp;&nbsp; التقييم: ☐ سهل ☐ تذكرته ☐ بصعوبة ☐ نسيت</div>`).join('')}</div>`;
-    h+=`<div class="print-page"><div class="print-title">🤲 الأثر الروحي</div><div class="print-box"><b>لماذا أحفظ؟</b><div class="print-lines"></div></div><div class="print-box"><b>آية اليوم التي أثرت فيّ:</b><div class="print-lines"></div></div><div class="print-grid"><div class="print-box"><b>أفضل فترة هذا الشهر:</b><div class="print-lines"></div></div><div class="print-box"><b>أسوأ فترة وكيف أعود:</b><div class="print-lines"></div></div></div><div class="print-box"><b>مراجعة أسبوعية:</b><br>☐ ممتاز &nbsp; ☐ جيد &nbsp; ☐ متذبذب &nbsp; ☐ توقّف ثم عاد<br>ملاحظة: الانقطاع لا يلغي الرحلة؛ نعود ونكمل.</div></div>`;
-  }
-  box.innerHTML=h;
-}
-function openPrintPreview(){buildPrint();openModal('printModal')}
-function printNow(mode){buildPrint();const st=document.getElementById('printSheet');if(mode==='bw')st.style.filter='grayscale(100%) contrast(120%)';else{st.style.filter='none';st.classList.add('print-color')}closeModal('printModal');setTimeout(()=>{window.print();st.classList.remove('print-color')},120)}
+function changeGoal(){const v=document.getElementById('goalSelect').value,b=document.getElementById('customGoalBox');if(v==='custom')b.style.display='block';else{b.style.display='none';const p=v.split(',');data.goal=Number(p[0]);data.goalUnit=p[1];save();renderProgress()}}
+function saveCustomGoal(){data.goal=+document.getElementById('customGoalNum').value;data.goalUnit=document.getElementById('customGoalUnit').value.trim();save();renderProgress();alert('تم!')}
+function renderRestDaysSettings(){const d=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let h='';d.forEach((x,i)=>{const c=data.restDays?.includes(i)?'checked':'';h+=`<label style="background:var(--input);padding:6px 10px;border-radius:8px;border:1px solid var(--border);display:flex;gap:6px;"><input type="checkbox" class="rest-cb" value="${i}" ${c}> ${x}</label>`;});document.getElementById('restDaysContainer').innerHTML=h;}
+function saveRestDays(){data.restDays=Array.from(document.querySelectorAll('.rest-cb:checked')).map(cb=>parseInt(cb.value));save();renderAll();alert('تم حفظ أيام الراحة!');}
+function updateTopStats(){document.getElementById('displayName').textContent=data.userName||'صديقي';document.getElementById('nameInput').value=data.userName||'';document.getElementById('evalMode').value=data.evalMode;document.getElementById('soundToggle').checked=data.soundEnabled;document.getElementById('graphicsModeSelect').value=data.graphicsLevel||1;document.getElementById('todayLabel').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
 
 /* INIT */
 function initUI(){
   document.body.dataset.theme=localStorage.getItem('rafiq-theme')||'dark';
-  applyGraphicsMode();
-  updateTopStats();
-  loadWidgets();
+  applyGraphicsMode(); updateTopStats(); loadWidgets();
   const tv=data.goal+','+data.goalUnit,tr=document.getElementById('goalSelect');
   if([...tr.options].some(o=>o.value===tv))tr.value=tv;else{tr.value='custom';document.getElementById('customGoalBox').style.display='block';document.getElementById('customGoalNum').value=data.goal;document.getElementById('customGoalUnit').value=data.goalUnit}
-  renderAdhkar();renderBoards();renderAll();checkComeback();
+  renderAdhkar();renderAll();
 }
 loadData();initUI();
 document.getElementById('searchInput').addEventListener('input',renderPool);
-if(!data.userName)openModal('welcomeModal');else setTimeout(showDailySplash,450);
-function consumeProfileHash(){if(!location.hash.startsWith('#profile='))return;document.getElementById('boardLink').value=location.href;openModal('groupModal');history.replaceState(null,'',location.href.split('#')[0])}
-window.addEventListener('hashchange',consumeProfileHash);consumeProfileHash();
-window.addEventListener('resize',()=>{if(document.getElementById('progress').classList.contains('active'))drawChart()});
+if(!data.userName)openModal('welcomeModal');
 </script>
 </body>
 </html>
