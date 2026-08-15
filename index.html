@@ -33,13 +33,14 @@ html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--text); font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; line-height: 1.6; padding-bottom: 86px; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; min-height: 100vh;}
 
 /* =========================================
-   GRAPHICS MODES ENGINE 🚀
+   GRAPHICS MODES ENGINE 🚀 (INCLUDES ICONS)
 ========================================= */
 
 /* LEVEL 1: SIMPLE (MOBILE - FAST) */
 body.mode-1 { --card-radius: 12px; --transition-speed: 0s; }
 body.mode-1 * { animation-duration: 0s !important; transition-duration: 0s !important; }
 body.mode-1 .card, body.mode-1 .item { border: 1px solid var(--border); border-radius: var(--card-radius); background: var(--card); box-shadow: none; }
+body.mode-1 .ultra-icon, body.mode-1 .ico { transform: none !important; filter: none !important; text-shadow: none !important; animation: none !important; }
 
 /* LEVEL 2: BALANCED (TABLET - ELEGANT) */
 body.mode-2 { --card-radius: 16px; --transition-speed: 0.2s; }
@@ -48,7 +49,13 @@ body.mode-2 { background: radial-gradient(circle at top right, #112218, var(--bg
 body.mode-2 .card, body.mode-2 .item { border-radius: var(--card-radius); background: var(--card); box-shadow: 0 6px 20px rgba(0,0,0,0.15); transition: transform var(--transition-speed); border: 1px solid var(--border); }
 [data-theme=light] body.mode-2 .card, [data-theme=light] body.mode-2 .item { box-shadow: 0 6px 20px rgba(0,0,0,0.05); }
 
-/* LEVEL 3: ULTRA (LAPTOP - GLASSMORPHISM & ANIMATIONS) */
+/* Icons in Mode 2 */
+body.mode-2 .nav-item .ico { transition: transform 0.2s ease, filter 0.2s ease; }
+body.mode-2 .nav-item.active .ico { transform: scale(1.15) translateY(-2px); filter: drop-shadow(0 4px 6px rgba(212,175,55,0.4)); }
+body.mode-2 .ultra-icon { filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); display: inline-block; transition: transform 0.3s; }
+body.mode-2 .ultra-icon:hover { transform: scale(1.05); }
+
+/* LEVEL 3: ULTRA (LAPTOP - GLASSMORPHISM & GLOWING ICONS) */
 body.mode-3 { --card-radius: 20px; --transition-speed: 0.3s; }
 body.mode-3 {
   background: linear-gradient(-45deg, #0a110e, #13241b, #0a1410, #1b2e22);
@@ -73,6 +80,26 @@ body.mode-3 .card, body.mode-3 .item {
 body.mode-3 .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(212,175,55,0.15); border-color: rgba(212,175,55,0.5); }
 body.mode-3 .main { box-shadow: 0 0 15px rgba(212,175,55,0.3); transition: all 0.3s; }
 body.mode-3 .main:hover { box-shadow: 0 0 25px rgba(212,175,55,0.6); transform: translateY(-2px); }
+
+/* Icons in Mode 3 (The Ultra Luxury) */
+@keyframes iconFloat {
+  0% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 15px rgba(212,175,55,0.3)); }
+  50% { transform: translateY(-8px) scale(1.03); filter: drop-shadow(0 15px 25px rgba(212,175,55,0.7)); }
+  100% { transform: translateY(0px) scale(1); filter: drop-shadow(0 5px 15px rgba(212,175,55,0.3)); }
+}
+@keyframes iconPulseGlow {
+  0% { filter: drop-shadow(0 0 8px rgba(212,175,55,0.5)); transform: scale(1.1); }
+  50% { filter: drop-shadow(0 0 20px rgba(212,175,55,1)) drop-shadow(0 0 30px rgba(212,175,55,0.8)); transform: scale(1.25); }
+  100% { filter: drop-shadow(0 0 8px rgba(212,175,55,0.5)); transform: scale(1.1); }
+}
+
+body.mode-3 .nav-item .ico { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: inline-block; }
+body.mode-3 .nav-item:not(.active):hover .ico { transform: translateY(-4px) scale(1.1); filter: drop-shadow(0 0 12px rgba(212,175,55,0.5)); }
+body.mode-3 .nav-item.active .ico { animation: iconPulseGlow 2.5s infinite alternate ease-in-out; }
+body.mode-3 .ultra-icon { display: inline-block; animation: iconFloat 4s infinite ease-in-out; }
+body.mode-3 .badge-card.unlocked .badge-icon { display: inline-block; animation: iconPulseGlow 3s infinite alternate; }
+body.mode-3 .fab { transition: all 0.3s; }
+body.mode-3 .fab:hover { transform: scale(1.05) translateY(-3px); box-shadow: 0 10px 25px rgba(212,175,55,0.4); }
 
 @keyframes bgUltra { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 @keyframes glowRotate { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
@@ -116,7 +143,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 .nav { position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0; background: var(--card); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 9px 4px calc(9px + env(safe-area-inset-bottom)); box-shadow: 0 -4px 20px rgba(0,0,0,.15); }
 .nav-item { flex: 1; text-align: center; font-size: 10px; color: var(--muted); cursor: pointer; padding: 5px; border-radius: 8px; transition: color 0.2s; }
 .nav-item.active { color: var(--gold); font-weight: 800; background: var(--goldDim); }
-.nav .ico { display: block; font-size: 20px; margin-bottom: 3px; }
+.nav .ico { display: block; font-size: 20px; margin-bottom: 3px; display: inline-block; }
 
 .view { display: none; animation: fadeIn 0.3s ease; }
 .view.active { display: block; }
@@ -173,7 +200,6 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 .gharib-card:after { content: 'غريب'; position: absolute; left: -26px; top: 18px; transform: rotate(-35deg); font-size: 10px; font-weight: 900; color: var(--gold); background: var(--goldDim); border: 1px solid var(--gold); padding: 4px 28px; }
 .record-btn { width: 70px; height: 70px; border-radius: 50%; background: var(--dangerDim); color: var(--danger); font-size: 28px; border: 2px solid var(--danger); cursor: pointer; margin: 20px auto; display: flex; align-items: center; justify-content: center; }
 .record-btn.recording { animation: pulse 1.5s infinite; background: var(--danger); color: #fff; }
-@keyframes pulse { 0%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,.7)} 70%{transform:scale(1.05);box-shadow:0 0 0 15px rgba(181,75,75,0)} 100%{transform:scale(1);box-shadow:0 0 0 0 rgba(181,75,75,0)} }
 
 /* RESPONSIVE DESKTOP */
 @media(min-width:992px){
@@ -181,7 +207,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
   .nav { top: 0; right: 0; left: auto; bottom: 0; width: 260px; height: 100vh; flex-direction: column; justify-content: flex-start; padding: 28px 15px; gap: 8px; border-top: none; border-left: 1px solid var(--border); }
   .nav-item { flex: none; width: 100%; padding: 13px; text-align: right; font-size: 14px; border-radius: 10px; display: flex; gap: 12px; align-items: center; }
   .nav .active { background: var(--goldDim); border: 1px solid rgba(212,175,55,.25); }
-  .nav .ico { display: inline; font-size: 20px; margin: 0; }
+  .nav .ico { display: inline-block; font-size: 20px; margin: 0; }
   .wrap { width: calc(100% - 260px); max-width: 1100px; margin: 0; margin-right: 260px; padding: 35px 40px; }
   .desktop { display: grid; grid-template-columns: 1.25fr .95fr; gap: 24px; align-items: start; }
   .fab { right: 280px; left: auto; bottom: 25px; }
@@ -202,7 +228,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
     <div class="small" style="margin-top:14px">(اضغط خارج البطاقة لتخطي الشاشة)</div>
   </div>
 </div>
-<button class="fab" onclick="openSadaqah()">🤲 صدقة جارية ودعاء</button>
+<button class="fab" onclick="openSadaqah()"><span class="ultra-icon">🤲</span> صدقة جارية ودعاء</button>
 
 <!-- NAV (5 Tabs) -->
 <div class="nav">
@@ -214,25 +240,57 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 </div>
 
 <!-- MODALS -->
-<div class="modal" id="welcomeModal"><div class="box" style="text-align:center"><div style="font-size:48px">📖</div><h2 style="color:var(--gold);margin:0">أهلاً بك في رفيق القرآن</h2><p class="small">بياناتك محفوظة محليًا على هذا المتصفح. اكتب اسمك للبدء.</p><input id="onboardName" placeholder="أدخل اسمك الكريم" style="text-align:center"><button class="main" onclick="saveWelcomeName()">ابدأ رحلتك</button></div></div>
-<div class="modal" id="addModal"><div class="box"><button class="close-modal" onclick="closeModal('addModal')">✕</button><h2 style="color:var(--gold);margin:0">➕ إضافة ورد جديد</h2><div class="add-section"><label class="small">اسم الورد</label><input id="newLabel" placeholder="مثال: البقرة ص 48"><label class="small">ملاحظة شخصية (اختياري)</label><input id="newNote" placeholder="ملاحظاتك..." style="margin-bottom:0"></div><div class="add-section"><div class="unit-grid"><div><label class="small">العدد</label><input id="unitCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="unitType" style="margin-bottom:0"><option value="500">صفحة ≈ 500 حرف</option><option value="50">آية ≈ 50 حرف</option><option value="10000">جزء ≈ 10000 حرف</option></select></div></div></div><div class="add-section" style="border-color:rgba(181,75,75,.35);background:var(--dangerDim)"><label style="display:flex;align-items:center;gap:10px;color:var(--danger);font-weight:900;margin:0"><input id="icuCheckbox" type="checkbox" style="width:19px;height:19px;accent-color:var(--danger);margin:0"> 🏥 عناية مركزة — للآيات الصعبة</label></div><button class="main" id="addBtn" onclick="addEntry()">➕ إضافة لخطة اليوم</button></div></div>
-<div class="modal" id="oldModal"><div class="box"><button class="close-modal" onclick="closeModal('oldModal')">✕</button><h2 style="color:var(--gold);margin:0">📚 إضافة محفوظ سابق</h2><div class="add-section"><label class="small">اسم الورد المحفوظ</label><input id="oldLabel" placeholder="مثال: جزء عم"></div><div class="add-section"><div class="unit-grid"><div><label class="small">العدد</label><input id="oldCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="oldType" style="margin-bottom:0"><option value="10000">جزء ≈ 10000 حرف</option><option value="500">صفحة ≈ 500 حرف</option></select></div></div></div><button class="main" id="oldBtn" onclick="addOldEntry()">📚 إضافة للمخزون</button></div></div>
+<div class="modal" id="welcomeModal"><div class="box" style="text-align:center"><div class="ultra-icon" style="font-size:48px">📖</div><h2 style="color:var(--gold);margin:0">أهلاً بك في رفيق القرآن</h2><p class="small">بياناتك محفوظة محليًا على هذا المتصفح. اكتب اسمك للبدء.</p><input id="onboardName" placeholder="أدخل اسمك الكريم" style="text-align:center"><button class="main" onclick="saveWelcomeName()">ابدأ رحلتك</button></div></div>
+<div class="modal" id="comebackModal"><div class="box" style="text-align:center"><button class="close-modal" onclick="closeModal('comebackModal')">✕</button><div class="ultra-icon" style="font-size:48px">🌱</div><h2 style="color:var(--gold);margin:0">عودًا حميدًا!</h2><p>فاتتك جلسة؟ لا بأس. المهم ألا تتوقف. عُد اليوم، والنبتة لا تبدأ من الصفر.</p><button class="main" onclick="closeModal('comebackModal')">بسم الله</button></div></div>
+
+<!-- YOUTUBE TAJWEED MODAL -->
+<div class="modal" id="tajweedModal">
+  <div class="box" style="padding:10px; max-width:600px;">
+    <button class="close-modal" onclick="closeTajweed()" style="top:-10px;left:-10px;z-index:100">✕</button>
+    <div id="ytContainer" style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;">
+      <iframe id="ytIframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen allow="autoplay"></iframe>
+    </div>
+    <div style="margin-top:18px;text-align:center;font-size:13px;color:var(--muted);padding:0 10px;">
+      ⚠️ في حال لم يعمل الفيديو داخل التطبيق، ابحث في يوتيوب عن:<br>
+      <b id="ytSearchHint" style="color:var(--info);font-size:15px;display:block;margin:6px 0;user-select:all;"></b>
+      <a id="ytExternalLink" href="#" target="_blank" style="display:inline-block;margin-top:10px;padding:10px 16px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid var(--info);border-radius:8px;text-decoration:none;font-weight:900;">
+        🔗 افتح الفيديو مباشرة في تطبيق يوتيوب
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- RECORDER MODAL -->
+<div class="modal" id="recordModal">
+  <div class="box" style="text-align:center">
+    <button class="close-modal" onclick="closeRecordModal()">✕</button>
+    <h2 style="color:var(--danger);margin-top:0">🎤 اختبر نفسك (بدون إنترنت)</h2>
+    <div class="small">سجّل مراجعتك للورد: <b id="recordTarget" style="color:var(--text)"></b></div>
+    <button class="record-btn" id="recordBtn" onclick="toggleRecord()">🎤</button>
+    <div id="recordStatus" class="sub" style="margin-bottom:15px">اضغط للبدء (البيانات لا تخرج من هاتفك)</div>
+    <div id="playbackContainer" style="display:none;margin-top:10px">
+      <audio id="playbackAudio" controls style="width:100%"></audio>
+      <div class="small" style="margin-top:8px">استمع لتلاوتك، ثم قارنها بالمصحف.</div>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="sadaqahModal"><div class="box"><button class="close-modal" onclick="closeModal('sadaqahModal')">✕</button><h2 style="color:var(--gold);margin-top:0">🤲 أذكار وصدقة جارية</h2><div class="card" style="background:var(--goldDim);border-color:var(--gold)"><div class="quran" style="font-size:19px!important">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div></div><div id="adhkarList"></div></div></div>
-<div class="modal" id="tajweedModal"><div class="box" style="padding:10px; max-width:600px;"><button class="close-modal" onclick="closeTajweed()" style="top:-10px;left:-10px;z-index:100">✕</button><div id="ytContainer" style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;background:#000;"><iframe id="ytIframe" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none" allowfullscreen allow="autoplay"></iframe></div><div style="margin-top:18px;text-align:center;font-size:13px;color:var(--muted);padding:0 10px;">⚠️ للبحث اليدوي في يوتيوب:<br><b id="ytSearchHint" style="color:var(--info);font-size:15px;display:block;margin:6px 0;user-select:all;"></b><a id="ytExternalLink" href="#" target="_blank" style="display:inline-block;margin-top:10px;padding:10px 16px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid var(--info);border-radius:8px;text-decoration:none;font-weight:900;">🔗 افتح في تطبيق يوتيوب</a></div></div></div>
-<div class="modal" id="recordModal"><div class="box" style="text-align:center"><button class="close-modal" onclick="closeRecordModal()">✕</button><h2 style="color:var(--danger);margin-top:0">🎤 اختبر نفسك (بدون إنترنت)</h2><div class="small">سجّل مراجعتك للورد: <b id="recordTarget" style="color:var(--text)"></b></div><button class="record-btn" id="recordBtn" onclick="toggleRecord()">🎤</button><div id="recordStatus" class="sub" style="margin-bottom:15px">اضغط للبدء</div><div id="playbackContainer" style="display:none;margin-top:10px"><audio id="playbackAudio" controls style="width:100%"></audio></div></div></div>
+<div class="modal" id="addModal"><div class="box"><button class="close-modal" onclick="closeModal('addModal')">✕</button><h2 style="color:var(--gold);margin:0">➕ إضافة ورد جديد</h2><div class="small" style="margin-top:4px">أدخل الورد كما ستتذكره أنت؛ التطبيق يحاول تحديد الآيات وحساب الحروف تلقائيًا عند توفر الإنترنت.</div><div class="add-section"><div class="add-section-title">📖 بيانات الورد</div><label class="small">اسم الورد</label><input id="newLabel" placeholder="مثال: البقرة ص 48 أو البقرة آية 255"><label class="small">ملاحظة شخصية (اختياري)</label><input id="newNote" placeholder="موضع صعب، متشابهات، اكتب أحكام آيتك هنا..." style="margin-bottom:0"></div><div class="add-section"><div class="add-section-title">🔢 تقدير الحروف عند تعذر الحساب الآلي</div><div class="unit-grid"><div><label class="small">العدد</label><input id="unitCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="unitType" style="margin-bottom:0"><option value="500">صفحة ≈ 500 حرف</option><option value="50">آية ≈ 50 حرف</option><option value="35">سطر ≈ 35 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="10000">جزء ≈ 10000 حرف</option></select></div></div><div class="input-help">هذه القيم تقريبية فقط؛ عند نجاح الحساب من بيانات المصحف سيُستخدم العدد الفعلي وتظهر علامة 🎯.</div></div><div class="add-section" style="border-color:rgba(181,75,75,.35);background:var(--dangerDim)"><label style="display:flex;align-items:center;gap:10px;color:var(--danger);font-weight:900;margin:0"><input id="icuCheckbox" type="checkbox" style="width:19px;height:19px;accent-color:var(--danger);margin:0"> 🏥 عناية مركزة — للآيات أو الأوراد شديدة الصعوبة</label></div><button class="main" id="addBtn" onclick="addEntry()">➕ إضافة لخطة اليوم</button></div></div>
+<div class="modal" id="oldModal"><div class="box"><button class="close-modal" onclick="closeModal('oldModal')">✕</button><h2 style="color:var(--gold);margin:0">📚 إضافة محفوظ سابق</h2><div class="small" style="margin-top:4px">سيبدأ مباشرة من مرحلة الاستدامة والمراجعة، دون أسبوع التثبيت الأول.</div><div class="add-section"><div class="add-section-title">📖 بيانات المحفوظ</div><label class="small">اسم الورد المحفوظ</label><input id="oldLabel" placeholder="مثال: جزء عم أو الكهف ص 295"><div class="input-help">يُفضّل إدخال اسم سورة/آية/صفحة واضحة حتى يتمكن التطبيق من حساب الحروف آليًا.</div></div><div class="add-section"><div class="add-section-title">🔢 تقدير احتياطي للحروف</div><div class="unit-grid"><div><label class="small">العدد</label><input id="oldCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div><label class="small">الوحدة</label><select id="oldType" style="margin-bottom:0"><option value="10000">جزء ≈ 10000 حرف</option><option value="500">صفحة ≈ 500 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="50">آية ≈ 50 حرف</option></select></div></div></div><button class="main" id="oldBtn" onclick="addOldEntry()">📚 إضافة للمخزون</button></div></div>
 
 <div class="wrap">
   <!-- 1. TAB: HOME (CLEAN & DIRECT) -->
   <section id="home" class="view active">
     <div class="header">
       <div>
-        <h1>خطة اليوم يا <span id="displayName">صديقي</span> 📅</h1>
+        <h1>خطة اليوم يا <span id="displayName">صديقي</span> <span class="ultra-icon">📅</span></h1>
         <div class="sub" id="todayLabel"></div>
       </div>
     </div>
     <div id="homeContent">
       <div class="card" id="restDayBanner" style="display:none;background:var(--successDim);border-color:var(--success)">
-        <h2 style="color:var(--success);margin:0;font-size:18px">☕ يوم راحة!</h2>
+        <h2 style="color:var(--success);margin:0;font-size:18px"><span class="ultra-icon">☕</span> يوم راحة!</h2>
         <p class="small" style="color:var(--text);margin-top:8px">اليوم مخصص للراحة وقراءة الكهف. مراجعة خفيفة تكفي لعدم انقطاع السلسلة.</p>
       </div>
       <button class="main huge" onclick="toggleFocus()">▶ ابدأ جلسة المراجعة والتركيز</button>
@@ -279,14 +337,14 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
   <section class="view" id="schedule">
     <div class="header">
       <div>
-        <h1>🧭 التخطيط والمخزون</h1>
+        <h1><span class="ultra-icon">🧭</span> التخطيط والمخزون</h1>
         <div class="sub" style="margin-top:4px">راقب إنجازك وخطط لمستقبلك</div>
       </div>
     </div>
 
     <!-- TIME PLANNER -->
     <div class="card" style="border-color:var(--info);">
-      <h2 style="color:var(--info); margin-bottom:14px;">🕰️ كشف حساب الحفظ</h2>
+      <h2 style="color:var(--info); margin-bottom:14px;"><span class="ultra-icon">🕰️</span> كشف حساب الحفظ</h2>
       
       <div class="plan-tabs">
         <button class="plan-tab active" onclick="switchPlan('day', this)">اليوم</button>
@@ -323,7 +381,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
   <section class="view" id="spiritual">
     <div class="header">
       <div>
-        <h1>💡 زاد الحافظ</h1>
+        <h1><span class="ultra-icon">💡</span> زاد الحافظ</h1>
         <div class="sub" style="margin-top:4px">ركن الروقان والتغذية الروحية</div>
       </div>
     </div>
@@ -400,11 +458,6 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
   <!-- 5. TAB: SETTINGS -->
   <section class="view" id="settings">
     <div class="header"><h1>⚙️ الإعدادات والنظام</h1></div>
-    <div class="card" style="background:var(--dangerDim);border-color:var(--danger)">
-      <div style="color:var(--danger);font-weight:800;text-align:center;font-size:13.5px">
-        ⚠️ بياناتك محليّة على هذا المتصفح. خذ نسخة احتياطية دوريًا.
-      </div>
-    </div>
     <div class="desktop">
       <div>
         <!-- GRAPHICS ENGINE SETTING -->
@@ -476,7 +529,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 
 <script>
 'use strict';
-const STORAGE_KEY='rafiq-quran-master-v10',ADHKAR_KEY='rafiq-adhkar-v10',SPLASH_KEY='rafiq-splash-day-v10';
+const STORAGE_KEY='rafiq-quran-master-v11',ADHKAR_KEY='rafiq-adhkar-v11',SPLASH_KEY='rafiq-splash-day-v11';
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,graphicsLevel:1,firstDate:'',totalFocusMinutes:0,restDays:[5]};
 let data=structuredClone(DEFAULT),poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,adhkarProgress={};
 
@@ -490,7 +543,7 @@ const dailyAyahs=[{s:9,a:104,text:'أَلَمْ يَعْلَمُوا أَنَّ 
 const tajweedData = [
   { title: "الإظهار الحلقي (نون ساكنة/تنوين)", rule: "إذا جاءت النون الساكنة أو التنوين وبعدها حرف حلقي (أ، هـ، ع، ح، غ، خ)، انطق النون بوضوح تام دون أي غنة زائدة.", yt: "sLv9OMs3o3U", search: "الإظهار الحلقي فارس عنتر" },
   { title: "الإخفاء الشفوي (ميم ساكنة)", rule: "إذا جاءت ميم ساكنة وبعدها حرف (ب)، اقفل شفتيك بخفة بدون كزّ، وأخرج غنة من الأنف مقدارها حركتين.", yt: "NE2cc2NxO0E", search: "الإخفاء الشفوي فارس عنتر" },
-  { title: "القلقلة (قطب جد)", rule: "رجة أو اضطراب في مخرج الحرف الساكن (ق، ط، ب، ج، د) حتى يظهر صوته بوضوح تام ותكون أقوى عند الوقف.", yt: "EHU9AjqvAP8", search: "القلقلة فارس عنتر" },
+  { title: "القلقلة (قطب جد)", rule: "رجة أو اضطراب في مخرج الحرف الساكن (ق، ط، ب، ج، د) حتى يظهر صوته بوضوح تام وتكون أقوى عند الوقف.", yt: "EHU9AjqvAP8", search: "القلقلة فارس عنتر" },
   { title: "المد الطبيعي (الأصلي)", rule: "حركتان فقط للألف الساكنة المفتوح ما قبلها، والواو المضموم ما قبلها، والياء المكسور ما قبلها.", yt: "F1LP-8LOlRw", search: "المد الطبيعي فارس عنتر" }
 ];
 
@@ -573,34 +626,20 @@ function renderPlan(period) {
 
   grid.innerHTML = `
     <div class="plan-box" style="border-top: 4px solid var(--warning)">
-      <h3 style="color:var(--warning)">🎯 ${titleTo}</h3>
+      <h3 style="color:var(--warning)"><span class="ultra-icon">🎯</span> ${titleTo}</h3>
       <div class="small" style="margin-bottom:8px">ما يجب عليك إنجازه للالتزام بمسارك:</div>
       <div style="font-size:14px; margin-bottom:4px">• <b>مراجعات مجدولة:</b> ${dueCount} ورد</div>
       <div style="font-size:14px; margin-bottom:4px">• <b>أوراد قيد التثبيت:</b> ${newCount} ورد</div>
       <div style="font-size:14px; margin-bottom:4px; color:var(--muted)">• <b>هدف تقريبي مقترح:</b> حفظ ${goalFraction} ${data.goalUnit}</div>
     </div>
     <div class="plan-box" style="border-top: 4px solid var(--success)">
-      <h3 style="color:var(--success)">🏆 ${titleDone}</h3>
+      <h3 style="color:var(--success)"><span class="ultra-icon">🏆</span> ${titleDone}</h3>
       <div class="small" style="margin-bottom:8px">ما أتممته بفضل الله وتوفيقه:</div>
       <div style="font-size:14px; margin-bottom:4px">• <b>حفظ جديد أُضيف:</b> ${doneSave} ورد</div>
       <div style="font-size:14px; margin-bottom:4px">• <b>مراجعات أُنجزت:</b> ${doneRev} ورد</div>
       <div style="font-size:14px; margin-bottom:4px">• <b>تكرارات (غيباً):</b> ${doneRep} مرة</div>
     </div>
   `;
-}
-
-/* FORECASTING */
-function renderForecast(){
-  const evalCount = data.entries.filter(e=>e.hasBeenEvaluated).length;
-  const activeDays = Object.keys(data.dailyLog).length;
-  const box = document.getElementById('forecastData');
-  if (activeDays < 3 || evalCount === 0) { box.innerHTML = 'استمر لعدة أيام ليتعلم الذكاء الاصطناعي معدلك ويحسب موعد الختمة.'; return; }
-  const rate = evalCount / activeDays;
-  const remaining = data.goal - evalCount;
-  if (remaining <= 0) { box.innerHTML = '🎉 لقد أتممت هدفك! ما شاء الله.'; return; }
-  const daysLeft = Math.ceil(remaining / rate);
-  const finishDate = new Date(); finishDate.setDate(finishDate.getDate() + daysLeft);
-  box.innerHTML = `بناءً على نشاطك (<b>${rate.toFixed(2)} ${data.goalUnit}/يوم</b>)، ستُتم هدفك في: <br><span style="font-size:24px;color:var(--gold);font-weight:900;display:block;margin-top:10px;">${finishDate.toLocaleDateString('ar-EG', { month: 'long', year: 'numeric' })}</span>`;
 }
 
 /* WIDGETS & TAJWEED */
@@ -756,16 +795,18 @@ function renderAll(){
   if(data.restDays && data.restDays.includes(todayIdx)){ document.getElementById('restDayBanner').style.display = 'block'; } else { document.getElementById('restDayBanner').style.display = 'none'; }
   document.getElementById('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="sub" style="text-align:center">📖 لا يوجد حفظ جديد اليوم.</div>';
   document.getElementById('dueCount').textContent=due.length;
-  document.getElementById('dueList').innerHTML=due.length?due.map(entryHTML).join(''):'<div class="sub" style="text-align:center">🎉 خلصت مراجعات اليوم!</div>';
+  document.getElementById('dueList').innerHTML=due.length?due.map(entryHTML).join('<div></div>'):'<div class="sub" style="text-align:center">🎉 خلصت مراجعات اليوم!</div>';
   document.getElementById('icuCard').style.display=icu.length?'block':'none';
   document.getElementById('icuList').innerHTML=icu.map(entryHTML).join('');
   renderPool();
   if(document.getElementById('progress').classList.contains('active')) renderProgress();
-  if(document.getElementById('schedule').classList.contains('active')){ renderPlan('day'); renderForecast(); }
+  if(document.getElementById('schedule').classList.contains('active')){ renderPlan('day'); }
 }
 
 function renderProgress(){
   const ev=data.entries.filter(e=>e.hasBeenEvaluated).length;
+  const activeDays=Object.keys(data.dailyLog).length;
+  const activeEl=document.getElementById('activeDaysStat');if(activeEl) activeEl.textContent=activeDays;
   document.getElementById('streakStat').textContent=data.streak;
   document.getElementById('entriesStat').textContent=data.entries.length;
   document.getElementById('evalStat').textContent=ev;
