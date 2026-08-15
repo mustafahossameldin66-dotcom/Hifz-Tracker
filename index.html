@@ -7,10 +7,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>رفيق القرآن - المراجعة الذكية</title>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- أكواد اللوجو والأيقونة -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
-<link rel="manifest" href="manifest.json">
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0f1b16; --card-bg: #16241c; --border: #2a3d30;
@@ -44,7 +46,7 @@
   input[type=text], input[type=number], textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); font-size: 14px; margin-bottom: 10px; font-family: 'Tahoma', sans-serif; }
 
   button.main-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--primary); color: #0f1b16; font-weight: bold; font-size: 16px; cursor: pointer; }
-  button.huge-btn { padding: 18px; font-size: 18px; background: linear-gradient(135deg, var(--primary), #a6854b); box-shadow: 0 4px 15px rgba(201,168,106,0.2); margin-top: 10px; }
+  button.huge-btn { padding: 18px; font-size: 18px; background: linear-gradient(135deg, var(--primary), #a6854b); box-shadow: 0 4px 15px rgba(201,168,106,0.2); margin-top: 10px; margin-bottom: 20px; }
   button:active { transform: scale(0.98); }
   .action-btn { flex: 1; background: var(--border); color: var(--text); text-align: center; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; border: none; }
 
@@ -65,29 +67,44 @@
   .item-meta { font-size: 11px; color: var(--secondary); margin-top: 6px; display:flex; justify-content:space-between; align-items: center;}
   .app-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
   .app-links a { text-decoration: none; color: var(--secondary); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; background: var(--card-bg); }
+  
+  /* Counter UI */
+  .rep-counter-container { display: flex; flex-direction: column; gap: 8px; background: var(--card-bg); padding: 10px; border-radius: 8px; border: 1px dashed var(--border); margin-top: 5px; }
+  .rep-counter-row { display: flex; justify-content: space-between; align-items: center; }
+  .rep-btn { background: var(--primary); color: #0f1b16; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
+  .rep-btn.done { background: var(--success); color: #fff; }
 
-  .q-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px; width: 100%; }
+  /* Buttons Grid */
+  .q-btns { display: grid; gap: 6px; margin-top: 10px; width: 100%; }
   .q-btns button { padding: 10px 4px; font-size: 12px; font-weight:bold; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; }
-
+  
+  /* Focus Mode / Session Mode */
   .timer-display { font-size: 48px; font-weight: bold; color: var(--primary); text-align: center; font-family: monospace; margin: 10px 0; letter-spacing: 2px; }
   body.focus-mode .bottom-nav { display: none !important; }
   body.focus-mode .header-row { display: none !important; }
   body.focus-mode #home-content { display: none !important; }
-
+  
   #session-container { display: none; }
   body.focus-mode #session-container { display: flex; flex-direction: column; justify-content: center; min-height: 80vh; }
-
-  .stats-grid { display: flex; text-align: center; justify-content: space-between; margin-bottom: 16px; }
-  .stat-box { flex: 1; background: var(--input-bg); margin: 0 4px; padding: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
-  .stat-num { font-size: 24px; font-weight: bold; color: var(--primary); }
+  
+  /* Stats */
+  .stats-grid { display: flex; text-align: center; justify-content: space-between; margin-bottom: 16px; gap: 8px; }
+  .stat-box { flex: 1; background: var(--input-bg); padding: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
+  .stat-num { font-size: 22px; font-weight: bold; color: var(--primary); }
   .stat-lbl { font-size: 11px; color: var(--secondary); margin-top: 4px; }
 
   .progress-bar-container { background: var(--input-bg); border-radius: 10px; height: 14px; width: 100%; overflow: hidden; margin: 10px 0; border: 1px solid var(--border); }
   .progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.5s ease; }
+  
+  /* Empty States */
+  .empty-state { text-align: center; padding: 20px; font-size: 13px; line-height: 1.8; color: var(--secondary); background: rgba(201, 168, 106, 0.05); border: 1px dashed var(--border); border-radius: 10px; }
+  .empty-state b { color: var(--primary); }
+  .phase-badge { background: rgba(201, 168, 106, 0.1); border: 1px solid var(--primary); color: var(--primary); font-size: 10px; padding: 2px 8px; border-radius: 12px; margin-right: 6px; }
 </style>
 </head>
 <body>
 
+<!-- Navigation Bar -->
 <div class="bottom-nav">
   <div class="nav-item active" onclick="switchTab('view-home', this)"><div class="nav-icon">📅</div>خطة اليوم</div>
   <div class="nav-item" onclick="switchTab('view-pool', this)"><div class="nav-icon">📚</div>المخزون</div>
@@ -95,6 +112,7 @@
   <div class="nav-item" onclick="switchTab('view-settings', this)"><div class="nav-icon">⚙️</div>الإعدادات</div>
 </div>
 
+<!-- Modals -->
 <div class="modal-overlay" id="welcomeModal">
   <div class="modal-content" style="text-align:center;">
     <div style="font-size:50px; margin-bottom:10px;">📖</div>
@@ -132,7 +150,7 @@
   <div class="modal-content">
     <button class="close-modal" onclick="closeModal('addOldModal')">✖</button>
     <h2 style="color:var(--primary); margin-top:0;">📚 إضافة محفوظ سابق</h2>
-    <p style="font-size:12px; color:var(--secondary);">هذا الورد سيدخل فوراً لمسار المراجعة المتباعدة لتحديد موعده.</p>
+    <p style="font-size:12px; color:var(--secondary);">بما أن هذا الورد محفوظ مسبقاً، سيدخل فوراً لمرحلة التعهد والمراجعة.</p>
     <input type="text" id="oldEntry" placeholder="الورد القديم (مثال: جزء عم)">
     <button class="main-btn" onclick="addOldEntry()" style="margin-top:10px;">إضافة للمخزون</button>
   </div>
@@ -150,6 +168,7 @@
 </div>
 
 <div class="wrap">
+  <!-- VIEW 1: HOME (Focused Daily Plan) -->
   <div id="view-home" class="view active">
     <div class="header-row">
       <div>
@@ -159,6 +178,7 @@
       <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     </div>
 
+    <!-- Session Container -->
     <div id="session-container">
       <h2 style="text-align:center; color:var(--primary); margin-bottom:20px;">⏱️ جلسة التركيز</h2>
       <div class="timer-display" id="mainTimerDisplay">00:00</div>
@@ -171,19 +191,20 @@
         <button class="main-btn" id="btnMainTimer" onclick="startMainTimer()">▶ ابدأ المؤقت</button>
         <button class="action-btn" style="background:var(--danger); color:#fff;" onclick="toggleFocusMode()">✖ إنهاء الجلسة</button>
       </div>
-      <div style="text-align:center; color:var(--secondary); font-size:13px;">اقرأ أورادك المطلوبة اليوم غيباً، ثم قيّم أداءك لجدولة المراجعة القادمة.</div>
+      <div style="text-align:center; color:var(--secondary); font-size:13px; line-height: 1.8;">
+        اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.
+        <br><strong style="color:var(--warning);">تنبيه: التكرار يبدأ فقط بعد الحفظ والضبط والإتقان.</strong>
+        <br>بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
+      </div>
     </div>
 
+    <!-- Main View Elements -->
     <div id="home-content">
-      <div class="stats-grid" style="margin-bottom: 10px;">
-        <div class="stat-box"><div class="stat-num" id="statStreak">0</div><div class="stat-lbl">أيام التزام 🔥</div></div>
-        <div class="stat-box"><div class="stat-num" id="statEvaluated">0</div><div class="stat-lbl">أوراد مُقيّمة 📚</div></div>
-        <div class="stat-box" style="border-color:var(--warning);"><div class="stat-num" style="color:var(--warning);" id="statDueToday">0</div><div class="stat-lbl">مهام اليوم ⏰</div></div>
-      </div>
+      
+      <button class="main-btn huge-btn" onclick="toggleFocusMode()">▶ ابدأ جلسة المراجعة</button>
 
-      <button class="main-btn huge-btn" onclick="toggleFocusMode()">▶ ابدأ الجلسة الآن</button>
-
-      <div class="card" style="margin-top: 20px;">
+      <!-- 1. Memorize Today -->
+      <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <h2 style="margin:0;">🆕 حِفظ اليوم</h2>
           <button style="background:transparent; border:1px solid var(--primary); color:var(--primary); border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;" onclick="openModal('addModal')">+ أضف</button>
@@ -191,21 +212,23 @@
         <div id="memorizeTodayList" style="margin-top:15px;"></div>
       </div>
 
+      <!-- 2. Review Today -->
       <div class="card" style="border-color:var(--warning);">
-        <h2 style="color:var(--warning);">🔄 مراجعات مستحقة اليوم</h2>
+        <h2 style="color:var(--warning);">🔄 مراجعات مستحقة اليوم <span class="badge-count" id="statDueToday" style="background:var(--warning); color:#000;">0</span></h2>
         <div id="dueTodayList"></div>
       </div>
     </div>
   </div>
 
+  <!-- VIEW 2: POOL (Inventory & Secondary Tools) -->
   <div id="view-pool" class="view">
     <div class="header-row">
       <h1>📚 المخزون الكامل</h1>
       <button class="action-btn" style="flex:none; padding:6px 12px; margin:0;" onclick="openModal('addOldModal')">+ إضافة محفوظ سابق</button>
     </div>
-
-    <p style="font-size:12px; color:var(--secondary); margin-bottom:15px;">يعتمد هذا المخزون على نظام المراجعة المتباعدة (SRS). تقييمك الذاتي يحدد موعد الظهور القادم.</p>
-
+    
+    <p style="font-size:12px; color:var(--secondary); margin-bottom:15px;">يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.</p>
+    
     <div style="display:flex; gap:10px; margin-bottom:15px;">
       <input type="text" id="searchInput" placeholder="ابحث في أورادك..." oninput="renderPool()" style="margin:0;">
       <button class="action-btn" style="flex:0.4; margin:0;" onclick="openHadrTest()">⏱️ مؤقت حَدْر</button>
@@ -223,11 +246,13 @@
     </div>
   </div>
 
+  <!-- VIEW 3: SPIRITUAL & PROGRESS -->
   <div id="view-spiritual" class="view">
     <h1>📊 التقدم والأثر الروحي</h1>
-
+    
     <div class="stats-grid" style="margin-top: 15px;">
-      <div class="stat-box"><div class="stat-num" id="statTotalAdded">0</div><div class="stat-lbl">إجمالي المُدخلات 📋</div></div>
+      <div class="stat-box"><div class="stat-num" id="statStreak">0</div><div class="stat-lbl">أيام التزام 🔥</div></div>
+      <div class="stat-box"><div class="stat-num" id="statTotalAdded">0</div><div class="stat-lbl">إجمالي الأوراد 📋</div></div>
       <div class="stat-box" style="border-color:var(--primary);"><div class="stat-num" id="statEvaluated2">0</div><div class="stat-lbl">أوراد مُقيّمة 📚</div></div>
     </div>
 
@@ -254,13 +279,23 @@
     </div>
   </div>
 
+  <!-- VIEW 4: SETTINGS -->
   <div id="view-settings" class="view">
     <h1>⚙️ الإعدادات والنظام</h1>
-
+    
     <div class="card" style="background: rgba(244, 67, 54, 0.05); border-color:var(--danger);">
       <div style="color:var(--danger); font-size:13px; font-weight:bold; text-align:center;">
         ⚠️ تنبيه هام: بياناتك محفوظة محلياً على هذا المتصفح فقط. لتجنب فقدانها عند مسح السجل، يرجى أخذ نسخة احتياطية بشكل دوري.
       </div>
+    </div>
+    
+    <div class="card">
+      <h2>🎛️ نظام المراجعة (بعد أول أسبوع)</h2>
+      <p style="font-size:12px; color:var(--secondary);">اختر الطريقة التي تفضلها في تثبيت الأوراد القديمة بعد انتهاء أسبوع التثبيت الأول.</p>
+      <select id="evalModeSelect" onchange="changeEvalMode()">
+        <option value="weekly">النظام التقليدي (مراجعة ثابتة مرة كل أسبوع)</option>
+        <option value="anki">نظام أنكي (تكرار متباعد ذكي بـ 4 خيارات)</option>
+      </select>
     </div>
 
     <div class="card">
@@ -299,7 +334,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> <!-- End Wrap -->
 
 <script>
 const STORAGE_KEY = 'hifz-core-v4';
@@ -308,7 +343,8 @@ let appData = {
   entries: [],
   streak: 0,
   lastActive: '',
-  goal: 604
+  goal: 604,
+  evalMode: 'weekly'
 };
 let poolVisibleCount = 20;
 
@@ -329,7 +365,8 @@ const duas = [
   "قال رسول الله ﷺ: «يا مقلب القلوب ثبت قلبي على دينك» [رواه الترمذي - صحيح]",
   "قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» [رواه مسلم]",
   "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» [رواه البخاري]",
-  "قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه - صحيح]"
+  "قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه - صحيح]",
+  "قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل» [دعاء مأثور]"
 ];
 
 // --- Utilities ---
@@ -358,8 +395,18 @@ function loadData() {
 
   const saved = localStorage.getItem(STORAGE_KEY);
   if(saved) {
-    try { appData = { ...appData, ...JSON.parse(saved) }; } catch(e) {}
+    try { 
+      const parsed = JSON.parse(saved);
+      appData = { ...appData, ...parsed }; 
+      if (!appData.evalMode) appData.evalMode = 'weekly'; 
+    } catch(e) {}
   }
+  
+  const today = todayStr();
+  appData.entries.forEach(e => {
+      if(e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
+      if(e.lastRepDate !== today) e.sessionReps = 0;
+  });
 
   if(!appData.userName) {
     openModal('welcomeModal');
@@ -372,8 +419,6 @@ function loadData() {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
   });
 
-  // Keep the daily content stable for the whole day.
-  // It changes automatically on the next local calendar day.
   const dayIndex = getDayOfYear(now);
   const dailyWord = gharibDict[dayIndex % gharibDict.length];
   document.getElementById('gharibWord').textContent = dailyWord.w;
@@ -389,6 +434,8 @@ function loadData() {
     document.getElementById('customGoal').style.display = 'block';
     document.getElementById('customGoal').value = appData.goal;
   }
+  
+  document.getElementById('evalModeSelect').value = appData.evalMode;
 
   checkComeback();
   renderAll();
@@ -420,6 +467,12 @@ function updateUserName() {
 function updateNameDisplays() {
   document.getElementById('displayUserName').textContent = appData.userName || 'صديقي';
   document.getElementById('settingsNameInput').value = appData.userName;
+}
+
+function changeEvalMode() {
+  appData.evalMode = document.getElementById('evalModeSelect').value;
+  saveData();
+  renderAll();
 }
 
 // --- Comeback Logic ---
@@ -502,7 +555,10 @@ function addEntry() {
     ease: 2.5,
     srsLevel: 0,
     reviewCount: 0,
-    hasBeenEvaluated: false
+    hasBeenEvaluated: false,
+    sessionReps: 0,
+    lastRepDate: todayStr(),
+    dailyPhaseReps: 0 
   });
 
   document.getElementById('newEntry').value = '';
@@ -529,7 +585,10 @@ function addOldEntry() {
     ease: 2.5,
     srsLevel: 0,
     reviewCount: 0,
-    hasBeenEvaluated: false
+    hasBeenEvaluated: false,
+    sessionReps: 0,
+    lastRepDate: todayStr(),
+    dailyPhaseReps: 7
   });
 
   document.getElementById('oldEntry').value = '';
@@ -546,47 +605,71 @@ function removeEntry(id) {
   }
 }
 
-// ANKI-STYLE 4 BUTTONS SRS
+// Daily Repetition Logic
+function addRep(id) {
+    const e = appData.entries.find(x => x.id === id);
+    if(!e) return;
+    
+    e.sessionReps = (e.sessionReps || 0) + 1;
+    e.lastRepDate = todayStr();
+    
+    saveData();
+    renderAll();
+}
+
+// 3-STAGE DYNAMIC LOGIC
 function reviewEntry(id, q) {
   const e = appData.entries.find(x => x.id === id);
   if(!e) return;
 
-  // Safe migration/defaults for any incomplete entry.
-  if (e.interval === undefined || !Number.isFinite(e.interval)) e.interval = 0;
-  if (e.ease === undefined || !Number.isFinite(e.ease)) e.ease = 2.5;
-  if (e.srsLevel === undefined || !Number.isFinite(e.srsLevel)) e.srsLevel = 0;
-  if (e.reviewCount === undefined || !Number.isFinite(e.reviewCount)) e.reviewCount = 0;
-  if (e.hasBeenEvaluated === undefined) e.hasBeenEvaluated = false;
+  if (e.interval === undefined) e.interval = 0;
+  if (e.ease === undefined) e.ease = 2.5;
+  if (e.srsLevel === undefined) e.srsLevel = 0;
+  if (e.reviewCount === undefined) e.reviewCount = 0;
+  if (e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
 
   e.hasBeenEvaluated = true;
   e.reviewCount += 1;
 
-  if (q === 4) { // Easy
-    e.srsLevel++;
-    e.ease += 0.15;
-    e.interval = e.srsLevel === 1
-      ? 4
-      : Math.max(1, Math.round(e.interval * e.ease * 1.3));
-  } else if (q === 3) { // Good
-    e.srsLevel++;
-    e.interval = e.srsLevel === 1
-      ? 1
-      : Math.max(1, Math.round(e.interval * e.ease));
-  } else if (q === 2) { // Hard
-    e.ease = Math.max(1.3, e.ease - 0.15);
-    e.interval = Math.max(1, Math.round((e.interval || 1) * 1.2));
-  } else { // Again
-    e.srsLevel = 0;
-    e.ease = Math.max(1.3, e.ease - 0.2);
-    e.interval = 1;
+  if (e.dailyPhaseReps < 7) {
+      if (q === 'daily_pass') {
+          e.dailyPhaseReps++;
+          e.interval = 1; 
+      } else if (q === 'daily_fail') {
+          e.dailyPhaseReps = 0; 
+          e.interval = 1; 
+      }
+  } else {
+      if (appData.evalMode === 'weekly') {
+          if (q === 'weekly_pass') {
+              e.interval = 7; 
+          } else if (q === 'weekly_fail') {
+              e.interval = 1; 
+          }
+      } else {
+          if (q === 4) { 
+            e.srsLevel++; e.ease += 0.15;
+            e.interval = e.srsLevel === 1 ? 4 : Math.max(1, Math.round(e.interval * e.ease * 1.3));
+          } else if (q === 3) { 
+            e.srsLevel++;
+            e.interval = e.srsLevel === 1 ? 1 : Math.max(1, Math.round(e.interval * e.ease));
+          } else if (q === 2) { 
+            e.ease = Math.max(1.3, e.ease - 0.15);
+            e.interval = Math.max(1, Math.round((e.interval || 1) * 1.2));
+          } else { 
+            e.srsLevel = 0; e.ease = Math.max(1.3, e.ease - 0.2);
+            e.interval = 1;
+          }
+      }
   }
 
   const d = new Date();
   d.setDate(d.getDate() + e.interval);
   e.nextReviewDate = getLocalDateStr(d);
   e.quality = q;
+  e.sessionReps = 0;
 
-  if((q === 3 || q === 4) && e.isICU) {
+  if(e.isICU && (q === 'daily_pass' || q === 'weekly_pass' || q === 3 || q === 4)) {
     if(confirm('أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟')) {
       e.isICU = false;
     }
@@ -610,21 +693,13 @@ function getSmartLinks(label) {
     for (let i = 0; i < quranSurahs.length; i++) {
       const s = quranSurahs[i];
       if (s === "ص" || s === "ق") {
-        if (text === s || text.includes("سورة " + s)) {
-          fSurah = i + 1;
-          break;
-        }
-      } else if (text.includes(s)) {
-        fSurah = i + 1;
-        break;
-      }
+        if (text === s || text.includes("سورة " + s)) { fSurah = i + 1; break; }
+      } else if (text.includes(s)) { fSurah = i + 1; break; }
     }
 
     if (fSurah !== -1) {
       const aMatch = text.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/) || text.match(/\s(\d+)/);
-      qLink = aMatch
-        ? `https://quran.com/${fSurah}/${aMatch[1]}`
-        : `https://quran.com/${fSurah}`;
+      qLink = aMatch ? `https://quran.com/${fSurah}/${aMatch[1]}` : `https://quran.com/${fSurah}`;
     } else {
       qLink = `https://quran.com/search?q=${encodeURIComponent(text)}`;
     }
@@ -655,20 +730,17 @@ function startMainTimer() {
 
   mTimerInterval = setInterval(() => {
     if(mTimeLeft > 0) {
-      mTimeLeft--;
-      updateMTimerDisplay();
+      mTimeLeft--; updateMTimerDisplay();
     } else {
       clearInterval(mTimerInterval);
       document.getElementById('btnMainTimer').textContent = "▶ ابدأ المؤقت";
-      mTimeLeft = 0;
-      updateMTimerDisplay();
+      mTimeLeft = 0; updateMTimerDisplay();
       alert('انتهت الجلسة! قم بتقييم مراجعاتك الآن.');
       document.body.classList.remove('focus-mode');
     }
   }, 1000);
 }
 
-// Hadr Timer
 let hTimerInterval;
 let hTimeLeft = 120;
 
@@ -713,22 +785,19 @@ function changeTrack() {
   } else {
     document.getElementById('customGoal').style.display = 'none';
     appData.goal = parseInt(val);
-    saveData();
-    renderAll();
+    saveData(); renderAll();
   }
 }
 
 document.getElementById('customGoal').addEventListener('change', (e) => {
   appData.goal = parseInt(e.target.value) || 604;
-  saveData();
-  renderAll();
+  saveData(); renderAll();
 });
 
 function exportCSV() {
-  let csv = '\\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';
+  let csv = '\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';
   appData.entries.forEach(e => {
-    csv += `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"
-`;
+    csv += `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`;
   });
   const link = document.createElement('a');
   link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
@@ -757,11 +826,10 @@ function importData(e) {
           entries: Array.isArray(data.entries) ? data.entries : [],
           streak: Number.isFinite(data.streak) ? data.streak : 0,
           lastActive: data.lastActive || '',
-          goal: Number.isFinite(data.goal) ? data.goal : 604
+          goal: Number.isFinite(data.goal) ? data.goal : 604,
+          evalMode: data.evalMode || 'weekly'
         };
-        saveData();
-        loadData();
-        alert('تم بنجاح!');
+        saveData(); loadData(); alert('تم بنجاح!');
       }
     } catch(err) {
       alert('ملف تالف');
@@ -780,9 +848,54 @@ function renderItemHTML(e) {
   const noteHtml = e.note ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>` : '';
   const isDue = (e.nextReviewDate <= todayStr() && e.hasBeenEvaluated);
   const dueCls = isDue ? 'due-review' : '';
-  const metaText = isDue
-    ? `<span style="color:var(--warning); font-weight:bold;">⏰ مستحق للمراجعة</span>`
-    : `المراجعة: ${e.nextReviewDate}`;
+  
+  if (e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
+  
+  let metaText = '';
+  if (!e.hasBeenEvaluated) {
+      metaText = `<span style="color:var(--primary); font-weight:bold;">✨ ورد جديد (كرر ثم قيّم)</span>`;
+  } else if (isDue) {
+      metaText = `<span style="color:var(--warning); font-weight:bold;">⏰ مستحق للمراجعة (كرر ثم قيّم)</span>`;
+  } else {
+      metaText = `المراجعة القادمة: ${e.nextReviewDate}`;
+  }
+  
+  const reps = e.sessionReps || 0;
+  const isDone = reps >= 10;
+  
+  let evaluationSection = '';
+  if(!e.hasBeenEvaluated || isDue) {
+      if (e.dailyPhaseReps < 7) {
+          evaluationSection = `
+          <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--primary); font-weight:bold;">📍 مرحلة التثبيت القريب: اليوم ${e.dailyPhaseReps + 1} من 7</div>
+          <div class="q-btns" style="grid-template-columns: 1fr 1fr;">
+            <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'daily_pass')">✅ أتممت مراجعة اليوم</button>
+            <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'daily_fail')">🔄 لم أتقنها (إعادة التثبيت)</button>
+          </div>`;
+      } else {
+          if (appData.evalMode === 'weekly') {
+              evaluationSection = `
+              <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--secondary);">التقييم الأسبوعي لتحديد الموعد القادم:</div>
+              <div class="q-btns" style="grid-template-columns: 1fr 1fr;">
+                <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'weekly_pass')">✅ مراجعة ممتازة (بعد 7 أيام)</button>
+                <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'weekly_fail')">🔴 أعد (غداً)</button>
+              </div>`;
+          } else {
+              evaluationSection = `
+              <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--secondary);">التقييم لجدولة الموعد القادم:</div>
+              <div class="q-btns" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
+                <button style="background:rgba(33,150,243,0.1); border-color:var(--info);" onclick="reviewEntry('${e.id}', 4)">🔵 سهل</button>
+                <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 3)">🟢 تذكرته</button>
+                <button style="background:rgba(255,193,7,0.1); border-color:var(--warning);" onclick="reviewEntry('${e.id}', 2)">🟡 بصعوبة</button>
+                <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 1)">🔴 نسيت</button>
+              </div>`;
+          }
+      }
+  }
+
+  let badge = e.dailyPhaseReps < 7 
+    ? `<span class="phase-badge">تثبيت (يوم ${e.dailyPhaseReps}/7)</span>` 
+    : `<span class="phase-badge" style="border-color:var(--success); color:var(--success);">استدامة (${appData.evalMode==='weekly'?'أسبوعي':'أنكي'})</span>`;
 
   return `
     <div class="item ${isICU} ${dueCls}">
@@ -792,22 +905,27 @@ function renderItemHTML(e) {
       </div>
       <div class="item-meta">
         <div>${metaText}</div>
-        <div style="opacity:0.6;">تقييمات سابقة: ${e.reviewCount||0}</div>
+        <div style="opacity:0.6;">${badge}</div>
       </div>
       ${getSmartLinks(e.label)}
-      <div class="q-btns">
-        <button style="background:rgba(33,150,243,0.1); border-color:var(--info);" onclick="reviewEntry('${e.id}', 4)">🔵 سهل</button>
-        <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 3)">🟢 جيد</button>
-        <button style="background:rgba(255,193,7,0.1); border-color:var(--warning);" onclick="reviewEntry('${e.id}', 2)">🟡 صعب</button>
-        <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 1)">🔴 أعد</button>
+      
+      <div class="rep-counter-container">
+         <div class="rep-counter-row">
+           <span style="font-size:12px; font-weight:bold; color:var(--text);">الهدف: 10 تكرارات غيباً</span>
+           <button class="rep-btn ${isDone ? 'done' : ''}" onclick="addRep('${e.id}')">
+              📿 كررت غيباً (${reps})
+           </button>
+         </div>
+         <div style="font-size:11px; color:var(--danger);">⚠️ التكرار يبدأ <b>بعد</b> إتمام الحفظ والضبط والإتقان.</div>
       </div>
+      
+      ${evaluationSection}
     </div>
   `;
 }
 
 function loadMorePool() {
-  poolVisibleCount += 20;
-  renderPool();
+  poolVisibleCount += 20; renderPool();
 }
 
 function renderPool() {
@@ -823,7 +941,7 @@ function renderPool() {
   const visiblePool = pool.slice(0, poolVisibleCount);
 
   if(visiblePool.length === 0) {
-    list.innerHTML = '<div class="empty">لا يوجد بيانات</div>';
+    list.innerHTML = '<div class="empty-state">لا يوجد أوراد في المخزون حتى الآن.</div>';
   } else {
     visiblePool.forEach(e => { list.innerHTML += renderItemHTML(e); });
   }
@@ -839,6 +957,8 @@ function renderAll() {
 
   document.getElementById('statStreak').textContent = appData.streak;
   document.getElementById('statEvaluated').textContent = evaluatedCount;
+  document.getElementById('statTotalAdded').textContent = appData.entries.length;
+  document.getElementById('statEvaluated2').textContent = evaluatedCount;
 
   let newToday = appData.entries.filter(e => e.date === today && !e.hasBeenEvaluated);
   const newTodayList = document.getElementById('memorizeTodayList');
@@ -847,10 +967,7 @@ function renderAll() {
     ? '📖 ابدأ أول ورد لك اليوم.<br>اضغط <b>(+ أضف)</b> للبدء في الحفظ.'
     : '📖 لا يوجد حفظ جديد اليوم.<br>اضغط <b>(+ أضف)</b> لإضافة ورد جديد.';
 
-  newTodayList.innerHTML = newToday.length
-    ? ''
-    : `<div class="empty-state">${newTodayEmptyState}</div>`;
-
+  newTodayList.innerHTML = newToday.length ? '' : `<div class="empty-state">${newTodayEmptyState}</div>`;
   newToday.forEach(e => { newTodayList.innerHTML += renderItemHTML(e); });
 
   let dueToday = appData.entries.filter(
@@ -864,10 +981,7 @@ function renderAll() {
     ? '📖 لا توجد أوراد بعد.<br>أضف أول ورد لك للبدء.'
     : '🎉 خلصت مراجعات اليوم!<br>يمكنك إضافة ورد جديد للحفظ.';
 
-  dList.innerHTML = dueToday.length
-    ? ''
-    : `<div class="empty-state">${reviewEmptyState}</div>`;
-
+  dList.innerHTML = dueToday.length ? '' : `<div class="empty-state">${reviewEmptyState}</div>`;
   dueToday.forEach(e => { dList.innerHTML += renderItemHTML(e); });
 
   const icuEntries = appData.entries.filter(e => e.isICU);
@@ -884,16 +998,12 @@ function renderAll() {
 
   renderPool();
 
-  document.getElementById('goalTextVal').textContent =
-    `${appData.goal} ورد (باعتبار الورد صفحة)`;
+  document.getElementById('goalTextVal').textContent = `${appData.goal} ورد (باعتبار الورد صفحة)`;
 
   const pct = Math.min((evaluatedCount / appData.goal) * 100, 100);
   document.getElementById('trackProgress').style.width = `${pct}%`;
   document.getElementById('trackText').textContent =
     `تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
-
-  document.getElementById('statTotalAdded').textContent = appData.entries.length;
-  document.getElementById('statEvaluated2').textContent = evaluatedCount;
 }
 
 loadData();
