@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#0f1b16">
+<meta name="theme-color" content="#0a110e">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>رفيق القرآن - المراجعة الذكية</title>
 
 <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
@@ -16,30 +16,38 @@
 
 <style>
   :root {
-    --bg: #0f1b16;
-    --card-bg: #16241c;
-    --border: #2a3d30;
-    --text: #e8e6df;
-    --primary: #c9a86a;
+    --bg: #0a110e; 
+    --card-bg: #121e18; 
+    --border: #23362a;
+    --text: #f0f2f1; 
+    --primary: #d4af37; 
+    --primary-dim: rgba(212, 175, 55, 0.12);
+    --primary-glow: rgba(212, 175, 55, 0.25);
     --secondary: #9aa89a;
-    --danger: #7f5a5a;
-    --input-bg: #0a120f;
-    --success: #4caf50;
-    --warning: #ff9800;
+    --danger: #b54b4b; 
+    --danger-dim: rgba(181, 75, 75, 0.1);
+    --input-bg: #070d0a;
+    --success: #3a914c; 
+    --success-dim: rgba(58, 145, 76, 0.12);
+    --warning: #db8c16;
     --info: #2196f3;
   }
 
   [data-theme="light"] {
-    --bg: #f4f6f5;
-    --card-bg: #ffffff;
-    --border: #d1d8d3;
-    --text: #2c3e35;
-    --primary: #8b6d33;
-    --secondary: #5c6b61;
-    --danger: #b33939;
-    --input-bg: #eef1f0;
-    --success: #388e3c;
-    --warning: #f57c00;
+    --bg: #f4f7f5; 
+    --card-bg: #ffffff; 
+    --border: #dce3df;
+    --text: #1b2620; 
+    --primary: #a67c00; 
+    --primary-dim: rgba(166, 124, 0, 0.08);
+    --primary-glow: rgba(166, 124, 0, 0.2);
+    --secondary: #637368;
+    --danger: #c93a3a; 
+    --danger-dim: rgba(201, 58, 58, 0.06);
+    --input-bg: #edf1ee;
+    --success: #2e8c42; 
+    --success-dim: rgba(46, 140, 66, 0.08);
+    --warning: #d97706;
     --info: #1976d2;
   }
 
@@ -47,4280 +55,936 @@
     transition: none !important;
     box-shadow: none !important;
     background-image: none !important;
+    animation: none !important;
   }
 
-  * {
-    box-sizing: border-box;
-    transition: background 0.3s, color 0.3s;
+  * { 
+    box-sizing: border-box; 
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease; 
   }
+
+  /* Custom Scrollbar for Desktop/Tablet */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
   body {
-    font-family: 'Tahoma', sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: var(--bg);
     color: var(--text);
     margin: 0;
     padding: 0;
-    padding-bottom: 80px;
+    padding-bottom: 85px;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
 
   .quran-font {
     font-family: 'Amiri', serif;
-    font-size: 19px !important;
+    font-size: 21px !important;
     font-weight: bold;
+    line-height: 1.8;
   }
 
-  .wrap {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 16px;
+  /* Workspace Container (Mobile First) */
+  .wrap { 
+    max-width: 600px; 
+    margin: 0 auto; 
+    padding: 20px 16px; 
   }
 
-  .view {
-    display: none;
-    animation: fadeIn 0.3s;
-  }
-
-  .view.active {
-    display: block;
-  }
+  .view { display: none; animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+  .view.active { display: block; }
 
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(5px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-
-  h1 {
-    font-size: 22px;
-    color: var(--primary);
-    margin: 0;
-    font-family: 'Amiri', serif;
-  }
+  .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+  h1 { font-size: 24px; color: var(--primary); margin: 0; font-family: 'Amiri', serif; }
 
   .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
+    border-radius: 16px;
+    padding: 20px;
     margin-bottom: 16px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
   }
 
-  .card h2 {
-    font-size: 16px;
-    margin: 0 0 12px;
-    color: var(--primary);
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .card h2 { 
+    font-size: 17px; 
+    margin: 0 0 14px; 
+    color: var(--primary); 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    font-weight: 700; 
   }
-
+  
   .badge-count {
     background: var(--border);
-    color: var(--secondary);
+    color: var(--text);
     font-size: 12px;
     padding: 2px 10px;
-    border-radius: 12px;
+    border-radius: 20px;
     margin-inline-start: auto;
     font-weight: bold;
   }
 
-  input[type=text],
-  input[type=number],
-  textarea,
-  select {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--input-bg);
-    color: var(--text);
-    font-size: 14px;
-    margin-bottom: 10px;
-    font-family: 'Tahoma', sans-serif;
+  input[type=text], input[type=number], textarea, select {
+    width: 100%; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--border);
+    background: var(--input-bg); color: var(--text); font-size: 15px; margin-bottom: 12px;
+    font-family: inherit; outline: none;
   }
+  input[type=text]:focus, input[type=number]:focus, select:focus { border-color: var(--primary); }
 
+  button { font-family: inherit; outline: none; }
   button.main-btn {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: none;
-    background: var(--primary);
-    color: #0f1b16;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
+    width: 100%; padding: 15px; border-radius: 12px; border: none;
+    background: var(--primary); color: #0a110e; font-weight: bold; font-size: 16px;
+    cursor: pointer; transition: transform 0.1s, filter 0.2s;
   }
-
+  button.main-btn:hover { filter: brightness(1.08); }
+  
   button.huge-btn {
-    padding: 18px;
-    font-size: 18px;
+    font-size: 17px; padding: 18px;
     background: linear-gradient(135deg, var(--primary), #a6854b);
-    box-shadow: 0 4px 15px rgba(201,168,106,0.2);
-    margin-top: 10px;
-    margin-bottom: 10px;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.18);
+    margin-bottom: 16px;
   }
-
-  button:active {
-    transform: scale(0.98);
-  }
+  button:active { transform: scale(0.98); }
 
   .action-btn {
-    flex: 1;
-    background: var(--border);
-    color: var(--text);
-    text-align: center;
-    padding: 12px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    border: none;
+    flex: 1; background: var(--border); color: var(--text); text-align: center;
+    padding: 13px; border-radius: 12px; cursor: pointer; font-size: 14px; font-weight: 600; border: none;
+    transition: background 0.2s, transform 0.1s;
   }
+  .action-btn:hover { background: var(--primary-dim); color: var(--primary); }
 
+  /* Navigation: Mobile Bar */
   .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background: var(--card-bg);
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-around;
-    padding: 10px 0;
-    z-index: 1000;
-    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg);
+    border-top: 1px solid var(--border); display: flex; justify-content: space-around;
+    padding: 10px 0; padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    z-index: 1000; box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
   }
-
   .nav-item {
-    flex: 1;
-    text-align: center;
-    color: var(--secondary);
-    font-size: 11px;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    flex: 1; text-align: center; color: var(--secondary); font-size: 11px; font-weight: 500;
+    cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px;
+    transition: color 0.2s;
   }
+  .nav-icon { font-size: 22px; transition: transform 0.2s; }
+  .nav-item.active { color: var(--primary); font-weight: 700; }
+  .nav-item.active .nav-icon { transform: scale(1.1); }
+  .sidebar-header { display: none; }
 
-  .nav-item.active {
-    color: var(--primary);
-    font-weight: bold;
-  }
-
-  .nav-icon {
-    font-size: 22px;
-  }
-
+  /* Modals */
   .modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 27, 22, 0.95);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    padding: 16px;
+    display: none; position: fixed; inset: 0; background: rgba(10, 17, 14, 0.82);
+    backdrop-filter: blur(6px); z-index: 2000; align-items: center; justify-content: center; padding: 20px;
   }
-
   .modal-content {
-    background: var(--card-bg);
-    border: 1px solid var(--primary);
-    width: 100%;
-    max-width: 400px;
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    max-height: 85vh;
-    overflow-y: auto;
+    background: var(--card-bg); border: 1px solid var(--border); width: 100%; max-width: 440px;
+    border-radius: 20px; padding: 26px; position: relative; max-height: 88vh; overflow-y: auto;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
   }
-
   .close-modal {
-    position: absolute;
-    top: 10px;
-    left: 15px;
-    background: none;
-    border: none;
-    color: var(--danger);
-    font-size: 22px;
-    cursor: pointer;
+    position: absolute; top: 14px; left: 16px; background: rgba(181, 75, 75, 0.1); border: none;
+    color: var(--danger); font-size: 16px; width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
   }
 
+  /* List Items */
   .item {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding: 14px;
-    border-bottom: 1px solid var(--border);
-    font-size: 14px;
-    background: var(--input-bg);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    border-right: 3px solid transparent;
-    position: relative;
-  }
-
-  .item.icu {
-    border-right-color: var(--danger);
-    background: rgba(244,67,54,0.05);
-  }
-
-  .item.due-review {
-    border-right-color: var(--warning);
-    background: rgba(255,152,0,0.05);
-  }
-
-  .item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-  }
-
-  .item-title {
-    flex: 1;
-  }
-
-  .item-meta {
-    font-size: 11px;
-    color: var(--secondary);
-    margin-top: 6px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .app-links {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    margin-top: 8px;
-  }
-
-  .app-links a {
-    text-decoration: none;
-    color: var(--secondary);
-    border: 1px solid var(--border);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    background: var(--card-bg);
-  }
-
-  .app-links a:hover {
-    color: var(--primary);
-    border-color: var(--primary);
-  }
-
-  /* Counter */
-  .rep-counter-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background: var(--card-bg);
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px dashed var(--border);
-    margin-top: 5px;
-  }
-
-  .rep-counter-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .rep-btn {
-    background: var(--primary);
-    color: #0f1b16;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 13px;
-  }
-
-  .rep-btn.done {
-    background: var(--success);
-    color: #fff;
-  }
-
-  /* Review Buttons */
-  .q-btns {
-    display: grid;
-    gap: 6px;
-    margin-top: 10px;
-    width: 100%;
-  }
-
-  .q-btns button {
-    padding: 10px 4px;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--card-bg);
-    color: var(--text);
-    cursor: pointer;
-  }
-
-  /* 7-day tracker */
-  .phase-tracker {
-    display: flex;
-    gap: 4px;
-    margin-top: 6px;
-  }
-
-  .t-box {
-    width: 14px;
-    height: 14px;
-    border: 1px solid var(--primary);
-    border-radius: 3px;
-    background: transparent;
-  }
-
-  .t-box.done {
-    background: var(--primary);
-  }
-
-  .timer-display {
-    font-size: 48px;
-    font-weight: bold;
-    color: var(--primary);
-    text-align: center;
-    font-family: monospace;
-    margin: 10px 0;
-    letter-spacing: 2px;
-
-    /* IMPORTANT: prevent RTL from reversing MM:SS */
-    direction: ltr;
-    unicode-bidi: isolate;
-    text-align: center;
-  }
-
-  body.focus-mode .bottom-nav {
-    display: none !important;
-  }
-
-  body.focus-mode .header-row {
-    display: none !important;
-  }
-
-  body.focus-mode #home-content {
-    display: none !important;
-  }
-
-  #session-container {
-    display: none;
-  }
-
-  body.focus-mode #session-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: 80vh;
-  }
-
-  .timer-custom-row {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-  }
-
-  .timer-custom-row input {
-    margin: 0;
-    flex: 1;
-  }
-
-  .timer-custom-row button {
-    flex: 0.45;
-    margin: 0;
-  }
-
-  /* Stats */
-  .stats-grid {
-    display: flex;
-    text-align: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    gap: 8px;
-  }
-
-  .stat-box {
-    flex: 1;
-    background: var(--input-bg);
-    padding: 12px 0;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-  }
-
-  .stat-num {
-    font-size: 22px;
-    font-weight: bold;
-    color: var(--primary);
-  }
-
-  .stat-lbl {
-    font-size: 11px;
-    color: var(--secondary);
-    margin-top: 4px;
-  }
-
-  .progress-bar-container {
-    background: var(--input-bg);
-    border-radius: 10px;
-    height: 14px;
-    width: 100%;
+    display: flex; flex-direction: column; gap: 10px; padding: 18px;
+    border: 1px solid var(--border); background: var(--input-bg);
+    border-radius: 14px; margin-bottom: 12px; position: relative;
     overflow: hidden;
-    margin: 10px 0;
-    border: 1px solid var(--border);
   }
+  .item::before { 
+    content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 4px; background: transparent;
+  }
+  .item.icu { background: var(--danger-dim); border-color: rgba(181, 75, 75, 0.3); }
+  .item.icu::before { background: var(--danger); }
+  .item.due-review { background: rgba(219, 140, 22, 0.05); border-color: rgba(219, 140, 22, 0.25); }
+  .item.due-review::before { background: var(--warning); }
 
-  .progress-bar {
-    background: var(--primary);
-    height: 100%;
-    width: 0%;
-    transition: width 0.5s ease;
+  .item-header { display: flex; justify-content: space-between; align-items: flex-start; }
+  .item-title { flex: 1; }
+  .note-txt { font-size: 12px; color: var(--secondary); margin-top: 4px; }
+  
+  .item-meta { font-size: 12px; color: var(--secondary); margin-top: 8px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  
+  .app-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .app-links a {
+    text-decoration: none; color: var(--text); border: 1px solid var(--border);
+    padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    background: var(--card-bg); display: flex; align-items: center; gap: 4px;
+    transition: border-color 0.2s, color 0.2s;
   }
+  .app-links a:hover { border-color: var(--primary); color: var(--primary); }
 
-  /* Empty states */
-  .empty-state {
-    text-align: center;
-    padding: 20px;
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--secondary);
-    background: rgba(201,168,106,0.05);
-    border: 1px dashed var(--border);
-    border-radius: 10px;
+  /* Counter & Tracking */
+  .rep-counter-container {
+    display: flex; flex-direction: column; gap: 8px; background: var(--card-bg);
+    padding: 12px 14px; border-radius: 12px; border: 1px dashed var(--border); margin-top: 8px;
   }
+  .rep-counter-row { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .rep-btn {
+    background: var(--primary-dim); color: var(--primary); border: 1px solid var(--primary);
+    padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 13px;
+    transition: all 0.2s;
+  }
+  .rep-btn:hover { filter: brightness(1.15); transform: translateY(-1px); }
+  .rep-btn.done { background: var(--success); border-color: var(--success); color: #fff; }
 
-  .empty-state b {
-    color: var(--primary);
+  /* Responsive Buttons Grid */
+  .q-btns { display: grid; gap: 8px; margin-top: 12px; width: 100%; grid-template-columns: repeat(2, 1fr); }
+  .q-btns button {
+    padding: 12px 6px; font-size: 13px; font-weight: 600; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer;
+    transition: transform 0.1s, filter 0.15s;
   }
+  .q-btns button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+  /* Phase Tracker */
+  .phase-tracker { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+  .t-box {
+    width: 14px; height: 14px; border: 1.5px solid var(--primary);
+    border-radius: 50%; background: transparent; transition: background 0.3s, transform 0.2s;
+  }
+  .t-box.done { background: var(--primary); box-shadow: 0 0 6px var(--primary-glow); transform: scale(1.05); }
 
   .phase-badge {
-    background: rgba(201,168,106,0.1);
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-right: 6px;
-    display: inline-block;
+    background: var(--primary-dim); border: 1px solid var(--primary); color: var(--primary);
+    font-size: 11px; padding: 4px 10px; border-radius: 20px; font-weight: 600;
   }
 
-  /* ---------------- GLOW SYSTEM ---------------- */
+  /* Focus Mode / Timer */
+  .timer-display {
+    font-size: 56px; font-weight: 700; color: var(--primary); text-align: center;
+    font-family: system-ui, -apple-system, monospace; margin: 12px 0; letter-spacing: 1px;
+    direction: ltr; unicode-bidi: isolate;
+  }
+  body.focus-mode .bottom-nav, body.focus-mode .header-row, body.focus-mode #home-content { display: none !important; }
+  #session-container { display: none; }
+  body.focus-mode #session-container { display: flex; flex-direction: column; justify-content: center; min-height: 80vh; max-width: 600px; margin: 0 auto; }
+  .timer-custom-row { display: flex; gap: 8px; margin-top: 8px; }
+  .timer-custom-row input { margin: 0; flex: 1; }
+  .timer-custom-row button { flex: 0.45; margin: 0; }
 
+  /* Stats Grid */
+  .stats-grid { display: flex; text-align: center; justify-content: space-between; margin-bottom: 20px; gap: 10px; }
+  .stat-box { flex: 1; background: var(--input-bg); padding: 16px 0; border-radius: 14px; border: 1px solid var(--border); }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--primary); }
+  .stat-lbl { font-size: 12px; color: var(--secondary); margin-top: 4px; font-weight: 500; }
+
+  .progress-bar-container { background: var(--input-bg); border-radius: 20px; height: 12px; width: 100%; overflow: hidden; margin: 12px 0; border: 1px solid var(--border); }
+  .progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  .empty-state { text-align: center; padding: 28px 20px; font-size: 14px; line-height: 1.8; color: var(--secondary); background: var(--primary-dim); border: 1px dashed var(--primary); border-radius: 14px; }
+  .empty-state b { color: var(--primary); }
+
+  /* Default Grid placeholders for mobile */
+  .desktop-grid { display: block; }
+  .tablet-grid-equal { display: block; }
+  .desktop-grid-2col { display: block; }
+
+
+  /* =========================================================
+     TABLET & IPAD ENHANCEMENTS (768px to 991px)
+  ========================================================= */
+  @media (min-width: 768px) and (max-width: 991px) {
+    .wrap { max-width: 820px; padding: 24px; }
+    
+    .bottom-nav {
+      padding: 14px 0;
+      padding-bottom: calc(14px + env(safe-area-inset-bottom));
+    }
+    .nav-item { font-size: 13px; gap: 6px; }
+    .nav-icon { font-size: 24px; }
+    
+    .stats-grid { gap: 16px; }
+    .stat-num { font-size: 30px; }
+
+    /* Utilize 2 columns for non-timeline views */
+    .tablet-grid-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+    .q-btns.anki-btns { grid-template-columns: repeat(4, 1fr); }
+  }
+
+
+  /* =========================================================
+     DESKTOP & LARGE SCREEN ENHANCEMENTS (>= 992px)
+  ========================================================= */
+  @media (min-width: 992px) {
+    body {
+      padding-bottom: 0;
+      display: flex;
+      background: linear-gradient(145deg, #070d0a 0%, #0c1612 100%);
+    }
+    /* Fixed Sidebar Navigation */
+    .bottom-nav {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: auto;
+      width: 260px;
+      height: 100vh;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 30px 16px;
+      border-top: none;
+      border-left: 1px solid var(--border);
+      background: var(--card-bg);
+      gap: 10px;
+      box-shadow: -4px 0 24px rgba(0,0,0,0.15);
+    }
+    .sidebar-header {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px 24px; border-bottom: 1px solid var(--border); margin-bottom: 12px;
+    }
+    .sidebar-brand-title {
+      font-family: 'Amiri', serif; font-size: 20px; color: var(--primary); font-weight: bold; line-height: 1.2;
+    }
+    .sidebar-brand-subtitle { font-size: 11px; color: var(--secondary); }
+
+    .nav-item {
+      flex: none; width: 100%; flex-direction: row; padding: 14px 18px;
+      border-radius: 12px; font-size: 14px; gap: 14px; justify-content: flex-start; border: 1px solid transparent;
+    }
+    .nav-item:hover { background: var(--primary-dim); color: var(--primary); }
+    .nav-item.active { background: var(--primary-dim); color: var(--primary); border-color: rgba(212, 175, 55, 0.25); }
+    .nav-icon { font-size: 20px; }
+
+    /* Wide Desktop Workspace */
+    .wrap {
+      max-width: 1100px;
+      margin: 0;
+      margin-right: 260px;
+      padding: 36px 40px;
+      width: calc(100% - 260px);
+    }
+
+    /* 2-Column Grids */
+    .desktop-grid-2col {
+      display: grid; grid-template-columns: 1.25fr 0.95fr; gap: 24px; align-items: start;
+    }
+    .tablet-grid-equal {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start;
+    }
+    .card { padding: 24px; border-radius: 18px; }
+    .q-btns.anki-btns { grid-template-columns: repeat(4, 1fr); }
+    .item { padding: 20px; }
+    .stats-grid { gap: 16px; }
+    .stat-box { padding: 20px 0; }
+    .stat-num { font-size: 32px; }
+  }
+
+
+  /* =========================================================
+     GLOW SYSTEM (Animations)
+  ========================================================= */
   @keyframes goldenGlow {
-    0% {
-      box-shadow:
-        0 0 0 rgba(201,168,106,0),
-        inset 0 0 0 rgba(201,168,106,0);
-      border-color: var(--border);
-    }
-
-    25% {
-      box-shadow:
-        0 0 10px rgba(201,168,106,.55),
-        0 0 28px rgba(201,168,106,.25),
-        inset 0 0 18px rgba(201,168,106,.08);
-      border-color: var(--primary);
-    }
-
-    55% {
-      box-shadow:
-        0 0 18px rgba(201,168,106,.75),
-        0 0 42px rgba(201,168,106,.35),
-        inset 0 0 24px rgba(201,168,106,.10);
-      border-color: var(--primary);
-    }
-
-    100% {
-      box-shadow:
-        0 0 0 rgba(201,168,106,0),
-        inset 0 0 0 rgba(201,168,106,0);
-      border-color: var(--border);
-    }
+    0%   { box-shadow: 0 0 0 rgba(212,175,55,0); border-color: var(--border); }
+    40%  { box-shadow: 0 4px 24px rgba(212,175,55,0.3), inset 0 0 12px rgba(212,175,55,0.06); border-color: var(--primary); }
+    100% { box-shadow: 0 0 0 rgba(212,175,55,0); border-color: var(--border); }
   }
-
   @keyframes goldenGlowText {
-    0% {
-      color: inherit;
-      text-shadow: none;
-    }
-
-    30% {
-      color: #e5c883;
-      text-shadow:
-        0 0 5px rgba(201,168,106,.55),
-        0 0 14px rgba(201,168,106,.45);
-    }
-
-    60% {
-      color: #f1d99b;
-      text-shadow:
-        0 0 8px rgba(201,168,106,.8),
-        0 0 22px rgba(201,168,106,.5);
-    }
-
-    100% {
-      color: inherit;
-      text-shadow: none;
-    }
+    0%   { color: inherit; text-shadow: none; transform: scale(1); }
+    40%  { color: var(--primary); text-shadow: 0 0 14px rgba(212,175,55,0.45); transform: scale(1.02); }
+    100% { color: inherit; text-shadow: none; transform: scale(1); }
   }
-
   @keyframes celebrateGlow {
-    0% {
-      box-shadow:
-        0 0 0 rgba(201,168,106,0);
-      transform: scale(1);
-    }
-
-    30% {
-      box-shadow:
-        0 0 18px rgba(201,168,106,.8),
-        0 0 45px rgba(201,168,106,.35),
-        inset 0 0 20px rgba(201,168,106,.08);
-      transform: scale(1.015);
-    }
-
-    60% {
-      box-shadow:
-        0 0 28px rgba(201,168,106,.95),
-        0 0 65px rgba(201,168,106,.45),
-        inset 0 0 28px rgba(201,168,106,.12);
-      transform: scale(1.02);
-    }
-
-    100% {
-      box-shadow:
-        0 0 0 rgba(201,168,106,0);
-      transform: scale(1);
-    }
+    0%   { transform: translateY(0) scale(1); box-shadow: 0 0 0 rgba(212,175,55,0); border-color: var(--border); }
+    40%  { transform: translateY(-3px) scale(1.01); box-shadow: 0 10px 36px rgba(212,175,55,0.4), inset 0 0 16px rgba(212,175,55,0.12); border-color: var(--primary); }
+    100% { transform: translateY(0) scale(1); box-shadow: 0 0 0 rgba(212,175,55,0); border-color: var(--border); }
   }
-
-  .golden-glow {
-    animation: goldenGlow .9s ease-out;
-  }
-
-  .golden-glow-text {
-    animation: goldenGlowText .9s ease-out;
-  }
-
-  .celebrate-glow {
-    animation: celebrateGlow 1.2s ease-in-out;
-    position: relative;
-    z-index: 10;
-  }
-
-  .item.golden-glow .glow-target {
-    animation: goldenGlowText .9s ease-out;
-  }
-
-  .item.golden-glow .phase-badge,
-  .item.celebrate-glow .phase-badge,
-  .item.golden-glow .rep-btn,
-  .item.celebrate-glow .rep-btn {
-    border-color: var(--primary);
-    animation: goldenGlowText .9s ease-out;
-  }
-
-  .item.celebrate-glow {
-    background:
-      radial-gradient(
-        circle at center,
-        rgba(201,168,106,.12),
-        transparent 72%
-      );
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-      animation-duration: 0.001ms !important;
-      animation-iteration-count: 1 !important;
-      scroll-behavior: auto !important;
-    }
-  }
+  .golden-glow { animation: goldenGlow 1s cubic-bezier(0.16, 1, 0.3, 1); z-index: 5; position: relative; }
+  .golden-glow-text { animation: goldenGlowText 1s cubic-bezier(0.16, 1, 0.3, 1); display: inline-block; }
+  .celebrate-glow { animation: celebrateGlow 1.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 10; position: relative; }
+  .item.golden-glow .glow-target { animation: goldenGlowText 1s ease-out; }
 </style>
 </head>
 
 <body>
 
-<!-- Navigation -->
+<!-- Navigation (Mobile/Tablet Bottom Bar & Desktop Sidebar) -->
 <div class="bottom-nav">
-  <div class="nav-item active" onclick="switchTab('view-home', this)">
-    <div class="nav-icon">📅</div>خطة اليوم
-  </div>
-
-  <div class="nav-item" onclick="switchTab('view-pool', this)">
-    <div class="nav-icon">📚</div>المخزون
-  </div>
-
-  <div class="nav-item" onclick="switchTab('view-spiritual', this)">
-    <div class="nav-icon">📊</div>التقدم والأثر
-  </div>
-
-  <div class="nav-item" onclick="switchTab('view-settings', this)">
-    <div class="nav-icon">⚙️</div>الإعدادات
-  </div>
-</div>
-
-<!-- Welcome Modal -->
-<div class="modal-overlay" id="welcomeModal">
-  <div class="modal-content" style="text-align:center;">
-    <div style="font-size:50px; margin-bottom:10px;">📖</div>
-
-    <h2 style="color:var(--primary); margin-top:0;">
-      أهلاً بك في رفيق القرآن
-    </h2>
-
-    <p style="font-size:14px; color:var(--secondary);">
-      تطبيقك الشخصي للمراجعة المتباعدة.
-      بياناتك تُحفظ على جهازك محلياً فقط.
-      ما هو اسمك للبدء؟
-    </p>
-
-    <input
-      type="text"
-      id="onboardName"
-      placeholder="أدخل اسمك هنا..."
-      style="text-align:center; font-size:16px;"
-    >
-
-    <button class="main-btn" onclick="saveNewUser()">
-      ابدأ رحلتك
-    </button>
-  </div>
-</div>
-
-<!-- Comeback -->
-<div class="modal-overlay" id="comebackModal">
-  <div class="modal-content" style="text-align:center;">
-    <div style="font-size:50px; margin-bottom:10px;">🌱</div>
-
-    <h2 style="color:var(--primary); margin-top:0;">
-      عوداً حميداً!
-    </h2>
-
-    <p style="font-size:14px; color:var(--text);">
-      فاتتك جلسة؟ لا بأس. المهم ألا تتوقف أبداً.
-      <br>
-      لنبدأ من جديد اليوم ونبني سلسلة نجاح جديدة!
-    </p>
-
-    <button class="main-btn" onclick="closeModal('comebackModal')">
-      بسم الله
-    </button>
-  </div>
-</div>
-
-<!-- Add New -->
-<div class="modal-overlay" id="addModal">
-  <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addModal')">✖</button>
-
-    <h2 style="color:var(--primary); margin-top:0;">
-      ➕ حفظ جديد للنهاردة
-    </h2>
-
-    <input
-      type="text"
-      id="newEntry"
-      placeholder="الورد (مثال: البقرة ص 4)"
-    >
-
-    <input
-      type="text"
-      id="newNote"
-      placeholder="ملاحظات شخصية (اختياري)"
-    >
-
-    <label style="
-      display:flex;
-      align-items:center;
-      gap:8px;
-      font-size:13px;
-      margin-bottom:10px;
-      color:var(--danger);
-    ">
-      <input
-        type="checkbox"
-        id="icuCheckbox"
-        style="width:18px;height:18px;accent-color:var(--danger);"
-      >
-      عناية مركزة (تنبيه مضاعف للآيات الصعبة)
-    </label>
-
-    <button
-      class="main-btn"
-      onclick="addEntry()"
-      style="margin-top:10px;"
-    >
-      إضافة لخطة اليوم
-    </button>
-  </div>
-</div>
-
-<!-- Add Old -->
-<div class="modal-overlay" id="addOldModal">
-  <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addOldModal')">✖</button>
-
-    <h2 style="color:var(--primary); margin-top:0;">
-      📚 إضافة محفوظ سابق
-    </h2>
-
-    <p style="font-size:12px; color:var(--secondary);">
-      بما أن هذا الورد محفوظ مسبقاً، سيدخل فوراً لمرحلة التعهد والمراجعة.
-    </p>
-
-    <input
-      type="text"
-      id="oldEntry"
-      placeholder="الورد القديم (مثال: جزء عم)"
-    >
-
-    <button
-      class="main-btn"
-      onclick="addOldEntry()"
-      style="margin-top:10px;"
-    >
-      إضافة للمخزون
-    </button>
-  </div>
-</div>
-
-<!-- Hadr Modal -->
-<div class="modal-overlay" id="hadrModal">
-  <div class="modal-content" style="text-align:center;">
-    <h2 style="color:var(--primary); margin-top:0;">
-      ⏱️ مؤقت الحَدْر
-    </h2>
-
-    <div style="
-      font-size:14px;
-      color:var(--secondary);
-      margin-bottom:15px;
-    ">
-      استخدم هذا المؤقت لضبط إيقاع قراءتك السريعة لهذا الورد:
+  <div class="sidebar-header">
+    <div style="font-size: 28px;">📖</div>
+    <div>
+      <div class="sidebar-brand-title">رفيق القرآن</div>
+      <div class="sidebar-brand-subtitle">المراجعة الذكية</div>
     </div>
-
-    <div
-      id="hadrTarget"
-      class="quran-font"
-      style="
-        font-size:24px!important;
-        color:var(--text);
-        margin-bottom:20px;
-      "
-    ></div>
-
-    <div
-      class="timer-display"
-      id="hadrTimerDisplay"
-      style="color:var(--warning);"
-    >
-      02:00
-    </div>
-
-    <button
-      class="main-btn"
-      id="hadrBtn"
-      onclick="startHadr()"
-    >
-      بدء المؤقت ▶
-    </button>
-
-    <button
-      class="action-btn"
-      style="
-        width:100%;
-        margin-top:10px;
-        background:transparent;
-      "
-      onclick="closeHadr()"
-    >
-      إلغاء
-    </button>
   </div>
+  <div class="nav-item active" onclick="switchTab('view-home', this)"><div class="nav-icon">📅</div><span>خطة اليوم</span></div>
+  <div class="nav-item" onclick="switchTab('view-pool', this)"><div class="nav-icon">📚</div><span>المخزون الشامل</span></div>
+  <div class="nav-item" onclick="switchTab('view-spiritual', this)"><div class="nav-icon">📊</div><span>التقدم والأثر</span></div>
+  <div class="nav-item" onclick="switchTab('view-settings', this)"><div class="nav-icon">⚙️</div><span>الإعدادات</span></div>
 </div>
+
+<!-- Modals -->
+<div class="modal-overlay" id="welcomeModal"><div class="modal-content" style="text-align:center;"><div style="font-size:50px; margin-bottom:10px;">📖</div><h2 style="color:var(--primary); margin-top:0;">أهلاً بك في رفيق القرآن</h2><p style="font-size:14px; color:var(--secondary);">تطبيقك الشخصي للمراجعة المتباعدة. بياناتك تُحفظ على جهازك محلياً فقط. ما هو اسمك للبدء؟</p><input type="text" id="onboardName" placeholder="أدخل اسمك هنا..." style="text-align:center;"><button class="main-btn" onclick="saveNewUser()">ابدأ رحلتك</button></div></div>
+<div class="modal-overlay" id="comebackModal"><div class="modal-content" style="text-align:center;"><div style="font-size:50px; margin-bottom:10px;">🌱</div><h2 style="color:var(--primary); margin-top:0;">عوداً حميداً!</h2><p style="font-size:14px; color:var(--text);">فاتتك جلسة؟ لا بأس. المهم ألا تتوقف أبداً.<br>لنبدأ من جديد اليوم ونبني سلسلة نجاح جديدة!</p><button class="main-btn" onclick="closeModal('comebackModal')">بسم الله</button></div></div>
+<div class="modal-overlay" id="addModal"><div class="modal-content"><button class="close-modal" onclick="closeModal('addModal')">✖</button><h2 style="color:var(--primary); margin-top:0;">➕ حفظ جديد للنهاردة</h2><input type="text" id="newEntry" placeholder="الورد (مثال: البقرة ص 4)"><input type="text" id="newNote" placeholder="ملاحظات شخصية (اختياري)"><label style="display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:15px; color:var(--danger); font-weight:600;"><input type="checkbox" id="icuCheckbox" style="width:18px;height:18px;accent-color:var(--danger);"> عناية مركزة (تنبيه مضاعف للآيات الصعبة)</label><button class="main-btn" onclick="addEntry()">إضافة لخطة اليوم</button></div></div>
+<div class="modal-overlay" id="addOldModal"><div class="modal-content"><button class="close-modal" onclick="closeModal('addOldModal')">✖</button><h2 style="color:var(--primary); margin-top:0;">📚 إضافة محفوظ سابق</h2><p style="font-size:13px; color:var(--secondary); margin-bottom:15px;">بما أن هذا الورد محفوظ مسبقاً، سيدخل فوراً لمرحلة التعهد والمراجعة.</p><input type="text" id="oldEntry" placeholder="الورد القديم (مثال: جزء عم)"><button class="main-btn" onclick="addOldEntry()">إضافة للمخزون</button></div></div>
+<div class="modal-overlay" id="hadrModal"><div class="modal-content" style="text-align:center;"><h2 style="color:var(--primary); margin-top:0;">⏱️ مؤقت الحَدْر</h2><div style="font-size:14px; color:var(--secondary); margin-bottom:15px;">استخدم هذا المؤقت لضبط إيقاع قراءتك السريعة لهذا الورد:</div><div id="hadrTarget" class="quran-font" style="color:var(--text); margin-bottom:20px;"></div><div class="timer-display" id="hadrTimerDisplay" style="color:var(--warning);">02:00</div><button class="main-btn" id="hadrBtn" onclick="startHadr()">بدء المؤقت ▶</button><button class="action-btn" style="width:100%; margin-top:10px; background:transparent;" onclick="closeHadr()">إلغاء</button></div></div>
 
 <!-- Guide -->
 <div class="modal-overlay" id="guideModal">
   <div class="modal-content">
-
-    <button class="close-modal" onclick="closeModal('guideModal')">
-      ✖
-    </button>
-
-    <h2 style="
-      color:var(--primary);
-      margin-top:0;
-      border-bottom:1px solid var(--border);
-      padding-bottom:10px;
-    ">
-      💡 دليلي للحفظ والإتقان
-    </h2>
-
-    <p style="
-      font-size:13px;
-      color:var(--secondary);
-      line-height:1.9;
-      margin-top:0;
-    ">
-      هذه هي <b style="color:var(--primary);">المنهجية التي اتبعتها شخصيًا في حفظ القرآن</b>،
-      وقد ساعدتني بشكل كبير بفضل الله. ليست هذه الطريقة الوحيدة الصحيحة،
-      فإن كانت لديك منهجية أخرى مناسبة لك وتساعدك على الحفظ والإتقان، فلا بأس باتباعها.
+    <button class="close-modal" onclick="closeModal('guideModal')">✖</button>
+    <h2 style="color:var(--primary); margin-top:0; border-bottom:1px solid var(--border); padding-bottom:12px;">💡 دليلي للحفظ والإتقان</h2>
+    <p style="font-size:13px; color:var(--secondary); line-height:1.9; margin-top:12px;">
+      هذه هي <b style="color:var(--primary);">المنهجية التي اتبعتها شخصيًا في حفظ القرآن</b>، وقد ساعدتني بشكل كبير بفضل الله. ليست هذه الطريقة الوحيدة الصحيحة، فإن كانت لديك منهجية أخرى مناسبة لك فلا بأس باتباعها.
     </p>
-
-    <h3 style="
-      font-size:15px;
-      color:var(--text);
-      margin-bottom:8px;
-    ">
-      الخطوات التي اتبعتها:
-    </h3>
-
-    <div style="
-      font-size:13px;
-      color:var(--secondary);
-      line-height:2;
-    ">
-
-      <b>1. الضبط والتجويد:</b>
-      يجب تعلُّم التجويد، وإن لم تكن قد تعلّمتَه بعد
-      فيُفضّل قبل بداية الحفظ الاستماع إلى الشيخ
-      <b>الحصري</b>
-      لضبط مخارج الحروف والتشكيل، خصوصًا في بداية رحلتك.
-      فالحفظ الخاطئ قد يرهقك لاحقًا.
-
-      <br><br>
-
-      <b>2. التثبيت والتربيط:</b>
-      الاستماع إلى مقاطع للتثبيت والتربيط والمتشابهات.
-      وفي حالتي كنت أستمع إلى مقاطع
-      <b>الأستاذة أمل ثابت</b>
-      لتثبيت الآيات وربطها والتركيز على المواضع المتشابهة.
-
-      <br><br>
-
-      <b>3. السلاسة والانطلاق:</b>
-      الترديد مع شيخ متقن.
-      وفي حالتي كان
-      <b>الشيخ فارس عباد</b>
-      سببًا - بفضل الله - في تسهيل الحفظ والتجويد والقراءة الصحيحة،
-      كما ساعدني الترديد معه على تعويد اللسان على تلاوة القرآن بسلاسة وانطلاق.
-
-      <br><br>
-
-      <b>4. بناء العضلة (التكرار غيبًا):</b>
-      استخدم عداد التكرار
-      <b>(10 مرات كحد أدنى)</b>
-      لترسيخ الورد غيبًا.
-
-      ويمكنك أيضًا استخدام
-      <a
-        href="https://tarteel.ai/"
-        target="_blank"
-        rel="noopener noreferrer"
-        style="
-          color:var(--primary);
-          font-weight:bold;
-          text-decoration:underline;
-        "
-      >
-        تطبيق ترتيل 🎤
-      </a>
-      للتسميع واكتشاف الأخطاء،
-      لكنه خيار إضافي وليس شرطًا.
-
-      <br><br>
-
-      <b>5. التثبيت القريب (7 أيام):</b>
-      مراجعة الورد الجديد لمدة أسبوع متتالي.
-      وسيظهر لك التطبيق 7 مربعات لمتابعة اكتمال أيام التثبيت.
-
+    <h3 style="font-size:15px; color:var(--text); margin-bottom:10px; margin-top:20px;">الخطوات التي اتبعتها:</h3>
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      <b>1. الضبط والتجويد:</b> يجب تعلُّم التجويد، فيُفضّل الاستماع إلى الشيخ <b>الحصري</b> لضبط مخارج الحروف والتشكيل.<br><br>
+      <b>2. التثبيت والتربيط:</b> الاستماع إلى مقاطع للتثبيت والتربيط والمتشابهات مثل مقاطع <b>الأستاذة أمل ثابت</b>.<br><br>
+      <b>3. السلاسة والانطلاق:</b> الترديد مع شيخ متقن. وفي حالتي كان <b>الشيخ فارس عباد</b>.<br><br>
+      <b>4. بناء العضلة (التكرار غيبًا):</b> استخدم عداد التكرار <b>(10 مرات كحد أدنى)</b>. ويمكنك أيضًا استخدام 
+      <a href="https://tarteel.ai/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:bold; text-decoration:none;">تطبيق ترتيل 🎤</a> لاكتشاف الأخطاء.<br><br>
+      <b>5. التثبيت القريب (7 أيام متتالية):</b> مراجعة الورد الجديد لمدة أسبوع متتالي. (انقطاع السلسلة يعيد العداد للصفر).
     </div>
-
-    <h3 style="
-      font-size:15px;
-      color:var(--text);
-      margin-top:20px;
-      margin-bottom:8px;
-    ">
-      📌 مهام يومية مهمة:
-    </h3>
-
-    <div style="
-      font-size:13px;
-      color:var(--secondary);
-      line-height:1.9;
-    ">
-      • تعلُّم التجويد وتطبيقه خطوة بخطوة.
-      <br>
-      • التثبيت والتربيط وربط أواخر الآيات ببدايات ما يليها.
-      <br>
-      • فهم الآيات وقراءة تفسير ولو لآية واحدة يوميًا؛ فالفهم يساعد على ترسيخ الحفظ.
-    </div>
-
-    <div style="
-      margin-top:20px;
-      padding:15px;
-      background:rgba(201,168,106,0.05);
-      border-radius:10px;
-      text-align:center;
-      border:1px dashed var(--primary);
-    ">
-      <div style="
-        color:var(--primary);
-        font-weight:bold;
-        font-size:14px;
-        font-family:'Amiri', serif;
-      ">
-        قال رسول الله ﷺ:
-      </div>
-
-      <div style="
-        color:var(--text);
-        font-size:16px;
-        font-family:'Amiri', serif;
-        margin-top:8px;
-      ">
-        "أَحَبُّ الأَعْمَالِ إلى اللهِ أدْوَمُهَا وإنْ قَلَّ"
-      </div>
+    <div style="margin-top:24px; padding:16px; background:var(--primary-dim); border-radius:12px; text-align:center; border:1px dashed var(--primary);">
+      <div style="color:var(--primary); font-weight:bold; font-size:14px; font-family:'Amiri', serif;">قال رسول الله ﷺ:</div>
+      <div style="color:var(--text); font-size:17px; font-family:'Amiri', serif; margin-top:8px;">"أَحَبُّ الأَعْمَالِ إلى اللهِ أدْوَمُهَا وإنْ قَلَّ"</div>
     </div>
   </div>
 </div>
 
 <div class="wrap">
-
 <!-- ================= HOME ================= -->
-
 <div id="view-home" class="view active">
-
   <div class="header-row">
     <div>
-      <h1>
-        خطة اليوم يا
-        <span id="displayUserName"></span>
-        📅
-      </h1>
-
-      <div
-        style="
-          font-size:12px;
-          color:var(--secondary);
-        "
-        id="dateHeader"
-      ></div>
+      <h1>خطة اليوم يا <span id="displayUserName"></span> 📅</h1>
+      <div style="font-size:13px; color:var(--secondary); margin-top:2px;" id="dateHeader"></div>
     </div>
-
-    <button
-      class="theme-toggle"
-      onclick="toggleTheme()"
-    >
-      🌓
-    </button>
+    <button class="theme-toggle" onclick="toggleTheme()" style="background:var(--input-bg); border:1px solid var(--border); font-size:20px; border-radius:50%; width:44px; height:44px; cursor:pointer;">🌓</button>
   </div>
 
-  <!-- Focus -->
+  <!-- Focus Session Overlay Mode -->
   <div id="session-container">
-
-    <h2 style="
-      text-align:center;
-      color:var(--primary);
-      margin-bottom:20px;
-    ">
-      ⏱️ جلسة التركيز
-    </h2>
-
-    <div
-      class="timer-display"
-      id="mainTimerDisplay"
-    >
-      00:00
+    <h2 style="text-align:center; color:var(--primary); margin-bottom:20px; font-size:22px;">⏱️ جلسة التركيز</h2>
+    <div class="timer-display" id="mainTimerDisplay">00:00</div>
+    <div style="display:flex; gap:10px; justify-content:center; margin-bottom:15px; flex-wrap:wrap;">
+      <button class="action-btn" onclick="setMainTimer(15)">15 دقيقة</button>
+      <button class="action-btn" onclick="setMainTimer(30)">30 دقيقة</button>
+      <button class="action-btn" onclick="setMainTimer(45)">45 دقيقة</button>
+      <button class="action-btn" onclick="setMainTimer(60)">60 دقيقة</button>
     </div>
-
-    <div style="
-      display:flex;
-      gap:8px;
-      justify-content:center;
-      margin-bottom:15px;
-      flex-wrap:wrap;
-    ">
-
-      <button
-        class="action-btn"
-        onclick="setMainTimer(15)"
-      >
-        15 دقيقة
-      </button>
-
-      <button
-        class="action-btn"
-        onclick="setMainTimer(30)"
-      >
-        30 دقيقة
-      </button>
-
-      <button
-        class="action-btn"
-        onclick="setMainTimer(45)"
-      >
-        45 دقيقة
-      </button>
-
-      <button
-        class="action-btn"
-        onclick="setMainTimer(60)"
-      >
-        60 دقيقة
-      </button>
-
+    <div class="timer-custom-row" style="margin-bottom: 20px;">
+      <input type="number" id="customTimerInput" min="1" max="240" placeholder="مدة مخصصة بالدقائق">
+      <button class="action-btn" onclick="setCustomTimer()">تخصيص</button>
     </div>
-
-    <div class="timer-custom-row">
-
-      <input
-        type="number"
-        id="customTimerInput"
-        min="1"
-        max="240"
-        placeholder="مدة مخصصة بالدقائق"
-      >
-
-      <button
-        class="action-btn"
-        onclick="setCustomTimer()"
-      >
-        تخصيص
-      </button>
-
+    <div style="display:flex; gap:12px; margin-bottom:24px;">
+      <button class="main-btn" id="btnMainTimer" onclick="startMainTimer()">▶ ابدأ المؤقت</button>
+      <button class="action-btn" style="background:var(--danger); color:#fff; border:none;" onclick="toggleFocusMode()">✖ إنهاء</button>
     </div>
-
-    <div style="
-      display:flex;
-      gap:10px;
-      margin-top:15px;
-      margin-bottom:20px;
-    ">
-
-      <button
-        class="main-btn"
-        id="btnMainTimer"
-        onclick="startMainTimer()"
-      >
-        ▶ ابدأ المؤقت
-      </button>
-
-      <button
-        class="action-btn"
-        style="
-          background:var(--danger);
-          color:#fff;
-        "
-        onclick="toggleFocusMode()"
-      >
-        ✖ إنهاء الجلسة
-      </button>
-
+    <div style="text-align:center; color:var(--secondary); font-size:14px; line-height: 1.8;">
+      اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.<br>بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
     </div>
-
-    <div style="
-      text-align:center;
-      color:var(--secondary);
-      font-size:13px;
-      line-height:1.8;
-    ">
-      اقرأ أورادك المطلوبة اليوم،
-      واستخدم عداد التكرار لتقوية الحفظ.
-      <br>
-      بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
-    </div>
-
   </div>
 
-  <!-- Home Content -->
+  <!-- Home Content (2-Column Grid on Desktop) -->
   <div id="home-content">
+    <div class="desktop-grid-2col">
+      <!-- Left Column: Tasks -->
+      <div>
+        <button class="main-btn huge-btn" onclick="toggleFocusMode()">▶ ابدأ جلسة المراجعة</button>
 
-    <button
-      class="main-btn huge-btn"
-      onclick="toggleFocusMode()"
-    >
-      ▶ ابدأ جلسة المراجعة
-    </button>
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 14px;">
+            <h2 style="margin:0;">🆕 حِفظ اليوم</h2>
+            <button style="background:var(--primary-dim); border:1px solid var(--primary); color:var(--primary); border-radius:8px; padding:6px 12px; cursor:pointer; font-weight:700;" onclick="openModal('addModal')">+ أضف</button>
+          </div>
+          <div id="memorizeTodayList"></div>
+        </div>
 
-    <button
-      class="action-btn"
-      style="
-        width:100%;
-        border:1px solid var(--primary);
-        color:var(--primary);
-        background:rgba(201,168,106,0.05);
-        margin-bottom:20px;
-      "
-      onclick="openModal('guideModal')"
-    >
-      💡 دليلي للحفظ والإتقان
-    </button>
-
-    <!-- New Memorization -->
-    <div class="card">
-
-      <div style="
-        display:flex;
-        justify-content:space-between;
-        align-items:center;
-      ">
-
-        <h2 style="margin:0;">
-          🆕 حِفظ اليوم
-        </h2>
-
-        <button
-          style="
-            background:transparent;
-            border:1px solid var(--primary);
-            color:var(--primary);
-            border-radius:6px;
-            padding:4px 10px;
-            cursor:pointer;
-            font-weight:bold;
-          "
-          onclick="openModal('addModal')"
-        >
-          + أضف
-        </button>
-
+        <div class="card" style="border-color: rgba(219, 140, 22, 0.4); background: linear-gradient(180deg, rgba(219, 140, 22, 0.03) 0%, transparent 100%);">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 14px;">
+            <h2 style="margin:0; color:var(--warning);">🔄 مستحق اليوم</h2>
+            <span class="badge-count" id="statDueToday" style="background:var(--warning); color:#fff;">0</span>
+          </div>
+          <div id="dueTodayList"></div>
+        </div>
       </div>
 
-      <div
-        id="memorizeTodayList"
-        style="margin-top:15px;"
-      ></div>
+      <!-- Right Column: Quick Studio & Reminders on Desktop -->
+      <div>
+        <button class="action-btn" style="width:100%; border:1px solid var(--primary); color:var(--primary); background:var(--primary-dim); margin-bottom:16px; padding: 16px;" onclick="openModal('guideModal')">💡 دليلي للحفظ والإتقان</button>
 
+        <div class="card" style="border-right:4px solid var(--primary);">
+          <h2>📖 غريب القرآن اليومي</h2>
+          <div style="font-size:18px; font-weight:bold; color:var(--primary); font-family:'Amiri', serif; margin-top:8px;" id="gharibWordHome"></div>
+          <div style="font-size:14px; color:var(--text); margin-top:6px;" id="gharibMeaningHome"></div>
+          <div style="font-size:11px; color:var(--secondary); margin-top:10px;" id="gharibSourceHome"></div>
+        </div>
+
+        <div class="card">
+          <h2>⚖️ تذكرة الدار الآخرة</h2>
+          <div style="font-size:13.5px; line-height:1.8; margin-bottom:10px;">• <b>الصدقة:</b> حتى لو بمبلغ بسيط لشخص محتاج تعرفه (الأقربون أولى) أو جهة موثوقة.</div>
+          <div style="font-size:13.5px; line-height:1.8;">• <b>القيام:</b> أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.</div>
+          <div style="font-size:14.5px; color:var(--primary); font-family:'Amiri',serif; font-weight:bold; margin-top:14px; text-align:center; border-top:1px solid var(--border); padding-top:10px;" id="dailyDuaHome"></div>
+        </div>
+      </div>
     </div>
-
-    <!-- Due -->
-    <div
-      class="card"
-      style="border-color:var(--warning);"
-    >
-
-      <h2 style="color:var(--warning);">
-
-        🔄 مراجعات مستحقة اليوم
-
-        <span
-          class="badge-count"
-          id="statDueToday"
-          style="
-            background:var(--warning);
-            color:#000;
-          "
-        >
-          0
-        </span>
-
-      </h2>
-
-      <div id="dueTodayList"></div>
-
-    </div>
-
   </div>
 </div>
 
 <!-- ================= POOL ================= -->
-
 <div id="view-pool" class="view">
-
   <div class="header-row">
-
     <h1>📚 المخزون الكامل</h1>
-
-    <button
-      class="action-btn"
-      style="
-        flex:none;
-        padding:6px 12px;
-        margin:0;
-      "
-      onclick="openModal('addOldModal')"
-    >
-      + إضافة محفوظ سابق
-    </button>
-
+    <button class="action-btn" style="flex:none; padding:8px 16px; margin:0; background:var(--primary-dim); color:var(--primary); border:1px solid var(--primary);" onclick="openModal('addOldModal')">+ إضافة محفوظ سابق</button>
+  </div>
+  <p style="font-size:13px; color:var(--secondary); margin-bottom:20px;">يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.</p>
+  
+  <div style="display:flex; gap:12px; margin-bottom:20px;">
+    <input type="text" id="searchInput" placeholder="ابحث في أورادك..." oninput="renderPool()" style="margin:0;">
+    <button class="action-btn" style="flex:0.35; margin:0;" onclick="openHadrTest()">⏱️ مؤقت حَدْر</button>
   </div>
 
-  <p style="
-    font-size:12px;
-    color:var(--secondary);
-    margin-bottom:15px;
-  ">
-    يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.
-  </p>
-
-  <div style="
-    display:flex;
-    gap:10px;
-    margin-bottom:15px;
-  ">
-
-    <input
-      type="text"
-      id="searchInput"
-      placeholder="ابحث في أورادك..."
-      oninput="renderPool()"
-      style="margin:0;"
-    >
-
-    <button
-      class="action-btn"
-      style="
-        flex:0.4;
-        margin:0;
-      "
-      onclick="openHadrTest()"
-    >
-      ⏱️ مؤقت حَدْر
-    </button>
-
-  </div>
-
-  <div
-    id="icuContainer"
-    style="
-      display:none;
-      margin-bottom:20px;
-    "
-  >
-
-    <h3 style="
-      color:var(--danger);
-      font-size:14px;
-      display:flex;
-      align-items:center;
-      gap:6px;
-    ">
-      🏥 العناية المركزة
-    </h3>
-
+  <div id="icuContainer" style="display:none; margin-bottom:24px;">
+    <h3 style="color:var(--danger); font-size:15px; display:flex; align-items:center; gap:8px; margin-bottom:12px;">🏥 العناية المركزة</h3>
     <div id="icuList"></div>
-
   </div>
 
   <div class="card">
-
-    <h2 style="margin-bottom:15px;">
-      كافة الأوراد
-
-      <span
-        class="badge-count"
-        id="poolTotalCount"
-      >
-        0
-      </span>
-    </h2>
-
+    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid var(--border); padding-bottom: 12px; margin-bottom: 14px;">
+      <h2 style="margin:0;">كافة الأوراد</h2>
+      <span class="badge-count" id="poolTotalCount">0</span>
+    </div>
     <div id="poolList"></div>
-
-    <button
-      id="loadMoreBtn"
-      class="action-btn"
-      style="
-        width:100%;
-        display:none;
-        margin-top:10px;
-      "
-      onclick="loadMorePool()"
-    >
-      عرض المزيد ↓
-    </button>
-
+    <button id="loadMoreBtn" class="action-btn" style="width:100%; display:none; margin-top:16px;" onclick="loadMorePool()">عرض المزيد ↓</button>
   </div>
 </div>
 
 <!-- ================= PROGRESS ================= -->
-
 <div id="view-spiritual" class="view">
-
   <h1>📊 التقدم والأثر الروحي</h1>
-
-  <div
-    class="stats-grid"
-    style="margin-top:15px;"
-  >
-
-    <div class="stat-box">
-      <div
-        class="stat-num"
-        id="statStreak"
-      >
-        0
-      </div>
-
-      <div class="stat-lbl">
-        أيام التزام 🔥
-      </div>
-    </div>
-
-    <div class="stat-box">
-      <div
-        class="stat-num"
-        id="statTotalAdded"
-      >
-        0
-      </div>
-
-      <div class="stat-lbl">
-        إجمالي الأوراد 📋
-      </div>
-    </div>
-
-    <div
-      class="stat-box"
-      style="border-color:var(--primary);"
-    >
-
-      <div
-        class="stat-num"
-        id="statEvaluated2"
-      >
-        0
-      </div>
-
-      <div class="stat-lbl">
-        أوراد مُقيّمة 📚
-      </div>
-
-    </div>
+  
+  <div class="stats-grid" style="margin-top:20px;">
+    <div class="stat-box"><div class="stat-num" id="statStreak">0</div><div class="stat-lbl">أيام التزام 🔥</div></div>
+    <div class="stat-box"><div class="stat-num" id="statTotalAdded">0</div><div class="stat-lbl">إجمالي الأوراد 📋</div></div>
+    <div class="stat-box" style="border-color:var(--primary); background:var(--primary-dim);"><div class="stat-num" id="statEvaluated2">0</div><div class="stat-lbl" style="color:var(--text)">أوراد مُقيّمة 📚</div></div>
   </div>
 
-  <div
-    class="card"
-    style="
-      background:rgba(201,168,106,0.05);
-      border-color:var(--primary);
-    "
-  >
-
-    <h2
-      style="
-        justify-content:center;
-        font-size:16px;
-      "
-    >
-      الهدف:
-      <span id="goalTextVal"></span>
-    </h2>
-
+  <div class="card" style="background:var(--primary-dim); border-color:var(--primary); margin-bottom: 24px;">
+    <h2 style="justify-content:center; font-size:17px;">الهدف: <span id="goalTextVal"></span></h2>
     <div class="progress-bar-container">
-      <div
-        class="progress-bar"
-        id="trackProgress"
-      ></div>
+      <div class="progress-bar" id="trackProgress"></div>
     </div>
-
-    <div
-      style="
-        text-align:center;
-        font-size:12px;
-        color:var(--secondary);
-        margin-top:5px;
-      "
-      id="trackText"
-    ></div>
-
+    <div style="text-align:center; font-size:13px; color:var(--text); margin-top:8px; font-weight:500;" id="trackText"></div>
   </div>
 
-  <div
-    class="card"
-    style="border-right:3px solid var(--primary);"
-  >
-
-    <h2>📖 غريب القرآن</h2>
-
-    <div
-      style="
-        font-size:16px;
-        font-weight:bold;
-        color:var(--primary);
-        font-family:'Amiri', serif;
-      "
-      id="gharibWord"
-    ></div>
-
-    <div
-      style="
-        font-size:13px;
-        color:var(--text);
-        margin-top:4px;
-      "
-      id="gharibMeaning"
-    ></div>
-
-    <div
-      style="
-        font-size:10px;
-        color:var(--secondary);
-        margin-top:8px;
-      "
-      id="gharibSource"
-    ></div>
-
-  </div>
-
-  <div class="card">
-
-    <h2>⚖️ تذكرة الدار الآخرة</h2>
-
-    <div
-      style="
-        font-size:13px;
-        margin-bottom:10px;
-      "
-    >
-      • <b>الصدقة:</b>
-      حتى لو بمبلغ بسيط لشخص محتاج تعرفه
-      (الأقربون أولى) أو جهة موثوقة.
-      قال رسول الله ﷺ:
-      "داووا مرضاكم بالصدقة"
-      [حسنه الألباني].
+  <div class="tablet-grid-equal">
+    <div class="card" style="border-right:4px solid var(--primary);">
+      <h2>📖 غريب القرآن</h2>
+      <div style="font-size:18px; font-weight:bold; color:var(--primary); font-family:'Amiri', serif; margin-top:8px;" id="gharibWord"></div>
+      <div style="font-size:14px; color:var(--text); margin-top:6px;" id="gharibMeaning"></div>
+      <div style="font-size:11px; color:var(--secondary); margin-top:12px;" id="gharibSource"></div>
     </div>
 
-    <div
-      style="
-        font-size:13px;
-        margin-bottom:10px;
-      "
-    >
-      • <b>القيام:</b>
-      أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.
+    <div class="card">
+      <h2>⚖️ تذكرة الدار الآخرة</h2>
+      <div style="font-size:14px; margin-bottom:10px; line-height:1.8;">• <b>الصدقة:</b> حتى لو بمبلغ بسيط لشخص محتاج تعرفه (الأقربون أولى) أو جهة موثوقة.</div>
+      <div style="font-size:14px; margin-bottom:10px; line-height:1.8;">• <b>القيام:</b> أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.</div>
+      <div style="font-size:15px; color:var(--primary); font-family:'Amiri',serif; font-weight:bold; margin-top:16px; text-align:center; border-top:1px solid var(--border); padding-top:12px;" id="dailyDua"></div>
     </div>
-
-    <div
-      style="
-        font-size:13px;
-        color:var(--primary);
-        font-weight:bold;
-        margin-top:12px;
-      "
-      id="dailyDua"
-    ></div>
-
   </div>
 </div>
 
 <!-- ================= SETTINGS ================= -->
-
 <div id="view-settings" class="view">
-
   <h1>⚙️ الإعدادات والنظام</h1>
-
-  <div
-    class="card"
-    style="
-      background:rgba(244,67,54,0.05);
-      border-color:var(--danger);
-    "
-  >
-
-    <div
-      style="
-        color:var(--danger);
-        font-size:13px;
-        font-weight:bold;
-        text-align:center;
-      "
-    >
-      ⚠️ تنبيه هام:
-      بياناتك محفوظة محلياً على هذا المتصفح فقط.
-      لتجنب فقدانها عند مسح السجل،
-      يرجى أخذ نسخة احتياطية بشكل دوري.
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <h2>🎛️ نظام المراجعة (بعد أول أسبوع)</h2>
-
-    <p style="
-      font-size:12px;
-      color:var(--secondary);
-    ">
-      النظام الأسبوعي هو الإعداد الافتراضي والأبسط.
-      وإذا أحببت تجربة المراجعة المتباعدة الذكية،
-      يمكنك اختيار نظام أنكي من هنا في أي وقت.
-    </p>
-
-    <select
-      id="evalModeSelect"
-      onchange="changeEvalMode()"
-    >
-
-      <option value="weekly">
-        النظام التقليدي — مراجعة ثابتة كل أسبوع
-      </option>
-
-      <option value="anki">
-        نظام أنكي — مراجعة متباعدة ذكية بـ 4 خيارات
-      </option>
-
-    </select>
-
-  </div>
-
-  <div class="card">
-
-    <h2>👤 الملف الشخصي</h2>
-
-    <div style="
-      display:flex;
-      gap:10px;
-    ">
-
-      <input
-        type="text"
-        id="settingsNameInput"
-        style="
-          margin:0;
-          flex:1;
-        "
-      >
-
-      <button
-        class="action-btn"
-        style="
-          flex:0.5;
-          margin:0;
-        "
-        onclick="updateUserName()"
-      >
-        تحديث
-      </button>
-
+  
+  <div class="card" style="background:var(--danger-dim); border-color:var(--danger); margin-bottom: 20px;">
+    <div style="color:var(--danger); font-size:13.5px; font-weight:bold; text-align:center; line-height:1.7;">
+      ⚠️ تنبيه هام: بياناتك محفوظة محلياً على هذا المتصفح فقط. لتجنب فقدانها عند مسح السجل، يرجى أخذ نسخة احتياطية بشكل دوري.
     </div>
   </div>
 
-  <div class="card">
+  <div class="tablet-grid-equal">
+    <div>
+      <div class="card">
+        <h2>🎛️ نظام المراجعة (بعد أول أسبوع)</h2>
+        <p style="font-size:13px; color:var(--secondary); margin-bottom:12px;">النظام الأسبوعي هو الإعداد الافتراضي والأبسط. وإذا أحببت تجربة المراجعة المتباعدة الذكية، يمكنك اختيار نظام أنكي من هنا في أي وقت.</p>
+        <select id="evalModeSelect" onchange="changeEvalMode()">
+          <option value="weekly">النظام التقليدي — مراجعة ثابتة كل أسبوع</option>
+          <option value="anki">نظام أنكي — مراجعة متباعدة ذكية بـ 4 خيارات</option>
+        </select>
+      </div>
 
-    <h2>🎯 إعداد هدف الحفظ</h2>
-
-    <p style="
-      font-size:12px;
-      color:var(--secondary);
-    ">
-      الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.
-    </p>
-
-    <select
-      id="trackSelect"
-      onchange="changeTrack()"
-    >
-
-      <option value="604">
-        الختمة (604 ورد/جلسة تقريبية)
-      </option>
-
-      <option value="30">
-        جزء عم (30 ورد)
-      </option>
-
-      <option value="48">
-        الزهراوين (48 ورد)
-      </option>
-
-      <option value="999">
-        تخصيص عدد الأوراد يدوياً...
-      </option>
-
-    </select>
-
-    <input
-      type="number"
-      id="customGoal"
-      style="display:none;"
-      placeholder="أدخل العدد المستهدف"
-    >
-
-  </div>
-
-  <div class="card">
-
-    <h2>📱 إدارة البيانات والتصدير</h2>
-
-    <label style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-size:14px;
-      margin-bottom:15px;
-      border-bottom:1px solid var(--border);
-      padding-bottom:10px;
-    ">
-
-      المؤثرات الصوتية
-
-      <input
-        type="checkbox"
-        id="soundModeCheck"
-        onchange="toggleSound()"
-        style="
-          width:18px;
-          height:18px;
-        "
-      >
-
-    </label>
-
-    <label style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      font-size:14px;
-      margin-bottom:15px;
-      border-bottom:1px solid var(--border);
-      padding-bottom:10px;
-    ">
-
-      وضع توفير البطارية
-
-      <input
-        type="checkbox"
-        id="liteModeCheck"
-        onchange="toggleLiteMode()"
-        style="
-          width:18px;
-          height:18px;
-        "
-      >
-
-    </label>
-
-    <button
-      class="action-btn"
-      style="
-        width:100%;
-        margin-bottom:10px;
-      "
-      onclick="exportCSV()"
-    >
-      📊 استخراج كجدول (Excel)
-    </button>
-
-    <div style="
-      display:flex;
-      gap:10px;
-    ">
-
-      <button
-        class="action-btn"
-        onclick="exportData()"
-      >
-        📥 أخذ نسخة احتياطية
-      </button>
-
-      <label
-        for="importFile"
-        class="action-btn"
-        style="
-          margin:0;
-          line-height:20px;
-        "
-      >
-
-        📤 استرجاع نسخة
-
-        <input
-          type="file"
-          id="importFile"
-          accept=".json"
-          style="display:none;"
-          onchange="importData(event)"
-        >
-
-      </label>
-
+      <div class="card">
+        <h2>👤 الملف الشخصي</h2>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="settingsNameInput" style="margin:0; flex:1;">
+          <button class="action-btn" style="flex:0.4; margin:0; background:var(--primary); color:#000;" onclick="updateUserName()">تحديث</button>
+        </div>
+      </div>
     </div>
 
+    <div>
+      <div class="card">
+        <h2>🎯 إعداد هدف الحفظ</h2>
+        <p style="font-size:13px; color:var(--secondary); margin-bottom:12px;">الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.</p>
+        <select id="trackSelect" onchange="changeTrack()">
+          <option value="604">الختمة (604 ورد/جلسة تقريبية)</option>
+          <option value="30">جزء عم (30 ورد)</option>
+          <option value="48">الزهراوين (48 ورد)</option>
+          <option value="999">تخصيص عدد الأوراد يدوياً...</option>
+        </select>
+        <input type="number" id="customGoal" style="display:none;" placeholder="أدخل العدد المستهدف">
+      </div>
+
+      <div class="card">
+        <h2>📱 إدارة البيانات والصوت</h2>
+        <label style="display:flex; justify-content:space-between; align-items:center; font-size:15px; margin-bottom:16px; border-bottom:1px solid var(--border); padding-bottom:12px; font-weight:600;">
+          المؤثرات الصوتية
+          <input type="checkbox" id="soundModeCheck" onchange="toggleSound()" style="width:20px;height:20px; accent-color:var(--primary);">
+        </label>
+        <label style="display:flex; justify-content:space-between; align-items:center; font-size:15px; margin-bottom:20px; border-bottom:1px solid var(--border); padding-bottom:12px; font-weight:600;">
+          توفير البطارية (بدون حركات)
+          <input type="checkbox" id="liteModeCheck" onchange="toggleLiteMode()" style="width:20px;height:20px; accent-color:var(--primary);">
+        </label>
+        <button class="action-btn" style="width:100%; margin-bottom:12px;" onclick="exportCSV()">📊 استخراج كجدول (Excel)</button>
+        <div style="display:flex; gap:12px;">
+          <button class="action-btn" style="background:var(--primary-dim); color:var(--primary); border:1px solid var(--primary);" onclick="exportData()">📥 أخذ نسخة</button>
+          <label for="importFile" class="action-btn" style="margin:0; line-height:20px;">
+            📤 استرجاع نسخة
+            <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
 </div>
 
 <script>
-
 /* =========================================================
    APP DATA
 ========================================================= */
-
 const STORAGE_KEY = 'hifz-core-v4';
-
-let appData = {
-  userName: '',
-  entries: [],
-  streak: 0,
-  lastActive: '',
-  goal: 604,
-  evalMode: 'weekly',
-  soundEnabled: true
-};
-
+let appData = { userName: '', entries: [], streak: 0, lastActive: '', goal: 604, evalMode: 'weekly', soundEnabled: true };
 let poolVisibleCount = 20;
-
 
 /* =========================================================
    AUDIO ENGINE
-   Lightweight system-like digital feedback
 ========================================================= */
-
-const AudioContextClass =
-  window.AudioContext || window.webkitAudioContext;
-
+const AudioContextClass = window.AudioContext || window.webkitAudioContext;
 let audioCtx = null;
 
 function getAudioContext() {
   if (!AudioContextClass) return null;
-
-  if (!audioCtx) {
-    audioCtx = new AudioContextClass();
-  }
-
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume().catch(() => {});
-  }
-
+  if (!audioCtx) audioCtx = new AudioContextClass();
+  if (audioCtx.state === 'suspended') audioCtx.resume().catch(() => {});
   return audioCtx;
 }
 
 function playTone(freq, duration, volume, type = 'sine') {
-
   if (!appData.soundEnabled) return;
-
   const ctx = getAudioContext();
   if (!ctx) return;
-
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
-
   osc.type = type;
   osc.frequency.setValueAtTime(freq, ctx.currentTime);
-
   gain.gain.setValueAtTime(0.0001, ctx.currentTime);
-  gain.gain.exponentialRampToValueAtTime(
-    volume,
-    ctx.currentTime + 0.012
-  );
-
-  gain.gain.exponentialRampToValueAtTime(
-    0.0001,
-    ctx.currentTime + duration
-  );
-
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-
-  osc.start();
-  osc.stop(ctx.currentTime + duration + 0.02);
+  gain.gain.exponentialRampToValueAtTime(volume, ctx.currentTime + 0.015);
+  gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.start(); osc.stop(ctx.currentTime + duration + 0.05);
 }
 
 function playSound(type) {
-
   if (!appData.soundEnabled) return;
-
   switch(type) {
-
-    case 'click':
-      // Very short tactile confirmation.
-      playTone(170, 0.055, 0.055, 'sine');
-      break;
-
-    case 'ding':
-      // Soft two-step confirmation, not a musical melody.
-      playTone(520, 0.11, 0.07, 'sine');
-
-      setTimeout(() => {
-        playTone(760, 0.16, 0.055, 'sine');
-      }, 75);
-
-      break;
-
-    case 'graduate':
-      // Three quick system-like confirmation tones.
-      playTone(430, 0.10, 0.065, 'sine');
-
-      setTimeout(() => {
-        playTone(610, 0.11, 0.06, 'sine');
-      }, 90);
-
-      setTimeout(() => {
-        playTone(820, 0.18, 0.055, 'sine');
-      }, 190);
-
-      break;
-
-    case 'pop':
-      playTone(260, 0.075, 0.045, 'sine');
-      break;
-
-    case 'timer':
-      // Calm end-of-timer alert.
-      playTone(480, 0.18, 0.065, 'sine');
-
-      setTimeout(() => {
-        playTone(680, 0.28, 0.055, 'sine');
-      }, 150);
-
-      break;
+    case 'click': playTone(180, 0.06, 0.06, 'sine'); break;
+    case 'ding': playTone(550, 0.12, 0.08, 'sine'); setTimeout(() => playTone(800, 0.18, 0.06, 'sine'), 80); break;
+    case 'graduate': playTone(450, 0.12, 0.07, 'sine'); setTimeout(() => playTone(650, 0.12, 0.07, 'sine'), 100); setTimeout(() => playTone(880, 0.2, 0.06, 'sine'), 220); break;
+    case 'pop': playTone(300, 0.08, 0.05, 'sine'); break;
+    case 'timer': playTone(500, 0.2, 0.07, 'sine'); setTimeout(() => playTone(700, 0.3, 0.06, 'sine'), 160); break;
   }
 }
 
 function toggleSound() {
-
-  appData.soundEnabled =
-    document.getElementById('soundModeCheck').checked;
-
-  saveData();
-
-  if (appData.soundEnabled) {
-    playSound('ding');
-  }
+  appData.soundEnabled = document.getElementById('soundModeCheck').checked; saveData();
+  if (appData.soundEnabled) playSound('ding');
 }
 
-
 /* =========================================================
-   QURAN DATA
+   DATA DICTIONARIES
 ========================================================= */
-
-const quranSurahs = [
-"الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام",
-"الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد",
-"إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
-"الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء",
-"النمل","القصص","العنكبوت","الروم","لقمان","السجدة",
-"الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
-"فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
-"محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم",
-"القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر",
-"الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق",
-"التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن",
-"المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ",
-"النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق",
-"البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
-"الشمس","الليل","الضحى","الشرح","التين","العلق","القدر",
-"البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر",
-"الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون",
-"النصر","المسد","الإخلاص","الفلق","الناس"
-];
-
-const gharibDict = [
-  {
-    w:"غاسقٍ إذا وقب",
-    m:"الليل إذا أظلم ودخل في كل شيء",
-    s:"التفسير الميسر"
-  },
-  {
-    w:"الصَّمَد",
-    m:"السيد الذي يُقصد في الحوائج كلها",
-    s:"التفسير الميسر"
-  },
-  {
-    w:"الفَلَق",
-    m:"الصبح الذي ينفلق عنه الليل",
-    s:"المعجم الوجيز"
-  },
-  {
-    w:"أبابيل",
-    m:"جماعات متتابعة",
-    s:"المعجم الوجيز"
-  },
-  {
-    w:"سجِّيل",
-    m:"طين متحجر أو طبقات من طين محروق",
-    s:"التفسير الميسر"
-  },
-  {
-    w:"القارِعَة",
-    m:"القيامة التي تقرع القلوب بأهوالها",
-    s:"التفسير الميسر"
-  },
-  {
-    w:"المُطَفِّفِين",
-    m:"الذين ينقصون المكيال والميزان",
-    s:"التفسير الميسر"
-  },
-  {
-    w:"كَبَد",
-    m:"مشقة وتعب في مكابدة الدنيا",
-    s:"التفسير الميسر"
-  }
-];
-
-const duas = [
-  "قال رسول الله ﷺ: «يا مقلب القلوب ثبت قلبي على دينك» [رواه الترمذي - صحيح]",
-  "قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» [رواه مسلم]",
-  "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» [رواه البخاري]",
-  "قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه - صحيح]",
-  "قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل» [دعاء مأثور]"
-];
-
+const quranSurahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+const gharibDict = [{w:"غاسقٍ إذا وقب",m:"الليل إذا أظلم ودخل في كل شيء",s:"التفسير الميسر"},{w:"الصَّمَد",m:"السيد الذي يُقصد في الحوائج كلها",s:"التفسير الميسر"},{w:"الفَلَق",m:"الصبح الذي ينفلق عنه الليل",s:"المعجم الوجيز"},{w:"أبابيل",m:"جماعات متتابعة",s:"المعجم الوجيز"},{w:"سجِّيل",m:"طين متحجر أو طبقات من طين محروق",s:"التفسير الميسر"},{w:"القارِعَة",m:"القيامة التي تقرع القلوب بأهوالها",s:"التفسير الميسر"},{w:"المُطَفِّفِين",m:"الذين ينقصون المكيال والميزان",s:"التفسير الميسر"},{w:"كَبَد",m:"مشقة وتعب في مكابدة الدنيا",s:"التفسير الميسر"}];
+const duas = ["قال رسول الله ﷺ: «يا مقلب القلوب ثبت قلبي على دينك» [رواه الترمذي]","قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» [رواه مسلم]","قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» [رواه البخاري]","قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه]","قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل»"];
 
 /* =========================================================
    UTILITIES
 ========================================================= */
-
-function getLocalDateStr(dateObj = new Date()) {
-
-  const d = new Date(
-    dateObj.getTime() -
-    (dateObj.getTimezoneOffset() * 60000)
-  );
-
-  return d.toISOString().slice(0,10);
-}
-
-function getDayOfYear(dateObj = new Date()) {
-
-  const start = new Date(
-    dateObj.getFullYear(),
-    0,
-    0
-  );
-
-  const diff = dateObj - start;
-
-  return Math.floor(diff / 86400000);
-}
-
+const getLocalDateStr = (d = new Date()) => new Date(d.getTime() - (d.getTimezoneOffset() * 60000)).toISOString().slice(0,10);
+const getDayOfYear = (d = new Date()) => Math.floor((d - new Date(d.getFullYear(), 0, 0)) / 86400000);
 const todayStr = () => getLocalDateStr();
-
-const daysBetween = (a,b) =>
-  Math.floor(
-    (new Date(b) - new Date(a)) / 86400000
-  );
-
-const escapeHtml = s => {
-
-  const d = document.createElement('div');
-
-  d.textContent = s;
-
-  return d.innerHTML;
-};
-
+const daysBetween = (a,b) => Math.floor((new Date(b) - new Date(a)) / 86400000);
+const escapeHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
 
 /* =========================================================
-   GLOW
+   GLOW EFFECTS
 ========================================================= */
+function triggerReflow(el) { void el.offsetWidth; }
 
 function flashEntry(id, textGlow = true) {
-
   requestAnimationFrame(() => {
-
-    const el =
-      document.querySelector(
-        `[data-entry-id="${CSS.escape(id)}"]`
-      );
-
+    const el = document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);
     if (!el) return;
-
-    el.classList.remove('golden-glow');
-
-    void el.offsetWidth;
-
-    el.classList.add('golden-glow');
-
-    if (textGlow) {
-
-      const target =
-        el.querySelector('.glow-target');
-
-      if (target) {
-
-        target.classList.remove(
-          'golden-glow-text'
-        );
-
-        void target.offsetWidth;
-
-        target.classList.add(
-          'golden-glow-text'
-        );
-      }
-    }
-
-    setTimeout(() => {
-      el.classList.remove('golden-glow');
-    }, 950);
+    el.classList.remove('golden-glow'); triggerReflow(el); el.classList.add('golden-glow');
+    if (textGlow) { const t = el.querySelector('.glow-target'); if (t) { t.classList.remove('golden-glow-text'); triggerReflow(t); t.classList.add('golden-glow-text'); } }
+    setTimeout(() => el.classList.remove('golden-glow'), 1000);
   });
 }
 
 function flashCelebrate(id) {
-
   requestAnimationFrame(() => {
-
-    const el =
-      document.querySelector(
-        `[data-entry-id="${CSS.escape(id)}"]`
-      );
-
+    const el = document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);
     if (!el) return;
-
-    el.classList.remove('celebrate-glow');
-
-    void el.offsetWidth;
-
-    el.classList.add('celebrate-glow');
-
-    setTimeout(() => {
-      el.classList.remove('celebrate-glow');
-    }, 1250);
+    el.classList.remove('celebrate-glow'); triggerReflow(el); el.classList.add('celebrate-glow');
+    setTimeout(() => el.classList.remove('celebrate-glow'), 1400);
   });
 }
 
 function flashStreak() {
-
-  const el =
-    document.getElementById('statStreak');
-
-  if (!el) return;
-
-  el.classList.remove('golden-glow-text');
-
-  void el.offsetWidth;
-
-  el.classList.add('golden-glow-text');
-
-  setTimeout(() => {
-    el.classList.remove('golden-glow-text');
-  }, 900);
+  const el = document.getElementById('statStreak');
+  if (!el) return; el.classList.remove('golden-glow-text'); triggerReflow(el); el.classList.add('golden-glow-text');
+  setTimeout(() => el.classList.remove('golden-glow-text'), 1000);
 }
-
 
 /* =========================================================
    INITIALIZATION
 ========================================================= */
-
 function loadData() {
-
-  document.body.setAttribute(
-    'data-theme',
-    localStorage.getItem('hifz-theme') || 'dark'
-  );
-
-  if (localStorage.getItem('hifz-lite') === 'true') {
-
-    document.body.classList.add('lite-mode');
-
-    document.getElementById(
-      'liteModeCheck'
-    ).checked = true;
-  }
-
-  const saved =
-    localStorage.getItem(STORAGE_KEY);
-
+  document.body.setAttribute('data-theme', localStorage.getItem('hifz-theme') || 'dark');
+  if (localStorage.getItem('hifz-lite') === 'true') { document.body.classList.add('lite-mode'); document.getElementById('liteModeCheck').checked = true; }
+  const saved = localStorage.getItem(STORAGE_KEY);
   if (saved) {
-
-    try {
-
-      const parsed =
-        JSON.parse(saved);
-
-      appData = {
-        ...appData,
-        ...parsed
-      };
-
-      if (!appData.evalMode) {
-        appData.evalMode = 'weekly';
-      }
-
-      if (
-        appData.soundEnabled === undefined
-      ) {
-        appData.soundEnabled = true;
-      }
-
-    } catch(e) {}
+    try { appData = { ...appData, ...JSON.parse(saved) }; if (!appData.evalMode) appData.evalMode = 'weekly'; if (appData.soundEnabled === undefined) appData.soundEnabled = true; } catch(e) {}
   }
-
-  document.getElementById(
-    'soundModeCheck'
-  ).checked = appData.soundEnabled;
-
+  document.getElementById('soundModeCheck').checked = appData.soundEnabled;
   const today = todayStr();
-
   appData.entries.forEach(e => {
-
-    if (e.phaseDays === undefined) {
-
-      e.phaseDays = [];
-
-      const count =
-        e.dailyPhaseReps ||
-        (e.hasBeenEvaluated ? 7 : 0);
-
-      for (
-        let i = 0;
-        i < count;
-        i++
-      ) {
-        e.phaseDays.push(
-          'old_day_' + i
-        );
-      }
-    }
-
-    if (e.lastRepDate !== today) {
-      e.sessionReps = 0;
-    }
+    if (e.phaseDays === undefined) { e.phaseDays = []; const count = e.dailyPhaseReps || (e.hasBeenEvaluated ? 7 : 0); for (let i = 0; i < count; i++) e.phaseDays.push('old_day_' + i); }
+    if (e.lastRepDate !== today) e.sessionReps = 0;
   });
 
-  if (!appData.userName) {
+  if (!appData.userName) openModal('welcomeModal'); else updateNameDisplays();
 
-    openModal('welcomeModal');
+  const now = new Date(); document.getElementById('dateHeader').textContent = now.toLocaleDateString('ar-EG', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  const dayIndex = getDayOfYear(now); const dw = gharibDict[dayIndex % gharibDict.length];
+  
+  document.getElementById('gharibWord').textContent = dw.w; document.getElementById('gharibMeaning').textContent = dw.m; document.getElementById('gharibSource').textContent = `(المصدر: ${dw.s})`;
+  document.getElementById('gharibWordHome').textContent = dw.w; document.getElementById('gharibMeaningHome').textContent = dw.m; document.getElementById('gharibSourceHome').textContent = `(المصدر: ${dw.s})`;
+  
+  document.getElementById('dailyDua').textContent = duas[dayIndex % duas.length]; document.getElementById('dailyDuaHome').textContent = duas[dayIndex % duas.length];
 
-  } else {
-
-    updateNameDisplays();
-  }
-
-  const now = new Date();
-
-  document.getElementById(
-    'dateHeader'
-  ).textContent =
-    now.toLocaleDateString(
-      'ar-EG',
-      {
-        weekday:'long',
-        year:'numeric',
-        month:'long',
-        day:'numeric'
-      }
-    );
-
-  const dayIndex =
-    getDayOfYear(now);
-
-  const dailyWord =
-    gharibDict[
-      dayIndex % gharibDict.length
-    ];
-
-  document.getElementById(
-    'gharibWord'
-  ).textContent = dailyWord.w;
-
-  document.getElementById(
-    'gharibMeaning'
-  ).textContent = dailyWord.m;
-
-  document.getElementById(
-    'gharibSource'
-  ).textContent =
-    `(المصدر: ${dailyWord.s})`;
-
-  document.getElementById(
-    'dailyDua'
-  ).textContent =
-    duas[
-      dayIndex % duas.length
-    ];
-
-  const ts =
-    document.getElementById(
-      'trackSelect'
-    );
-
-  if (
-    [30,48,604].includes(
-      appData.goal
-    )
-  ) {
-
-    ts.value = appData.goal;
-
-  } else {
-
-    ts.value = '999';
-
-    document.getElementById(
-      'customGoal'
-    ).style.display = 'block';
-
-    document.getElementById(
-      'customGoal'
-    ).value = appData.goal;
-  }
-
-  document.getElementById(
-    'evalModeSelect'
-  ).value = appData.evalMode;
-
-  checkComeback();
-  renderAll();
+  const ts = document.getElementById('trackSelect');
+  if ([30,48,604].includes(appData.goal)) { ts.value = appData.goal; } else { ts.value = '999'; document.getElementById('customGoal').style.display = 'block'; document.getElementById('customGoal').value = appData.goal; }
+  document.getElementById('evalModeSelect').value = appData.evalMode; checkComeback(); renderAll();
 }
 
-function saveData() {
-
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(appData)
-  );
-}
-
+function saveData() { localStorage.setItem(STORAGE_KEY, JSON.stringify(appData)); }
+function saveNewUser() { const nm = document.getElementById('onboardName').value.trim(); if (!nm) return alert("من فضلك أدخل اسمك"); appData.userName = nm; saveData(); closeModal('welcomeModal'); updateNameDisplays(); }
+function updateUserName() { const nm = document.getElementById('settingsNameInput').value.trim(); if (nm) { appData.userName = nm; saveData(); updateNameDisplays(); alert("تم الحفظ!"); } }
+function updateNameDisplays() { document.getElementById('displayUserName').textContent = appData.userName || 'صديقي'; document.getElementById('settingsNameInput').value = appData.userName; }
+function changeEvalMode() { appData.evalMode = document.getElementById('evalModeSelect').value; saveData(); renderAll(); }
 
 /* =========================================================
-   PROFILE
+   STREAK & NAV
 ========================================================= */
-
-function saveNewUser() {
-
-  const nm =
-    document.getElementById(
-      'onboardName'
-    ).value.trim();
-
-  if (!nm) {
-    alert("من فضلك أدخل اسمك");
-    return;
-  }
-
-  appData.userName = nm;
-
-  saveData();
-
-  closeModal('welcomeModal');
-
-  updateNameDisplays();
-}
-
-function updateUserName() {
-
-  const nm =
-    document.getElementById(
-      'settingsNameInput'
-    ).value.trim();
-
-  if (nm) {
-
-    appData.userName = nm;
-
-    saveData();
-
-    updateNameDisplays();
-
-    alert("تم الحفظ!");
-  }
-}
-
-function updateNameDisplays() {
-
-  document.getElementById(
-    'displayUserName'
-  ).textContent =
-    appData.userName || 'صديقي';
-
-  document.getElementById(
-    'settingsNameInput'
-  ).value =
-    appData.userName;
-}
-
-function changeEvalMode() {
-
-  appData.evalMode =
-    document.getElementById(
-      'evalModeSelect'
-    ).value;
-
-  saveData();
-
-  renderAll();
-}
-
-
-/* =========================================================
-   COMEBACK / STREAK
-========================================================= */
-
-function checkComeback() {
-
-  const today = todayStr();
-
-  if (!appData.lastActive) return;
-
-  const diff =
-    daysBetween(
-      appData.lastActive,
-      today
-    );
-
-  if (diff > 1) {
-
-    if (appData.streak > 0) {
-      openModal('comebackModal');
-    }
-
-    appData.streak = 0;
-
-    saveData();
-  }
-}
-
+function checkComeback() { const t = todayStr(); if (!appData.lastActive) return; if (daysBetween(appData.lastActive, t) > 1) { if (appData.streak > 0) openModal('comebackModal'); appData.streak = 0; saveData(); } }
 function updateActive() {
-
-  const today = todayStr();
-
-  if (
-    appData.lastActive === today
-  ) return;
-
-  const previousStreak =
-    appData.streak;
-
-  if (
-    daysBetween(
-      appData.lastActive,
-      today
-    ) === 1
-  ) {
-
-    appData.streak++;
-
-  } else {
-
-    appData.streak = 1;
-  }
-
-  appData.lastActive = today;
-
-  saveData();
-
-  if (
-    appData.streak >
-    previousStreak
-  ) {
-    flashStreak();
-  }
+  const t = todayStr(); if (appData.lastActive === t) return; const p = appData.streak;
+  if (!appData.lastActive) appData.streak = 1; else appData.streak = (daysBetween(appData.lastActive, t) === 1) ? appData.streak + 1 : 1;
+  appData.lastActive = t; saveData(); if (appData.streak > p) flashStreak();
 }
-
-
-/* =========================================================
-   NAVIGATION
-========================================================= */
-
-function switchTab(tabId, element) {
-
-  document
-    .querySelectorAll('.view')
-    .forEach(v =>
-      v.classList.remove('active')
-    );
-
-  document
-    .querySelectorAll('.nav-item')
-    .forEach(n =>
-      n.classList.remove('active')
-    );
-
-  document
-    .getElementById(tabId)
-    .classList.add('active');
-
-  if (element) {
-    element.classList.add('active');
-  }
-
-  document.body.classList.remove(
-    'focus-mode'
-  );
-
-  window.scrollTo(0,0);
-}
-
-function openModal(id) {
-
-  document.getElementById(id)
-    .style.display = 'flex';
-}
-
-function closeModal(id) {
-
-  document.getElementById(id)
-    .style.display = 'none';
-}
-
-function toggleTheme() {
-
-  const next =
-    document.body.getAttribute(
-      'data-theme'
-    ) === 'dark'
-      ? 'light'
-      : 'dark';
-
-  document.body.setAttribute(
-    'data-theme',
-    next
-  );
-
-  localStorage.setItem(
-    'hifz-theme',
-    next
-  );
-}
-
-function toggleLiteMode() {
-
-  const isLite =
-    document.getElementById(
-      'liteModeCheck'
-    ).checked;
-
-  document.body.classList.toggle(
-    'lite-mode',
-    isLite
-  );
-
-  localStorage.setItem(
-    'hifz-lite',
-    isLite
-  );
-}
-
+function switchTab(t, e) { document.querySelectorAll('.view').forEach(v => v.classList.remove('active')); document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active')); document.getElementById(t).classList.add('active'); if (e) e.classList.add('active'); document.body.classList.remove('focus-mode'); window.scrollTo(0,0); }
+function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+function toggleTheme() { const n = document.body.getAttribute('data-theme')==='dark'?'light':'dark'; document.body.setAttribute('data-theme',n); localStorage.setItem('hifz-theme',n); }
+function toggleLiteMode() { const L = document.getElementById('liteModeCheck').checked; document.body.classList.toggle('lite-mode',L); localStorage.setItem('hifz-lite',L); }
 function toggleFocusMode() {
-
-  document.body.classList.toggle(
-    'focus-mode'
-  );
-
-  if (
-    !document.body.classList.contains(
-      'focus-mode'
-    )
-  ) {
-
-    clearInterval(
-      mTimerInterval
-    );
-
-    document.getElementById(
-      'btnMainTimer'
-    ).textContent =
-      "▶ ابدأ المؤقت";
-
-    mTimeLeft = 0;
-
-    updateMTimerDisplay();
-  }
+  document.body.classList.toggle('focus-mode');
+  if (!document.body.classList.contains('focus-mode')) { clearInterval(mTimerInterval); document.getElementById('btnMainTimer').textContent = "▶ ابدأ المؤقت"; mTimeLeft = 0; updateMTimerDisplay(); }
 }
 
-
 /* =========================================================
-   ADD ENTRY
+   ENTRIES LOGIC
 ========================================================= */
-
-function addEntry() {
-
-  const label =
-    document.getElementById(
-      'newEntry'
-    ).value.trim();
-
-  const note =
-    document.getElementById(
-      'newNote'
-    ).value.trim();
-
-  const isICU =
-    document.getElementById(
-      'icuCheckbox'
-    ).checked;
-
-  if (!label) {
-    alert('اكتب الورد أولاً');
-    return;
-  }
-
-  const newId =
-    Date.now().toString();
-
-  appData.entries.push({
-
-    id: newId,
-    label,
-    note,
-    isICU,
-
-    date: todayStr(),
-
-    nextReviewDate: todayStr(),
-
-    quality: null,
-
-    interval: 0,
-
-    ease: 2.5,
-
-    srsLevel: 0,
-
-    reviewCount: 0,
-
-    hasBeenEvaluated: false,
-
-    sessionReps: 0,
-
-    lastRepDate: todayStr(),
-
-    phaseDays: []
-
-  });
-
-  document.getElementById(
-    'newEntry'
-  ).value = '';
-
-  document.getElementById(
-    'newNote'
-  ).value = '';
-
-  document.getElementById(
-    'icuCheckbox'
-  ).checked = false;
-
-  closeModal('addModal');
-
-  updateActive();
-
-  saveData();
-
-  renderAll();
-
-  playSound('pop');
-
-  setTimeout(() => {
-    flashEntry(newId, true);
-  }, 50);
+function createEntryBase(label, note, isICU, skipPhase = false) {
+  const newId = Date.now().toString();
+  appData.entries.push({ id: newId, label, note, isICU, date: todayStr(), nextReviewDate: todayStr(), quality: null, interval: 0, ease: 2.5, srsLevel: 0, reviewCount: 0, hasBeenEvaluated: false, sessionReps: 0, lastRepDate: todayStr(), phaseDays: skipPhase ? ['1','2','3','4','5','6','7'] : [] }); return newId;
 }
-
-
-/* =========================================================
-   ADD OLD ENTRY
-========================================================= */
-
-function addOldEntry() {
-
-  const label =
-    document.getElementById(
-      'oldEntry'
-    ).value.trim();
-
-  if (!label) {
-
-    alert('اكتب الورد أولاً');
-
-    return;
-  }
-
-  const newId =
-    Date.now().toString();
-
-  appData.entries.push({
-
-    id: newId,
-    label,
-    note: '',
-    isICU: false,
-
-    date: todayStr(),
-
-    nextReviewDate: todayStr(),
-
-    quality: null,
-
-    interval: 0,
-
-    ease: 2.5,
-
-    srsLevel: 0,
-
-    reviewCount: 0,
-
-    hasBeenEvaluated: false,
-
-    sessionReps: 0,
-
-    lastRepDate: todayStr(),
-
-    phaseDays:
-      ['1','2','3','4','5','6','7']
-
-  });
-
-  document.getElementById(
-    'oldEntry'
-  ).value = '';
-
-  closeModal('addOldModal');
-
-  updateActive();
-
-  saveData();
-
-  renderAll();
-
-  playSound('pop');
-
-  setTimeout(() => {
-    flashEntry(newId, true);
-  }, 50);
-}
-
-
-/* =========================================================
-   REMOVE
-========================================================= */
-
-function removeEntry(id) {
-
-  if (
-    confirm('تأكيد الحذف؟')
-  ) {
-
-    appData.entries =
-      appData.entries.filter(
-        e => e.id !== id
-      );
-
-    saveData();
-
-    renderAll();
-  }
-}
-
-
-/* =========================================================
-   REP COUNTER
-========================================================= */
-
+function addEntry() { const l = document.getElementById('newEntry').value.trim(); if (!l) return alert('اكتب الورد أولاً'); const id = createEntryBase(l, document.getElementById('newNote').value.trim(), document.getElementById('icuCheckbox').checked); document.getElementById('newEntry').value = ''; document.getElementById('newNote').value = ''; document.getElementById('icuCheckbox').checked = false; closeModal('addModal'); updateActive(); saveData(); renderAll(); playSound('pop'); setTimeout(() => flashEntry(id, true), 50); }
+function addOldEntry() { const l = document.getElementById('oldEntry').value.trim(); if (!l) return alert('اكتب الورد أولاً'); const id = createEntryBase(l, '', false, true); document.getElementById('oldEntry').value = ''; closeModal('addOldModal'); updateActive(); saveData(); renderAll(); playSound('pop'); setTimeout(() => flashEntry(id, true), 50); }
+function removeEntry(id) { if (confirm('تأكيد الحذف؟')) { appData.entries = appData.entries.filter(e => e.id !== id); saveData(); renderAll(); } }
 function addRep(id) {
-
-  const e =
-    appData.entries.find(
-      x => x.id === id
-    );
-
-  if (!e) return;
-
-  const today = todayStr();
-
-  if (e.lastRepDate !== today) {
-    e.sessionReps = 0;
-  }
-
-  e.sessionReps =
-    (e.sessionReps || 0) + 1;
-
-  e.lastRepDate = today;
-
-  saveData();
-
-  renderAll();
-
-  if (e.sessionReps === 10) {
-
-    playSound('ding');
-
-    setTimeout(() => {
-      flashCelebrate(id);
-    }, 50);
-
-  } else {
-
-    playSound('click');
-
-    setTimeout(() => {
-      flashEntry(id, true);
-    }, 50);
-  }
+  const e = appData.entries.find(x => x.id === id); if (!e) return; const t = todayStr(); if (e.lastRepDate !== t) e.sessionReps = 0; e.sessionReps = (e.sessionReps || 0) + 1; e.lastRepDate = t; saveData(); renderAll();
+  if (e.sessionReps === 10) { playSound('ding'); setTimeout(() => flashCelebrate(id), 50); } else { playSound('click'); setTimeout(() => flashEntry(id, true), 50); }
 }
-
-
-/* =========================================================
-   REVIEW / SRS
-========================================================= */
 
 function reviewEntry(id, q) {
+  const e = appData.entries.find(x => x.id === id); if (!e) return;
+  if (e.interval === undefined) e.interval = 0; if (e.ease === undefined) e.ease = 2.5; if (e.srsLevel === undefined) e.srsLevel = 0; if (e.reviewCount === undefined) e.reviewCount = 0; if (e.phaseDays === undefined) e.phaseDays = [];
+  const today = todayStr(); let successful = false; let graduated = false;
 
-  const e =
-    appData.entries.find(
-      x => x.id === id
-    );
-
-  if (!e) return;
-
-  if (
-    e.interval === undefined
-  ) e.interval = 0;
-
-  if (
-    e.ease === undefined
-  ) e.ease = 2.5;
-
-  if (
-    e.srsLevel === undefined
-  ) e.srsLevel = 0;
-
-  if (
-    e.reviewCount === undefined
-  ) e.reviewCount = 0;
-
-  if (
-    e.phaseDays === undefined
-  ) e.phaseDays = [];
-
-  const today = todayStr();
-
-  let successful = false;
-  let graduated = false;
-
-  /* -------- 7-day phase -------- */
-
-  if (
-    e.phaseDays.length < 7
-  ) {
-
+  if (e.phaseDays.length < 7) {
+    if (e.phaseDays.length > 0) {
+      const lastPhaseDate = e.phaseDays[e.phaseDays.length - 1];
+      if (lastPhaseDate && lastPhaseDate.startsWith('20') && daysBetween(lastPhaseDate, today) > 1) {
+        e.phaseDays = []; alert('⚠️ انقطعت سلسلة المراجعة المتتالية لهذا الورد!\nسيتم إعادة التثبيت من اليوم الأول لضمان الإتقان.');
+      }
+    }
     if (q === 'daily_pass') {
-
-      if (
-        e.phaseDays.includes(today)
-      ) {
-
-        alert(
-          'لقد قمت بتسجيل مراجعة هذا الورد لليوم بالفعل! عُد غداً.'
-        );
-
-        return;
-      }
-
-      e.phaseDays.push(today);
-
-      if (
-        e.phaseDays.length === 7
-      ) {
-        graduated = true;
-      }
-
-      e.interval = 1;
-
-      successful = true;
-
-    } else if (
-      q === 'daily_fail'
-    ) {
-
-      e.phaseDays = [];
-
-      e.interval = 1;
-    }
-
-    e.hasBeenEvaluated = true;
-
-    e.reviewCount += 1;
-
-  }
-
-  /* -------- Long-term phase -------- */
-
-  else {
-
-    e.hasBeenEvaluated = true;
-
-    e.reviewCount += 1;
-
-    if (
-      appData.evalMode === 'weekly'
-    ) {
-
-      if (
-        q === 'weekly_pass'
-      ) {
-
-        e.interval = 7;
-
-        successful = true;
-
-      } else if (
-        q === 'weekly_fail'
-      ) {
-
-        e.interval = 1;
-      }
-
+      if (e.phaseDays.includes(today)) return alert('لقد قمت بتسجيل مراجعة هذا الورد لليوم بالفعل! عُد غداً.');
+      e.phaseDays.push(today); if (e.phaseDays.length === 7) graduated = true;
+      e.interval = 1; successful = true;
+    } else if (q === 'daily_fail') { e.phaseDays = []; e.interval = 1; }
+    e.hasBeenEvaluated = true; e.reviewCount += 1;
+  } else {
+    e.hasBeenEvaluated = true; e.reviewCount += 1;
+    if (appData.evalMode === 'weekly') {
+      if (q === 'weekly_pass') { e.interval = 7; successful = true; } else if (q === 'weekly_fail') e.interval = 1;
     } else {
-
-      /* Anki-like mode */
-
-      if (q === 4) {
-
-        e.srsLevel++;
-
-        e.ease += 0.15;
-
-        e.interval =
-          e.srsLevel === 1
-            ? 4
-            : Math.max(
-                1,
-                Math.round(
-                  e.interval *
-                  e.ease *
-                  1.3
-                )
-              );
-
-        successful = true;
-
-      } else if (q === 3) {
-
-        e.srsLevel++;
-
-        e.interval =
-          e.srsLevel === 1
-            ? 1
-            : Math.max(
-                1,
-                Math.round(
-                  e.interval *
-                  e.ease
-                )
-              );
-
-        successful = true;
-
-      } else if (q === 2) {
-
-        e.ease =
-          Math.max(
-            1.3,
-            e.ease - 0.15
-          );
-
-        e.interval =
-          Math.max(
-            1,
-            Math.round(
-              (e.interval || 1) * 1.2
-            )
-          );
-
-      } else {
-
-        e.srsLevel = 0;
-
-        e.ease =
-          Math.max(
-            1.3,
-            e.ease - 0.2
-          );
-
-        e.interval = 1;
-      }
+      if (q === 4) { e.srsLevel++; e.ease += 0.15; e.interval = e.srsLevel === 1 ? 4 : Math.max(1, Math.round(e.interval * e.ease * 1.3)); successful = true; }
+      else if (q === 3) { e.srsLevel++; e.interval = e.srsLevel === 1 ? 1 : Math.max(1, Math.round(e.interval * e.ease)); successful = true; }
+      else if (q === 2) { e.ease = Math.max(1.3, e.ease - 0.15); e.interval = Math.max(1, Math.round((e.interval || 1) * 1.2)); }
+      else { e.srsLevel = 0; e.ease = Math.max(1.3, e.ease - 0.2); e.interval = 1; }
     }
   }
 
-  const d = new Date();
-
-  d.setDate(
-    d.getDate() + e.interval
-  );
-
-  e.nextReviewDate =
-    getLocalDateStr(d);
-
-  e.quality = q;
-
-  e.sessionReps = 0;
-
-  if (
-    e.isICU &&
-    (
-      q === 'daily_pass' ||
-      q === 'weekly_pass' ||
-      q === 3 ||
-      q === 4
-    )
-  ) {
-
-    if (
-      confirm(
-        'أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟'
-      )
-    ) {
-      e.isICU = false;
-    }
-  }
-
-  updateActive();
-
-  saveData();
-
-  renderAll();
-
-  if (graduated) {
-
-    playSound('graduate');
-
-    setTimeout(() => {
-      flashCelebrate(id);
-    }, 50);
-
-  } else if (successful) {
-
-    playSound('ding');
-
-    setTimeout(() => {
-      flashEntry(id, true);
-    }, 50);
-  }
+  const d = new Date(); d.setDate(d.getDate() + e.interval); e.nextReviewDate = getLocalDateStr(d); e.quality = q; e.sessionReps = 0;
+  if (e.isICU && (q === 'daily_pass' || q === 'weekly_pass' || q === 3 || q === 4)) { if (confirm('أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟')) e.isICU = false; }
+  
+  updateActive(); saveData(); renderAll();
+  if (graduated) { playSound('graduate'); setTimeout(() => flashCelebrate(id), 50); }
+  else if (successful) { playSound('ding'); setTimeout(() => flashEntry(id, true), 50); }
 }
-
-
-/* =========================================================
-   SMART LINKS
-========================================================= */
 
 function getSmartLinks(label) {
-
-  let text = label.trim();
-
-  let qLink = '';
-
-  const pMatch =
-    text.match(
-      /(?:ص|صفحة|صفحه)\s*(\d+)/
-    );
-
-  if (
-    pMatch &&
-    pMatch[1]
-  ) {
-
-    qLink =
-      `https://quran.com/page/${pMatch[1]}`;
-
-  } else {
-
-    let fSurah = -1;
-
-    for (
-      let i = 0;
-      i < quranSurahs.length;
-      i++
-    ) {
-
-      const s =
-        quranSurahs[i];
-
-      if (
-        s === "ص" ||
-        s === "ق"
-      ) {
-
-        if (
-          text === s ||
-          text.includes(
-            "سورة " + s
-          )
-        ) {
-
-          fSurah = i + 1;
-          break;
-        }
-
-      } else if (
-        text.includes(s)
-      ) {
-
-        fSurah = i + 1;
-        break;
-      }
-    }
-
-    if (fSurah !== -1) {
-
-      const aMatch =
-        text.match(
-          /(?:آية|اية|آيه|ايه)\s*(\d+)/
-        ) ||
-        text.match(
-          /\s(\d+)/
-        );
-
-      qLink =
-        aMatch
-          ? `https://quran.com/${fSurah}/${aMatch[1]}`
-          : `https://quran.com/${fSurah}`;
-
-    } else {
-
-      qLink =
-        `https://quran.com/search?q=${encodeURIComponent(text)}`;
-    }
+  let t = label.trim(); let q = ''; const pMatch = t.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);
+  if (pMatch && pMatch[1]) q = `https://quran.com/page/${pMatch[1]}`; else {
+    let f = -1; for (let i = 0; i < quranSurahs.length; i++) { const s = quranSurahs[i]; if (s === "ص" || s === "ق") { if (t === s || t.includes("سورة " + s)) { f = i + 1; break; } } else if (t.includes(s)) { f = i + 1; break; } }
+    if (f !== -1) { const a = t.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/) || t.match(/\s(\d+)/); q = a ? `https://quran.com/${f}/${a[1]}` : `https://quran.com/${f}`; } else q = `https://quran.com/search?q=${encodeURIComponent(t)}`;
   }
-
-  return `
-    <div class="app-links">
-
-      <a
-        href="${qLink}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        📖 المصحف (Quran.com)
-      </a>
-
-      <a
-        href="https://tarteel.ai/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        🎤 تسميع (ترتيل)
-      </a>
-
-    </div>
-  `;
+  return `<div class="app-links"><a href="${q}" target="_blank" rel="noopener noreferrer">📖 المصحف</a><a href="https://tarteel.ai/" target="_blank" rel="noopener noreferrer">🎤 ترتيل</a></div>`;
 }
-
 
 /* =========================================================
-   MAIN TIMER
+   TIMERS
 ========================================================= */
-
-let mTimerInterval = null;
-let mTimeLeft = 0;
-
-function updateMTimerDisplay() {
-
-  const minutes =
-    Math.floor(
-      mTimeLeft / 60
-    );
-
-  const seconds =
-    mTimeLeft % 60;
-
-  document.getElementById(
-    'mainTimerDisplay'
-  ).textContent =
-    `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-}
-
-function setMainTimer(mins) {
-
-  clearInterval(mTimerInterval);
-
-  mTimeLeft =
-    Math.max(
-      1,
-      Math.floor(mins * 60)
-    );
-
-  updateMTimerDisplay();
-
-  flashTimerDisplay();
-}
-
-function setCustomTimer() {
-
-  const input =
-    document.getElementById(
-      'customTimerInput'
-    );
-
-  const mins =
-    Number(input.value);
-
-  if (
-    !Number.isFinite(mins) ||
-    mins < 1 ||
-    mins > 240
-  ) {
-
-    alert(
-      'اكتب مدة صحيحة من 1 إلى 240 دقيقة.'
-    );
-
-    return;
-  }
-
-  setMainTimer(mins);
-
-  input.value = '';
-}
-
-function flashTimerDisplay() {
-
-  const el =
-    document.getElementById(
-      'mainTimerDisplay'
-    );
-
-  if (!el) return;
-
-  el.classList.remove(
-    'golden-glow-text'
-  );
-
-  void el.offsetWidth;
-
-  el.classList.add(
-    'golden-glow-text'
-  );
-
-  setTimeout(() => {
-    el.classList.remove(
-      'golden-glow-text'
-    );
-  }, 900);
-}
-
+let mTimerInterval = null, mTimeLeft = 0;
+function updateMTimerDisplay() { document.getElementById('mainTimerDisplay').textContent = `${Math.floor(mTimeLeft/60).toString().padStart(2,'0')}:${(mTimeLeft%60).toString().padStart(2,'0')}`; }
+function setMainTimer(mins) { clearInterval(mTimerInterval); mTimeLeft = Math.max(1, Math.floor(mins * 60)); updateMTimerDisplay(); flashTimerDisplay(); }
+function setCustomTimer() { const val = Number(document.getElementById('customTimerInput').value); if (!Number.isFinite(val) || val < 1 || val > 240) return alert('مدة من 1 إلى 240 دقيقة.'); setMainTimer(val); document.getElementById('customTimerInput').value = ''; }
+function flashTimerDisplay() { const el = document.getElementById('mainTimerDisplay'); if(!el) return; el.classList.remove('golden-glow-text'); triggerReflow(el); el.classList.add('golden-glow-text'); setTimeout(() => el.classList.remove('golden-glow-text'), 1000); }
 function startMainTimer() {
-
-  if (mTimeLeft <= 0) {
-
-    alert(
-      'اختر المدة أولاً'
-    );
-
-    return;
-  }
-
-  const btn =
-    document.getElementById(
-      'btnMainTimer'
-    );
-
-  btn.textContent =
-    "⏳ المؤقت يعمل...";
-
-  clearInterval(mTimerInterval);
-
-  mTimerInterval =
-    setInterval(() => {
-
-      if (mTimeLeft > 0) {
-
-        mTimeLeft--;
-
-        updateMTimerDisplay();
-
-      } else {
-
-        clearInterval(
-          mTimerInterval
-        );
-
-        mTimerInterval = null;
-
-        btn.textContent =
-          "▶ ابدأ المؤقت";
-
-        mTimeLeft = 0;
-
-        updateMTimerDisplay();
-
-        playSound('timer');
-
-        const timerEl =
-          document.getElementById(
-            'mainTimerDisplay'
-          );
-
-        timerEl.classList.remove(
-          'golden-glow-text'
-        );
-
-        void timerEl.offsetWidth;
-
-        timerEl.classList.add(
-          'golden-glow-text'
-        );
-
-        setTimeout(() => {
-
-          timerEl.classList.remove(
-            'golden-glow-text'
-          );
-
-          alert(
-            'انتهت الجلسة! قم بتقييم مراجعاتك الآن.'
-          );
-
-          document.body.classList.remove(
-            'focus-mode'
-          );
-
-        }, 700);
-      }
-
-    }, 1000);
-}
-
-
-/* =========================================================
-   HADAR TIMER
-========================================================= */
-
-let hTimerInterval = null;
-let hTimeLeft = 120;
-
-function openHadrTest() {
-
-  const pool =
-    appData.entries.filter(
-      e =>
-        e.hasBeenEvaluated &&
-        !e.isICU
-    );
-
-  if (
-    pool.length === 0
-  ) {
-
-    alert(
-      'يجب أن يكون لديك أوراد محفوظة مسبقاً للبدء.'
-    );
-
-    return;
-  }
-
-  const target =
-    pool[
-      Math.floor(
-        Math.random() * pool.length
-      )
-    ];
-
-  document.getElementById(
-    'hadrTarget'
-  ).textContent =
-    target.label;
-
-  hTimeLeft = 120;
-
-  document.getElementById(
-    'hadrTimerDisplay'
-  ).textContent =
-    '02:00';
-
-  document.getElementById(
-    'hadrBtn'
-  ).style.display =
-    'block';
-
-  clearInterval(
-    hTimerInterval
-  );
-
-  openModal('hadrModal');
-}
-
-function startHadr() {
-
-  document.getElementById(
-    'hadrBtn'
-  ).style.display =
-    'none';
-
-  hTimerInterval =
-    setInterval(() => {
-
-      if (hTimeLeft > 0) {
-
-        hTimeLeft--;
-
-        const minutes =
-          Math.floor(
-            hTimeLeft / 60
-          );
-
-        const seconds =
-          hTimeLeft % 60;
-
-        document.getElementById(
-          'hadrTimerDisplay'
-        ).textContent =
-          `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
-
-      } else {
-
-        clearInterval(
-          hTimerInterval
-        );
-
-        playSound('timer');
-
-        alert(
-          'انتهى الوقت المخصص. ⏱️'
-        );
-
-        closeHadr();
-      }
-
-    },1000);
-}
-
-function closeHadr() {
-
-  clearInterval(
-    hTimerInterval
-  );
-
-  closeModal(
-    'hadrModal'
-  );
-}
-
-
-/* =========================================================
-   SETTINGS
-========================================================= */
-
-function changeTrack() {
-
-  const val =
-    document.getElementById(
-      'trackSelect'
-    ).value;
-
-  if (val === '999') {
-
-    document.getElementById(
-      'customGoal'
-    ).style.display =
-      'block';
-
-  } else {
-
-    document.getElementById(
-      'customGoal'
-    ).style.display =
-      'none';
-
-    appData.goal =
-      parseInt(val);
-
-    saveData();
-
-    renderAll();
-  }
-}
-
-document.getElementById(
-  'customGoal'
-).addEventListener(
-  'change',
-  e => {
-
-    appData.goal =
-      parseInt(
-        e.target.value
-      ) || 604;
-
-    saveData();
-
-    renderAll();
-  }
-);
-
-
-/* =========================================================
-   EXPORT
-========================================================= */
-
-function exportCSV() {
-
-  let csv =
-    '\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';
-
-  appData.entries.forEach(e => {
-
-    csv +=
-      `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`;
-  });
-
-  const link =
-    document.createElement('a');
-
-  link.href =
-    URL.createObjectURL(
-      new Blob(
-        [csv],
-        {
-          type:
-            'text/csv;charset=utf-8;'
-        }
-      )
-    );
-
-  link.download =
-    `حفظي_${todayStr()}.csv`;
-
-  link.click();
-
-  setTimeout(() => {
-    URL.revokeObjectURL(link.href);
+  if (mTimeLeft <= 0) return alert('اختر المدة أولاً');
+  const btn = document.getElementById('btnMainTimer'); btn.textContent = "⏳ يعمل..."; clearInterval(mTimerInterval);
+  mTimerInterval = setInterval(() => {
+    if (mTimeLeft > 0) { mTimeLeft--; updateMTimerDisplay(); } else {
+      clearInterval(mTimerInterval); mTimerInterval = null; btn.textContent = "▶ ابدأ المؤقت"; mTimeLeft = 0; updateMTimerDisplay(); playSound('timer');
+      const el = document.getElementById('mainTimerDisplay'); el.classList.remove('golden-glow-text'); triggerReflow(el); el.classList.add('golden-glow-text');
+      setTimeout(() => { el.classList.remove('golden-glow-text'); alert('انتهت الجلسة! قيّم مراجعاتك.'); document.body.classList.remove('focus-mode'); }, 700);
+    }
   }, 1000);
 }
-
-function exportData() {
-
-  const link =
-    document.createElement('a');
-
-  link.href =
-    'data:application/json;charset=utf-8,' +
-    encodeURIComponent(
-      JSON.stringify(appData)
-    );
-
-  link.download =
-    `backup_${todayStr()}.json`;
-
-  link.click();
-}
-
+let hTimerInterval = null, hTimeLeft = 120;
+function openHadrTest() { const pool = appData.entries.filter(e => e.hasBeenEvaluated && !e.isICU); if (pool.length === 0) return alert('أضف أوراداً محفوظة أولاً.'); document.getElementById('hadrTarget').textContent = pool[Math.floor(Math.random() * pool.length)].label; hTimeLeft = 120; document.getElementById('hadrTimerDisplay').textContent = '02:00'; document.getElementById('hadrBtn').style.display = 'block'; clearInterval(hTimerInterval); openModal('hadrModal'); }
+function startHadr() { document.getElementById('hadrBtn').style.display = 'none'; hTimerInterval = setInterval(() => { if (hTimeLeft > 0) { hTimeLeft--; document.getElementById('hadrTimerDisplay').textContent = `${Math.floor(hTimeLeft/60).toString().padStart(2,'0')}:${(hTimeLeft%60).toString().padStart(2,'0')}`; } else { clearInterval(hTimerInterval); playSound('timer'); alert('انتهى الوقت. ⏱️'); closeHadr(); } },1000); }
+function closeHadr() { clearInterval(hTimerInterval); closeModal('hadrModal'); }
 
 /* =========================================================
-   IMPORT
+   SETTINGS & DATA
 ========================================================= */
-
-function importData(e) {
-
-  const file =
-    e.target.files[0];
-
-  if (!file) return;
-
-  const reader =
-    new FileReader();
-
-  reader.onload = evt => {
-
-    try {
-
-      const data =
-        JSON.parse(
-          evt.target.result
-        );
-
-      if (
-        data.entries &&
-        confirm(
-          'استبدال البيانات الحالية؟'
-        )
-      ) {
-
-        appData = {
-
-          userName:
-            data.userName || '',
-
-          entries:
-            Array.isArray(
-              data.entries
-            )
-              ? data.entries
-              : [],
-
-          streak:
-            Number.isFinite(
-              data.streak
-            )
-              ? data.streak
-              : 0,
-
-          lastActive:
-            data.lastActive || '',
-
-          goal:
-            Number.isFinite(
-              data.goal
-            )
-              ? data.goal
-              : 604,
-
-          evalMode:
-            data.evalMode ||
-            'weekly',
-
-          soundEnabled:
-            data.soundEnabled !== undefined
-              ? data.soundEnabled
-              : true
-        };
-
-        saveData();
-
-        loadData();
-
-        alert(
-          'تم بنجاح!'
-        );
-      }
-
-    } catch(err) {
-
-      alert(
-        'ملف تالف'
-      );
-    }
-  };
-
-  reader.readAsText(file);
-
-  e.target.value = '';
-}
-
+function changeTrack() { const v = document.getElementById('trackSelect').value; if (v === '999') { document.getElementById('customGoal').style.display = 'block'; } else { document.getElementById('customGoal').style.display = 'none'; appData.goal = parseInt(v); saveData(); renderAll(); } }
+document.getElementById('customGoal').addEventListener('change', e => { appData.goal = parseInt(e.target.value) || 604; saveData(); renderAll(); });
+function exportCSV() { let csv = '\uFEFFالورد,ملاحظات,الإضافة,مركّزة,القادمة,تكرارات\n'; appData.entries.forEach(e => csv += `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`); const l = document.createElement('a'); l.href = URL.createObjectURL(new Blob([csv], {type: 'text/csv;charset=utf-8;'})); l.download = `Hifz_${todayStr()}.csv`; l.click(); setTimeout(() => URL.revokeObjectURL(l.href), 1000); }
+function exportData() { const l = document.createElement('a'); l.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(appData)); l.download = `Backup_${todayStr()}.json`; l.click(); }
+function importData(e) { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = evt => { try { const d = JSON.parse(evt.target.result); if (d.entries && confirm('استبدال؟')) { appData = { userName: d.userName||'', entries: Array.isArray(d.entries)?d.entries:[], streak: Number.isFinite(d.streak)?d.streak:0, lastActive: d.lastActive||'', goal: Number.isFinite(d.goal)?d.goal:604, evalMode: d.evalMode||'weekly', soundEnabled: d.soundEnabled!==undefined?d.soundEnabled:true }; saveData(); loadData(); alert('تم!'); } } catch(err){ alert('ملف تالف'); } }; r.readAsText(f); e.target.value = ''; }
 
 /* =========================================================
    RENDER
 ========================================================= */
-
-function getEvaluatedCount() {
-
-  return appData.entries.filter(
-    e => e.hasBeenEvaluated
-  ).length;
-}
-
+function getEvaluatedCount() { return appData.entries.filter(e => e.hasBeenEvaluated).length; }
 function renderItemHTML(e) {
-
-  const isICU =
-    e.isICU
-      ? 'icu'
-      : '';
-
-  const noteHtml =
-    e.note
-      ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>`
-      : '';
-
-  const isDue =
-    (
-      e.nextReviewDate <=
-      todayStr()
-    ) &&
-    e.hasBeenEvaluated;
-
-  const dueCls =
-    isDue
-      ? 'due-review'
-      : '';
-
-  if (
-    e.phaseDays === undefined
-  ) {
-    e.phaseDays = [];
-  }
-
-  const phaseCount =
-    e.phaseDays.length;
-
-  let metaText = '';
-
-  if (!e.hasBeenEvaluated) {
-
-    metaText =
-      `<span style="
-        color:var(--primary);
-        font-weight:bold;
-      ">
-        ✨ ورد جديد (كرر ثم قيّم)
-      </span>`;
-
-  } else if (isDue) {
-
-    metaText =
-      `<span style="
-        color:var(--warning);
-        font-weight:bold;
-      ">
-        ⏰ مستحق للمراجعة (كرر ثم قيّم)
-      </span>`;
-
-  } else {
-
-    metaText =
-      `المراجعة القادمة: ${e.nextReviewDate}`;
-  }
-
-  const reps =
-    e.sessionReps || 0;
-
-  const isDone =
-    reps >= 10;
-
-  let evaluationSection = '';
-
-  if (
-    !e.hasBeenEvaluated ||
-    isDue
-  ) {
-
-    if (
-      phaseCount < 7
-    ) {
-
-      evaluationSection = `
-
-        <div style="
-          font-size:11px;
-          text-align:center;
-          margin-top:10px;
-          color:var(--primary);
-          font-weight:bold;
-        ">
-          📍 التقييم اليومي لفترة التثبيت:
-        </div>
-
-        <div
-          class="q-btns"
-          style="grid-template-columns:1fr 1fr;"
-        >
-
-          <button
-            style="
-              background:rgba(76,175,80,0.1);
-              border-color:var(--success);
-            "
-            onclick="
-              reviewEntry(
-                '${e.id}',
-                'daily_pass'
-              )
-            "
-          >
-            ✅ أتممت مراجعة اليوم
-          </button>
-
-          <button
-            style="
-              background:rgba(244,67,54,0.1);
-              border-color:var(--danger);
-            "
-            onclick="
-              reviewEntry(
-                '${e.id}',
-                'daily_fail'
-              )
-            "
-          >
-            🔄 لم أتقنها (إعادة التثبيت)
-          </button>
-
-        </div>
-      `;
-
+  const isICU = e.isICU ? 'icu' : ''; const noteHtml = e.note ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>` : ''; const isDue = (e.nextReviewDate <= todayStr() && e.hasBeenEvaluated); const dueCls = isDue ? 'due-review' : '';
+  if (!e.phaseDays) e.phaseDays = []; const phaseCount = e.phaseDays.length;
+  let metaText = !e.hasBeenEvaluated ? `<span style="color:var(--primary); font-weight:700;">✨ ورد جديد (كرر ثم قيّم)</span>` : (isDue ? `<span style="color:var(--warning); font-weight:700;">⏰ مستحق للمراجعة (كرر ثم قيّم)</span>` : `المراجعة القادمة: ${e.nextReviewDate}`);
+  const reps = e.sessionReps || 0; const isDone = reps >= 10; let evalSec = '';
+  if (!e.hasBeenEvaluated || isDue) {
+    if (phaseCount < 7) {
+      evalSec = `<div style="font-size:12px; text-align:center; margin-top:12px; color:var(--primary); font-weight:700;">📍 التقييم اليومي لفترة التثبيت:</div><div class="q-btns"><button style="background:var(--success-dim); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'daily_pass')">✅ أتممت مراجعة اليوم</button><button style="background:var(--danger-dim); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'daily_fail')">🔄 لم أتقنها</button></div>`;
     } else {
-
-      if (
-        appData.evalMode ===
-        'weekly'
-      ) {
-
-        evaluationSection = `
-
-          <div style="
-            font-size:11px;
-            text-align:center;
-            margin-top:10px;
-            color:var(--secondary);
-          ">
-            التقييم الأسبوعي لتحديد الموعد القادم:
-          </div>
-
-          <div
-            class="q-btns"
-            style="grid-template-columns:1fr 1fr;"
-          >
-
-            <button
-              style="
-                background:rgba(76,175,80,0.1);
-                border-color:var(--success);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  'weekly_pass'
-                )
-              "
-            >
-              ✅ مراجعة ممتازة (بعد 7 أيام)
-            </button>
-
-            <button
-              style="
-                background:rgba(244,67,54,0.1);
-                border-color:var(--danger);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  'weekly_fail'
-                )
-              "
-            >
-              🔴 أعد (غداً)
-            </button>
-
-          </div>
-        `;
-
-      } else {
-
-        evaluationSection = `
-
-          <div style="
-            font-size:11px;
-            text-align:center;
-            margin-top:10px;
-            color:var(--secondary);
-          ">
-            التقييم لجدولة الموعد القادم:
-          </div>
-
-          <div
-            class="q-btns"
-            style="
-              grid-template-columns:
-              repeat(2,1fr);
-            "
-          >
-
-            <button
-              style="
-                background:rgba(33,150,243,0.1);
-                border-color:var(--info);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  4
-                )
-              "
-            >
-              🔵 سهل
-            </button>
-
-            <button
-              style="
-                background:rgba(76,175,80,0.1);
-                border-color:var(--success);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  3
-                )
-              "
-            >
-              🟢 تذكرته
-            </button>
-
-            <button
-              style="
-                background:rgba(255,193,7,0.1);
-                border-color:var(--warning);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  2
-                )
-              "
-            >
-              🟡 بصعوبة
-            </button>
-
-            <button
-              style="
-                background:rgba(244,67,54,0.1);
-                border-color:var(--danger);
-              "
-              onclick="
-                reviewEntry(
-                  '${e.id}',
-                  1
-                )
-              "
-            >
-              🔴 نسيت
-            </button>
-
-          </div>
-        `;
-      }
+      if (appData.evalMode === 'weekly') { evalSec = `<div style="font-size:12px; text-align:center; margin-top:12px; color:var(--secondary);">التقييم الأسبوعي لتحديد الموعد القادم:</div><div class="q-btns"><button style="background:var(--success-dim); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'weekly_pass')">✅ مراجعة ممتازة (بعد 7 أيام)</button><button style="background:var(--danger-dim); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'weekly_fail')">🔴 أعد (غداً)</button></div>`; }
+      else { evalSec = `<div style="font-size:12px; text-align:center; margin-top:12px; color:var(--secondary);">التقييم لجدولة الموعد القادم:</div><div class="q-btns anki-btns"><button style="background:rgba(33,150,243,0.1); border-color:var(--info);" onclick="reviewEntry('${e.id}', 4)">🔵 سهل</button><button style="background:var(--success-dim); border-color:var(--success);" onclick="reviewEntry('${e.id}', 3)">🟢 تذكرته</button><button style="background:rgba(219,140,22,0.1); border-color:var(--warning);" onclick="reviewEntry('${e.id}', 2)">🟡 بصعوبة</button><button style="background:var(--danger-dim); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 1)">🔴 نسيت</button></div>`; }
     }
   }
+  let boxesHtml = ''; for (let i = 0; i < 7; i++) boxesHtml += `<div class="t-box ${i < phaseCount ? 'done' : ''}"></div>`;
+  const badge = phaseCount < 7 ? `<div style="display:flex; flex-direction:column; gap:4px; align-items:flex-end;"><span class="phase-badge">تثبيت (يوم ${phaseCount}/7)</span><div class="phase-tracker">${boxesHtml}</div></div>` : `<span class="phase-badge" style="border-color:var(--success); color:var(--success); background:var(--success-dim);">استدامة (${appData.evalMode === 'weekly' ? 'أسبوعي' : 'أنكي'})</span>`;
 
-  let boxesHtml = '';
-
-  for (
-    let i = 0;
-    i < 7;
-    i++
-  ) {
-
-    const stateClass =
-      i < phaseCount
-        ? 'done'
-        : '';
-
-    boxesHtml +=
-      `<div class="t-box ${stateClass}"></div>`;
-  }
-
-  const badge =
-    phaseCount < 7
-
-      ? `
-        <div style="
-          display:flex;
-          flex-direction:column;
-          gap:4px;
-          align-items:flex-end;
-        ">
-
-          <span class="phase-badge">
-            تثبيت
-            (يوم ${phaseCount}/7)
-          </span>
-
-          <div class="phase-tracker">
-            ${boxesHtml}
-          </div>
-
-        </div>
-      `
-
-      : `
-        <span
-          class="phase-badge"
-          style="
-            border-color:var(--success);
-            color:var(--success);
-          "
-        >
-          استدامة
-          (${appData.evalMode === 'weekly'
-            ? 'أسبوعي'
-            : 'أنكي'})
-        </span>
-      `;
-
-  return `
-
-    <div
-      class="item ${isICU} ${dueCls}"
-      data-entry-id="${e.id}"
-    >
-
-      <div class="item-header">
-
-        <div class="item-title">
-
-          <div
-            class="quran-font glow-target"
-          >
-            ${escapeHtml(e.label)}
-          </div>
-
-          ${noteHtml}
-
-        </div>
-
-        <button
-          class="del"
-          onclick="
-            removeEntry('${e.id}')
-          "
-        >
-          ✕
-        </button>
-
-      </div>
-
-      <div class="item-meta">
-
-        <div>
-          ${metaText}
-        </div>
-
-        <div>
-          ${badge}
-        </div>
-
-      </div>
-
-      ${getSmartLinks(e.label)}
-
-      <div class="rep-counter-container">
-
-        <div class="rep-counter-row">
-
-          <span style="
-            font-size:12px;
-            font-weight:bold;
-            color:var(--text);
-          ">
-            الهدف: 10 تكرارات غيباً
-          </span>
-
-          <button
-            class="rep-btn ${isDone ? 'done' : ''}"
-            onclick="
-              addRep('${e.id}')
-            "
-          >
-            📿 كررت غيباً (${reps})
-          </button>
-
-        </div>
-
-        <div style="
-          font-size:11px;
-          color:var(--secondary);
-        ">
-          💡 يُفضّل أن يبدأ التكرار
-          <b>بعد</b>
-          إتقان الورد.
-        </div>
-
-      </div>
-
-      ${evaluationSection}
-
-    </div>
-
-  `;
+  return `<div class="item ${isICU} ${dueCls}" data-entry-id="${e.id}"><div class="item-header"><div class="item-title"><div class="quran-font glow-target">${escapeHtml(e.label)}</div>${noteHtml}</div><button class="del" onclick="removeEntry('${e.id}')" style="background:transparent; border:none; font-size:18px; color:var(--secondary); cursor:pointer;">✕</button></div><div class="item-meta"><div>${metaText}</div><div>${badge}</div></div>${getSmartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:13px; font-weight:700; color:var(--text);">الهدف: 10 تكرارات غيباً</span><button class="rep-btn ${isDone ? 'done' : ''}" onclick="addRep('${e.id}')">📿 كررت (${reps})</button></div><div style="font-size:11px; color:var(--secondary);">💡 يُفضّل أن يبدأ التكرار <b>بعد</b> إتقان الورد.</div></div>${evalSec}</div>`;
 }
 
-
-/* =========================================================
-   POOL
-========================================================= */
-
-function loadMorePool() {
-
-  poolVisibleCount += 20;
-
-  renderPool();
-}
-
+function loadMorePool() { poolVisibleCount += 20; renderPool(); }
 function renderPool() {
-
-  const q =
-    document.getElementById(
-      'searchInput'
-    ).value.trim().toLowerCase();
-
-  let pool =
-    [...appData.entries];
-
-  if (q) {
-
-    pool =
-      pool.filter(
-        e =>
-          e.label
-            .toLowerCase()
-            .includes(q)
-      );
-  }
-
-  pool.sort(
-    (a,b) =>
-      a.nextReviewDate.localeCompare(
-        b.nextReviewDate
-      )
-  );
-
-  const list =
-    document.getElementById(
-      'poolList'
-    );
-
-  list.innerHTML = '';
-
-  const visiblePool =
-    pool.slice(
-      0,
-      poolVisibleCount
-    );
-
-  if (
-    visiblePool.length === 0
-  ) {
-
-    list.innerHTML =
-      `<div class="empty-state">
-        لا يوجد أوراد في المخزون حتى الآن.
-      </div>`;
-
-  } else {
-
-    visiblePool.forEach(e => {
-
-      list.innerHTML +=
-        renderItemHTML(e);
-    });
-  }
-
-  document.getElementById(
-    'poolTotalCount'
-  ).textContent =
-    pool.length;
-
-  document.getElementById(
-    'loadMoreBtn'
-  ).style.display =
-    pool.length > poolVisibleCount
-      ? 'block'
-      : 'none';
+  const q = document.getElementById('searchInput').value.trim().toLowerCase(); let pool = [...appData.entries];
+  if (q) pool = pool.filter(e => e.label.toLowerCase().includes(q));
+  pool.sort((a,b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
+  const list = document.getElementById('poolList'); list.innerHTML = '';
+  const visible = pool.slice(0, poolVisibleCount);
+  if (!visible.length) list.innerHTML = `<div class="empty-state">لا يوجد أوراد.</div>`; else visible.forEach(e => list.innerHTML += renderItemHTML(e));
+  document.getElementById('poolTotalCount').textContent = pool.length;
+  document.getElementById('loadMoreBtn').style.display = pool.length > poolVisibleCount ? 'block' : 'none';
 }
-
-
-/* =========================================================
-   RENDER ALL
-========================================================= */
 
 function renderAll() {
+  const today = todayStr(); const evCount = getEvaluatedCount();
+  document.getElementById('statStreak').textContent = appData.streak; document.getElementById('statTotalAdded').textContent = appData.entries.length; document.getElementById('statEvaluated2').textContent = evCount;
+  
+  const nt = appData.entries.filter(e => e.date === today && !e.hasBeenEvaluated);
+  const nList = document.getElementById('memorizeTodayList');
+  nList.innerHTML = nt.length ? '' : `<div class="empty-state">${appData.entries.length === 0 ? '📖 ابدأ أول ورد لك اليوم.<br>اضغط <b>(+ أضف)</b>' : '📖 لا يوجد حفظ جديد اليوم.<br>اضغط <b>(+ أضف)</b>'}</div>`;
+  nt.forEach(e => nList.innerHTML += renderItemHTML(e));
 
-  const today =
-    todayStr();
+  const dt = appData.entries.filter(e => (e.nextReviewDate <= today && e.hasBeenEvaluated) || e.isICU);
+  document.getElementById('statDueToday').textContent = dt.length;
+  const dList = document.getElementById('dueTodayList');
+  dList.innerHTML = dt.length ? '' : `<div class="empty-state">${appData.entries.length === 0 ? '📖 لا توجد أوراد بعد.' : '🎉 خلصت مراجعات اليوم!'}</div>`;
+  dt.forEach(e => dList.innerHTML += renderItemHTML(e));
 
-  const evaluatedCount =
-    getEvaluatedCount();
-
-  document.getElementById(
-    'statStreak'
-  ).textContent =
-    appData.streak;
-
-  document.getElementById(
-    'statEvaluated'
-  ).textContent =
-    evaluatedCount;
-
-  document.getElementById(
-    'statTotalAdded'
-  ).textContent =
-    appData.entries.length;
-
-  document.getElementById(
-    'statEvaluated2'
-  ).textContent =
-    evaluatedCount;
-
-  /* -------- New Today -------- */
-
-  const newToday =
-    appData.entries.filter(
-      e =>
-        e.date === today &&
-        !e.hasBeenEvaluated
-    );
-
-  const newTodayList =
-    document.getElementById(
-      'memorizeTodayList'
-    );
-
-  const newTodayEmptyState =
-    appData.entries.length === 0
-
-      ? `
-        📖 ابدأ أول ورد لك اليوم.
-        <br>
-        اضغط <b>(+ أضف)</b>
-        للبدء في الحفظ.
-      `
-
-      : `
-        📖 لا يوجد حفظ جديد اليوم.
-        <br>
-        اضغط <b>(+ أضف)</b>
-        لإضافة ورد جديد.
-      `;
-
-  newTodayList.innerHTML =
-    newToday.length
-      ? ''
-      : `<div class="empty-state">
-          ${newTodayEmptyState}
-        </div>`;
-
-  newToday.forEach(e => {
-
-    newTodayList.innerHTML +=
-      renderItemHTML(e);
-  });
-
-  /* -------- Due Today -------- */
-
-  const dueToday =
-    appData.entries.filter(
-      e =>
-        (
-          e.nextReviewDate <= today &&
-          e.hasBeenEvaluated
-        ) ||
-        e.isICU
-    );
-
-  document.getElementById(
-    'statDueToday'
-  ).textContent =
-    dueToday.length;
-
-  const dList =
-    document.getElementById(
-      'dueTodayList'
-    );
-
-  const reviewEmptyState =
-    appData.entries.length === 0
-
-      ? `
-        📖 لا توجد أوراد بعد.
-        <br>
-        أضف أول ورد لك للبدء.
-      `
-
-      : `
-        🎉 خلصت مراجعات اليوم!
-        <br>
-        يمكنك إضافة ورد جديد للحفظ.
-      `;
-
-  dList.innerHTML =
-    dueToday.length
-      ? ''
-      : `<div class="empty-state">
-          ${reviewEmptyState}
-        </div>`;
-
-  dueToday.forEach(e => {
-
-    dList.innerHTML +=
-      renderItemHTML(e);
-  });
-
-  /* -------- ICU -------- */
-
-  const icuEntries =
-    appData.entries.filter(
-      e => e.isICU
-    );
-
-  const icuContainer =
-    document.getElementById(
-      'icuContainer'
-    );
-
-  if (
-    icuEntries.length > 0
-  ) {
-
-    icuContainer.style.display =
-      'block';
-
-    const icuList =
-      document.getElementById(
-        'icuList'
-      );
-
-    icuList.innerHTML = '';
-
-    icuEntries.forEach(e => {
-
-      icuList.innerHTML +=
-        renderItemHTML(e);
-    });
-
-  } else {
-
-    icuContainer.style.display =
-      'none';
-  }
+  const icuE = appData.entries.filter(e => e.isICU);
+  const icuC = document.getElementById('icuContainer');
+  if (icuE.length) { icuC.style.display = 'block'; const icuL = document.getElementById('icuList'); icuL.innerHTML = ''; icuE.forEach(e => icuL.innerHTML += renderItemHTML(e)); } else icuC.style.display = 'none';
 
   renderPool();
-
-  /* -------- Progress -------- */
-
-  document.getElementById(
-    'goalTextVal'
-  ).textContent =
-    `${appData.goal} ورد (باعتبار الورد صفحة)`;
-
-  const pct =
-    appData.goal > 0
-      ? Math.min(
-          (evaluatedCount /
-            appData.goal) * 100,
-          100
-        )
-      : 0;
-
-  document.getElementById(
-    'trackProgress'
-  ).style.width =
-    `${pct}%`;
-
-  document.getElementById(
-    'trackText'
-  ).textContent =
-    `تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
+  document.getElementById('goalTextVal').textContent = `${appData.goal} ورد`;
+  const pct = appData.goal > 0 ? Math.min((evCount / appData.goal) * 100, 100) : 0;
+  document.getElementById('trackProgress').style.width = `${pct}%`;
+  document.getElementById('trackText').textContent = `تم تقييم ${evCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
 }
 
-
-/* =========================================================
-   START
-========================================================= */
-
 loadData();
-
 </script>
-
 </body>
 </html>
