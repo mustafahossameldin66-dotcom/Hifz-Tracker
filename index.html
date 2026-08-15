@@ -7,1005 +7,109 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>رفيق القرآن - المراجعة الذكية</title>
-
-<!-- أكواد اللوجو والأيقونة -->
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
-
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0f1b16; --card-bg: #16241c; --border: #2a3d30;
-    --text: #e8e6df; --primary: #c9a86a; --secondary: #9aa89a;
-    --danger: #7f5a5a; --input-bg: #0a120f; --success: #4caf50; --warning: #ff9800; --info: #2196f3;
-  }
-  [data-theme="light"] {
-    --bg: #f4f6f5; --card-bg: #ffffff; --border: #d1d8d3;
-    --text: #2c3e35; --primary: #8b6d33; --secondary: #5c6b61;
-    --danger: #b33939; --input-bg: #eef1f0; --success: #388e3c; --warning: #f57c00; --info: #1976d2;
-  }
-  body.lite-mode * { transition: none !important; box-shadow: none !important; background-image: none !important; }
-
-  * { box-sizing: border-box; transition: background 0.3s, color 0.3s; }
-  body { font-family: 'Tahoma', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; padding-bottom: 80px; line-height: 1.6; }
-  .quran-font { font-family: 'Amiri', serif; font-size: 19px !important; font-weight: bold; }
-
-  .wrap { max-width: 640px; margin: 0 auto; padding: 16px; }
-
-  .view { display: none; animation: fadeIn 0.3s; }
-  .view.active { display: block; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-  .header-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-  h1 { font-size: 22px; color: var(--primary); margin: 0; font-family: 'Amiri', serif; }
-
-  .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-  .card h2 { font-size: 16px; margin: 0 0 12px; color: var(--primary); display: flex; align-items: center; gap: 6px; }
-  .badge-count { background: var(--border); color: var(--secondary); font-size: 12px; padding: 2px 10px; border-radius: 12px; margin-inline-start: auto; font-weight: bold; }
-
-  input[type=text], input[type=number], textarea, select { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--input-bg); color: var(--text); font-size: 14px; margin-bottom: 10px; font-family: 'Tahoma', sans-serif; }
-
-  button.main-btn { width: 100%; padding: 14px; border-radius: 10px; border: none; background: var(--primary); color: #0f1b16; font-weight: bold; font-size: 16px; cursor: pointer; }
-  button.huge-btn { padding: 18px; font-size: 18px; background: linear-gradient(135deg, var(--primary), #a6854b); box-shadow: 0 4px 15px rgba(201,168,106,0.2); margin-top: 10px; margin-bottom: 20px; }
-  button:active { transform: scale(0.98); }
-  .action-btn { flex: 1; background: var(--border); color: var(--text); text-align: center; padding: 12px; border-radius: 10px; cursor: pointer; font-size: 14px; font-weight: bold; border: none; }
-
-  .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--card-bg); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; box-shadow: 0 -2px 10px rgba(0,0,0,0.2); }
-  .nav-item { flex: 1; text-align: center; color: var(--secondary); font-size: 11px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  .nav-item.active { color: var(--primary); font-weight: bold; }
-  .nav-icon { font-size: 22px; }
-
-  .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 27, 22, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 16px; }
-  .modal-content { background: var(--card-bg); border: 1px solid var(--primary); width: 100%; max-width: 400px; border-radius: 16px; padding: 24px; position: relative; }
-  .close-modal { position: absolute; top: 10px; left: 15px; background: none; border: none; color: var(--danger); font-size: 22px; cursor: pointer; }
-
-  .item { display: flex; flex-direction: column; gap: 8px; padding: 14px; border-bottom: 1px solid var(--border); font-size: 14px; background: var(--input-bg); border-radius: 10px; margin-bottom: 10px; border-right: 3px solid transparent; }
-  .item.icu { border-right-color: var(--danger); background: rgba(244, 67, 54, 0.05); }
-  .item.due-review { border-right-color: var(--warning); background: rgba(255, 152, 0, 0.05); }
-  .item-header { display: flex; justify-content: space-between; align-items: flex-start; }
-  .item-title { flex: 1; }
-  .item-meta { font-size: 11px; color: var(--secondary); margin-top: 6px; display:flex; justify-content:space-between; align-items: center;}
-  .app-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
-  .app-links a { text-decoration: none; color: var(--secondary); border: 1px solid var(--border); padding: 4px 8px; border-radius: 6px; font-size: 11px; background: var(--card-bg); }
-  
-  /* Counter UI */
-  .rep-counter-container { display: flex; flex-direction: column; gap: 8px; background: var(--card-bg); padding: 10px; border-radius: 8px; border: 1px dashed var(--border); margin-top: 5px; }
-  .rep-counter-row { display: flex; justify-content: space-between; align-items: center; }
-  .rep-btn { background: var(--primary); color: #0f1b16; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 13px; }
-  .rep-btn.done { background: var(--success); color: #fff; }
-
-  /* Buttons Grid */
-  .q-btns { display: grid; gap: 6px; margin-top: 10px; width: 100%; }
-  .q-btns button { padding: 10px 4px; font-size: 12px; font-weight:bold; border-radius: 6px; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); cursor: pointer; }
-  
-  /* Focus Mode / Session Mode */
-  .timer-display { font-size: 48px; font-weight: bold; color: var(--primary); text-align: center; font-family: monospace; margin: 10px 0; letter-spacing: 2px; }
-  body.focus-mode .bottom-nav { display: none !important; }
-  body.focus-mode .header-row { display: none !important; }
-  body.focus-mode #home-content { display: none !important; }
-  
-  #session-container { display: none; }
-  body.focus-mode #session-container { display: flex; flex-direction: column; justify-content: center; min-height: 80vh; }
-  
-  /* Stats */
-  .stats-grid { display: flex; text-align: center; justify-content: space-between; margin-bottom: 16px; gap: 8px; }
-  .stat-box { flex: 1; background: var(--input-bg); padding: 12px 0; border-radius: 10px; border: 1px solid var(--border); }
-  .stat-num { font-size: 22px; font-weight: bold; color: var(--primary); }
-  .stat-lbl { font-size: 11px; color: var(--secondary); margin-top: 4px; }
-
-  .progress-bar-container { background: var(--input-bg); border-radius: 10px; height: 14px; width: 100%; overflow: hidden; margin: 10px 0; border: 1px solid var(--border); }
-  .progress-bar { background: var(--primary); height: 100%; width: 0%; transition: width 0.5s ease; }
-  
-  /* Empty States */
-  .empty-state { text-align: center; padding: 20px; font-size: 13px; line-height: 1.8; color: var(--secondary); background: rgba(201, 168, 106, 0.05); border: 1px dashed var(--border); border-radius: 10px; }
-  .empty-state b { color: var(--primary); }
-  .phase-badge { background: rgba(201, 168, 106, 0.1); border: 1px solid var(--primary); color: var(--primary); font-size: 10px; padding: 2px 8px; border-radius: 12px; margin-right: 6px; }
+:root{--bg:#0f1b16;--card-bg:#16241c;--border:#2a3d30;--text:#e8e6df;--primary:#c9a86a;--secondary:#9aa89a;--danger:#7f5a5a;--input-bg:#0a120f;--success:#4caf50;--warning:#ff9800;--info:#2196f3;}
+[data-theme="light"]{--bg:#f4f6f5;--card-bg:#fff;--border:#d1d8d3;--text:#2c3e35;--primary:#8b6d33;--secondary:#5c6b61;--danger:#b33939;--input-bg:#eef1f0;--success:#388e3c;--warning:#f57c00;--info:#1976d2;}
+body.lite-mode *{transition:none!important;box-shadow:none!important;background-image:none!important}
+*{box-sizing:border-box;transition:background .3s,color .3s}
+body{font-family:Tahoma,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0 0 80px;line-height:1.6}
+.quran-font{font-family:'Amiri',serif;font-size:19px!important;font-weight:700}
+.wrap{max-width:640px;margin:0 auto;padding:16px}.view{display:none;animation:fadeIn .3s}.view.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.header-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}h1{font-size:22px;color:var(--primary);margin:0;font-family:'Amiri',serif}
+.card{background:var(--card-bg);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:16px;box-shadow:0 4px 6px rgba(0,0,0,.1)}
+.card h2{font-size:16px;margin:0 0 12px;color:var(--primary);display:flex;align-items:center;gap:6px}.badge-count{background:var(--border);color:var(--secondary);font-size:12px;padding:2px 10px;border-radius:12px;margin-inline-start:auto;font-weight:700}
+input[type=text],input[type=number],textarea,select{width:100%;padding:12px;border-radius:10px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;margin-bottom:10px;font-family:Tahoma,sans-serif}
+button.main-btn{width:100%;padding:14px;border-radius:10px;border:0;background:var(--primary);color:#0f1b16;font-weight:700;font-size:16px;cursor:pointer}button.huge-btn{padding:18px;font-size:18px;background:linear-gradient(135deg,var(--primary),#a6854b);box-shadow:0 4px 15px rgba(201,168,106,.2);margin:10px 0}
+button:active{transform:scale(.98)}.action-btn{flex:1;background:var(--border);color:var(--text);text-align:center;padding:12px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:700;border:0}
+.bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:var(--card-bg);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:10px 0;z-index:1000;box-shadow:0 -2px 10px rgba(0,0,0,.2)}
+.nav-item{flex:1;text-align:center;color:var(--secondary);font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px}.nav-item.active{color:var(--primary);font-weight:700}.nav-icon{font-size:22px}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,27,22,.95);z-index:2000;align-items:center;justify-content:center;padding:16px}.modal-content{background:var(--card-bg);border:1px solid var(--primary);width:100%;max-width:400px;border-radius:16px;padding:24px;position:relative;max-height:85vh;overflow-y:auto}.close-modal{position:absolute;top:10px;left:15px;background:none;border:0;color:var(--danger);font-size:22px;cursor:pointer}
+.item{display:flex;flex-direction:column;gap:8px;padding:14px;border-bottom:1px solid var(--border);font-size:14px;background:var(--input-bg);border-radius:10px;margin-bottom:10px;border-right:3px solid transparent}.item.icu{border-right-color:var(--danger);background:rgba(244,67,54,.05)}.item.due-review{border-right-color:var(--warning);background:rgba(255,152,0,.05)}
+.item-header{display:flex;justify-content:space-between;align-items:flex-start}.item-title{flex:1}.item-meta{font-size:11px;color:var(--secondary);margin-top:6px;display:flex;justify-content:space-between;align-items:center}.app-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.app-links a{text-decoration:none;color:var(--secondary);border:1px solid var(--border);padding:4px 8px;border-radius:6px;font-size:11px;background:var(--card-bg)}
+.rep-counter-container{display:flex;flex-direction:column;gap:8px;background:var(--card-bg);padding:10px;border-radius:8px;border:1px dashed var(--border);margin-top:5px}.rep-counter-row{display:flex;justify-content:space-between;align-items:center}.rep-btn{background:var(--primary);color:#0f1b16;border:0;padding:8px 16px;border-radius:6px;font-weight:700;cursor:pointer;font-size:13px}.rep-btn.done{background:var(--success);color:#fff}
+.q-btns{display:grid;gap:6px;margin-top:10px;width:100%}.q-btns button{padding:10px 4px;font-size:12px;font-weight:700;border-radius:6px;border:1px solid var(--border);background:var(--card-bg);color:var(--text);cursor:pointer}
+.phase-tracker{display:flex;gap:4px;margin-top:6px}.t-box{width:14px;height:14px;border:1px solid var(--primary);border-radius:3px;background:transparent}.t-box.done{background:var(--primary)}
+.timer-display{font-size:48px;font-weight:700;color:var(--primary);text-align:center;font-family:monospace;margin:10px 0;letter-spacing:2px}body.focus-mode .bottom-nav,body.focus-mode .header-row,body.focus-mode #home-content{display:none!important}#session-container{display:none}body.focus-mode #session-container{display:flex;flex-direction:column;justify-content:center;min-height:80vh}
+.stats-grid{display:flex;text-align:center;justify-content:space-between;margin-bottom:16px;gap:8px}.stat-box{flex:1;background:var(--input-bg);padding:12px 0;border-radius:10px;border:1px solid var(--border)}.stat-num{font-size:22px;font-weight:700;color:var(--primary)}.stat-lbl{font-size:11px;color:var(--secondary);margin-top:4px}
+.progress-bar-container{background:var(--input-bg);border-radius:10px;height:14px;width:100%;overflow:hidden;margin:10px 0;border:1px solid var(--border)}.progress-bar{background:var(--primary);height:100%;width:0%;transition:width .5s ease}
+.empty-state{text-align:center;padding:20px;font-size:13px;line-height:1.8;color:var(--secondary);background:rgba(201,168,106,.05);border:1px dashed var(--border);border-radius:10px}.empty-state b{color:var(--primary)}.phase-badge{background:rgba(201,168,106,.1);border:1px solid var(--primary);color:var(--primary);font-size:10px;padding:2px 8px;border-radius:12px;margin-right:6px;display:inline-block}
+/* Golden micro-interaction */
+@keyframes goldenGlow{0%{box-shadow:0 0 0 rgba(201,168,106,0);text-shadow:none;border-color:var(--border)}35%{box-shadow:0 0 12px rgba(201,168,106,.65),0 0 28px rgba(201,168,106,.22);text-shadow:0 0 9px rgba(201,168,106,.65);border-color:var(--primary)}100%{box-shadow:0 0 0 rgba(201,168,106,0);text-shadow:none}}
+.golden-glow{animation:goldenGlow .75s ease-out}.golden-glow-text{animation:goldenGlow .7s ease-out}.celebrate-glow{animation:goldenGlow 1s ease-out}
 </style>
 </head>
 <body>
-
-<!-- Navigation Bar -->
 <div class="bottom-nav">
-  <div class="nav-item active" onclick="switchTab('view-home', this)"><div class="nav-icon">📅</div>خطة اليوم</div>
-  <div class="nav-item" onclick="switchTab('view-pool', this)"><div class="nav-icon">📚</div>المخزون</div>
-  <div class="nav-item" onclick="switchTab('view-spiritual', this)"><div class="nav-icon">📊</div>التقدم والأثر</div>
-  <div class="nav-item" onclick="switchTab('view-settings', this)"><div class="nav-icon">⚙️</div>الإعدادات</div>
+  <div class="nav-item active" onclick="switchTab('view-home',this)"><div class="nav-icon">📅</div>خطة اليوم</div>
+  <div class="nav-item" onclick="switchTab('view-pool',this)"><div class="nav-icon">📚</div>المخزون</div>
+  <div class="nav-item" onclick="switchTab('view-spiritual',this)"><div class="nav-icon">📊</div>التقدم والأثر</div>
+  <div class="nav-item" onclick="switchTab('view-settings',this)"><div class="nav-icon">⚙️</div>الإعدادات</div>
 </div>
 
-<!-- Modals -->
-<div class="modal-overlay" id="welcomeModal">
-  <div class="modal-content" style="text-align:center;">
-    <div style="font-size:50px; margin-bottom:10px;">📖</div>
-    <h2 style="color:var(--primary); margin-top:0;">أهلاً بك في رفيق القرآن</h2>
-    <p style="font-size:14px; color:var(--secondary);">تطبيقك الشخصي للمراجعة المتباعدة. بياناتك تُحفظ على جهازك محلياً فقط. ما هو اسمك للبدء؟</p>
-    <input type="text" id="onboardName" placeholder="أدخل اسمك هنا..." style="text-align:center; font-size:16px;">
-    <button class="main-btn" onclick="saveNewUser()">ابدأ رحلتك</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="comebackModal">
-  <div class="modal-content" style="text-align:center;">
-    <div style="font-size:50px; margin-bottom:10px;">🌱</div>
-    <h2 style="color:var(--primary); margin-top:0;">عوداً حميداً!</h2>
-    <p style="font-size:14px; color:var(--text);">فاتتك جلسة؟ لا بأس. المهم ألا تتوقف أبداً.<br>لنبدأ من جديد اليوم ونبني سلسلة نجاح جديدة!</p>
-    <button class="main-btn" onclick="closeModal('comebackModal')">بسم الله</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="addModal">
-  <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addModal')">✖</button>
-    <h2 style="color:var(--primary); margin-top:0;">➕ حفظ جديد للنهاردة</h2>
-    <input type="text" id="newEntry" placeholder="الورد (مثال: البقرة ص 4)">
-    <input type="text" id="newNote" placeholder="ملاحظات شخصية (اختياري)">
-    <label style="display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; color:var(--danger);">
-      <input type="checkbox" id="icuCheckbox" style="width:18px;height:18px;accent-color:var(--danger);">
-      عناية مركزة (تنبيه مضاعف للآيات الصعبة)
-    </label>
-    <button class="main-btn" onclick="addEntry()" style="margin-top:10px;">إضافة لخطة اليوم</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="addOldModal">
-  <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addOldModal')">✖</button>
-    <h2 style="color:var(--primary); margin-top:0;">📚 إضافة محفوظ سابق</h2>
-    <p style="font-size:12px; color:var(--secondary);">بما أن هذا الورد محفوظ مسبقاً، سيدخل فوراً لمرحلة التعهد والمراجعة.</p>
-    <input type="text" id="oldEntry" placeholder="الورد القديم (مثال: جزء عم)">
-    <button class="main-btn" onclick="addOldEntry()" style="margin-top:10px;">إضافة للمخزون</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="hadrModal">
-  <div class="modal-content" style="text-align:center;">
-    <h2 style="color:var(--primary); margin-top:0;">⏱️ مؤقت الحَدْر</h2>
-    <div style="font-size:14px; color:var(--secondary); margin-bottom:15px;">استخدم هذا المؤقت لضبط إيقاع قراءتك السريعة لهذا الورد:</div>
-    <div id="hadrTarget" class="quran-font" style="font-size:24px!important; color:var(--text); margin-bottom:20px;"></div>
-    <div class="timer-display" id="hadrTimerDisplay" style="color:var(--warning);">02:00</div>
-    <button class="main-btn" id="hadrBtn" onclick="startHadr()">بدء المؤقت ▶</button>
-    <button class="action-btn" style="width:100%; margin-top:10px; background:transparent;" onclick="closeHadr()">إلغاء</button>
-  </div>
-</div>
+<div class="modal-overlay" id="welcomeModal"><div class="modal-content" style="text-align:center"><div style="font-size:50px;margin-bottom:10px">📖</div><h2 style="color:var(--primary);margin-top:0">أهلاً بك في رفيق القرآن</h2><p style="font-size:14px;color:var(--secondary)">تطبيقك الشخصي للمراجعة المتباعدة. بياناتك تُحفظ على جهازك محلياً فقط. ما هو اسمك للبدء؟</p><input type="text" id="onboardName" placeholder="أدخل اسمك هنا..." style="text-align:center;font-size:16px"><button class="main-btn" onclick="saveNewUser()">ابدأ رحلتك</button></div></div>
+<div class="modal-overlay" id="comebackModal"><div class="modal-content" style="text-align:center"><div style="font-size:50px;margin-bottom:10px">🌱</div><h2 style="color:var(--primary);margin-top:0">عوداً حميداً!</h2><p style="font-size:14px;color:var(--text)">فاتتك جلسة؟ لا بأس. المهم ألا تتوقف أبداً.<br>لنبدأ من جديد اليوم ونبني سلسلة نجاح جديدة!</p><button class="main-btn" onclick="closeModal('comebackModal')">بسم الله</button></div></div>
+<div class="modal-overlay" id="addModal"><div class="modal-content"><button class="close-modal" onclick="closeModal('addModal')">✖</button><h2 style="color:var(--primary);margin-top:0">➕ حفظ جديد للنهاردة</h2><input type="text" id="newEntry" placeholder="الورد (مثال: البقرة ص 4)"><input type="text" id="newNote" placeholder="ملاحظات شخصية (اختياري)"><label style="display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:10px;color:var(--danger)"><input type="checkbox" id="icuCheckbox" style="width:18px;height:18px;accent-color:var(--danger)">عناية مركزة (تنبيه مضاعف للآيات الصعبة)</label><button class="main-btn" onclick="addEntry()">إضافة لخطة اليوم</button></div></div>
+<div class="modal-overlay" id="addOldModal"><div class="modal-content"><button class="close-modal" onclick="closeModal('addOldModal')">✖</button><h2 style="color:var(--primary);margin-top:0">📚 إضافة محفوظ سابق</h2><p style="font-size:12px;color:var(--secondary)">بما أن هذا الورد محفوظ مسبقاً، سيدخل فوراً لمرحلة التعهد والمراجعة.</p><input type="text" id="oldEntry" placeholder="الورد القديم (مثال: جزء عم)"><button class="main-btn" onclick="addOldEntry()">إضافة للمخزون</button></div></div>
+<div class="modal-overlay" id="hadrModal"><div class="modal-content" style="text-align:center"><h2 style="color:var(--primary);margin-top:0">⏱️ مؤقت الحَدْر</h2><div style="font-size:14px;color:var(--secondary);margin-bottom:15px">استخدم هذا المؤقت لضبط إيقاع قراءتك السريعة لهذا الورد:</div><div id="hadrTarget" class="quran-font" style="font-size:24px!important;color:var(--text);margin-bottom:20px"></div><div class="timer-display" id="hadrTimerDisplay" style="color:var(--warning)">02:00</div><button class="main-btn" id="hadrBtn" onclick="startHadr()">بدء المؤقت ▶</button><button class="action-btn" style="width:100%;margin-top:10px;background:transparent" onclick="closeHadr()">إلغاء</button></div></div>
+<div class="modal-overlay" id="guideModal"><div class="modal-content"><button class="close-modal" onclick="closeModal('guideModal')">✖</button><h2 style="color:var(--primary);margin-top:0;border-bottom:1px solid var(--border);padding-bottom:10px">💡 دليلي للحفظ والإتقان</h2><h3 style="font-size:15px;color:var(--text);margin-bottom:8px">الخطوات الذهبية للحفظ:</h3><div style="font-size:13px;color:var(--secondary);line-height:1.8"><b>1. الضبط والتجويد (الأساس):</b> الاستماع للشيخ <b>الحصري</b> لضبط مخارج الحروف والتشكيل.<br><b>2. الترسيخ البصري والسمعي:</b> استخدام مقاطع <b>أمل ثابت</b> لدمج الذاكرة السمعية والبصرية وربط الآيات.<br><b>3. السلاسة والانطلاق:</b> الترديد مع الشيخ <b>فارس عباد</b> لتعويد اللسان على الانطلاق بسرعة بدون تلعثم (الحَدْر).<br><b>4. بناء العضلة (التكرار غيباً):</b> استخدم عداد التكرار <b>(10 مرات كحد أدنى)</b> لترسيخ الورد غيباً. <span style="color:var(--info);font-size:11.5px">(خيار إضافي: يمكنك استخدام <b>تطبيق ترتيل 🎤</b> للتسميع واكتشاف الأخطاء، ولكنه ليس شرطاً).</span><br><b>5. التثبيت القريب (7 أيام):</b> راجع الورد الجديد لمدة أسبوع متتالي. التطبيق سيظهر لك 7 مربعات لتتبع اكتمال تثبيتك.</div><h3 style="font-size:15px;color:var(--text);margin-top:20px;margin-bottom:8px">📌 مهام يومية لا غنى عنها (أركان الحفظ):</h3><div style="font-size:13px;color:var(--secondary);line-height:1.8">• <b>تعلم التجويد:</b> خطوة بخطوة لتقرأ كما أُنزِل.<br>• <b>التثبيت والتربيط:</b> ربط أواخر الآيات ببدايات ما يليها لمعالجة النسيان السريع.<br>• <b>فهم الآيات:</b> قراءة تفسير ولو لآية واحدة يومياً؛ الفهم يرسخ الحفظ في القلب قبل العقل.</div><div style="margin-top:20px;padding:15px;background:rgba(201,168,106,.05);border-radius:10px;text-align:center;border:1px dashed var(--primary)"><div style="color:var(--primary);font-weight:700;font-size:14px;font-family:'Amiri',serif">قال رسول الله ﷺ:</div><div style="color:var(--text);font-size:16px;font-family:'Amiri',serif;margin-top:8px">"أَحَبُّ الأَعْمَالِ إلى اللهِ أدْوَمُهَا وإنْ قَلَّ"</div></div></div></div>
 
 <div class="wrap">
-  <!-- VIEW 1: HOME (Focused Daily Plan) -->
-  <div id="view-home" class="view active">
-    <div class="header-row">
-      <div>
-        <h1>خطة اليوم يا <span id="displayUserName"></span> 📅</h1>
-        <div style="font-size:12px; color:var(--secondary);" id="dateHeader"></div>
-      </div>
-      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
-    </div>
-
-    <!-- Session Container -->
-    <div id="session-container">
-      <h2 style="text-align:center; color:var(--primary); margin-bottom:20px;">⏱️ جلسة التركيز</h2>
-      <div class="timer-display" id="mainTimerDisplay">00:00</div>
-      <div style="display:flex; gap:8px; justify-content:center; margin-bottom:20px; flex-wrap:wrap;">
-        <button class="action-btn" onclick="setMainTimer(15)">15 دقيقة</button>
-        <button class="action-btn" onclick="setMainTimer(30)">30 دقيقة</button>
-        <button class="action-btn" onclick="setMainTimer(45)">45 دقيقة</button>
-      </div>
-      <div style="display:flex; gap:10px; margin-bottom:20px;">
-        <button class="main-btn" id="btnMainTimer" onclick="startMainTimer()">▶ ابدأ المؤقت</button>
-        <button class="action-btn" style="background:var(--danger); color:#fff;" onclick="toggleFocusMode()">✖ إنهاء الجلسة</button>
-      </div>
-      <div style="text-align:center; color:var(--secondary); font-size:13px; line-height: 1.8;">
-        اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.
-        <br><strong style="color:var(--warning);">تنبيه: التكرار يبدأ فقط بعد الحفظ والضبط والإتقان.</strong>
-        <br>بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
-      </div>
-    </div>
-
-    <!-- Main View Elements -->
-    <div id="home-content">
-      
-      <button class="main-btn huge-btn" onclick="toggleFocusMode()">▶ ابدأ جلسة المراجعة</button>
-
-      <!-- 1. Memorize Today -->
-      <div class="card">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <h2 style="margin:0;">🆕 حِفظ اليوم</h2>
-          <button style="background:transparent; border:1px solid var(--primary); color:var(--primary); border-radius:6px; padding:4px 10px; cursor:pointer; font-weight:bold;" onclick="openModal('addModal')">+ أضف</button>
-        </div>
-        <div id="memorizeTodayList" style="margin-top:15px;"></div>
-      </div>
-
-      <!-- 2. Review Today -->
-      <div class="card" style="border-color:var(--warning);">
-        <h2 style="color:var(--warning);">🔄 مراجعات مستحقة اليوم <span class="badge-count" id="statDueToday" style="background:var(--warning); color:#000;">0</span></h2>
-        <div id="dueTodayList"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- VIEW 2: POOL (Inventory & Secondary Tools) -->
-  <div id="view-pool" class="view">
-    <div class="header-row">
-      <h1>📚 المخزون الكامل</h1>
-      <button class="action-btn" style="flex:none; padding:6px 12px; margin:0;" onclick="openModal('addOldModal')">+ إضافة محفوظ سابق</button>
-    </div>
-    
-    <p style="font-size:12px; color:var(--secondary); margin-bottom:15px;">يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.</p>
-    
-    <div style="display:flex; gap:10px; margin-bottom:15px;">
-      <input type="text" id="searchInput" placeholder="ابحث في أورادك..." oninput="renderPool()" style="margin:0;">
-      <button class="action-btn" style="flex:0.4; margin:0;" onclick="openHadrTest()">⏱️ مؤقت حَدْر</button>
-    </div>
-
-    <div id="icuContainer" style="display:none; margin-bottom:20px;">
-      <h3 style="color:var(--danger); font-size:14px; display:flex; align-items:center; gap:6px;">🏥 العناية المركزة</h3>
-      <div id="icuList"></div>
-    </div>
-
-    <div class="card">
-      <h2 style="margin-bottom:15px;">كافة الأوراد <span class="badge-count" id="poolTotalCount">0</span></h2>
-      <div id="poolList"></div>
-      <button id="loadMoreBtn" class="action-btn" style="width:100%; display:none; margin-top:10px;" onclick="loadMorePool()">عرض المزيد ↓</button>
-    </div>
-  </div>
-
-  <!-- VIEW 3: SPIRITUAL & PROGRESS -->
-  <div id="view-spiritual" class="view">
-    <h1>📊 التقدم والأثر الروحي</h1>
-    
-    <div class="stats-grid" style="margin-top: 15px;">
-      <div class="stat-box"><div class="stat-num" id="statStreak">0</div><div class="stat-lbl">أيام التزام 🔥</div></div>
-      <div class="stat-box"><div class="stat-num" id="statTotalAdded">0</div><div class="stat-lbl">إجمالي الأوراد 📋</div></div>
-      <div class="stat-box" style="border-color:var(--primary);"><div class="stat-num" id="statEvaluated2">0</div><div class="stat-lbl">أوراد مُقيّمة 📚</div></div>
-    </div>
-
-    <div class="card" style="background:rgba(201,168,106,0.05); border-color:var(--primary);">
-      <h2 style="justify-content:center; font-size:16px;">الهدف: <span id="goalTextVal"></span></h2>
-      <div class="progress-bar-container">
-        <div class="progress-bar" id="trackProgress"></div>
-      </div>
-      <div style="text-align:center; font-size:12px; color:var(--secondary); margin-top:5px;" id="trackText"></div>
-    </div>
-
-    <div class="card" style="border-right:3px solid var(--primary);">
-      <h2>📖 غريب القرآن</h2>
-      <div style="font-size:16px; font-weight:bold; color:var(--primary); font-family:'Amiri', serif;" id="gharibWord"></div>
-      <div style="font-size:13px; color:var(--text); margin-top:4px;" id="gharibMeaning"></div>
-      <div style="font-size:10px; color:var(--secondary); margin-top:8px;" id="gharibSource"></div>
-    </div>
-
-    <div class="card">
-      <h2>⚖️ تذكرة الدار الآخرة</h2>
-      <div style="font-size:13px; margin-bottom:10px;">• <b>الصدقة:</b> حتى لو بمبلغ بسيط لشخص محتاج تعرفه (الأقربون أولى) أو جهة موثوقة. قال رسول الله ﷺ: "داووا مرضاكم بالصدقة" [حسنه الألباني].</div>
-      <div style="font-size:13px; margin-bottom:10px;">• <b>القيام:</b> أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.</div>
-      <div style="font-size:13px; color:var(--primary); font-weight:bold; margin-top:12px;" id="dailyDua"></div>
-    </div>
-  </div>
-
-  <!-- VIEW 4: SETTINGS -->
-  <div id="view-settings" class="view">
-    <h1>⚙️ الإعدادات والنظام</h1>
-    
-    <div class="card" style="background: rgba(244, 67, 54, 0.05); border-color:var(--danger);">
-      <div style="color:var(--danger); font-size:13px; font-weight:bold; text-align:center;">
-        ⚠️ تنبيه هام: بياناتك محفوظة محلياً على هذا المتصفح فقط. لتجنب فقدانها عند مسح السجل، يرجى أخذ نسخة احتياطية بشكل دوري.
-      </div>
-    </div>
-    
-    <div class="card">
-      <h2>🎛️ نظام المراجعة (بعد أول أسبوع)</h2>
-      <p style="font-size:12px; color:var(--secondary);">اختر الطريقة التي تفضلها في تثبيت الأوراد القديمة بعد انتهاء أسبوع التثبيت الأول.</p>
-      <select id="evalModeSelect" onchange="changeEvalMode()">
-        <option value="weekly">النظام التقليدي (مراجعة ثابتة مرة كل أسبوع)</option>
-        <option value="anki">نظام أنكي (تكرار متباعد ذكي بـ 4 خيارات)</option>
-      </select>
-    </div>
-
-    <div class="card">
-      <h2>👤 الملف الشخصي</h2>
-      <div style="display:flex; gap:10px;">
-        <input type="text" id="settingsNameInput" style="margin:0; flex:1;">
-        <button class="action-btn" style="flex:0.5; margin:0;" onclick="updateUserName()">تحديث</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <h2>🎯 إعداد هدف الحفظ</h2>
-      <p style="font-size:12px; color:var(--secondary);">الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.</p>
-      <select id="trackSelect" onchange="changeTrack()">
-        <option value="604">الختمة (604 ورد/جلسة تقريبية)</option>
-        <option value="30">جزء عم (30 ورد)</option>
-        <option value="48">الزهراوين (48 ورد)</option>
-        <option value="999">تخصيص عدد الأوراد يدوياً...</option>
-      </select>
-      <input type="number" id="customGoal" style="display:none;" placeholder="أدخل العدد المستهدف">
-    </div>
-
-    <div class="card">
-      <h2>📱 إدارة البيانات والتصدير</h2>
-      <label style="display:flex; justify-content:space-between; align-items:center; font-size:14px; margin-bottom:15px; border-bottom:1px solid var(--border); padding-bottom:10px;">
-        وضع توفير البطارية (بدون تأثيرات)
-        <input type="checkbox" id="liteModeCheck" onchange="toggleLiteMode()" style="width:18px;height:18px;">
-      </label>
-      <button class="action-btn" style="width:100%; margin-bottom:10px;" onclick="exportCSV()">📊 استخراج كجدول (Excel)</button>
-      <div style="display:flex; gap:10px;">
-        <button class="action-btn" onclick="exportData()">📥 أخذ نسخة احتياطية</button>
-        <label for="importFile" class="action-btn" style="margin: 0; line-height: 20px;">
-          📤 استرجاع نسخة
-          <input type="file" id="importFile" accept=".json" style="display:none;" onchange="importData(event)">
-        </label>
-      </div>
-    </div>
-  </div>
-</div> <!-- End Wrap -->
+<div id="view-home" class="view active">
+  <div class="header-row"><div><h1>خطة اليوم يا <span id="displayUserName"></span> 📅</h1><div style="font-size:12px;color:var(--secondary)" id="dateHeader"></div></div><button onclick="toggleTheme()">🌓</button></div>
+  <div id="session-container"><h2 style="text-align:center;color:var(--primary);margin-bottom:20px">⏱️ جلسة التركيز</h2><div class="timer-display" id="mainTimerDisplay">00:00</div><div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;flex-wrap:wrap"><button class="action-btn" onclick="setMainTimer(15)">15 دقيقة</button><button class="action-btn" onclick="setMainTimer(30)">30 دقيقة</button><button class="action-btn" onclick="setMainTimer(45)">45 دقيقة</button></div><div style="display:flex;gap:10px;margin-bottom:20px"><button class="main-btn" id="btnMainTimer" onclick="startMainTimer()">▶ ابدأ المؤقت</button><button class="action-btn" style="background:var(--danger);color:#fff" onclick="toggleFocusMode()">✖ إنهاء الجلسة</button></div><div style="text-align:center;color:var(--secondary);font-size:13px;line-height:1.8">اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.<br>بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.</div></div>
+  <div id="home-content"><button class="main-btn huge-btn" onclick="toggleFocusMode()">▶ ابدأ جلسة المراجعة</button><button class="action-btn" style="width:100%;border:1px solid var(--primary);color:var(--primary);background:rgba(201,168,106,.05);margin-bottom:20px" onclick="openModal('guideModal')">💡 دليلي للحفظ والإتقان</button><div class="card"><div style="display:flex;justify-content:space-between;align-items:center"><h2 style="margin:0">🆕 حِفظ اليوم</h2><button style="background:transparent;border:1px solid var(--primary);color:var(--primary);border-radius:6px;padding:4px 10px;font-weight:700" onclick="openModal('addModal')">+ أضف</button></div><div id="memorizeTodayList" style="margin-top:15px"></div></div><div class="card" style="border-color:var(--warning)"><h2 style="color:var(--warning)">🔄 مراجعات مستحقة اليوم <span class="badge-count" id="statDueToday" style="background:var(--warning);color:#000">0</span></h2><div id="dueTodayList"></div></div></div>
+</div>
+<div id="view-pool" class="view"><div class="header-row"><h1>📚 المخزون الكامل</h1><button class="action-btn" style="flex:none;padding:6px 12px;margin:0" onclick="openModal('addOldModal')">+ إضافة محفوظ سابق</button></div><p style="font-size:12px;color:var(--secondary);margin-bottom:15px">يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.</p><div style="display:flex;gap:10px;margin-bottom:15px"><input type="text" id="searchInput" placeholder="ابحث في أورادك..." oninput="renderPool()" style="margin:0"><button class="action-btn" style="flex:.4;margin:0" onclick="openHadrTest()">⏱️ مؤقت حَدْر</button></div><div id="icuContainer" style="display:none;margin-bottom:20px"><h3 style="color:var(--danger);font-size:14px">🏥 العناية المركزة</h3><div id="icuList"></div></div><div class="card"><h2 style="margin-bottom:15px">كافة الأوراد <span class="badge-count" id="poolTotalCount">0</span></h2><div id="poolList"></div><button id="loadMoreBtn" class="action-btn" style="width:100%;display:none;margin-top:10px" onclick="loadMorePool()">عرض المزيد ↓</button></div></div>
+<div id="view-spiritual" class="view"><h1>📊 التقدم والأثر الروحي</h1><div class="stats-grid" style="margin-top:15px"><div class="stat-box"><div class="stat-num" id="statStreak">0</div><div class="stat-lbl">أيام التزام 🔥</div></div><div class="stat-box"><div class="stat-num" id="statTotalAdded">0</div><div class="stat-lbl">إجمالي الأوراد 📋</div></div><div class="stat-box" style="border-color:var(--primary)"><div class="stat-num" id="statEvaluated2">0</div><div class="stat-lbl">أوراد مُقيّمة 📚</div></div></div><div class="card" style="background:rgba(201,168,106,.05);border-color:var(--primary)"><h2 style="justify-content:center;font-size:16px">الهدف: <span id="goalTextVal"></span></h2><div class="progress-bar-container"><div class="progress-bar" id="trackProgress"></div></div><div style="text-align:center;font-size:12px;color:var(--secondary);margin-top:5px" id="trackText"></div></div><div class="card" style="border-right:3px solid var(--primary)"><h2>📖 غريب القرآن</h2><div style="font-size:16px;font-weight:700;color:var(--primary);font-family:'Amiri',serif" id="gharibWord"></div><div style="font-size:13px;color:var(--text);margin-top:4px" id="gharibMeaning"></div><div style="font-size:10px;color:var(--secondary);margin-top:8px" id="gharibSource"></div></div><div class="card"><h2>⚖️ تذكرة الدار الآخرة</h2><div style="font-size:13px;margin-bottom:10px">• <b>الصدقة:</b> حتى لو بمبلغ بسيط لشخص محتاج تعرفه (الأقربون أولى) أو جهة موثوقة. قال رسول الله ﷺ: "داووا مرضاكم بالصدقة" [حسنه الألباني].</div><div style="font-size:13px;margin-bottom:10px">• <b>القيام:</b> أعظم تثبيت للحفظ أن تصلي ركعتين في جوف الليل بما حفظته.</div><div style="font-size:13px;color:var(--primary);font-weight:700;margin-top:12px" id="dailyDua"></div></div></div>
+<div id="view-settings" class="view"><h1>⚙️ الإعدادات والنظام</h1><div class="card" style="background:rgba(244,67,54,.05);border-color:var(--danger)"><div style="color:var(--danger);font-size:13px;font-weight:700;text-align:center">⚠️ تنبيه هام: بياناتك محفوظة محلياً على هذا المتصفح فقط. لتجنب فقدانها عند مسح السجل، يرجى أخذ نسخة احتياطية بشكل دوري.</div></div><div class="card"><h2>🎛️ طريقة المراجعة بعد أول أسبوع</h2><p style="font-size:12px;color:var(--secondary);line-height:1.8;margin-bottom:12px">بعد انتهاء أول 7 أيام من تثبيت الورد، اختر الطريقة التي تناسبك.</p><select id="evalModeSelect" onchange="changeEvalMode()"><option value="weekly">🟢 المراجعة الأسبوعية — الخيار الأبسط</option><option value="anki">🔵 المراجعة المتباعدة — اختياري للمستخدم المتقدم</option></select><div style="font-size:11px;color:var(--secondary);margin-top:8px;line-height:1.7"><b style="color:var(--text)">المراجعة الأسبوعية:</b> موعد ثابت كل أسبوع، ومناسبة لمعظم المستخدمين.<br><b style="color:var(--text)">المراجعة المتباعدة:</b> تجعل الموعد القادم يتغير حسب مدى سهولة أو صعوبة تذكرك للورد.</div></div><div class="card"><h2>👤 الملف الشخصي</h2><div style="display:flex;gap:10px"><input type="text" id="settingsNameInput" style="margin:0;flex:1"><button class="action-btn" style="flex:.5;margin:0" onclick="updateUserName()">تحديث</button></div></div><div class="card"><h2>🎯 إعداد هدف الحفظ</h2><p style="font-size:12px;color:var(--secondary)">الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.</p><select id="trackSelect" onchange="changeTrack()"><option value="604">الختمة (604 ورد/جلسة تقريبية)</option><option value="30">جزء عم (30 ورد)</option><option value="48">الزهراوين (48 ورد)</option><option value="999">تخصيص عدد الأوراد يدوياً...</option></select><input type="number" id="customGoal" style="display:none" placeholder="أدخل العدد المستهدف"></div><div class="card"><h2>📱 إدارة البيانات والتصدير</h2><label style="display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:15px;border-bottom:1px solid var(--border);padding-bottom:10px">وضع توفير البطارية (بدون تأثيرات)<input type="checkbox" id="liteModeCheck" onchange="toggleLiteMode()" style="width:18px;height:18px"></label><button class="action-btn" style="width:100%;margin-bottom:10px" onclick="exportCSV()">📊 استخراج كجدول (Excel)</button><div style="display:flex;gap:10px"><button class="action-btn" onclick="exportData()">📥 أخذ نسخة احتياطية</button><label for="importFile" class="action-btn" style="margin:0;line-height:20px">📤 استرجاع نسخة<input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)"></label></div></div></div>
+</div>
 
 <script>
-const STORAGE_KEY = 'hifz-core-v4';
-let appData = {
-  userName: '',
-  entries: [],
-  streak: 0,
-  lastActive: '',
-  goal: 604,
-  evalMode: 'weekly'
-};
-let poolVisibleCount = 20;
-
-const quranSurahs = ["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
-
-const gharibDict = [
-  {w: "غاسقٍ إذا وقب", m: "الليل إذا أظلم ودخل في كل شيء", s: "التفسير الميسر"},
-  {w: "الصَّمَد", m: "السيد الذي يُقصد في الحوائج كلها", s: "التفسير الميسر"},
-  {w: "الفَلَق", m: "الصبح الذي ينفلق عنه الليل", s: "المعجم الوجيز"},
-  {w: "أبابيل", m: "جماعات متتابعة", s: "المعجم الوجيز"},
-  {w: "سجِّيل", m: "طين متحجر أو طبقات من طين محروق", s: "التفسير الميسر"},
-  {w: "القارِعَة", m: "القيامة التي تقرع القلوب بأهوالها", s: "التفسير الميسر"},
-  {w: "المُطَفِّفِين", m: "الذين ينقصون المكيال والميزان", s: "التفسير الميسر"},
-  {w: "كَبَد", m: "مشقة وتعب في مكابدة الدنيا", s: "التفسير الميسر"}
-];
-
-const duas = [
-  "قال رسول الله ﷺ: «يا مقلب القلوب ثبت قلبي على دينك» [رواه الترمذي - صحيح]",
-  "قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» [رواه مسلم]",
-  "قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» [رواه البخاري]",
-  "قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه - صحيح]",
-  "قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل» [دعاء مأثور]"
-];
-
-// --- Utilities ---
-function getLocalDateStr(dateObj = new Date()) {
-  const d = new Date(dateObj.getTime() - (dateObj.getTimezoneOffset() * 60000));
-  return d.toISOString().slice(0,10);
-}
-
-function getDayOfYear(dateObj = new Date()) {
-  const start = new Date(dateObj.getFullYear(), 0, 0);
-  const diff = dateObj - start;
-  return Math.floor(diff / 86400000);
-}
-
-const todayStr = () => getLocalDateStr();
-const daysBetween = (a, b) => Math.floor((new Date(b) - new Date(a)) / 86400000);
-const escapeHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
-
-// --- Initialization ---
-function loadData() {
-  document.body.setAttribute('data-theme', localStorage.getItem('hifz-theme') || 'dark');
-  if(localStorage.getItem('hifz-lite') === 'true') {
-    document.body.classList.add('lite-mode');
-    document.getElementById('liteModeCheck').checked = true;
-  }
-
-  const saved = localStorage.getItem(STORAGE_KEY);
-  if(saved) {
-    try { 
-      const parsed = JSON.parse(saved);
-      appData = { ...appData, ...parsed }; 
-      if (!appData.evalMode) appData.evalMode = 'weekly'; 
-    } catch(e) {}
-  }
-  
-  const today = todayStr();
-  appData.entries.forEach(e => {
-      if(e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
-      if(e.lastRepDate !== today) e.sessionReps = 0;
-  });
-
-  if(!appData.userName) {
-    openModal('welcomeModal');
-  } else {
-    updateNameDisplays();
-  }
-
-  const now = new Date();
-  document.getElementById('dateHeader').textContent = now.toLocaleDateString('ar-EG', {
-    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-  });
-
-  const dayIndex = getDayOfYear(now);
-  const dailyWord = gharibDict[dayIndex % gharibDict.length];
-  document.getElementById('gharibWord').textContent = dailyWord.w;
-  document.getElementById('gharibMeaning').textContent = dailyWord.m;
-  document.getElementById('gharibSource').textContent = `(المصدر: ${dailyWord.s})`;
-  document.getElementById('dailyDua').textContent = duas[dayIndex % duas.length];
-
-  const ts = document.getElementById('trackSelect');
-  if([30, 48, 604].includes(appData.goal)) {
-    ts.value = appData.goal;
-  } else {
-    ts.value = '999';
-    document.getElementById('customGoal').style.display = 'block';
-    document.getElementById('customGoal').value = appData.goal;
-  }
-  
-  document.getElementById('evalModeSelect').value = appData.evalMode;
-
-  checkComeback();
-  renderAll();
-}
-
-function saveData() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(appData));
-}
-
-function saveNewUser() {
-  const nm = document.getElementById('onboardName').value.trim();
-  if(!nm) return alert("من فضلك أدخل اسمك");
-  appData.userName = nm;
-  saveData();
-  closeModal('welcomeModal');
-  updateNameDisplays();
-}
-
-function updateUserName() {
-  const nm = document.getElementById('settingsNameInput').value.trim();
-  if(nm) {
-    appData.userName = nm;
-    saveData();
-    updateNameDisplays();
-    alert("تم الحفظ!");
-  }
-}
-
-function updateNameDisplays() {
-  document.getElementById('displayUserName').textContent = appData.userName || 'صديقي';
-  document.getElementById('settingsNameInput').value = appData.userName;
-}
-
-function changeEvalMode() {
-  appData.evalMode = document.getElementById('evalModeSelect').value;
-  saveData();
-  renderAll();
-}
-
-// --- Comeback Logic ---
-function checkComeback() {
-  const today = todayStr();
-  if (!appData.lastActive) return;
-  const diff = daysBetween(appData.lastActive, today);
-  if (diff > 1) {
-    if(appData.streak > 0) openModal('comebackModal');
-    appData.streak = 0;
-    saveData();
-  }
-}
-
-function updateActive() {
-  const today = todayStr();
-  if (appData.lastActive === today) return;
-  if (daysBetween(appData.lastActive, today) === 1) appData.streak++;
-  else appData.streak = 1;
-  appData.lastActive = today;
-  saveData();
-}
-
-// --- Navigation & Modals ---
-function switchTab(tabId, element) {
-  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById(tabId).classList.add('active');
-  if(element) element.classList.add('active');
-  document.body.classList.remove('focus-mode');
-  window.scrollTo(0,0);
-}
-
-function openModal(id) {
-  document.getElementById(id).style.display = 'flex';
-}
-
-function closeModal(id) {
-  document.getElementById(id).style.display = 'none';
-}
-
-function toggleTheme() {
-  const next = document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.body.setAttribute('data-theme', next);
-  localStorage.setItem('hifz-theme', next);
-}
-
-function toggleLiteMode() {
-  const isLite = document.getElementById('liteModeCheck').checked;
-  document.body.classList.toggle('lite-mode', isLite);
-  localStorage.setItem('hifz-lite', isLite);
-}
-
-function toggleFocusMode() {
-  document.body.classList.toggle('focus-mode');
-  if(!document.body.classList.contains('focus-mode')) {
-    clearInterval(mTimerInterval);
-    document.getElementById('btnMainTimer').textContent = "▶ ابدأ المؤقت";
-    mTimeLeft = 0;
-    updateMTimerDisplay();
-  }
-}
-
-// --- App Logic ---
-function addEntry() {
-  const label = document.getElementById('newEntry').value.trim();
-  const note = document.getElementById('newNote').value.trim();
-  const isICU = document.getElementById('icuCheckbox').checked;
-  if(!label) return;
-
-  appData.entries.push({
-    id: Date.now().toString(),
-    label,
-    note,
-    isICU,
-    date: todayStr(),
-    nextReviewDate: todayStr(),
-    quality: null,
-    interval: 0,
-    ease: 2.5,
-    srsLevel: 0,
-    reviewCount: 0,
-    hasBeenEvaluated: false,
-    sessionReps: 0,
-    lastRepDate: todayStr(),
-    dailyPhaseReps: 0 
-  });
-
-  document.getElementById('newEntry').value = '';
-  document.getElementById('newNote').value = '';
-  document.getElementById('icuCheckbox').checked = false;
-  closeModal('addModal');
-  updateActive();
-  renderAll();
-}
-
-function addOldEntry() {
-  const label = document.getElementById('oldEntry').value.trim();
-  if(!label) return;
-
-  appData.entries.push({
-    id: Date.now().toString(),
-    label,
-    note: '',
-    isICU: false,
-    date: todayStr(),
-    nextReviewDate: todayStr(),
-    quality: null,
-    interval: 0,
-    ease: 2.5,
-    srsLevel: 0,
-    reviewCount: 0,
-    hasBeenEvaluated: false,
-    sessionReps: 0,
-    lastRepDate: todayStr(),
-    dailyPhaseReps: 7
-  });
-
-  document.getElementById('oldEntry').value = '';
-  closeModal('addOldModal');
-  updateActive();
-  renderAll();
-}
-
-function removeEntry(id) {
-  if(confirm('تأكيد الحذف؟')) {
-    appData.entries = appData.entries.filter(e => e.id !== id);
-    saveData();
-    renderAll();
-  }
-}
-
-// Daily Repetition Logic
-function addRep(id) {
-    const e = appData.entries.find(x => x.id === id);
-    if(!e) return;
-    
-    e.sessionReps = (e.sessionReps || 0) + 1;
-    e.lastRepDate = todayStr();
-    
-    saveData();
-    renderAll();
-}
-
-// 3-STAGE DYNAMIC LOGIC
-function reviewEntry(id, q) {
-  const e = appData.entries.find(x => x.id === id);
-  if(!e) return;
-
-  if (e.interval === undefined) e.interval = 0;
-  if (e.ease === undefined) e.ease = 2.5;
-  if (e.srsLevel === undefined) e.srsLevel = 0;
-  if (e.reviewCount === undefined) e.reviewCount = 0;
-  if (e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
-
-  e.hasBeenEvaluated = true;
-  e.reviewCount += 1;
-
-  if (e.dailyPhaseReps < 7) {
-      if (q === 'daily_pass') {
-          e.dailyPhaseReps++;
-          e.interval = 1; 
-      } else if (q === 'daily_fail') {
-          e.dailyPhaseReps = 0; 
-          e.interval = 1; 
-      }
-  } else {
-      if (appData.evalMode === 'weekly') {
-          if (q === 'weekly_pass') {
-              e.interval = 7; 
-          } else if (q === 'weekly_fail') {
-              e.interval = 1; 
-          }
-      } else {
-          if (q === 4) { 
-            e.srsLevel++; e.ease += 0.15;
-            e.interval = e.srsLevel === 1 ? 4 : Math.max(1, Math.round(e.interval * e.ease * 1.3));
-          } else if (q === 3) { 
-            e.srsLevel++;
-            e.interval = e.srsLevel === 1 ? 1 : Math.max(1, Math.round(e.interval * e.ease));
-          } else if (q === 2) { 
-            e.ease = Math.max(1.3, e.ease - 0.15);
-            e.interval = Math.max(1, Math.round((e.interval || 1) * 1.2));
-          } else { 
-            e.srsLevel = 0; e.ease = Math.max(1.3, e.ease - 0.2);
-            e.interval = 1;
-          }
-      }
-  }
-
-  const d = new Date();
-  d.setDate(d.getDate() + e.interval);
-  e.nextReviewDate = getLocalDateStr(d);
-  e.quality = q;
-  e.sessionReps = 0;
-
-  if(e.isICU && (q === 'daily_pass' || q === 'weekly_pass' || q === 3 || q === 4)) {
-    if(confirm('أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟')) {
-      e.isICU = false;
-    }
-  }
-
-  updateActive();
-  saveData();
-  renderAll();
-}
-
-// --- Smart Links ---
-function getSmartLinks(label) {
-  let text = label.trim();
-  let qLink = '';
-  const pMatch = text.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);
-
-  if (pMatch && pMatch[1]) {
-    qLink = `https://quran.com/page/${pMatch[1]}`;
-  } else {
-    let fSurah = -1;
-    for (let i = 0; i < quranSurahs.length; i++) {
-      const s = quranSurahs[i];
-      if (s === "ص" || s === "ق") {
-        if (text === s || text.includes("سورة " + s)) { fSurah = i + 1; break; }
-      } else if (text.includes(s)) { fSurah = i + 1; break; }
-    }
-
-    if (fSurah !== -1) {
-      const aMatch = text.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/) || text.match(/\s(\d+)/);
-      qLink = aMatch ? `https://quran.com/${fSurah}/${aMatch[1]}` : `https://quran.com/${fSurah}`;
-    } else {
-      qLink = `https://quran.com/search?q=${encodeURIComponent(text)}`;
-    }
-  }
-
-  return `<div class="app-links"><a href="${qLink}" target="_blank" rel="noopener noreferrer">📖 المصحف (Quran.com)</a></div>`;
-}
-
-// --- Timers ---
-let mTimerInterval;
-let mTimeLeft = 0;
-
-function setMainTimer(mins) {
-  mTimeLeft = mins * 60;
-  updateMTimerDisplay();
-}
-
-function updateMTimerDisplay() {
-  document.getElementById('mainTimerDisplay').textContent =
-    `${Math.floor(mTimeLeft/60).toString().padStart(2,'0')}:${(mTimeLeft%60).toString().padStart(2,'0')}`;
-}
-
-function startMainTimer() {
-  if(mTimeLeft <= 0) return alert('اختر المدة أولاً');
-
-  document.getElementById('btnMainTimer').textContent = "يتم الحفظ والمراجعة...";
-  clearInterval(mTimerInterval);
-
-  mTimerInterval = setInterval(() => {
-    if(mTimeLeft > 0) {
-      mTimeLeft--; updateMTimerDisplay();
-    } else {
-      clearInterval(mTimerInterval);
-      document.getElementById('btnMainTimer').textContent = "▶ ابدأ المؤقت";
-      mTimeLeft = 0; updateMTimerDisplay();
-      alert('انتهت الجلسة! قم بتقييم مراجعاتك الآن.');
-      document.body.classList.remove('focus-mode');
-    }
-  }, 1000);
-}
-
-let hTimerInterval;
-let hTimeLeft = 120;
-
-function openHadrTest() {
-  const pool = appData.entries.filter(e => e.hasBeenEvaluated && !e.isICU);
-  if(pool.length === 0) return alert('يجب أن يكون لديك أوراد محفوظة مسبقاً للبدء.');
-
-  const target = pool[Math.floor(Math.random() * pool.length)];
-  document.getElementById('hadrTarget').textContent = target.label;
-  hTimeLeft = 120;
-  document.getElementById('hadrTimerDisplay').textContent = "02:00";
-  document.getElementById('hadrBtn').style.display = 'block';
-  clearInterval(hTimerInterval);
-  openModal('hadrModal');
-}
-
-function startHadr() {
-  document.getElementById('hadrBtn').style.display = 'none';
-  hTimerInterval = setInterval(() => {
-    if(hTimeLeft > 0) {
-      hTimeLeft--;
-      document.getElementById('hadrTimerDisplay').textContent =
-        `${Math.floor(hTimeLeft/60).toString().padStart(2,'0')}:${(hTimeLeft%60).toString().padStart(2,'0')}`;
-    } else {
-      clearInterval(hTimerInterval);
-      alert('انتهى الوقت المخصص. ⏱️');
-      closeHadr();
-    }
-  }, 1000);
-}
-
-function closeHadr() {
-  clearInterval(hTimerInterval);
-  closeModal('hadrModal');
-}
-
-// --- Settings & CSV ---
-function changeTrack() {
-  const val = document.getElementById('trackSelect').value;
-  if(val === '999') {
-    document.getElementById('customGoal').style.display = 'block';
-  } else {
-    document.getElementById('customGoal').style.display = 'none';
-    appData.goal = parseInt(val);
-    saveData(); renderAll();
-  }
-}
-
-document.getElementById('customGoal').addEventListener('change', (e) => {
-  appData.goal = parseInt(e.target.value) || 604;
-  saveData(); renderAll();
-});
-
-function exportCSV() {
-  let csv = '\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';
-  appData.entries.forEach(e => {
-    csv += `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`;
-  });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-  link.download = `حفظي_${todayStr()}.csv`;
-  link.click();
-}
-
-function exportData() {
-  const link = document.createElement('a');
-  link.href = 'data:application/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(appData));
-  link.download = `backup_${todayStr()}.json`;
-  link.click();
-}
-
-function importData(e) {
-  const file = e.target.files[0];
-  if(!file) return;
-
-  const reader = new FileReader();
-  reader.onload = evt => {
-    try {
-      const data = JSON.parse(evt.target.result);
-      if(data.entries && confirm('استبدال البيانات الحالية؟')) {
-        appData = {
-          userName: data.userName || '',
-          entries: Array.isArray(data.entries) ? data.entries : [],
-          streak: Number.isFinite(data.streak) ? data.streak : 0,
-          lastActive: data.lastActive || '',
-          goal: Number.isFinite(data.goal) ? data.goal : 604,
-          evalMode: data.evalMode || 'weekly'
-        };
-        saveData(); loadData(); alert('تم بنجاح!');
-      }
-    } catch(err) {
-      alert('ملف تالف');
-    }
-  };
-  reader.readAsText(file);
-}
-
-// --- Rendering ---
-function getEvaluatedCount() {
-  return appData.entries.filter(e => e.hasBeenEvaluated).length;
-}
-
-function renderItemHTML(e) {
-  const isICU = e.isICU ? 'icu' : '';
-  const noteHtml = e.note ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>` : '';
-  const isDue = (e.nextReviewDate <= todayStr() && e.hasBeenEvaluated);
-  const dueCls = isDue ? 'due-review' : '';
-  
-  if (e.dailyPhaseReps === undefined) e.dailyPhaseReps = e.hasBeenEvaluated ? 7 : 0;
-  
-  let metaText = '';
-  if (!e.hasBeenEvaluated) {
-      metaText = `<span style="color:var(--primary); font-weight:bold;">✨ ورد جديد (كرر ثم قيّم)</span>`;
-  } else if (isDue) {
-      metaText = `<span style="color:var(--warning); font-weight:bold;">⏰ مستحق للمراجعة (كرر ثم قيّم)</span>`;
-  } else {
-      metaText = `المراجعة القادمة: ${e.nextReviewDate}`;
-  }
-  
-  const reps = e.sessionReps || 0;
-  const isDone = reps >= 10;
-  
-  let evaluationSection = '';
-  if(!e.hasBeenEvaluated || isDue) {
-      if (e.dailyPhaseReps < 7) {
-          evaluationSection = `
-          <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--primary); font-weight:bold;">📍 مرحلة التثبيت القريب: اليوم ${e.dailyPhaseReps + 1} من 7</div>
-          <div class="q-btns" style="grid-template-columns: 1fr 1fr;">
-            <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'daily_pass')">✅ أتممت مراجعة اليوم</button>
-            <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'daily_fail')">🔄 لم أتقنها (إعادة التثبيت)</button>
-          </div>`;
-      } else {
-          if (appData.evalMode === 'weekly') {
-              evaluationSection = `
-              <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--secondary);">التقييم الأسبوعي لتحديد الموعد القادم:</div>
-              <div class="q-btns" style="grid-template-columns: 1fr 1fr;">
-                <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 'weekly_pass')">✅ مراجعة ممتازة (بعد 7 أيام)</button>
-                <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 'weekly_fail')">🔴 أعد (غداً)</button>
-              </div>`;
-          } else {
-              evaluationSection = `
-              <div style="font-size:11px; text-align:center; margin-top:10px; color:var(--secondary);">التقييم لجدولة الموعد القادم:</div>
-              <div class="q-btns" style="grid-template-columns: 1fr 1fr 1fr 1fr;">
-                <button style="background:rgba(33,150,243,0.1); border-color:var(--info);" onclick="reviewEntry('${e.id}', 4)">🔵 سهل</button>
-                <button style="background:rgba(76,175,80,0.1); border-color:var(--success);" onclick="reviewEntry('${e.id}', 3)">🟢 تذكرته</button>
-                <button style="background:rgba(255,193,7,0.1); border-color:var(--warning);" onclick="reviewEntry('${e.id}', 2)">🟡 بصعوبة</button>
-                <button style="background:rgba(244,67,54,0.1); border-color:var(--danger);" onclick="reviewEntry('${e.id}', 1)">🔴 نسيت</button>
-              </div>`;
-          }
-      }
-  }
-
-  let badge = e.dailyPhaseReps < 7 
-    ? `<span class="phase-badge">تثبيت (يوم ${e.dailyPhaseReps}/7)</span>` 
-    : `<span class="phase-badge" style="border-color:var(--success); color:var(--success);">استدامة (${appData.evalMode==='weekly'?'أسبوعي':'أنكي'})</span>`;
-
-  return `
-    <div class="item ${isICU} ${dueCls}">
-      <div class="item-header">
-        <div class="item-title"><div class="quran-font">${escapeHtml(e.label)}</div>${noteHtml}</div>
-        <button class="del" onclick="removeEntry('${e.id}')">✕</button>
-      </div>
-      <div class="item-meta">
-        <div>${metaText}</div>
-        <div style="opacity:0.6;">${badge}</div>
-      </div>
-      ${getSmartLinks(e.label)}
-      
-      <div class="rep-counter-container">
-         <div class="rep-counter-row">
-           <span style="font-size:12px; font-weight:bold; color:var(--text);">الهدف: 10 تكرارات غيباً</span>
-           <button class="rep-btn ${isDone ? 'done' : ''}" onclick="addRep('${e.id}')">
-              📿 كررت غيباً (${reps})
-           </button>
-         </div>
-         <div style="font-size:11px; color:var(--danger);">⚠️ التكرار يبدأ <b>بعد</b> إتمام الحفظ والضبط والإتقان.</div>
-      </div>
-      
-      ${evaluationSection}
-    </div>
-  `;
-}
-
-function loadMorePool() {
-  poolVisibleCount += 20; renderPool();
-}
-
-function renderPool() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  let pool = [...appData.entries];
-
-  if(q) pool = pool.filter(e => e.label.toLowerCase().includes(q));
-
-  pool.sort((a, b) => a.nextReviewDate.localeCompare(b.nextReviewDate));
-
-  const list = document.getElementById('poolList');
-  list.innerHTML = '';
-  const visiblePool = pool.slice(0, poolVisibleCount);
-
-  if(visiblePool.length === 0) {
-    list.innerHTML = '<div class="empty-state">لا يوجد أوراد في المخزون حتى الآن.</div>';
-  } else {
-    visiblePool.forEach(e => { list.innerHTML += renderItemHTML(e); });
-  }
-
-  document.getElementById('poolTotalCount').textContent = pool.length;
-  document.getElementById('loadMoreBtn').style.display =
-    (pool.length > poolVisibleCount) ? 'block' : 'none';
-}
-
-function renderAll() {
-  const today = todayStr();
-  const evaluatedCount = getEvaluatedCount();
-
-  document.getElementById('statStreak').textContent = appData.streak;
-  document.getElementById('statEvaluated').textContent = evaluatedCount;
-  document.getElementById('statTotalAdded').textContent = appData.entries.length;
-  document.getElementById('statEvaluated2').textContent = evaluatedCount;
-
-  let newToday = appData.entries.filter(e => e.date === today && !e.hasBeenEvaluated);
-  const newTodayList = document.getElementById('memorizeTodayList');
-
-  const newTodayEmptyState = appData.entries.length === 0
-    ? '📖 ابدأ أول ورد لك اليوم.<br>اضغط <b>(+ أضف)</b> للبدء في الحفظ.'
-    : '📖 لا يوجد حفظ جديد اليوم.<br>اضغط <b>(+ أضف)</b> لإضافة ورد جديد.';
-
-  newTodayList.innerHTML = newToday.length ? '' : `<div class="empty-state">${newTodayEmptyState}</div>`;
-  newToday.forEach(e => { newTodayList.innerHTML += renderItemHTML(e); });
-
-  let dueToday = appData.entries.filter(
-    e => (e.nextReviewDate <= today && e.hasBeenEvaluated) || e.isICU
-  );
-
-  document.getElementById('statDueToday').textContent = dueToday.length;
-  const dList = document.getElementById('dueTodayList');
-
-  const reviewEmptyState = appData.entries.length === 0
-    ? '📖 لا توجد أوراد بعد.<br>أضف أول ورد لك للبدء.'
-    : '🎉 خلصت مراجعات اليوم!<br>يمكنك إضافة ورد جديد للحفظ.';
-
-  dList.innerHTML = dueToday.length ? '' : `<div class="empty-state">${reviewEmptyState}</div>`;
-  dueToday.forEach(e => { dList.innerHTML += renderItemHTML(e); });
-
-  const icuEntries = appData.entries.filter(e => e.isICU);
-  const icuContainer = document.getElementById('icuContainer');
-
-  if(icuEntries.length > 0) {
-    icuContainer.style.display = 'block';
-    const icuList = document.getElementById('icuList');
-    icuList.innerHTML = '';
-    icuEntries.forEach(e => { icuList.innerHTML += renderItemHTML(e); });
-  } else {
-    icuContainer.style.display = 'none';
-  }
-
-  renderPool();
-
-  document.getElementById('goalTextVal').textContent = `${appData.goal} ورد (باعتبار الورد صفحة)`;
-
-  const pct = Math.min((evaluatedCount / appData.goal) * 100, 100);
-  document.getElementById('trackProgress').style.width = `${pct}%`;
-  document.getElementById('trackText').textContent =
-    `تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
-}
-
+const STORAGE_KEY='hifz-core-v4';
+let appData={userName:'',entries:[],streak:0,lastActive:'',goal:604,evalMode:'weekly'};
+let poolVisibleCount=20;
+const quranSurahs=["الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة","الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق","التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى","الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين","العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر","المسد","الإخلاص","الفلق","الناس"];
+const gharibDict=[{w:"غاسقٍ إذا وقب",m:"الليل إذا أظلم ودخل في كل شيء",s:"التفسير الميسر"},{w:"الصَّمَد",m:"السيد الذي يُقصد في الحوائج كلها",s:"التفسير الميسر"},{w:"الفَلَق",m:"الصبح الذي ينفلق عنه الليل",s:"المعجم الوجيز"},{w:"أبابيل",m:"جماعات متتابعة",s:"المعجم الوجيز"},{w:"سجِّيل",m:"طين متحجر أو طبقات من طين محروق",s:"التفسير الميسر"},{w:"القارِعَة",m:"القيامة التي تقرع القلوب بأهوالها",s:"التفسير الميسر"},{w:"المُطَفِّفِين",m:"الذين ينقصون المكيال والميزان",s:"التفسير الميسر"},{w:"كَبَد",m:"مشقة وتعب في مكابدة الدنيا",s:"التفسير الميسر"}];
+const duas=["قال رسول الله ﷺ: «يا مقلب القلوب ثبت قلبي على دينك» [رواه الترمذي - صحيح]","قال رسول الله ﷺ: «اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه» [رواه مسلم]","قال رسول الله ﷺ: «خيركم من تعلم القرآن وعلمه» [رواه البخاري]","قال رسول الله ﷺ: «إن لله أهَلِينَ من الناس... أهل القرآن هم أهل الله وخاصته» [رواه ابن ماجه - صحيح]","قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل» [دعاء مأثور]"];
+function getLocalDateStr(dateObj=new Date()){const d=new Date(dateObj.getTime()-dateObj.getTimezoneOffset()*60000);return d.toISOString().slice(0,10)}
+function getDayOfYear(dateObj=new Date()){const start=new Date(dateObj.getFullYear(),0,0);return Math.floor((dateObj-start)/86400000)}
+const todayStr=()=>getLocalDateStr(); const daysBetween=(a,b)=>Math.floor((new Date(b)-new Date(a))/86400000); const escapeHtml=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
+function saveData(){localStorage.setItem(STORAGE_KEY,JSON.stringify(appData))}
+function flashEntry(id,textGlow=false){requestAnimationFrame(()=>{const el=document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);if(!el)return;el.classList.remove('golden-glow');void el.offsetWidth;el.classList.add('golden-glow');if(textGlow){const t=el.querySelector('.glow-target');if(t){t.classList.remove('golden-glow-text');void t.offsetWidth;t.classList.add('golden-glow-text')}}setTimeout(()=>el.classList.remove('golden-glow'),850);})}
+function flashStreak(){const el=document.getElementById('statStreak');if(!el)return;el.classList.remove('golden-glow-text');void el.offsetWidth;el.classList.add('golden-glow-text');setTimeout(()=>el.classList.remove('golden-glow-text'),850)}
+function loadData(){document.body.setAttribute('data-theme',localStorage.getItem('hifz-theme')||'dark');if(localStorage.getItem('hifz-lite')==='true'){document.body.classList.add('lite-mode');document.getElementById('liteModeCheck').checked=true}const saved=localStorage.getItem(STORAGE_KEY);if(saved){try{const parsed=JSON.parse(saved);appData={...appData,...parsed};if(!appData.evalMode)appData.evalMode='weekly'}catch(e){}}const today=todayStr();appData.entries.forEach(e=>{if(e.phaseDays===undefined){e.phaseDays=[];const count=e.dailyPhaseReps||(e.hasBeenEvaluated?7:0);for(let i=0;i<count;i++)e.phaseDays.push('old_day_'+i)}if(e.lastRepDate!==today)e.sessionReps=0});if(!appData.userName)openModal('welcomeModal');else updateNameDisplays();const now=new Date();dateHeader.textContent=now.toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});const dayIndex=getDayOfYear(now),dailyWord=gharibDict[dayIndex%gharibDict.length];gharibWord.textContent=dailyWord.w;gharibMeaning.textContent=dailyWord.m;gharibSource.textContent=`(المصدر: ${dailyWord.s})`;dailyDua.textContent=duas[dayIndex%duas.length];if([30,48,604].includes(appData.goal)){trackSelect.value=appData.goal}else{trackSelect.value='999';customGoal.style.display='block';customGoal.value=appData.goal}evalModeSelect.value=appData.evalMode;checkComeback();renderAll()}
+function saveNewUser(){const nm=onboardName.value.trim();if(!nm)return alert('من فضلك أدخل اسمك');appData.userName=nm;saveData();closeModal('welcomeModal');updateNameDisplays()}
+function updateUserName(){const nm=settingsNameInput.value.trim();if(nm){appData.userName=nm;saveData();updateNameDisplays();alert('تم الحفظ!')}}
+function updateNameDisplays(){displayUserName.textContent=appData.userName||'صديقي';settingsNameInput.value=appData.userName}
+function changeEvalMode(){appData.evalMode=evalModeSelect.value;saveData();renderAll()}
+function checkComeback(){const today=todayStr();if(!appData.lastActive)return;const diff=daysBetween(appData.lastActive,today);if(diff>1){if(appData.streak>0)openModal('comebackModal');appData.streak=0;saveData()}}
+function updateActive(){const today=todayStr();if(appData.lastActive===today)return;const prev=appData.streak;if(daysBetween(appData.lastActive,today)===1)appData.streak++;else appData.streak=1;appData.lastActive=today;saveData();if(appData.streak>prev)flashStreak()}
+function switchTab(tabId,element){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));document.getElementById(tabId).classList.add('active');if(element)element.classList.add('active');document.body.classList.remove('focus-mode');scrollTo(0,0)}
+function openModal(id){document.getElementById(id).style.display='flex'} function closeModal(id){document.getElementById(id).style.display='none'}
+function toggleTheme(){const next=document.body.getAttribute('data-theme')==='dark'?'light':'dark';document.body.setAttribute('data-theme',next);localStorage.setItem('hifz-theme',next)}
+function toggleLiteMode(){const isLite=liteModeCheck.checked;document.body.classList.toggle('lite-mode',isLite);localStorage.setItem('hifz-lite',isLite)}
+function toggleFocusMode(){document.body.classList.toggle('focus-mode');if(!document.body.classList.contains('focus-mode')){clearInterval(mTimerInterval);btnMainTimer.textContent='▶ ابدأ المؤقت';mTimeLeft=0;updateMTimerDisplay()}}
+function addEntry(){const label=newEntry.value.trim(),note=document.getElementById('newNote').value.trim(),isICU=icuCheckbox.checked;if(!label)return;appData.entries.push({id:Date.now().toString(),label,note,isICU,date:todayStr(),nextReviewDate:todayStr(),quality:null,interval:0,ease:2.5,srsLevel:0,reviewCount:0,hasBeenEvaluated:false,sessionReps:0,lastRepDate:todayStr(),phaseDays:[]});newEntry.value='';newNote.value='';icuCheckbox.checked=false;closeModal('addModal');updateActive();renderAll();}
+function addOldEntry(){const label=oldEntry.value.trim();if(!label)return;appData.entries.push({id:Date.now().toString(),label,note:'',isICU:false,date:todayStr(),nextReviewDate:todayStr(),quality:null,interval:0,ease:2.5,srsLevel:0,reviewCount:0,hasBeenEvaluated:false,sessionReps:0,lastRepDate:todayStr(),phaseDays:['1','2','3','4','5','6','7']});oldEntry.value='';closeModal('addOldModal');updateActive();renderAll();}
+function removeEntry(id){if(confirm('تأكيد الحذف؟')){appData.entries=appData.entries.filter(e=>e.id!==id);saveData();renderAll()}}
+function addRep(id){const e=appData.entries.find(x=>x.id===id);if(!e)return;e.sessionReps=(e.sessionReps||0)+1;e.lastRepDate=todayStr();saveData();renderAll();flashEntry(id,true)}
+function reviewEntry(id,q){const e=appData.entries.find(x=>x.id===id);if(!e)return;if(e.interval===undefined||!Number.isFinite(e.interval))e.interval=0;if(e.ease===undefined||!Number.isFinite(e.ease))e.ease=2.5;if(e.srsLevel===undefined||!Number.isFinite(e.srsLevel))e.srsLevel=0;if(e.reviewCount===undefined||!Number.isFinite(e.reviewCount))e.reviewCount=0;if(e.phaseDays===undefined)e.phaseDays=[];const today=todayStr();let successful=false;if(e.phaseDays.length<7){if(q==='daily_pass'){if(e.phaseDays.includes(today)){alert('لقد قمت بتسجيل مراجعة هذا الورد لليوم بالفعل! عُد غداً.');return}e.phaseDays.push(today);e.interval=1;e.hasBeenEvaluated=true;e.reviewCount+=1;successful=true}else if(q==='daily_fail'){e.phaseDays=[];e.interval=1;e.hasBeenEvaluated=true;e.reviewCount+=1}}else{e.hasBeenEvaluated=true;e.reviewCount+=1;if(appData.evalMode==='weekly'){if(q==='weekly_pass'){e.interval=7;successful=true}else if(q==='weekly_fail')e.interval=1}else{if(q===4){e.srsLevel++;e.ease+=.15;e.interval=e.srsLevel===1?4:Math.max(1,Math.round(e.interval*e.ease*1.3));successful=true}else if(q===3){e.srsLevel++;e.interval=e.srsLevel===1?1:Math.max(1,Math.round(e.interval*e.ease));successful=true}else if(q===2){e.ease=Math.max(1.3,e.ease-.15);e.interval=Math.max(1,Math.round((e.interval||1)*1.2))}else{e.srsLevel=0;e.ease=Math.max(1.3,e.ease-.2);e.interval=1}}}const d=new Date();d.setDate(d.getDate()+e.interval);e.nextReviewDate=getLocalDateStr(d);e.quality=q;e.sessionReps=0;if(e.isICU&&(q==='daily_pass'||q==='weekly_pass'||q===3||q===4)){if(confirm('أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟'))e.isICU=false}updateActive();saveData();renderAll();flashEntry(id,successful);}
+function getSmartLinks(label){let text=label.trim(),qLink='';const pMatch=text.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(pMatch&&pMatch[1])qLink=`https://quran.com/page/${pMatch[1]}`;else{let fSurah=-1;for(let i=0;i<quranSurahs.length;i++){const s=quranSurahs[i];if((s==='ص'||s==='ق')?(text===s||text.includes('سورة '+s)):text.includes(s)){fSurah=i+1;break}}if(fSurah!==-1){const aMatch=text.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||text.match(/\s(\d+)/);qLink=aMatch?`https://quran.com/${fSurah}/${aMatch[1]}`:`https://quran.com/${fSurah}`}else qLink=`https://quran.com/search?q=${encodeURIComponent(text)}`}return `<div class="app-links"><a href="${qLink}" target="_blank" rel="noopener noreferrer">📖 المصحف (Quran.com)</a><a href="https://app.tarteel.ai" target="_blank" rel="noopener noreferrer">🎤 تسميع (ترتيل)</a></div>`}
+let mTimerInterval,mTimeLeft=0;function setMainTimer(mins){mTimeLeft=mins*60;updateMTimerDisplay()}function updateMTimerDisplay(){mainTimerDisplay.textContent=`${String(Math.floor(mTimeLeft/60)).padStart(2,'0')}:${String(mTimeLeft%60).padStart(2,'0')}`}function startMainTimer(){if(mTimeLeft<=0)return alert('اختر المدة أولاً');btnMainTimer.textContent='يتم الحفظ والمراجعة...';clearInterval(mTimerInterval);mTimerInterval=setInterval(()=>{if(mTimeLeft>0){mTimeLeft--;updateMTimerDisplay()}else{clearInterval(mTimerInterval);btnMainTimer.textContent='▶ ابدأ المؤقت';mTimeLeft=0;updateMTimerDisplay();alert('انتهت الجلسة! قم بتقييم مراجعاتك الآن.');document.body.classList.remove('focus-mode')}},1000)}
+let hTimerInterval,hTimeLeft=120;function openHadrTest(){const pool=appData.entries.filter(e=>e.hasBeenEvaluated&&!e.isICU);if(!pool.length)return alert('يجب أن يكون لديك أوراد محفوظة مسبقاً للبدء.');const target=pool[Math.floor(Math.random()*pool.length)];hadrTarget.textContent=target.label;hTimeLeft=120;hadrTimerDisplay.textContent='02:00';hadrBtn.style.display='block';clearInterval(hTimerInterval);openModal('hadrModal')}function startHadr(){hadrBtn.style.display='none';hTimerInterval=setInterval(()=>{if(hTimeLeft>0){hTimeLeft--;hadrTimerDisplay.textContent=`${String(Math.floor(hTimeLeft/60)).padStart(2,'0')}:${String(hTimeLeft%60).padStart(2,'0')}`}else{clearInterval(hTimerInterval);alert('انتهى الوقت المخصص. ⏱️');closeHadr()}},1000)}function closeHadr(){clearInterval(hTimerInterval);closeModal('hadrModal')}
+function changeTrack(){const val=trackSelect.value;if(val==='999')customGoal.style.display='block';else{customGoal.style.display='none';appData.goal=parseInt(val);saveData();renderAll()}}customGoal.addEventListener('change',e=>{appData.goal=parseInt(e.target.value)||604;saveData();renderAll()});
+function exportCSV(){let csv='\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';appData.entries.forEach(e=>{csv+=`"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount||0}"\n`});const link=document.createElement('a');link.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));link.download=`حفظي_${todayStr()}.csv`;link.click()}
+function exportData(){const link=document.createElement('a');link.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(appData));link.download=`backup_${todayStr()}.json`;link.click()}
+function importData(e){const file=e.target.files[0];if(!file)return;const reader=new FileReader();reader.onload=evt=>{try{const data=JSON.parse(evt.target.result);if(data.entries&&confirm('استبدال البيانات الحالية؟')){appData={userName:data.userName||'',entries:Array.isArray(data.entries)?data.entries:[],streak:Number.isFinite(data.streak)?data.streak:0,lastActive:data.lastActive||'',goal:Number.isFinite(data.goal)?data.goal:604,evalMode:data.evalMode||'weekly'};saveData();loadData();alert('تم بنجاح!')}}catch(err){alert('ملف تالف')}};reader.readAsText(file)}
+function getEvaluatedCount(){return appData.entries.filter(e=>e.hasBeenEvaluated).length}
+function renderItemHTML(e){const isICU=e.isICU?'icu':'',noteHtml=e.note?`<div class="note-txt">📌 ${escapeHtml(e.note)}</div>`:'',isDue=e.nextReviewDate<=todayStr()&&e.hasBeenEvaluated,dueCls=isDue?'due-review':'';if(e.phaseDays===undefined)e.phaseDays=[];const phaseCount=e.phaseDays.length;let metaText=!e.hasBeenEvaluated?'<span style="color:var(--primary);font-weight:700">✨ ورد جديد (كرر ثم قيّم)</span>':isDue?'<span style="color:var(--warning);font-weight:700">⏰ مستحق للمراجعة (كرر ثم قيّم)</span>':`المراجعة القادمة: ${e.nextReviewDate}`;const reps=e.sessionReps||0,isDone=reps>=10;let evaluationSection='';if(!e.hasBeenEvaluated||isDue){if(phaseCount<7){evaluationSection=`<div style="font-size:11px;text-align:center;margin-top:10px;color:var(--primary);font-weight:700">📍 التقييم اليومي لفترة التثبيت:</div><div class="q-btns" style="grid-template-columns:1fr 1fr"><button style="background:rgba(76,175,80,.1);border-color:var(--success)" onclick="reviewEntry('${e.id}','daily_pass')">✅ أتممت مراجعة اليوم</button><button style="background:rgba(244,67,54,.1);border-color:var(--danger)" onclick="reviewEntry('${e.id}','daily_fail')">🔄 لم أتقنها (إعادة التثبيت)</button></div>`}else if(appData.evalMode==='weekly'){evaluationSection=`<div style="font-size:11px;text-align:center;margin-top:10px;color:var(--secondary)">التقييم الأسبوعي لتحديد الموعد القادم:</div><div class="q-btns" style="grid-template-columns:1fr 1fr"><button style="background:rgba(76,175,80,.1);border-color:var(--success)" onclick="reviewEntry('${e.id}','weekly_pass')">✅ مراجعة ممتازة (بعد 7 أيام)</button><button style="background:rgba(244,67,54,.1);border-color:var(--danger)" onclick="reviewEntry('${e.id}','weekly_fail')">🔴 أعد (غداً)</button></div>`}else{evaluationSection=`<div style="font-size:11px;text-align:center;margin-top:10px;color:var(--secondary)">التقييم لجدولة الموعد القادم:</div><div class="q-btns" style="grid-template-columns:1fr 1fr 1fr 1fr"><button style="background:rgba(33,150,243,.1);border-color:var(--info)" onclick="reviewEntry('${e.id}',4)">🔵 سهل</button><button style="background:rgba(76,175,80,.1);border-color:var(--success)" onclick="reviewEntry('${e.id}',3)">🟢 تذكرته</button><button style="background:rgba(255,193,7,.1);border-color:var(--warning)" onclick="reviewEntry('${e.id}',2)">🟡 بصعوبة</button><button style="background:rgba(244,67,54,.1);border-color:var(--danger)" onclick="reviewEntry('${e.id}',1)">🔴 نسيت</button></div>`}}let boxesHtml='';for(let i=0;i<7;i++)boxesHtml+=`<div class="t-box ${i<phaseCount?'done':''}"></div>`;const badge=phaseCount<7?`<div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><span class="phase-badge">تثبيت (يوم ${phaseCount}/7)</span><div class="phase-tracker">${boxesHtml}</div></div>`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success)">استدامة (${appData.evalMode==='weekly'?'أسبوعي':'متباعد'})</span>`;return `<div class="item ${isICU} ${dueCls}" data-entry-id="${e.id}"><div class="item-header"><div class="item-title"><div class="quran-font glow-target">${escapeHtml(e.label)}</div>${noteHtml}</div><button onclick="removeEntry('${e.id}')">✕</button></div><div class="item-meta"><div>${metaText}</div><div>${badge}</div></div>${getSmartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:12px;font-weight:700;color:var(--text)">الهدف: 10 تكرارات غيباً</span><button class="rep-btn ${isDone?'done':''}" onclick="addRep('${e.id}')">📿 كررت غيباً (${reps})</button></div><div style="font-size:11px;color:var(--secondary)">💡 يُفضّل أن يبدأ التكرار <b>بعد</b> إتقان الورد.</div></div>${evaluationSection}</div>`}
+function loadMorePool(){poolVisibleCount+=20;renderPool()}
+function renderPool(){const q=searchInput.value.trim().toLowerCase();let pool=[...appData.entries];if(q)pool=pool.filter(e=>e.label.toLowerCase().includes(q));pool.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));poolList.innerHTML='';const visible=pool.slice(0,poolVisibleCount);if(!visible.length)poolList.innerHTML='<div class="empty-state">لا يوجد أوراد في المخزون حتى الآن.</div>';else visible.forEach(e=>poolList.innerHTML+=renderItemHTML(e));poolTotalCount.textContent=pool.length;loadMoreBtn.style.display=pool.length>poolVisibleCount?'block':'none'}
+function renderAll(){const today=todayStr(),evaluatedCount=getEvaluatedCount();statTotalAdded.textContent=appData.entries.length;statEvaluated2.textContent=evaluatedCount;const newToday=appData.entries.filter(e=>e.date===today&&!e.hasBeenEvaluated);memorizeTodayList.innerHTML=newToday.length?'':`<div class="empty-state">${appData.entries.length===0?'📖 ابدأ أول ورد لك اليوم.<br>اضغط <b>(+ أضف)</b> للبدء في الحفظ.':'📖 لا يوجد حفظ جديد اليوم.<br>اضغط <b>(+ أضف)</b> لإضافة ورد جديد.'}</div>`;newToday.forEach(e=>memorizeTodayList.innerHTML+=renderItemHTML(e));const dueToday=appData.entries.filter(e=>(e.nextReviewDate<=today&&e.hasBeenEvaluated)||e.isICU);statDueToday.textContent=dueToday.length;dueTodayList.innerHTML=dueToday.length?'':`<div class="empty-state">${appData.entries.length===0?'📖 لا توجد أوراد بعد.<br>أضف أول ورد لك للبدء.':'🎉 خلصت مراجعات اليوم!<br>يمكنك إضافة ورد جديد للحفظ.'}</div>`;dueToday.forEach(e=>dueTodayList.innerHTML+=renderItemHTML(e));const icuEntries=appData.entries.filter(e=>e.isICU);icuContainer.style.display=icuEntries.length?'block':'none';if(icuEntries.length){icuList.innerHTML='';icuEntries.forEach(e=>icuList.innerHTML+=renderItemHTML(e))}renderPool();goalTextVal.textContent=`${appData.goal} ورد (باعتبار الورد صفحة)`;const pct=Math.min((evaluatedCount/appData.goal)*100,100);trackProgress.style.width=`${pct}%`;trackText.textContent=`تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;statStreak.textContent=appData.streak}
 loadData();
 </script>
 </body>
