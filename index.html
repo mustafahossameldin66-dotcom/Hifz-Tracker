@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
 <meta name="theme-color" content="#0f1b16">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
 <title>رفيق القرآن - المراجعة الذكية</title>
 
-<!-- Favicon / PWA -->
 <link rel="icon" type="image/png" href="logo.png" sizes="32x32">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
@@ -60,7 +61,8 @@
     background: var(--bg);
     color: var(--text);
     margin: 0;
-    padding: 0 0 80px 0;
+    padding: 0;
+    padding-bottom: 80px;
     line-height: 1.6;
   }
 
@@ -90,6 +92,7 @@
       opacity: 0;
       transform: translateY(5px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -176,6 +179,12 @@
 
   button:active {
     transform: scale(0.98);
+  }
+
+  button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none !important;
   }
 
   .action-btn {
@@ -303,7 +312,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
 
   .app-links {
@@ -323,7 +332,6 @@
     background: var(--card-bg);
   }
 
-  /* Counter UI */
   .rep-counter-container {
     display: flex;
     flex-direction: column;
@@ -358,7 +366,6 @@
     color: #fff;
   }
 
-  /* Buttons Grid */
   .q-btns {
     display: grid;
     gap: 6px;
@@ -377,7 +384,6 @@
     cursor: pointer;
   }
 
-  /* 7-day tracker */
   .phase-tracker {
     display: flex;
     gap: 4px;
@@ -390,24 +396,13 @@
     border: 1px solid var(--primary);
     border-radius: 3px;
     background: transparent;
+    transition: background 0.3s;
   }
 
   .t-box.done {
     background: var(--primary);
   }
 
-  .phase-badge {
-    background: rgba(201, 168, 106, 0.1);
-    border: 1px solid var(--primary);
-    color: var(--primary);
-    font-size: 10px;
-    padding: 2px 8px;
-    border-radius: 12px;
-    margin-right: 6px;
-    display: inline-block;
-  }
-
-  /* Focus Mode */
   .timer-display {
     font-size: 48px;
     font-weight: bold;
@@ -416,10 +411,19 @@
     font-family: monospace;
     margin: 10px 0;
     letter-spacing: 2px;
-
-    /* Fix RTL timer visual order */
     direction: ltr;
     unicode-bidi: isolate;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .timer-display .time-part,
+  .timer-display .time-separator {
+    direction: ltr;
+    unicode-bidi: isolate;
+    display: inline-block;
   }
 
   body.focus-mode .bottom-nav {
@@ -445,7 +449,55 @@
     min-height: 80vh;
   }
 
-  /* Stats */
+  .timer-presets {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .timer-preset {
+    background: var(--border);
+    color: var(--text);
+    border: 1px solid transparent;
+    padding: 11px 8px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  .timer-preset.active {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: rgba(201,168,106,0.12);
+  }
+
+  .custom-timer-box {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    align-items: stretch;
+  }
+
+  .custom-timer-box input {
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
+
+  .custom-timer-box button {
+    flex: 0 0 110px;
+  }
+
+  .timer-help {
+    text-align: center;
+    color: var(--secondary);
+    font-size: 11px;
+    margin-top: -4px;
+    margin-bottom: 12px;
+  }
+
   .stats-grid {
     display: flex;
     text-align: center;
@@ -491,7 +543,6 @@
     transition: width 0.5s ease;
   }
 
-  /* Empty states */
   .empty-state {
     text-align: center;
     padding: 20px;
@@ -507,7 +558,17 @@
     color: var(--primary);
   }
 
-  /* Golden Glow */
+  .phase-badge {
+    background: rgba(201, 168, 106, 0.1);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-right: 6px;
+    display: inline-block;
+  }
+
   @keyframes goldenGlow {
     0% {
       box-shadow: 0 0 0 rgba(201,168,106,0);
@@ -517,10 +578,9 @@
 
     35% {
       box-shadow:
-        0 0 18px rgba(201,168,106,.75),
-        0 0 40px rgba(201,168,106,.30);
-      text-shadow:
-        0 0 12px rgba(201,168,106,.8);
+        0 0 12px rgba(201,168,106,.65),
+        0 0 28px rgba(201,168,106,.22);
+      text-shadow: 0 0 9px rgba(201,168,106,.65);
       border-color: var(--primary);
     }
 
@@ -540,10 +600,10 @@
 
     30% {
       box-shadow:
-        0 0 24px rgba(201,168,106,.85),
-        0 0 48px rgba(201,168,106,.42);
+        0 0 20px rgba(201,168,106,.8),
+        0 0 40px rgba(201,168,106,.4);
       border-color: var(--primary);
-      transform: scale(1.025);
+      transform: scale(1.02);
     }
 
     100% {
@@ -554,11 +614,11 @@
   }
 
   .golden-glow {
-    animation: goldenGlow 1s ease-out;
+    animation: goldenGlow .75s ease-out;
   }
 
   .golden-glow-text {
-    animation: goldenGlow .9s ease-out;
+    animation: goldenGlow .7s ease-out;
   }
 
   .celebrate-glow {
@@ -566,40 +626,26 @@
     position: relative;
     z-index: 10;
   }
-
-  @media (prefers-reduced-motion: reduce) {
-    .golden-glow,
-    .golden-glow-text,
-    .celebrate-glow {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-    }
-  }
 </style>
 </head>
 
 <body>
 
-<!-- Navigation -->
 <div class="bottom-nav">
   <div class="nav-item active" onclick="switchTab('view-home', this)">
-    <div class="nav-icon">📅</div>
-    خطة اليوم
+    <div class="nav-icon">📅</div>خطة اليوم
   </div>
 
   <div class="nav-item" onclick="switchTab('view-pool', this)">
-    <div class="nav-icon">📚</div>
-    المخزون
+    <div class="nav-icon">📚</div>المخزون
   </div>
 
   <div class="nav-item" onclick="switchTab('view-spiritual', this)">
-    <div class="nav-icon">📊</div>
-    التقدم والأثر
+    <div class="nav-icon">📊</div>التقدم والأثر
   </div>
 
   <div class="nav-item" onclick="switchTab('view-settings', this)">
-    <div class="nav-icon">⚙️</div>
-    الإعدادات
+    <div class="nav-icon">⚙️</div>الإعدادات
   </div>
 </div>
 
@@ -652,10 +698,13 @@
   </div>
 </div>
 
-<!-- Add New Entry -->
+<!-- Add New Modal -->
 <div class="modal-overlay" id="addModal">
   <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addModal')">✖</button>
+
+    <button class="close-modal" onclick="closeModal('addModal')">
+      ✖
+    </button>
 
     <h2 style="color:var(--primary); margin-top:0;">
       ➕ حفظ جديد للنهاردة
@@ -673,13 +722,20 @@
       placeholder="ملاحظات شخصية (اختياري)"
     >
 
-    <label style="display:flex; align-items:center; gap:8px; font-size:13px; margin-bottom:10px; color:var(--danger);">
+    <label style="
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:13px;
+      margin-bottom:10px;
+      color:var(--danger);
+    ">
       <input
         type="checkbox"
         id="icuCheckbox"
         style="width:18px;height:18px;accent-color:var(--danger);"
       >
-      عناية مركزة (تنبيه للآيات الصعبة)
+      عناية مركزة (تنبيه مضاعف للآيات الصعبة)
     </label>
 
     <button
@@ -689,13 +745,17 @@
     >
       إضافة لخطة اليوم
     </button>
+
   </div>
 </div>
 
-<!-- Add Old Entry -->
+<!-- Add Old Modal -->
 <div class="modal-overlay" id="addOldModal">
   <div class="modal-content">
-    <button class="close-modal" onclick="closeModal('addOldModal')">✖</button>
+
+    <button class="close-modal" onclick="closeModal('addOldModal')">
+      ✖
+    </button>
 
     <h2 style="color:var(--primary); margin-top:0;">
       📚 إضافة محفوظ سابق
@@ -718,12 +778,14 @@
     >
       إضافة للمخزون
     </button>
+
   </div>
 </div>
 
-<!-- Hadr Timer -->
+<!-- Hadr Modal -->
 <div class="modal-overlay" id="hadrModal">
   <div class="modal-content" style="text-align:center;">
+
     <h2 style="color:var(--primary); margin-top:0;">
       ⏱️ مؤقت الحَدْر
     </h2>
@@ -738,13 +800,10 @@
       style="font-size:24px!important; color:var(--text); margin-bottom:20px;"
     ></div>
 
-    <div
-      class="timer-display"
-      id="hadrTimerDisplay"
-      dir="ltr"
-      style="color:var(--warning);"
-    >
-      02:00
+    <div class="timer-display" style="color:var(--warning);">
+      <span id="hadrMinutes" class="time-part">02</span>
+      <span class="time-separator">:</span>
+      <span id="hadrSeconds" class="time-part">00</span>
     </div>
 
     <button
@@ -762,10 +821,11 @@
     >
       إلغاء
     </button>
+
   </div>
 </div>
 
-<!-- Guide -->
+<!-- Guide Modal -->
 <div class="modal-overlay" id="guideModal">
   <div class="modal-content">
 
@@ -776,725 +836,929 @@
       ✖
     </button>
 
-    <h2 style="color:var(--primary); margin-top:0; border-bottom:1px solid var(--border); padding-bottom:10px;">
+    <h2 style="
+      color:var(--primary);
+      margin-top:0;
+      border-bottom:1px solid var(--border);
+      padding-bottom:10px;
+    ">
       💡 دليلي للحفظ والإتقان
     </h2>
 
+    <div style="
+      font-size:13px;
+      color:var(--secondary);
+      line-height:1.9;
+      background:rgba(201,168,106,0.05);
+      border:1px dashed var(--primary);
+      border-radius:10px;
+      padding:12px;
+      margin-bottom:18px;
+    ">
+      <b style="color:var(--primary);">ملاحظة:</b>
+      هذه هي المنهجية التي اتبعتها شخصيًا في حفظ القرآن،
+      ووجدت فيها نفعًا كبيرًا بفضل الله.
+      وليست طريقة إلزامية؛ فإذا كانت لديك منهجية أخرى مناسبة لك،
+      فلا بأس، فالمهم أن تكون صحيحة وتساعدك على الضبط والمداومة.
+    </div>
+
     <h3 style="font-size:15px; color:var(--text); margin-bottom:8px;">
-      الخطوات الذهبية للحفظ:
+      1. الضبط والتجويد — الأساس
     </h3>
 
-    <div style="font-size:13px; color:var(--secondary); line-height:1.8;">
-      <b>1. الضبط والتجويد (الأساس):</b>
-      الاستماع للشيخ <b>الحصري</b> لضبط مخارج الحروف والتشكيل.
-      (الحفظ الخاطئ يرهقك لاحقاً).<br>
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      يجب تعلُّم التجويد قدر الإمكان، وقبل بداية الحفظ يُفضَّل
+      الاستماع إلى الشيخ <b>الحصري</b> لضبط مخارج الحروف والتشكيل،
+      خصوصًا إذا لم تكن قد تعلّمت التجويد بعد.
+      فالحفظ على قراءة خاطئة قد يرهقك لاحقًا عند تصحيحها.
+    </div>
 
-      <b>2. الترسيخ البصري والسمعي:</b>
-      استخدام مقاطع <b>أمل ثابت</b> لدمج الذاكرة السمعية بالبصرية وربط الآيات.<br>
+    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
+      2. التثبيت والتربيط
+    </h3>
 
-      <b>3. السلاسة والانطلاق:</b>
-      الترديد مع الشيخ <b>فارس عباد</b> لتعويد اللسان على الانطلاق بسرعة بدون تلعثم.<br>
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      الاستماع إلى مقاطع تساعد على <b>التثبيت والتربيط والمتشابهات</b>.
+      وفي منهجيتي الشخصية، كنت أستمع إلى مقاطع
+      <b>الأستاذة أمل ثابت</b> لتثبيت الآيات وربطها بما يشابهها،
+      والتركيز على المتشابهات.
+    </div>
 
-      <b>4. بناء العضلة (التكرار غيباً):</b>
-      استخدم عداد التكرار <b>(10 مرات كحد أدنى)</b> لترسيخ الورد غيباً.
-      <span style="color:var(--info); font-size:11.5px;">
-        خيار إضافي: يمكنك استخدام <b>تطبيق ترتيل 🎤</b> للتسميع واكتشاف الأخطاء، ولكنه ليس شرطاً.
-      </span><br>
+    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
+      3. السلاسة والانطلاق
+    </h3>
 
-      <b>5. التثبيت القريب (7 أيام):</b>
-      راجع الورد الجديد لمدة أسبوع متتالي.
-      التطبيق سيظهر لك 7 مربعات لتتبع اكتمال تثبيتك.
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      الترديد مع شيخ متقن.
+      وفي تجربتي الشخصية، حفظت بالسماع والترديد مع
+      <b>الشيخ فارس عباد</b> عدة أجزاء، وكان ذلك سببًا
+      — بفضل الله — في تسهيل الحفظ والتجويد بالنسبة لي،
+      وتعويد اللسان على التلاوة الصحيحة والانطلاق في القراءة بسلاسة.
+    </div>
+
+    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
+      4. بناء العضلة — التكرار غيبًا
+    </h3>
+
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      بعد إتقان الورد، استخدم <b>عداد التكرار</b> لتكراره غيبًا
+      <b>10 مرات على الأقل</b> لترسيخه وتقوية استدعائه من الذاكرة.
+      <br>
+      <span style="color:var(--info);">
+        خيار إضافي: يمكنك استخدام <b>تطبيق ترتيل 🎤</b>
+        للتسميع واكتشاف الأخطاء، لكنه ليس شرطًا.
+      </span>
+    </div>
+
+    <h3 style="font-size:15px; color:var(--text); margin-top:18px; margin-bottom:8px;">
+      5. التثبيت القريب — 7 أيام
+    </h3>
+
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      راجع الورد الجديد لمدة <b>أسبوع متتالي</b>،
+      وسيساعدك التطبيق على تتبع أيام التثبيت السبعة
+      من خلال المربعات الموجودة بجانب الورد.
     </div>
 
     <h3 style="font-size:15px; color:var(--text); margin-top:20px; margin-bottom:8px;">
-      📌 مهام يومية لا غنى عنها
+      📌 أركان مهمة في رحلة الحفظ
     </h3>
 
-    <div style="font-size:13px; color:var(--secondary); line-height:1.8;">
-      • <b>تعلم التجويد:</b> خطوة بخطوة لتقرأ كما أُنزِل.<br>
-      • <b>التثبيت والتربيط:</b> ربط أواخر الآيات ببدايات ما يليها.<br>
-      • <b>فهم الآيات:</b> قراءة تفسير ولو لآية واحدة يومياً.
+    <div style="font-size:13px; color:var(--secondary); line-height:1.9;">
+      • <b>تعلم التجويد:</b> خطوة بخطوة حتى تكون القراءة صحيحة.<br>
+      • <b>التثبيت والتربيط:</b> الاهتمام بالروابط والمتشابهات بين الآيات.<br>
+      • <b>فهم الآيات:</b> قراءة تفسير ولو لآية واحدة يوميًا؛ فالفهم يساعد على رسوخ المعنى والحفظ.
     </div>
 
-    <div style="margin-top:20px; padding:15px; background:rgba(201,168,106,0.05); border-radius:10px; text-align:center; border:1px dashed var(--primary);">
-
-      <div style="color:var(--primary); font-weight:bold; font-size:14px; font-family:'Amiri', serif;">
+    <div style="
+      margin-top:20px;
+      padding:15px;
+      background:rgba(201,168,106,0.05);
+      border-radius:10px;
+      text-align:center;
+      border:1px dashed var(--primary);
+    ">
+      <div style="
+        color:var(--primary);
+        font-weight:bold;
+        font-size:14px;
+        font-family:'Amiri', serif;
+      ">
         قال رسول الله ﷺ:
       </div>
 
-      <div style="color:var(--text); font-size:16px; font-family:'Amiri', serif; margin-top:8px;">
+      <div style="
+        color:var(--text);
+        font-size:16px;
+        font-family:'Amiri', serif;
+        margin-top:8px;
+      ">
         "أَحَبُّ الأَعْمَالِ إلى اللهِ أدْوَمُهَا وإنْ قَلَّ"
       </div>
-
     </div>
+
   </div>
 </div>
 
 <div class="wrap">
 
-  <!-- HOME -->
-  <div id="view-home" class="view active">
+<!-- =========================
+     HOME
+========================= -->
 
-    <div class="header-row">
-      <div>
-        <h1>
-          خطة اليوم يا <span id="displayUserName"></span> 📅
-        </h1>
+<div id="view-home" class="view active">
 
-        <div
-          style="font-size:12px; color:var(--secondary);"
-          id="dateHeader"
-        ></div>
-      </div>
+  <div class="header-row">
 
-      <button
-        class="theme-toggle"
-        onclick="toggleTheme()"
-      >
-        🌓
-      </button>
-    </div>
-
-    <!-- Focus Session -->
-    <div id="session-container">
-
-      <h2 style="text-align:center; color:var(--primary); margin-bottom:20px;">
-        ⏱️ جلسة التركيز
-      </h2>
-
-      <div
-        class="timer-display"
-        id="mainTimerDisplay"
-        dir="ltr"
-      >
-        00:00
-      </div>
-
-      <div
-        style="
-          display:flex;
-          gap:8px;
-          justify-content:center;
-          margin-bottom:20px;
-          flex-wrap:wrap;
-        "
-      >
-        <button class="action-btn" onclick="setMainTimer(15)">
-          15 دقيقة
-        </button>
-
-        <button class="action-btn" onclick="setMainTimer(30)">
-          30 دقيقة
-        </button>
-
-        <button class="action-btn" onclick="setMainTimer(45)">
-          45 دقيقة
-        </button>
-      </div>
-
-      <div
-        style="
-          display:flex;
-          gap:10px;
-          margin-bottom:20px;
-        "
-      >
-        <button
-          class="main-btn"
-          id="btnMainTimer"
-          onclick="startMainTimer()"
-        >
-          ▶ ابدأ المؤقت
-        </button>
-
-        <button
-          class="action-btn"
-          style="background:var(--danger); color:#fff;"
-          onclick="toggleFocusMode()"
-        >
-          ✖ إنهاء الجلسة
-        </button>
-      </div>
-
-      <div
-        style="
-          text-align:center;
-          color:var(--secondary);
-          font-size:13px;
-          line-height:1.8;
-        "
-      >
-        اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.
-        <br>
-        بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
-      </div>
-    </div>
-
-    <!-- Home Content -->
-    <div id="home-content">
-
-      <button
-        class="main-btn huge-btn"
-        onclick="toggleFocusMode()"
-      >
-        ▶ ابدأ جلسة المراجعة
-      </button>
-
-      <button
-        class="action-btn"
-        style="
-          width:100%;
-          border:1px solid var(--primary);
-          color:var(--primary);
-          background:rgba(201,168,106,0.05);
-          margin-bottom:20px;
-        "
-        onclick="openModal('guideModal')"
-      >
-        💡 دليلي للحفظ والإتقان
-      </button>
-
-      <!-- New Memorization -->
-      <div class="card">
-
-        <div
-          style="
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-          "
-        >
-          <h2 style="margin:0;">
-            🆕 حِفظ اليوم
-          </h2>
-
-          <button
-            style="
-              background:transparent;
-              border:1px solid var(--primary);
-              color:var(--primary);
-              border-radius:6px;
-              padding:4px 10px;
-              cursor:pointer;
-              font-weight:bold;
-            "
-            onclick="openModal('addModal')"
-          >
-            + أضف
-          </button>
-        </div>
-
-        <div
-          id="memorizeTodayList"
-          style="margin-top:15px;"
-        ></div>
-
-      </div>
-
-      <!-- Today's Reviews -->
-      <div
-        class="card"
-        style="border-color:var(--warning);"
-      >
-        <h2 style="color:var(--warning);">
-          🔄 مراجعات مستحقة اليوم
-
-          <span
-            class="badge-count"
-            id="statDueToday"
-            style="background:var(--warning); color:#000;"
-          >
-            0
-          </span>
-        </h2>
-
-        <div id="dueTodayList"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- POOL -->
-  <div id="view-pool" class="view">
-
-    <div class="header-row">
+    <div>
 
       <h1>
-        📚 المخزون الكامل
+        خطة اليوم يا
+        <span id="displayUserName"></span>
+        📅
       </h1>
 
-      <button
-        class="action-btn"
-        style="flex:none; padding:6px 12px; margin:0;"
-        onclick="openModal('addOldModal')"
-      >
-        + إضافة محفوظ سابق
-      </button>
-
-    </div>
-
-    <p style="font-size:12px; color:var(--secondary); margin-bottom:15px;">
-      يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.
-    </p>
-
-    <div
-      style="
-        display:flex;
-        gap:10px;
-        margin-bottom:15px;
-      "
-    >
-
-      <input
-        type="text"
-        id="searchInput"
-        placeholder="ابحث في أورادك..."
-        oninput="renderPool()"
-        style="margin:0;"
-      >
-
-      <button
-        class="action-btn"
-        style="flex:0.4; margin:0;"
-        onclick="openHadrTest()"
-      >
-        ⏱️ مؤقت حَدْر
-      </button>
-
-    </div>
-
-    <div
-      id="icuContainer"
-      style="display:none; margin-bottom:20px;"
-    >
-      <h3
-        style="
-          color:var(--danger);
-          font-size:14px;
-          display:flex;
-          align-items:center;
-          gap:6px;
-        "
-      >
-        🏥 العناية المركزة
-      </h3>
-
-      <div id="icuList"></div>
-    </div>
-
-    <div class="card">
-
-      <h2 style="margin-bottom:15px;">
-        كافة الأوراد
-
-        <span
-          class="badge-count"
-          id="poolTotalCount"
-        >
-          0
-        </span>
-      </h2>
-
-      <div id="poolList"></div>
-
-      <button
-        id="loadMoreBtn"
-        class="action-btn"
-        style="width:100%; display:none; margin-top:10px;"
-        onclick="loadMorePool()"
-      >
-        عرض المزيد ↓
-      </button>
-    </div>
-  </div>
-
-  <!-- SPIRITUAL -->
-  <div id="view-spiritual" class="view">
-
-    <h1>
-      📊 التقدم والأثر الروحي
-    </h1>
-
-    <div
-      class="stats-grid"
-      style="margin-top:15px;"
-    >
-
-      <div class="stat-box">
-        <div
-          class="stat-num"
-          id="statStreak"
-        >
-          0
-        </div>
-
-        <div class="stat-lbl">
-          أيام التزام 🔥
-        </div>
-      </div>
-
-      <div class="stat-box">
-        <div
-          class="stat-num"
-          id="statTotalAdded"
-        >
-          0
-        </div>
-
-        <div class="stat-lbl">
-          إجمالي الأوراد 📋
-        </div>
-      </div>
-
       <div
-        class="stat-box"
-        style="border-color:var(--primary);"
-      >
-        <div
-          class="stat-num"
-          id="statEvaluated2"
-        >
-          0
-        </div>
-
-        <div class="stat-lbl">
-          أوراد مُقيّمة 📚
-        </div>
-      </div>
-
-    </div>
-
-    <div
-      class="card"
-      style="
-        background:rgba(201,168,106,0.05);
-        border-color:var(--primary);
-      "
-    >
-
-      <h2 style="justify-content:center; font-size:16px;">
-        الهدف:
-        <span id="goalTextVal"></span>
-      </h2>
-
-      <div class="progress-bar-container">
-        <div
-          class="progress-bar"
-          id="trackProgress"
-        ></div>
-      </div>
-
-      <div
-        id="trackText"
-        style="
-          text-align:center;
-          font-size:12px;
-          color:var(--secondary);
-          margin-top:5px;
-        "
+        style="font-size:12px; color:var(--secondary);"
+        id="dateHeader"
       ></div>
 
     </div>
 
-    <div
-      class="card"
-      style="border-right:3px solid var(--primary);"
+    <button
+      class="theme-toggle"
+      onclick="toggleTheme()"
     >
-
-      <h2>
-        📖 غريب القرآن
-      </h2>
-
-      <div
-        id="gharibWord"
-        style="
-          font-size:16px;
-          font-weight:bold;
-          color:var(--primary);
-          font-family:'Amiri', serif;
-        "
-      ></div>
-
-      <div
-        id="gharibMeaning"
-        style="
-          font-size:13px;
-          color:var(--text);
-          margin-top:4px;
-        "
-      ></div>
-
-      <div
-        id="gharibSource"
-        style="
-          font-size:10px;
-          color:var(--secondary);
-          margin-top:8px;
-        "
-      ></div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>
-        ⚖️ تذكرة الدار الآخرة
-      </h2>
-
-      <div style="font-size:13px; margin-bottom:10px;">
-        • <b>الصدقة:</b>
-        حتى لو بمبلغ بسيط لشخص محتاج تعرفه
-        (الأقربون أولى) أو جهة موثوقة.
-        قال رسول الله ﷺ:
-        "داووا مرضاكم بالصدقة"
-        [حسنه الألباني].
-      </div>
-
-      <div style="font-size:13px; margin-bottom:10px;">
-        • <b>القيام:</b>
-        أعظم تثبيت للحفظ أن تصلي ركعتين
-        في جوف الليل بما حفظته.
-      </div>
-
-      <div
-        id="dailyDua"
-        style="
-          font-size:13px;
-          color:var(--primary);
-          font-weight:bold;
-          margin-top:12px;
-        "
-      ></div>
-
-    </div>
+      🌓
+    </button>
 
   </div>
 
-  <!-- SETTINGS -->
-  <div id="view-settings" class="view">
+  <!-- SESSION -->
 
-    <h1>
-      ⚙️ الإعدادات والنظام
-    </h1>
+  <div id="session-container">
+
+    <h2 style="
+      text-align:center;
+      color:var(--primary);
+      margin-bottom:20px;
+    ">
+      ⏱️ جلسة التركيز
+    </h2>
 
     <div
-      class="card"
-      style="
-        background:rgba(244,67,54,0.05);
-        border-color:var(--danger);
-      "
+      class="timer-display"
+      id="mainTimerDisplay"
     >
-      <div
-        style="
-          color:var(--danger);
-          font-size:13px;
-          font-weight:bold;
-          text-align:center;
-        "
-      >
-        ⚠️ تنبيه هام:
-        بياناتك محفوظة محلياً على هذا المتصفح فقط.
-        لتجنب فقدانها عند مسح السجل،
-        يرجى أخذ نسخة احتياطية بشكل دوري.
-      </div>
+      <span id="mainMinutes" class="time-part">00</span>
+      <span class="time-separator">:</span>
+      <span id="mainSeconds" class="time-part">00</span>
     </div>
 
-    <div class="card">
+    <div class="timer-presets">
 
-      <h2>
-        🎛️ نظام المراجعة (بعد أول أسبوع)
-      </h2>
-
-      <p
-        style="
-          font-size:12px;
-          color:var(--secondary);
-        "
+      <button
+        class="timer-preset"
+        onclick="setMainTimer(15, this)"
       >
-        النظام التقليدي هو الاختيار الافتراضي:
-        مراجعة ثابتة كل أسبوع.
-        ويمكنك لاحقاً تجربة نظام أنكي إذا أردت
-        جدولة أكثر ديناميكية بناءً على تقييمك.
-      </p>
+        15 دقيقة
+      </button>
 
-      <select
-        id="evalModeSelect"
-        onchange="changeEvalMode()"
+      <button
+        class="timer-preset"
+        onclick="setMainTimer(30, this)"
       >
-        <option value="weekly">
-          النظام التقليدي (مراجعة ثابتة كل أسبوع)
-        </option>
+        30 دقيقة
+      </button>
 
-        <option value="anki">
-          تجربة نظام أنكي (مراجعة متباعدة ذكية)
-        </option>
-      </select>
+      <button
+        class="timer-preset"
+        onclick="setMainTimer(45, this)"
+      >
+        45 دقيقة
+      </button>
+
+      <button
+        class="timer-preset"
+        onclick="setMainTimer(60, this)"
+      >
+        60 دقيقة
+      </button>
 
     </div>
 
-    <div class="card">
-
-      <h2>
-        👤 الملف الشخصي
-      </h2>
-
-      <div
-        style="
-          display:flex;
-          gap:10px;
-        "
-      >
-
-        <input
-          type="text"
-          id="settingsNameInput"
-          style="margin:0; flex:1;"
-        >
-
-        <button
-          class="action-btn"
-          style="flex:0.5; margin:0;"
-          onclick="updateUserName()"
-        >
-          تحديث
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <h2>
-        🎯 إعداد هدف الحفظ
-      </h2>
-
-      <p
-        style="
-          font-size:12px;
-          color:var(--secondary);
-        "
-      >
-        الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.
-      </p>
-
-      <select
-        id="trackSelect"
-        onchange="changeTrack()"
-      >
-        <option value="604">
-          الختمة (604 ورد/جلسة تقريبية)
-        </option>
-
-        <option value="30">
-          جزء عم (30 ورد)
-        </option>
-
-        <option value="48">
-          الزهراوين (48 ورد)
-        </option>
-
-        <option value="999">
-          تخصيص عدد الأوراد يدوياً...
-        </option>
-      </select>
+    <div class="custom-timer-box">
 
       <input
         type="number"
-        id="customGoal"
-        style="display:none;"
-        placeholder="أدخل العدد المستهدف"
+        id="customTimerInput"
+        min="1"
+        max="180"
+        step="1"
+        placeholder="مثال: 25"
       >
-
-    </div>
-
-    <div class="card">
-
-      <h2>
-        📱 إدارة البيانات والتصدير
-      </h2>
-
-      <label
-        style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          font-size:14px;
-          margin-bottom:15px;
-          border-bottom:1px solid var(--border);
-          padding-bottom:10px;
-        "
-      >
-        المؤثرات الصوتية
-        <input
-          type="checkbox"
-          id="soundModeCheck"
-          onchange="toggleSound()"
-          style="width:18px;height:18px;"
-        >
-      </label>
-
-      <label
-        style="
-          display:flex;
-          justify-content:space-between;
-          align-items:center;
-          font-size:14px;
-          margin-bottom:15px;
-          border-bottom:1px solid var(--border);
-          padding-bottom:10px;
-        "
-      >
-        وضع توفير البطارية (بدون تأثيرات)
-        <input
-          type="checkbox"
-          id="liteModeCheck"
-          onchange="toggleLiteMode()"
-          style="width:18px;height:18px;"
-        >
-      </label>
 
       <button
         class="action-btn"
-        style="width:100%; margin-bottom:10px;"
-        onclick="exportCSV()"
+        onclick="setCustomTimer()"
       >
-        📊 استخراج كجدول (Excel)
+        ⏱️ مدة مخصصة
       </button>
 
-      <div style="display:flex; gap:10px;">
+    </div>
+
+    <div class="timer-help">
+      من 1 إلى 180 دقيقة
+    </div>
+
+    <div style="
+      display:flex;
+      gap:10px;
+      margin-bottom:20px;
+    ">
+
+      <button
+        class="main-btn"
+        id="btnMainTimer"
+        onclick="startMainTimer()"
+        disabled
+      >
+        ▶ اختر مدة أولًا
+      </button>
+
+      <button
+        class="action-btn"
+        style="background:var(--danger); color:#fff;"
+        onclick="toggleFocusMode()"
+      >
+        ✖ إنهاء الجلسة
+      </button>
+
+    </div>
+
+    <div style="
+      text-align:center;
+      color:var(--secondary);
+      font-size:13px;
+      line-height:1.8;
+    ">
+      اقرأ أورادك المطلوبة اليوم، واستخدم عداد التكرار لتقوية الحفظ.
+      <br>
+      بعد الانتهاء، قيّم أداءك لجدولة الموعد القادم.
+    </div>
+
+  </div>
+
+  <!-- HOME CONTENT -->
+
+  <div id="home-content">
+
+    <button
+      class="main-btn huge-btn"
+      onclick="toggleFocusMode()"
+    >
+      ▶ ابدأ جلسة المراجعة
+    </button>
+
+    <button
+      class="action-btn"
+      style="
+        width:100%;
+        border:1px solid var(--primary);
+        color:var(--primary);
+        background:rgba(201,168,106,0.05);
+        margin-bottom:20px;
+      "
+      onclick="openModal('guideModal')"
+    >
+      💡 دليلي للحفظ والإتقان
+    </button>
+
+    <!-- NEW -->
+
+    <div class="card">
+
+      <div style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+      ">
+
+        <h2 style="margin:0;">
+          🆕 حِفظ اليوم
+        </h2>
 
         <button
-          class="action-btn"
-          onclick="exportData()"
+          style="
+            background:transparent;
+            border:1px solid var(--primary);
+            color:var(--primary);
+            border-radius:6px;
+            padding:4px 10px;
+            cursor:pointer;
+            font-weight:bold;
+          "
+          onclick="openModal('addModal')"
         >
-          📥 أخذ نسخة احتياطية
+          + أضف
         </button>
 
-        <label
-          for="importFile"
-          class="action-btn"
-          style="margin:0; line-height:20px;"
+      </div>
+
+      <div
+        id="memorizeTodayList"
+        style="margin-top:15px;"
+      ></div>
+
+    </div>
+
+    <!-- DUE -->
+
+    <div
+      class="card"
+      style="border-color:var(--warning);"
+    >
+
+      <h2 style="color:var(--warning);">
+
+        🔄 مراجعات مستحقة اليوم
+
+        <span
+          class="badge-count"
+          id="statDueToday"
+          style="
+            background:var(--warning);
+            color:#000;
+          "
         >
-          📤 استرجاع نسخة
+          0
+        </span>
 
-          <input
-            type="file"
-            id="importFile"
-            accept=".json"
-            style="display:none;"
-            onchange="importData(event)"
-          >
-        </label>
+      </h2>
 
+      <div id="dueTodayList"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     POOL
+========================= -->
+
+<div id="view-pool" class="view">
+
+  <div class="header-row">
+
+    <h1>📚 المخزون الكامل</h1>
+
+    <button
+      class="action-btn"
+      style="
+        flex:none;
+        padding:6px 12px;
+        margin:0;
+      "
+      onclick="openModal('addOldModal')"
+    >
+      + إضافة محفوظ سابق
+    </button>
+
+  </div>
+
+  <p
+    style="
+      font-size:12px;
+      color:var(--secondary);
+      margin-bottom:15px;
+    "
+  >
+    يعرض كافة الأوراد المضافة سابقاً وتواريخ مراجعتها القادمة.
+  </p>
+
+  <div
+    style="
+      display:flex;
+      gap:10px;
+      margin-bottom:15px;
+    "
+  >
+
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="ابحث في أورادك..."
+      oninput="renderPool()"
+      style="margin:0;"
+    >
+
+    <button
+      class="action-btn"
+      style="flex:0.4; margin:0;"
+      onclick="openHadrTest()"
+    >
+      ⏱️ مؤقت حَدْر
+    </button>
+
+  </div>
+
+  <div
+    id="icuContainer"
+    style="
+      display:none;
+      margin-bottom:20px;
+    "
+  >
+
+    <h3
+      style="
+        color:var(--danger);
+        font-size:14px;
+        display:flex;
+        align-items:center;
+        gap:6px;
+      "
+    >
+      🏥 العناية المركزة
+    </h3>
+
+    <div id="icuList"></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2 style="margin-bottom:15px;">
+
+      كافة الأوراد
+
+      <span
+        class="badge-count"
+        id="poolTotalCount"
+      >
+        0
+      </span>
+
+    </h2>
+
+    <div id="poolList"></div>
+
+    <button
+      id="loadMoreBtn"
+      class="action-btn"
+      style="
+        width:100%;
+        display:none;
+        margin-top:10px;
+      "
+      onclick="loadMorePool()"
+    >
+      عرض المزيد ↓
+    </button>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     PROGRESS
+========================= -->
+
+<div id="view-spiritual" class="view">
+
+  <h1>📊 التقدم والأثر الروحي</h1>
+
+  <div
+    class="stats-grid"
+    style="margin-top:15px;"
+  >
+
+    <div class="stat-box">
+
+      <div
+        class="stat-num"
+        id="statStreak"
+      >
+        0
+      </div>
+
+      <div class="stat-lbl">
+        أيام التزام 🔥
+      </div>
+
+    </div>
+
+    <div class="stat-box">
+
+      <div
+        class="stat-num"
+        id="statTotalAdded"
+      >
+        0
+      </div>
+
+      <div class="stat-lbl">
+        إجمالي الأوراد 📋
+      </div>
+
+    </div>
+
+    <div
+      class="stat-box"
+      style="border-color:var(--primary);"
+    >
+
+      <div
+        class="stat-num"
+        id="statEvaluated2"
+      >
+        0
+      </div>
+
+      <div class="stat-lbl">
+        أوراد مُقيّمة 📚
       </div>
 
     </div>
 
   </div>
+
+  <div
+    class="card"
+    style="
+      background:rgba(201,168,106,0.05);
+      border-color:var(--primary);
+    "
+  >
+
+    <h2
+      style="
+        justify-content:center;
+        font-size:16px;
+      "
+    >
+      الهدف:
+      <span id="goalTextVal"></span>
+    </h2>
+
+    <div class="progress-bar-container">
+      <div
+        class="progress-bar"
+        id="trackProgress"
+      ></div>
+    </div>
+
+    <div
+      style="
+        text-align:center;
+        font-size:12px;
+        color:var(--secondary);
+        margin-top:5px;
+      "
+      id="trackText"
+    ></div>
+
+  </div>
+
+  <div
+    class="card"
+    style="border-right:3px solid var(--primary);"
+  >
+
+    <h2>
+      📖 غريب القرآن
+    </h2>
+
+    <div
+      style="
+        font-size:16px;
+        font-weight:bold;
+        color:var(--primary);
+        font-family:'Amiri', serif;
+      "
+      id="gharibWord"
+    ></div>
+
+    <div
+      style="
+        font-size:13px;
+        color:var(--text);
+        margin-top:4px;
+      "
+      id="gharibMeaning"
+    ></div>
+
+    <div
+      style="
+        font-size:10px;
+        color:var(--secondary);
+        margin-top:8px;
+      "
+      id="gharibSource"
+    ></div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>
+      ⚖️ تذكرة الدار الآخرة
+    </h2>
+
+    <div
+      style="
+        font-size:13px;
+        margin-bottom:10px;
+      "
+    >
+      • <b>الصدقة:</b>
+      حتى لو بمبلغ بسيط لشخص محتاج تعرفه
+      (الأقربون أولى) أو جهة موثوقة.
+      قال رسول الله ﷺ:
+      "داووا مرضاكم بالصدقة"
+      [حسنه الألباني].
+    </div>
+
+    <div
+      style="
+        font-size:13px;
+        margin-bottom:10px;
+      "
+    >
+      • <b>القيام:</b>
+      أعظم تثبيت للحفظ أن تصلي ركعتين
+      في جوف الليل بما حفظته.
+    </div>
+
+    <div
+      style="
+        font-size:13px;
+        color:var(--primary);
+        font-weight:bold;
+        margin-top:12px;
+      "
+      id="dailyDua"
+    ></div>
+
+  </div>
+
 </div>
 
+
+<!-- =========================
+     SETTINGS
+========================= -->
+
+<div id="view-settings" class="view">
+
+  <h1>⚙️ الإعدادات والنظام</h1>
+
+  <div
+    class="card"
+    style="
+      background:rgba(244,67,54,0.05);
+      border-color:var(--danger);
+    "
+  >
+    <div
+      style="
+        color:var(--danger);
+        font-size:13px;
+        font-weight:bold;
+        text-align:center;
+      "
+    >
+      ⚠️ تنبيه هام:
+      بياناتك محفوظة محلياً على هذا المتصفح فقط.
+      لتجنب فقدانها عند مسح السجل،
+      يرجى أخذ نسخة احتياطية بشكل دوري.
+    </div>
+  </div>
+
+  <div class="card">
+
+    <h2>
+      🎛️ نظام المراجعة بعد أول أسبوع
+    </h2>
+
+    <p
+      style="
+        font-size:12px;
+        color:var(--secondary);
+        line-height:1.8;
+      "
+    >
+      النظام الأسبوعي هو الطريقة الافتراضية والبسيطة:
+      بعد انتهاء أسبوع التثبيت، يظهر لك الورد للمراجعة مرة كل أسبوع.
+
+      <br><br>
+
+      <b style="color:var(--primary);">
+        خيار أنكي اختياري فقط:
+      </b>
+
+      إذا كنت تحب المراجعة المتباعدة بشكل أكثر ديناميكية،
+      يمكنك تفعيله ليختار التطبيق الفاصل الزمني بناءً على تقييمك.
+      وإذا لم تفعّله، فأنت لا تفوّت أي جزء أساسي من التطبيق.
+    </p>
+
+    <select
+      id="evalModeSelect"
+      onchange="changeEvalMode()"
+    >
+
+      <option value="weekly">
+        النظام التقليدي — مراجعة أسبوعية
+      </option>
+
+      <option value="anki">
+        أنكي — مراجعة متباعدة اختيارية
+      </option>
+
+    </select>
+
+  </div>
+
+  <div class="card">
+
+    <h2>
+      👤 الملف الشخصي
+    </h2>
+
+    <div style="display:flex; gap:10px;">
+
+      <input
+        type="text"
+        id="settingsNameInput"
+        style="margin:0; flex:1;"
+      >
+
+      <button
+        class="action-btn"
+        style="flex:0.5; margin:0;"
+        onclick="updateUserName()"
+      >
+        تحديث
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="card">
+
+    <h2>
+      🎯 إعداد هدف الحفظ
+    </h2>
+
+    <p
+      style="
+        font-size:12px;
+        color:var(--secondary);
+      "
+    >
+      الورد هو وحدة القياس، سواء كان آية أو صفحة أو جزء.
+    </p>
+
+    <select
+      id="trackSelect"
+      onchange="changeTrack()"
+    >
+
+      <option value="604">
+        الختمة (604 ورد/جلسة تقريبية)
+      </option>
+
+      <option value="30">
+        جزء عم (30 ورد)
+      </option>
+
+      <option value="48">
+        الزهراوين (48 ورد)
+      </option>
+
+      <option value="999">
+        تخصيص عدد الأوراد يدوياً...
+      </option>
+
+    </select>
+
+    <input
+      type="number"
+      id="customGoal"
+      style="display:none;"
+      placeholder="أدخل العدد المستهدف"
+      min="1"
+    >
+
+  </div>
+
+  <div class="card">
+
+    <h2>
+      📱 إدارة البيانات والتصدير
+    </h2>
+
+    <label
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        font-size:14px;
+        margin-bottom:15px;
+        border-bottom:1px solid var(--border);
+        padding-bottom:10px;
+      "
+    >
+      المؤثرات الصوتية (أصوات رقمية)
+
+      <input
+        type="checkbox"
+        id="soundModeCheck"
+        onchange="toggleSound()"
+        style="width:18px;height:18px;"
+      >
+    </label>
+
+    <label
+      style="
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        font-size:14px;
+        margin-bottom:15px;
+        border-bottom:1px solid var(--border);
+        padding-bottom:10px;
+      "
+    >
+      وضع توفير البطارية (بدون تأثيرات)
+
+      <input
+        type="checkbox"
+        id="liteModeCheck"
+        onchange="toggleLiteMode()"
+        style="width:18px;height:18px;"
+      >
+    </label>
+
+    <button
+      class="action-btn"
+      style="
+        width:100%;
+        margin-bottom:10px;
+      "
+      onclick="exportCSV()"
+    >
+      📊 استخراج كجدول (Excel)
+    </button>
+
+    <div style="display:flex; gap:10px;">
+
+      <button
+        class="action-btn"
+        onclick="exportData()"
+      >
+        📥 أخذ نسخة احتياطية
+      </button>
+
+      <label
+        for="importFile"
+        class="action-btn"
+        style="
+          margin:0;
+          line-height:20px;
+        "
+      >
+        📤 استرجاع نسخة
+
+        <input
+          type="file"
+          id="importFile"
+          accept=".json"
+          style="display:none;"
+          onchange="importData(event)"
+        >
+      </label>
+
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
 <script>
+
+/* =========================================================
+   DATA
+========================================================= */
+
 const STORAGE_KEY = 'hifz-core-v4';
 
 let appData = {
@@ -1509,69 +1773,82 @@ let appData = {
 
 let poolVisibleCount = 20;
 
-/* =========================================================
-   AUDIO — Lazy initialization for browser compatibility
-   ========================================================= */
 
-const AudioContextClass =
-  window.AudioContext || window.webkitAudioContext;
+/* =========================================================
+   AUDIO
+========================================================= */
 
 let audioCtx = null;
 
 function getAudioContext() {
+
+  if (audioCtx) return audioCtx;
+
+  const AudioContextClass =
+    window.AudioContext ||
+    window.webkitAudioContext;
+
   if (!AudioContextClass) return null;
 
-  if (!audioCtx) {
-    try {
-      audioCtx = new AudioContextClass();
-    } catch (e) {
-      return null;
-    }
+  try {
+    audioCtx =
+      new AudioContextClass();
+  } catch (e) {
+    audioCtx = null;
   }
 
   return audioCtx;
 }
 
-async function ensureAudioReady() {
-  const ctx = getAudioContext();
-  if (!ctx) return null;
-
-  try {
-    if (ctx.state === 'suspended') {
-      await ctx.resume();
-    }
-  } catch (e) {}
-
-  return ctx;
-}
-
 function playSound(type) {
+
   if (!appData.soundEnabled) return;
 
   const ctx = getAudioContext();
+
   if (!ctx) return;
 
   if (ctx.state === 'suspended') {
     ctx.resume().catch(() => {});
   }
 
-  const osc = ctx.createOscillator();
-  const gainNode = ctx.createGain();
+  const osc =
+    ctx.createOscillator();
+
+  const gainNode =
+    ctx.createGain();
 
   osc.connect(gainNode);
   gainNode.connect(ctx.destination);
 
-  const now = ctx.currentTime;
+  const now =
+    ctx.currentTime;
 
   try {
+
     if (type === 'click') {
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(250, now);
-      osc.frequency.exponentialRampToValueAtTime(50, now + 0.05);
 
-      gainNode.gain.setValueAtTime(0.08, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+      osc.frequency.setValueAtTime(
+        250,
+        now
+      );
+
+      osc.frequency.exponentialRampToValueAtTime(
+        50,
+        now + 0.05
+      );
+
+      gainNode.gain.setValueAtTime(
+        0.35,
+        now
+      );
+
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 0.05
+      );
 
       osc.start(now);
       osc.stop(now + 0.05);
@@ -1579,10 +1856,21 @@ function playSound(type) {
     } else if (type === 'ding') {
 
       osc.type = 'triangle';
-      osc.frequency.setValueAtTime(800, now);
 
-      gainNode.gain.setValueAtTime(0.15, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+      osc.frequency.setValueAtTime(
+        800,
+        now
+      );
+
+      gainNode.gain.setValueAtTime(
+        0.22,
+        now
+      );
+
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 0.4
+      );
 
       osc.start(now);
       osc.stop(now + 0.4);
@@ -1590,38 +1878,87 @@ function playSound(type) {
     } else if (type === 'graduate') {
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, now);
 
-      gainNode.gain.setValueAtTime(0.15, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      osc.frequency.setValueAtTime(
+        600,
+        now
+      );
 
-      const osc2 = ctx.createOscillator();
-      const gain2 = ctx.createGain();
+      osc.frequency.setValueAtTime(
+        900,
+        now + 0.15
+      );
+
+      gainNode.gain.setValueAtTime(
+        0.3,
+        now
+      );
+
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 0.15
+      );
+
+      const osc2 =
+        ctx.createOscillator();
+
+      const gain2 =
+        ctx.createGain();
 
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(900, now + 0.15);
-
-      gain2.gain.setValueAtTime(0, now);
-      gain2.gain.setValueAtTime(0.15, now + 0.15);
-      gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
 
       osc2.connect(gain2);
       gain2.connect(ctx.destination);
 
-      osc.start(now);
-      osc.stop(now + 0.15);
+      osc2.frequency.setValueAtTime(
+        900,
+        now + 0.15
+      );
+
+      gain2.gain.setValueAtTime(
+        0,
+        now
+      );
+
+      gain2.gain.setValueAtTime(
+        0.3,
+        now + 0.15
+      );
+
+      gain2.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 0.5
+      );
 
       osc2.start(now + 0.15);
       osc2.stop(now + 0.5);
 
+      osc.start(now);
+      osc.stop(now + 0.15);
+
     } else if (type === 'pop') {
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(400, now);
-      osc.frequency.exponentialRampToValueAtTime(100, now + 0.1);
 
-      gainNode.gain.setValueAtTime(0.12, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+      osc.frequency.setValueAtTime(
+        400,
+        now
+      );
+
+      osc.frequency.exponentialRampToValueAtTime(
+        100,
+        now + 0.1
+      );
+
+      gainNode.gain.setValueAtTime(
+        0.4,
+        now
+      );
+
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 0.1
+      );
 
       osc.start(now);
       osc.stop(now + 0.1);
@@ -1629,91 +1966,111 @@ function playSound(type) {
     } else if (type === 'gong') {
 
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(400, now);
 
-      gainNode.gain.setValueAtTime(0.18, now);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 2);
+      osc.frequency.setValueAtTime(
+        400,
+        now
+      );
+
+      gainNode.gain.setValueAtTime(
+        0.35,
+        now
+      );
+
+      gainNode.gain.exponentialRampToValueAtTime(
+        0.01,
+        now + 1.5
+      );
 
       osc.start(now);
-      osc.stop(now + 2);
+      osc.stop(now + 1.5);
     }
 
-  } catch (e) {}
+  } catch (e) {
+    // Audio failure should never break the app.
+  }
 }
 
 function toggleSound() {
+
   appData.soundEnabled =
-    document.getElementById('soundModeCheck').checked;
+    document.getElementById(
+      'soundModeCheck'
+    ).checked;
 
   saveData();
 
   if (appData.soundEnabled) {
-    ensureAudioReady().then(() => playSound('ding'));
+    playSound('ding');
   }
 }
 
+
 /* =========================================================
-   DATA
-   ========================================================= */
+   QURAN DATA
+========================================================= */
 
 const quranSurahs = [
-  "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام","الأعراف",
-  "الأنفال","التوبة","يونس","هود","يوسف","الرعد","إبراهيم","الحجر","النحل",
-  "الإسراء","الكهف","مريم","طه","الأنبياء","الحج","المؤمنون","النور",
-  "الفرقان","الشعراء","النمل","القصص","العنكبوت","الروم","لقمان","السجدة",
-  "الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر","فصلت","الشورى",
-  "الزخرف","الدخان","الجاثية","الأحقاف","محمد","الفتح","الحجرات","ق",
-  "الذاريات","الطور","النجم","القمر","الرحمن","الواقعة","الحديد","المجادلة",
-  "الحشر","الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق",
-  "التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن","المزمل",
-  "المدثر","القيامة","الإنسان","المرسلات","النبأ","النازعات","عبس",
-  "التكوير","الانفطار","المطففين","الانشقاق","البروج","الطارق","الأعلى",
-  "الغاشية","الفجر","البلد","الشمس","الليل","الضحى","الشرح","التين",
-  "العلق","القدر","البينة","الزلزلة","العاديات","القارعة","التكاثر",
-  "العصر","الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون","النصر",
-  "المسد","الإخلاص","الفلق","الناس"
+  "الفاتحة","البقرة","آل عمران","النساء","المائدة","الأنعام",
+  "الأعراف","الأنفال","التوبة","يونس","هود","يوسف","الرعد",
+  "إبراهيم","الحجر","النحل","الإسراء","الكهف","مريم","طه",
+  "الأنبياء","الحج","المؤمنون","النور","الفرقان","الشعراء",
+  "النمل","القصص","العنكبوت","الروم","لقمان","السجدة",
+  "الأحزاب","سبأ","فاطر","يس","الصافات","ص","الزمر","غافر",
+  "فصلت","الشورى","الزخرف","الدخان","الجاثية","الأحقاف",
+  "محمد","الفتح","الحجرات","ق","الذاريات","الطور","النجم",
+  "القمر","الرحمن","الواقعة","الحديد","المجادلة","الحشر",
+  "الممتحنة","الصف","الجمعة","المنافقون","التغابن","الطلاق",
+  "التحريم","الملك","القلم","الحاقة","المعارج","نوح","الجن",
+  "المزمل","المدثر","القيامة","الإنسان","المرسلات","النبأ",
+  "النازعات","عبس","التكوير","الانفطار","المطففين","الانشقاق",
+  "البروج","الطارق","الأعلى","الغاشية","الفجر","البلد",
+  "الشمس","الليل","الضحى","الشرح","التين","العلق","القدر",
+  "البينة","الزلزلة","العاديات","القارعة","التكاثر","العصر",
+  "الهمزة","الفيل","قريش","الماعون","الكوثر","الكافرون",
+  "النصر","المسد","الإخلاص","الفلق","الناس"
 ];
 
 const gharibDict = [
   {
-    w:"غاسقٍ إذا وقب",
-    m:"الليل إذا أظلم ودخل في كل شيء",
-    s:"التفسير الميسر"
+    w: "غاسقٍ إذا وقب",
+    m: "الليل إذا أظلم ودخل في كل شيء",
+    s: "التفسير الميسر"
   },
   {
-    w:"الصَّمَد",
-    m:"السيد الذي يُقصد في الحوائج كلها",
-    s:"التفسير الميسر"
+    w: "الصَّمَد",
+    m: "السيد الذي يُقصد في الحوائج كلها",
+    s: "التفسير الميسر"
   },
   {
-    w:"الفَلَق",
-    m:"الصبح الذي ينفلق عنه الليل",
-    s:"المعجم الوجيز"
+    w: "الفَلَق",
+    m: "الصبح الذي ينفلق عنه الليل",
+    s: "المعجم الوجيز"
   },
   {
-    w:"أبابيل",
-    m:"جماعات متتابعة",
-    s:"المعجم الوجيز"
+    w: "أبابيل",
+    m: "جماعات متتابعة",
+    s: "المعجم الوجيز"
   },
   {
-    w:"سجِّيل",
-    m:"طين متحجر أو طبقات من طين محروق",
-    s:"التفسير الميسر"
+    w: "سجِّيل",
+    m: "طين متحجر أو طبقات من طين محروق",
+    s: "التفسير الميسر"
   },
   {
-    w:"القارِعَة",
-    m:"القيامة التي تقرع القلوب بأهوالها",
-    s:"التفسير الميسر"
+    w: "القارِعَة",
+    m: "القيامة التي تقرع القلوب بأهوالها",
+    s: "التفسير الميسر"
   },
   {
-    w:"المُطَفِّفِين",
-    m:"الذين ينقصون المكيال والميزان",
-    s:"التفسير الميسر"
+    w: "المُطَفِّفِين",
+    m: "الذين ينقصون المكيال والميزان",
+    s: "التفسير الميسر"
   },
   {
-    w:"كَبَد",
-    m:"مشقة وتعب في مكابدة الدنيا",
-    s:"التفسير الميسر"
+    w: "كَبَد",
+    m: "مشقة وتعب في مكابدة الدنيا",
+    s: "التفسير الميسر"
   }
 ];
 
@@ -1725,123 +2082,371 @@ const duas = [
   "قال رسول الله ﷺ: «اللهم إني أسألك الفردوس الأعلى وما قرب إليها من قول أو عمل» [دعاء مأثور]"
 ];
 
+
 /* =========================================================
    UTILITIES
-   ========================================================= */
+========================================================= */
 
 function getLocalDateStr(dateObj = new Date()) {
-  const d = new Date(
-    dateObj.getTime() -
-    (dateObj.getTimezoneOffset() * 60000)
-  );
 
-  return d.toISOString().slice(0,10);
+  const year =
+    dateObj.getFullYear();
+
+  const month =
+    String(
+      dateObj.getMonth() + 1
+    ).padStart(2,'0');
+
+  const day =
+    String(
+      dateObj.getDate()
+    ).padStart(2,'0');
+
+  return `${year}-${month}-${day}`;
+}
+
+function parseDateOnly(dateStr) {
+
+  if (
+    typeof dateStr !== 'string' ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(dateStr)
+  ) {
+    return null;
+  }
+
+  const [y,m,d] =
+    dateStr.split('-').map(Number);
+
+  const result =
+    new Date(
+      y,
+      m - 1,
+      d
+    );
+
+  return Number.isNaN(
+    result.getTime()
+  )
+    ? null
+    : result;
+}
+
+function daysBetween(a,b) {
+
+  const start =
+    parseDateOnly(a);
+
+  const end =
+    parseDateOnly(b);
+
+  if (!start || !end) return 0;
+
+  return Math.round(
+    (
+      end.getTime() -
+      start.getTime()
+    ) / 86400000
+  );
 }
 
 function getDayOfYear(dateObj = new Date()) {
-  const start = new Date(
-    dateObj.getFullYear(),
-    0,
-    0
+
+  const start =
+    new Date(
+      dateObj.getFullYear(),
+      0,
+      1
+    );
+
+  const current =
+    new Date(
+      dateObj.getFullYear(),
+      dateObj.getMonth(),
+      dateObj.getDate()
+    );
+
+  return Math.floor(
+    (
+      current.getTime() -
+      start.getTime()
+    ) / 86400000
   );
-
-  const diff = dateObj - start;
-
-  return Math.floor(diff / 86400000);
 }
 
-const todayStr = () => getLocalDateStr();
-
-const daysBetween = (a,b) =>
-  Math.floor(
-    (new Date(b) - new Date(a)) / 86400000
-  );
+const todayStr = () =>
+  getLocalDateStr();
 
 const escapeHtml = s => {
-  const d = document.createElement('div');
-  d.textContent = s;
+
+  const d =
+    document.createElement('div');
+
+  d.textContent =
+    String(s ?? '');
+
   return d.innerHTML;
 };
 
+function normalizeEntry(e) {
+
+  if (!e || typeof e !== 'object') {
+    return null;
+  }
+
+  if (
+    typeof e.id !== 'string' ||
+    e.id.trim() === ''
+  ) {
+    e.id =
+      Date.now().toString() +
+      Math.random().toString(36).slice(2);
+  }
+
+  e.label =
+    typeof e.label === 'string'
+      ? e.label
+      : '';
+
+  e.note =
+    typeof e.note === 'string'
+      ? e.note
+      : '';
+
+  e.isICU =
+    Boolean(e.isICU);
+
+  e.date =
+    typeof e.date === 'string'
+      ? e.date
+      : todayStr();
+
+  e.nextReviewDate =
+    typeof e.nextReviewDate === 'string'
+      ? e.nextReviewDate
+      : todayStr();
+
+  e.interval =
+    Number.isFinite(Number(e.interval))
+      ? Number(e.interval)
+      : 0;
+
+  e.ease =
+    Number.isFinite(Number(e.ease))
+      ? Number(e.ease)
+      : 2.5;
+
+  e.srsLevel =
+    Number.isFinite(Number(e.srsLevel))
+      ? Number(e.srsLevel)
+      : 0;
+
+  e.reviewCount =
+    Number.isFinite(Number(e.reviewCount))
+      ? Number(e.reviewCount)
+      : 0;
+
+  e.hasBeenEvaluated =
+    Boolean(e.hasBeenEvaluated);
+
+  e.sessionReps =
+    Number.isFinite(Number(e.sessionReps))
+      ? Number(e.sessionReps)
+      : 0;
+
+  e.lastRepDate =
+    typeof e.lastRepDate === 'string'
+      ? e.lastRepDate
+      : todayStr();
+
+  if (!Array.isArray(e.phaseDays)) {
+    e.phaseDays = [];
+  }
+
+  return e;
+}
+
+function normalizeAppData(data) {
+
+  const base = {
+    userName: '',
+    entries: [],
+    streak: 0,
+    lastActive: '',
+    goal: 604,
+    evalMode: 'weekly',
+    soundEnabled: true
+  };
+
+  if (!data || typeof data !== 'object') {
+    return base;
+  }
+
+  const normalized = {
+    ...base,
+    ...data
+  };
+
+  normalized.userName =
+    typeof normalized.userName === 'string'
+      ? normalized.userName
+      : '';
+
+  normalized.entries =
+    Array.isArray(normalized.entries)
+      ? normalized.entries
+          .map(normalizeEntry)
+          .filter(Boolean)
+      : [];
+
+  normalized.streak =
+    Number.isFinite(Number(normalized.streak))
+      ? Number(normalized.streak)
+      : 0;
+
+  normalized.lastActive =
+    typeof normalized.lastActive === 'string'
+      ? normalized.lastActive
+      : '';
+
+  normalized.goal =
+    Number.isFinite(Number(normalized.goal)) &&
+    Number(normalized.goal) > 0
+      ? Number(normalized.goal)
+      : 604;
+
+  normalized.evalMode =
+    normalized.evalMode === 'anki'
+      ? 'anki'
+      : 'weekly';
+
+  normalized.soundEnabled =
+    normalized.soundEnabled !== false;
+
+  return normalized;
+}
+
+
 /* =========================================================
-   GOLDEN GLOW
-   ========================================================= */
+   GLOW
+========================================================= */
 
-function flashEntry(id,textGlow=false) {
+function getEntryElement(id) {
+
+  const safeId =
+    String(id)
+      .replace(/\\/g, '\\\\')
+      .replace(/"/g, '\\"');
+
+  return document.querySelector(
+    `[data-entry-id="${safeId}"]`
+  );
+}
+
+function flashEntry(id, textGlow = false) {
+
   requestAnimationFrame(() => {
-    const el = document.querySelector(
-      `[data-entry-id="${CSS.escape(id)}"]`
+
+    const el =
+      getEntryElement(id);
+
+    if (!el) return;
+
+    el.classList.remove(
+      'golden-glow'
     );
-
-    if(!el) return;
-
-    el.classList.remove('golden-glow');
 
     void el.offsetWidth;
 
-    el.classList.add('golden-glow');
+    el.classList.add(
+      'golden-glow'
+    );
 
-    if(textGlow) {
-      const t = el.querySelector('.glow-target');
+    if (textGlow) {
 
-      if(t) {
-        t.classList.remove('golden-glow-text');
+      const t =
+        el.querySelector(
+          '.glow-target'
+        );
+
+      if (t) {
+
+        t.classList.remove(
+          'golden-glow-text'
+        );
 
         void t.offsetWidth;
 
-        t.classList.add('golden-glow-text');
-
-        setTimeout(() => {
-          t.classList.remove('golden-glow-text');
-        }, 950);
+        t.classList.add(
+          'golden-glow-text'
+        );
       }
     }
 
     setTimeout(() => {
-      el.classList.remove('golden-glow');
-    }, 1050);
+      el.classList.remove(
+        'golden-glow'
+      );
+    }, 850);
   });
 }
 
 function flashCelebrate(id) {
+
   requestAnimationFrame(() => {
-    const el = document.querySelector(
-      `[data-entry-id="${CSS.escape(id)}"]`
+
+    const el =
+      getEntryElement(id);
+
+    if (!el) return;
+
+    el.classList.remove(
+      'celebrate-glow'
     );
-
-    if(!el) return;
-
-    el.classList.remove('celebrate-glow');
 
     void el.offsetWidth;
 
-    el.classList.add('celebrate-glow');
+    el.classList.add(
+      'celebrate-glow'
+    );
 
     setTimeout(() => {
-      el.classList.remove('celebrate-glow');
-    }, 1250);
+      el.classList.remove(
+        'celebrate-glow'
+      );
+    }, 1200);
   });
 }
 
 function flashStreak() {
-  const el = document.getElementById('statStreak');
 
-  if(!el) return;
+  const el =
+    document.getElementById(
+      'statStreak'
+    );
 
-  el.classList.remove('golden-glow-text');
+  if (!el) return;
+
+  el.classList.remove(
+    'golden-glow-text'
+  );
 
   void el.offsetWidth;
 
-  el.classList.add('golden-glow-text');
+  el.classList.add(
+    'golden-glow-text'
+  );
 
   setTimeout(() => {
-    el.classList.remove('golden-glow-text');
-  }, 950);
+    el.classList.remove(
+      'golden-glow-text'
+    );
+  }, 850);
 }
+
 
 /* =========================================================
    INITIALIZATION
-   ========================================================= */
+========================================================= */
 
 function loadData() {
 
@@ -1850,196 +2455,362 @@ function loadData() {
     localStorage.getItem('hifz-theme') || 'dark'
   );
 
-  if(localStorage.getItem('hifz-lite') === 'true') {
-    document.body.classList.add('lite-mode');
-    document.getElementById('liteModeCheck').checked = true;
+  const lite =
+    localStorage.getItem('hifz-lite') === 'true';
+
+  document.body.classList.toggle(
+    'lite-mode',
+    lite
+  );
+
+  const liteToggle =
+    document.getElementById(
+      'liteModeCheck'
+    );
+
+  if (liteToggle) {
+    liteToggle.checked = lite;
   }
 
-  const saved = localStorage.getItem(STORAGE_KEY);
+  const saved =
+    localStorage.getItem(
+      STORAGE_KEY
+    );
 
-  if(saved) {
+  if (saved) {
+
     try {
-      const parsed = JSON.parse(saved);
 
-      appData = {
-        ...appData,
-        ...parsed
-      };
+      appData =
+        normalizeAppData(
+          JSON.parse(saved)
+        );
 
-      if(!appData.evalMode)
-        appData.evalMode = 'weekly';
+    } catch (e) {
 
-      if(appData.soundEnabled === undefined)
-        appData.soundEnabled = true;
+      appData =
+        normalizeAppData(null);
+    }
 
-    } catch(e) {}
+  } else {
+
+    appData =
+      normalizeAppData(appData);
   }
 
-  document.getElementById('soundModeCheck').checked =
-    appData.soundEnabled;
+  const soundToggle =
+    document.getElementById(
+      'soundModeCheck'
+    );
 
-  const today = todayStr();
+  if (soundToggle) {
+    soundToggle.checked =
+      appData.soundEnabled;
+  }
+
+  const today =
+    todayStr();
 
   appData.entries.forEach(e => {
 
-    if(e.phaseDays === undefined) {
-      e.phaseDays = [];
-
-      let count =
-        e.dailyPhaseReps ||
-        (e.hasBeenEvaluated ? 7 : 0);
-
-      for(let i = 0; i < count; i++) {
-        e.phaseDays.push('old_day_' + i);
-      }
+    if (
+      e.lastRepDate !== today
+    ) {
+      e.sessionReps = 0;
     }
 
-    if(e.lastRepDate !== today) {
-      e.sessionReps = 0;
+    if (
+      e.phaseDays.length > 7
+    ) {
+      e.phaseDays =
+        e.phaseDays.slice(0,7);
     }
   });
 
-  if(!appData.userName) {
-    openModal('welcomeModal');
+  if (!appData.userName) {
+
+    openModal(
+      'welcomeModal'
+    );
+
   } else {
+
     updateNameDisplays();
   }
 
-  const now = new Date();
+  const now =
+    new Date();
 
-  document.getElementById('dateHeader').textContent =
-    now.toLocaleDateString('ar-EG',{
-      weekday:'long',
-      year:'numeric',
-      month:'long',
-      day:'numeric'
-    });
+  const dateHeader =
+    document.getElementById(
+      'dateHeader'
+    );
 
-  const dayIndex = getDayOfYear(now);
+  if (dateHeader) {
+
+    dateHeader.textContent =
+      now.toLocaleDateString(
+        'ar-EG',
+        {
+          weekday:'long',
+          year:'numeric',
+          month:'long',
+          day:'numeric'
+        }
+      );
+  }
+
+  const dayIndex =
+    getDayOfYear(now);
 
   const dailyWord =
     gharibDict[
       dayIndex % gharibDict.length
     ];
 
-  document.getElementById('gharibWord').textContent =
-    dailyWord.w;
+  const wordEl =
+    document.getElementById(
+      'gharibWord'
+    );
 
-  document.getElementById('gharibMeaning').textContent =
-    dailyWord.m;
+  const meaningEl =
+    document.getElementById(
+      'gharibMeaning'
+    );
 
-  document.getElementById('gharibSource').textContent =
-    `(المصدر: ${dailyWord.s})`;
+  const sourceEl =
+    document.getElementById(
+      'gharibSource'
+    );
 
-  document.getElementById('dailyDua').textContent =
-    duas[
-      dayIndex % duas.length
-    ];
+  const duaEl =
+    document.getElementById(
+      'dailyDua'
+    );
+
+  if (wordEl)
+    wordEl.textContent =
+      dailyWord.w;
+
+  if (meaningEl)
+    meaningEl.textContent =
+      dailyWord.m;
+
+  if (sourceEl)
+    sourceEl.textContent =
+      `(المصدر: ${dailyWord.s})`;
+
+  if (duaEl)
+    duaEl.textContent =
+      duas[
+        dayIndex % duas.length
+      ];
 
   const ts =
-    document.getElementById('trackSelect');
+    document.getElementById(
+      'trackSelect'
+    );
 
-  if([30,48,604].includes(appData.goal)) {
-    ts.value = appData.goal;
-  } else {
-    ts.value = '999';
-
+  const customGoal =
     document.getElementById(
       'customGoal'
-    ).style.display = 'block';
+    );
 
-    document.getElementById(
-      'customGoal'
-    ).value = appData.goal;
+  if (ts) {
+
+    if (
+      [30,48,604].includes(
+        appData.goal
+      )
+    ) {
+
+      ts.value =
+        String(appData.goal);
+
+      if (customGoal) {
+        customGoal.style.display =
+          'none';
+      }
+
+    } else {
+
+      ts.value = '999';
+
+      if (customGoal) {
+
+        customGoal.style.display =
+          'block';
+
+        customGoal.value =
+          appData.goal;
+      }
+    }
   }
 
-  document.getElementById(
-    'evalModeSelect'
-  ).value = appData.evalMode;
+  const evalModeSelect =
+    document.getElementById(
+      'evalModeSelect'
+    );
+
+  if (evalModeSelect) {
+
+    evalModeSelect.value =
+      appData.evalMode;
+  }
 
   checkComeback();
+
   renderAll();
 }
 
 function saveData() {
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(appData)
-  );
+
+  try {
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(appData)
+    );
+
+    return true;
+
+  } catch (e) {
+
+    console.error(
+      'تعذر حفظ البيانات:',
+      e
+    );
+
+    alert(
+      'تعذر حفظ البيانات على هذا المتصفح. تأكد من وجود مساحة تخزين كافية.'
+    );
+
+    return false;
+  }
 }
+
 
 /* =========================================================
    USER
-   ========================================================= */
+========================================================= */
 
 function saveNewUser() {
-  const nm =
+
+  const input =
     document.getElementById(
       'onboardName'
-    ).value.trim();
+    );
 
-  if(!nm)
-    return alert("من فضلك أدخل اسمك");
+  const nm =
+    input
+      ? input.value.trim()
+      : '';
 
-  appData.userName = nm;
+  if (!nm) {
+
+    alert(
+      'من فضلك أدخل اسمك'
+    );
+
+    return;
+  }
+
+  appData.userName =
+    nm;
 
   saveData();
 
-  closeModal('welcomeModal');
+  closeModal(
+    'welcomeModal'
+  );
 
   updateNameDisplays();
+
+  renderAll();
 }
 
 function updateUserName() {
 
-  const nm =
+  const input =
     document.getElementById(
       'settingsNameInput'
-    ).value.trim();
+    );
 
-  if(nm) {
-    appData.userName = nm;
+  const nm =
+    input
+      ? input.value.trim()
+      : '';
 
-    saveData();
+  if (!nm) return;
 
-    updateNameDisplays();
+  appData.userName =
+    nm;
 
-    alert("تم الحفظ!");
-  }
+  saveData();
+
+  updateNameDisplays();
+
+  alert(
+    'تم الحفظ!'
+  );
 }
 
 function updateNameDisplays() {
-  document.getElementById(
-    'displayUserName'
-  ).textContent =
-    appData.userName || 'صديقي';
 
-  document.getElementById(
-    'settingsNameInput'
-  ).value =
-    appData.userName;
+  const nameEl =
+    document.getElementById(
+      'displayUserName'
+    );
+
+  const settingsEl =
+    document.getElementById(
+      'settingsNameInput'
+    );
+
+  if (nameEl) {
+
+    nameEl.textContent =
+      appData.userName ||
+      'صديقي';
+  }
+
+  if (settingsEl) {
+
+    settingsEl.value =
+      appData.userName;
+  }
 }
 
 function changeEvalMode() {
 
-  appData.evalMode =
+  const select =
     document.getElementById(
       'evalModeSelect'
-    ).value;
+    );
+
+  if (!select) return;
+
+  appData.evalMode =
+    select.value === 'anki'
+      ? 'anki'
+      : 'weekly';
 
   saveData();
+
   renderAll();
 }
 
+
 /* =========================================================
-   COMEBACK
-   ========================================================= */
+   STREAK
+========================================================= */
 
 function checkComeback() {
 
-  const today = todayStr();
+  const today =
+    todayStr();
 
-  if(!appData.lastActive)
+  if (!appData.lastActive)
     return;
 
   const diff =
@@ -2048,10 +2819,14 @@ function checkComeback() {
       today
     );
 
-  if(diff > 1) {
+  if (diff > 1) {
 
-    if(appData.streak > 0) {
-      openModal('comebackModal');
+    if (
+      appData.streak > 0
+    ) {
+      openModal(
+        'comebackModal'
+      );
     }
 
     appData.streak = 0;
@@ -2062,83 +2837,123 @@ function checkComeback() {
 
 function updateActive() {
 
-  const today = todayStr();
+  const today =
+    todayStr();
 
-  if(appData.lastActive === today)
+  if (
+    appData.lastActive === today
+  ) {
     return;
+  }
 
-  const previous =
+  const prev =
     appData.streak;
 
-  if(
+  const diff =
     daysBetween(
       appData.lastActive,
       today
-    ) === 1
-  ) {
+    );
+
+  if (diff === 1) {
+
     appData.streak++;
+
   } else {
+
     appData.streak = 1;
   }
 
-  appData.lastActive = today;
+  appData.lastActive =
+    today;
 
   saveData();
 
-  if(appData.streak > previous) {
+  if (
+    appData.streak > prev
+  ) {
     flashStreak();
   }
 }
 
+
 /* =========================================================
    NAVIGATION
-   ========================================================= */
+========================================================= */
 
-function switchTab(tabId,element) {
+function switchTab(tabId, element) {
 
-  document
-    .querySelectorAll('.view')
-    .forEach(v =>
-      v.classList.remove('active')
-    );
-
-  document
-    .querySelectorAll('.nav-item')
-    .forEach(n =>
-      n.classList.remove('active')
-    );
-
-  document
-    .getElementById(tabId)
-    .classList.add('active');
-
-  if(element)
-    element.classList.add('active');
-
-  document.body.classList.remove(
-    'focus-mode'
+  document.querySelectorAll(
+    '.view'
+  ).forEach(v =>
+    v.classList.remove(
+      'active'
+    )
   );
 
-  window.scrollTo(0,0);
+  document.querySelectorAll(
+    '.nav-item'
+  ).forEach(n =>
+    n.classList.remove(
+      'active'
+    )
+  );
+
+  const target =
+    document.getElementById(
+      tabId
+    );
+
+  if (target) {
+    target.classList.add(
+      'active'
+    );
+  }
+
+  if (element) {
+    element.classList.add(
+      'active'
+    );
+  }
+
+  if (
+    document.body.classList.contains(
+      'focus-mode'
+    )
+  ) {
+    stopMainTimer();
+    document.body.classList.remove(
+      'focus-mode'
+    );
+  }
+
+  window.scrollTo(
+    0,
+    0
+  );
 }
 
-/* =========================================================
-   MODALS
-   ========================================================= */
-
 function openModal(id) {
-  document.getElementById(id).style.display =
-    'flex';
+
+  const el =
+    document.getElementById(id);
+
+  if (el) {
+    el.style.display =
+      'flex';
+  }
 }
 
 function closeModal(id) {
-  document.getElementById(id).style.display =
-    'none';
-}
 
-/* =========================================================
-   SETTINGS
-   ========================================================= */
+  const el =
+    document.getElementById(id);
+
+  if (el) {
+    el.style.display =
+      'none';
+  }
+}
 
 function toggleTheme() {
 
@@ -2162,10 +2977,13 @@ function toggleTheme() {
 
 function toggleLiteMode() {
 
-  const isLite =
+  const el =
     document.getElementById(
       'liteModeCheck'
-    ).checked;
+    );
+
+  const isLite =
+    el ? el.checked : false;
 
   document.body.classList.toggle(
     'lite-mode',
@@ -2174,184 +2992,579 @@ function toggleLiteMode() {
 
   localStorage.setItem(
     'hifz-lite',
-    isLite
+    String(isLite)
   );
 }
-
-/* =========================================================
-   FOCUS MODE
-   ========================================================= */
 
 function toggleFocusMode() {
 
-  document.body.classList.toggle(
+  const entering =
+    !document.body.classList.contains(
+      'focus-mode'
+    );
+
+  if (!entering) {
+
+    stopMainTimer();
+
+    document.body.classList.remove(
+      'focus-mode'
+    );
+
+    return;
+  }
+
+  document.body.classList.add(
     'focus-mode'
   );
 
-  if(!document.body.classList.contains('focus-mode')) {
+  updateMainTimerButton();
+}
 
-    clearInterval(
-      mTimerInterval
+
+/* =========================================================
+   MAIN TIMER
+========================================================= */
+
+let mTimerInterval = null;
+let mTimeLeft = 0;
+let mTimerRunning = false;
+
+function updateTimerDisplay(
+  minutesEl,
+  secondsEl,
+  totalSeconds
+) {
+
+  if (
+    !minutesEl ||
+    !secondsEl
+  ) return;
+
+  const safe =
+    Math.max(
+      0,
+      Number(totalSeconds) || 0
     );
 
+  const minutes =
+    Math.floor(
+      safe / 60
+    );
+
+  const seconds =
+    safe % 60;
+
+  minutesEl.textContent =
+    String(minutes)
+      .padStart(2,'0');
+
+  secondsEl.textContent =
+    String(seconds)
+      .padStart(2,'0');
+}
+
+function updateMTimerDisplay() {
+
+  updateTimerDisplay(
+    document.getElementById(
+      'mainMinutes'
+    ),
+    document.getElementById(
+      'mainSeconds'
+    ),
+    mTimeLeft
+  );
+}
+
+function updateHadrTimerDisplay() {
+
+  updateTimerDisplay(
+    document.getElementById(
+      'hadrMinutes'
+    ),
+    document.getElementById(
+      'hadrSeconds'
+    ),
+    hTimeLeft
+  );
+}
+
+function clearTimerPresetSelection() {
+
+  document.querySelectorAll(
+    '.timer-preset'
+  ).forEach(btn =>
+    btn.classList.remove(
+      'active'
+    )
+  );
+}
+
+function updateMainTimerButton() {
+
+  const btn =
     document.getElementById(
       'btnMainTimer'
-    ).textContent =
-      "▶ ابدأ المؤقت";
+    );
 
-    mTimeLeft = 0;
+  if (!btn) return;
 
-    updateMTimerDisplay();
+  if (mTimerRunning) {
+
+    btn.disabled = true;
+
+    btn.textContent =
+      '⏳ يتم الحفظ والمراجعة...';
+
+  } else if (mTimeLeft > 0) {
+
+    btn.disabled = false;
+
+    btn.textContent =
+      '▶ بدء المؤقت';
+
+  } else {
+
+    btn.disabled = true;
+
+    btn.textContent =
+      '▶ اختر مدة أولًا';
   }
 }
 
+function setMainTimer(
+  mins,
+  buttonEl = null
+) {
+
+  if (mTimerRunning)
+    return;
+
+  const n =
+    Number(mins);
+
+  if (
+    !Number.isFinite(n) ||
+    n < 1 ||
+    n > 180
+  ) {
+    return;
+  }
+
+  const safeMinutes =
+    Math.floor(n);
+
+  mTimeLeft =
+    safeMinutes * 60;
+
+  clearTimerPresetSelection();
+
+  if (buttonEl) {
+    buttonEl.classList.add(
+      'active'
+    );
+  }
+
+  const customInput =
+    document.getElementById(
+      'customTimerInput'
+    );
+
+  if (customInput) {
+    customInput.value = '';
+  }
+
+  updateMTimerDisplay();
+  updateMainTimerButton();
+}
+
+function setCustomTimer() {
+
+  if (mTimerRunning)
+    return;
+
+  const input =
+    document.getElementById(
+      'customTimerInput'
+    );
+
+  if (!input)
+    return;
+
+  const minutes =
+    Math.floor(
+      Number(input.value)
+    );
+
+  if (
+    !Number.isFinite(minutes) ||
+    minutes < 1 ||
+    minutes > 180
+  ) {
+
+    alert(
+      'اكتب مدة صحيحة من 1 إلى 180 دقيقة.'
+    );
+
+    return;
+  }
+
+  mTimeLeft =
+    minutes * 60;
+
+  clearTimerPresetSelection();
+
+  updateMTimerDisplay();
+
+  updateMainTimerButton();
+}
+
+function startMainTimer() {
+
+  if (mTimerRunning)
+    return;
+
+  if (mTimeLeft <= 0) {
+
+    alert(
+      'اختر مدة المؤقت أولًا.'
+    );
+
+    return;
+  }
+
+  mTimerRunning = true;
+
+  updateMainTimerButton();
+
+  clearInterval(
+    mTimerInterval
+  );
+
+  mTimerInterval =
+    setInterval(() => {
+
+      if (mTimeLeft > 0) {
+
+        mTimeLeft--;
+
+        updateMTimerDisplay();
+
+      } else {
+
+        finishMainTimer();
+      }
+
+    }, 1000);
+}
+
+function stopMainTimer() {
+
+  clearInterval(
+    mTimerInterval
+  );
+
+  mTimerInterval =
+    null;
+
+  mTimerRunning =
+    false;
+
+  mTimeLeft =
+    0;
+
+  updateMTimerDisplay();
+  updateMainTimerButton();
+}
+
+function finishMainTimer() {
+
+  clearInterval(
+    mTimerInterval
+  );
+
+  mTimerInterval =
+    null;
+
+  mTimerRunning =
+    false;
+
+  mTimeLeft =
+    0;
+
+  updateMTimerDisplay();
+  updateMainTimerButton();
+
+  const timerEl =
+    document.getElementById(
+      'mainTimerDisplay'
+    );
+
+  if (timerEl) {
+
+    timerEl.classList.remove(
+      'golden-glow-text'
+    );
+
+    void timerEl.offsetWidth;
+
+    timerEl.classList.add(
+      'golden-glow-text'
+    );
+  }
+
+  playSound('gong');
+
+  setTimeout(() => {
+
+    if (timerEl) {
+      timerEl.classList.remove(
+        'golden-glow-text'
+      );
+    }
+
+    alert(
+      'انتهت الجلسة! قم بتقييم مراجعاتك الآن.'
+    );
+
+    document.body.classList.remove(
+      'focus-mode'
+    );
+
+  }, 600);
+}
+
+
 /* =========================================================
-   ADD ENTRIES
-   ========================================================= */
+   ADD ENTRY
+========================================================= */
 
 function addEntry() {
 
-  const label =
+  const labelInput =
     document.getElementById(
       'newEntry'
-    ).value.trim();
+    );
 
-  const note =
+  const noteInput =
     document.getElementById(
       'newNote'
-    ).value.trim();
+    );
 
-  const isICU =
+  const icuInput =
     document.getElementById(
       'icuCheckbox'
-    ).checked;
+    );
 
-  if(!label)
+  if (!labelInput)
     return;
 
+  const label =
+    labelInput.value.trim();
+
+  const note =
+    noteInput
+      ? noteInput.value.trim()
+      : '';
+
+  const isICU =
+    icuInput
+      ? icuInput.checked
+      : false;
+
+  if (!label) {
+
+    alert(
+      'اكتب الورد أولًا.'
+    );
+
+    labelInput.focus();
+
+    return;
+  }
+
   const newId =
-    Date.now().toString();
+    Date.now().toString() +
+    Math.random()
+      .toString(36)
+      .slice(2);
 
-  appData.entries.push({
-
-    id:newId,
+  const entry = {
+    id: newId,
     label,
     note,
     isICU,
 
-    date:todayStr(),
-    nextReviewDate:todayStr(),
+    date: todayStr(),
+    nextReviewDate: todayStr(),
 
-    quality:null,
-    interval:0,
-    ease:2.5,
-    srsLevel:0,
-    reviewCount:0,
-    hasBeenEvaluated:false,
+    quality: null,
+    interval: 0,
+    ease: 2.5,
+    srsLevel: 0,
+    reviewCount: 0,
 
-    sessionReps:0,
-    lastRepDate:todayStr(),
+    hasBeenEvaluated: false,
 
-    phaseDays:[]
-  });
+    sessionReps: 0,
+    lastRepDate: todayStr(),
 
-  document.getElementById(
-    'newEntry'
-  ).value = '';
+    phaseDays: []
+  };
 
-  document.getElementById(
-    'newNote'
-  ).value = '';
+  appData.entries.push(
+    entry
+  );
 
-  document.getElementById(
-    'icuCheckbox'
-  ).checked = false;
-
-  closeModal('addModal');
+  /*
+    IMPORTANT:
+    Save immediately.
+    This fixes the previous bug where
+    updateActive() could return without saving
+    if the user had already been active today.
+  */
+  saveData();
 
   updateActive();
+
+  if (labelInput)
+    labelInput.value = '';
+
+  if (noteInput)
+    noteInput.value = '';
+
+  if (icuInput)
+    icuInput.checked = false;
+
+  closeModal(
+    'addModal'
+  );
+
   renderAll();
 
   playSound('pop');
 
-  setTimeout(() =>
-    flashEntry(newId,false),
-    50
-  );
+  setTimeout(() => {
+    flashEntry(
+      newId,
+      false
+    );
+  }, 50);
 }
+
+
+/* =========================================================
+   ADD OLD ENTRY
+========================================================= */
 
 function addOldEntry() {
 
-  const label =
+  const input =
     document.getElementById(
       'oldEntry'
-    ).value.trim();
+    );
 
-  if(!label)
+  if (!input)
     return;
 
+  const label =
+    input.value.trim();
+
+  if (!label) {
+
+    alert(
+      'اكتب اسم الورد أولًا.'
+    );
+
+    input.focus();
+
+    return;
+  }
+
   const newId =
-    Date.now().toString();
+    Date.now().toString() +
+    Math.random()
+      .toString(36)
+      .slice(2);
 
   appData.entries.push({
 
-    id:newId,
+    id: newId,
     label,
-    note:'',
-    isICU:false,
+    note: '',
+    isICU: false,
 
-    date:todayStr(),
-    nextReviewDate:todayStr(),
+    date: todayStr(),
+    nextReviewDate: todayStr(),
 
-    quality:null,
-    interval:0,
-    ease:2.5,
-    srsLevel:0,
-    reviewCount:0,
-    hasBeenEvaluated:false,
+    quality: null,
+    interval: 0,
+    ease: 2.5,
+    srsLevel: 0,
+    reviewCount: 0,
 
-    sessionReps:0,
-    lastRepDate:todayStr(),
+    hasBeenEvaluated: false,
 
-    phaseDays:[
+    sessionReps: 0,
+    lastRepDate: todayStr(),
+
+    phaseDays: [
       '1','2','3','4','5','6','7'
     ]
   });
 
-  document.getElementById(
-    'oldEntry'
-  ).value = '';
-
-  closeModal('addOldModal');
+  saveData();
 
   updateActive();
+
+  input.value = '';
+
+  closeModal(
+    'addOldModal'
+  );
+
   renderAll();
 
   playSound('pop');
 
-  setTimeout(() =>
-    flashEntry(newId,false),
-    50
-  );
+  setTimeout(() => {
+    flashEntry(
+      newId,
+      false
+    );
+  }, 50);
 }
+
+
+/* =========================================================
+   REMOVE ENTRY
+========================================================= */
 
 function removeEntry(id) {
 
-  if(confirm('تأكيد الحذف؟')) {
-
-    appData.entries =
-      appData.entries.filter(
-        e => e.id !== id
-      );
-
-    saveData();
-    renderAll();
+  if (
+    !confirm(
+      'تأكيد الحذف؟'
+    )
+  ) {
+    return;
   }
+
+  appData.entries =
+    appData.entries.filter(
+      e => e.id !== id
+    );
+
+  saveData();
+
+  renderAll();
 }
 
+
 /* =========================================================
-   REPETITIONS
-   ========================================================= */
+   REP COUNTER
+========================================================= */
 
 function addRep(id) {
 
@@ -2360,22 +3573,31 @@ function addRep(id) {
       x => x.id === id
     );
 
-  if(!e)
+  if (!e)
     return;
 
   e.sessionReps =
-    (e.sessionReps || 0) + 1;
+    Math.max(
+      0,
+      Number(e.sessionReps) || 0
+    ) + 1;
 
   e.lastRepDate =
     todayStr();
 
   saveData();
+
   renderAll();
 
-  if(e.sessionReps === 10) {
+  if (
+    e.sessionReps === 10
+  ) {
 
     playSound('ding');
-    flashCelebrate(id);
+
+    flashCelebrate(
+      id
+    );
 
   } else {
 
@@ -2388,56 +3610,82 @@ function addRep(id) {
   }
 }
 
-/* =========================================================
-   REVIEW / SRS
-   ========================================================= */
 
-function reviewEntry(id,q) {
+/* =========================================================
+   REVIEW
+========================================================= */
+
+function reviewEntry(
+  id,
+  q
+) {
 
   const e =
     appData.entries.find(
       x => x.id === id
     );
 
-  if(!e)
+  if (!e)
     return;
 
-  if(e.interval === undefined)
-    e.interval = 0;
+  e.interval =
+    Number.isFinite(
+      Number(e.interval)
+    )
+      ? Number(e.interval)
+      : 0;
 
-  if(e.ease === undefined)
-    e.ease = 2.5;
+  e.ease =
+    Number.isFinite(
+      Number(e.ease)
+    )
+      ? Number(e.ease)
+      : 2.5;
 
-  if(e.srsLevel === undefined)
-    e.srsLevel = 0;
+  e.srsLevel =
+    Number.isFinite(
+      Number(e.srsLevel)
+    )
+      ? Number(e.srsLevel)
+      : 0;
 
-  if(e.reviewCount === undefined)
-    e.reviewCount = 0;
+  e.reviewCount =
+    Number.isFinite(
+      Number(e.reviewCount)
+    )
+      ? Number(e.reviewCount)
+      : 0;
 
-  if(e.phaseDays === undefined)
+  if (!Array.isArray(e.phaseDays)) {
     e.phaseDays = [];
+  }
 
   const today =
     todayStr();
 
-  let successful = false;
-  let graduated = false;
+  let successful =
+    false;
 
-  /* -----------------------------
-     First 7 days
-  ------------------------------ */
+  let graduated =
+    false;
 
-  if(e.phaseDays.length < 7) {
+  if (
+    e.phaseDays.length < 7
+  ) {
 
-    if(q === 'daily_pass') {
+    if (q === 'daily_pass') {
 
-      if(
-        !e.phaseDays.includes(today)
+      if (
+        !e.phaseDays.includes(
+          today
+        )
       ) {
 
-        e.phaseDays.push(today);
+        e.phaseDays.push(
+          today
+        );
 
-        if(
+        if (
           e.phaseDays.length === 7
         ) {
           graduated = true;
@@ -2452,49 +3700,67 @@ function reviewEntry(id,q) {
         return;
       }
 
-      e.interval = 1;
-      successful = true;
+      e.interval =
+        1;
 
-    } else if(q === 'daily_fail') {
+      successful =
+        true;
+
+    } else if (
+      q === 'daily_fail'
+    ) {
 
       e.phaseDays = [];
-      e.interval = 1;
+
+      e.interval =
+        1;
     }
 
-    e.hasBeenEvaluated = true;
-    e.reviewCount += 1;
+    e.hasBeenEvaluated =
+      true;
+
+    e.reviewCount +=
+      1;
 
   } else {
 
-    e.hasBeenEvaluated = true;
-    e.reviewCount += 1;
+    e.hasBeenEvaluated =
+      true;
 
-    /* -----------------------------
-       Weekly default
-    ------------------------------ */
+    e.reviewCount +=
+      1;
 
-    if(appData.evalMode === 'weekly') {
+    if (
+      appData.evalMode ===
+      'weekly'
+    ) {
 
-      if(q === 'weekly_pass') {
+      if (
+        q === 'weekly_pass'
+      ) {
 
-        e.interval = 7;
-        successful = true;
+        e.interval =
+          7;
 
-      } else if(q === 'weekly_fail') {
+        successful =
+          true;
 
-        e.interval = 1;
+      } else if (
+        q === 'weekly_fail'
+      ) {
+
+        e.interval =
+          1;
       }
-
-    /* -----------------------------
-       Optional Anki mode
-    ------------------------------ */
 
     } else {
 
-      if(q === 4) {
+      if (q === 4) {
 
         e.srsLevel++;
-        e.ease += 0.15;
+
+        e.ease +=
+          0.15;
 
         e.interval =
           e.srsLevel === 1
@@ -2508,9 +3774,12 @@ function reviewEntry(id,q) {
                 )
               );
 
-        successful = true;
+        successful =
+          true;
 
-      } else if(q === 3) {
+      } else if (
+        q === 3
+      ) {
 
         e.srsLevel++;
 
@@ -2525,9 +3794,12 @@ function reviewEntry(id,q) {
                 )
               );
 
-        successful = true;
+        successful =
+          true;
 
-      } else if(q === 2) {
+      } else if (
+        q === 2
+      ) {
 
         e.ease =
           Math.max(
@@ -2539,13 +3811,15 @@ function reviewEntry(id,q) {
           Math.max(
             1,
             Math.round(
-              (e.interval || 1) * 1.2
+              (e.interval || 1) *
+              1.2
             )
           );
 
       } else {
 
-        e.srsLevel = 0;
+        e.srsLevel =
+          0;
 
         e.ease =
           Math.max(
@@ -2553,7 +3827,8 @@ function reviewEntry(id,q) {
             e.ease - 0.2
           );
 
-        e.interval = 1;
+        e.interval =
+          1;
       }
     }
   }
@@ -2569,10 +3844,13 @@ function reviewEntry(id,q) {
   e.nextReviewDate =
     getLocalDateStr(d);
 
-  e.quality = q;
-  e.sessionReps = 0;
+  e.quality =
+    q;
 
-  if(
+  e.sessionReps =
+    0;
+
+  if (
     e.isICU &&
     (
       q === 'daily_pass' ||
@@ -2582,49 +3860,64 @@ function reviewEntry(id,q) {
     )
   ) {
 
-    if(
+    if (
       confirm(
         'أحسنت! هل تود إخراج هذه الآية من العناية المركزة؟'
       )
     ) {
-      e.isICU = false;
+
+      e.isICU =
+        false;
     }
   }
 
   updateActive();
 
   saveData();
+
   renderAll();
 
-  if(graduated) {
+  if (graduated) {
 
-    playSound('graduate');
+    playSound(
+      'graduate'
+    );
+
     flashCelebrate(id);
 
-  } else if(successful) {
+  } else if (successful) {
 
-    playSound('ding');
-    flashEntry(id,false);
+    playSound(
+      'ding'
+    );
+
+    flashEntry(
+      id,
+      false
+    );
   }
 }
 
+
 /* =========================================================
    SMART LINKS
-   ========================================================= */
+========================================================= */
 
 function getSmartLinks(label) {
 
-  let text =
-    label.trim();
+  const text =
+    String(label || '')
+      .trim();
 
-  let qLink = '';
+  let qLink =
+    '';
 
   const pMatch =
     text.match(
       /(?:ص|صفحة|صفحه)\s*(\d+)/
     );
 
-  if(
+  if (
     pMatch &&
     pMatch[1]
   ) {
@@ -2634,25 +3927,28 @@ function getSmartLinks(label) {
 
   } else {
 
-    let fSurah = -1;
+    let fSurah =
+      -1;
 
-    for(
-      let i=0;
-      i<quranSurahs.length;
+    for (
+      let i = 0;
+      i < quranSurahs.length;
       i++
     ) {
 
       const s =
         quranSurahs[i];
 
-      if(
-        s === "ص" ||
-        s === "ق"
+      if (
+        s === 'ص' ||
+        s === 'ق'
       ) {
 
-        if(
+        if (
           text === s ||
-          text.includes("سورة " + s)
+          text.includes(
+            'سورة ' + s
+          )
         ) {
 
           fSurah =
@@ -2661,7 +3957,7 @@ function getSmartLinks(label) {
           break;
         }
 
-      } else if(
+      } else if (
         text.includes(s)
       ) {
 
@@ -2672,7 +3968,9 @@ function getSmartLinks(label) {
       }
     }
 
-    if(fSurah !== -1) {
+    if (
+      fSurah !== -1
+    ) {
 
       const aMatch =
         text.match(
@@ -2717,151 +4015,16 @@ function getSmartLinks(label) {
   `;
 }
 
-/* =========================================================
-   MAIN TIMER
-   ========================================================= */
-
-let mTimerInterval = null;
-let mTimeLeft = 0;
-
-function setMainTimer(mins) {
-
-  clearInterval(
-    mTimerInterval
-  );
-
-  mTimeLeft =
-    mins * 60;
-
-  document.getElementById(
-    'btnMainTimer'
-  ).textContent =
-    "▶ ابدأ المؤقت";
-
-  updateMTimerDisplay();
-}
-
-function updateMTimerDisplay() {
-
-  const minutes =
-    Math.floor(
-      mTimeLeft / 60
-    );
-
-  const seconds =
-    mTimeLeft % 60;
-
-  document.getElementById(
-    'mainTimerDisplay'
-  ).textContent =
-    `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-}
-
-function startMainTimer() {
-
-  if(mTimeLeft <= 0) {
-    return alert(
-      'اختر المدة أولاً'
-    );
-  }
-
-  ensureAudioReady();
-
-  document.getElementById(
-    'btnMainTimer'
-  ).textContent =
-    "يتم الحفظ والمراجعة...";
-
-  clearInterval(
-    mTimerInterval
-  );
-
-  mTimerInterval =
-    setInterval(() => {
-
-      if(mTimeLeft <= 0) {
-
-        clearInterval(
-          mTimerInterval
-        );
-
-        mTimerInterval = null;
-
-        finishMainTimer();
-
-        return;
-      }
-
-      mTimeLeft--;
-
-      updateMTimerDisplay();
-
-      /* Exact end at 00:00 */
-      if(mTimeLeft === 0) {
-
-        clearInterval(
-          mTimerInterval
-        );
-
-        mTimerInterval = null;
-
-        finishMainTimer();
-      }
-
-    },1000);
-}
-
-function finishMainTimer() {
-
-  document.getElementById(
-    'btnMainTimer'
-  ).textContent =
-    "▶ ابدأ المؤقت";
-
-  mTimeLeft = 0;
-
-  updateMTimerDisplay();
-
-  playSound('gong');
-
-  const timerEl =
-    document.getElementById(
-      'mainTimerDisplay'
-    );
-
-  timerEl.classList.remove(
-    'golden-glow-text'
-  );
-
-  void timerEl.offsetWidth;
-
-  timerEl.classList.add(
-    'golden-glow-text'
-  );
-
-  setTimeout(() => {
-
-    timerEl.classList.remove(
-      'golden-glow-text'
-    );
-
-    alert(
-      'انتهت الجلسة! قم بتقييم مراجعاتك الآن.'
-    );
-
-    document.body.classList.remove(
-      'focus-mode'
-    );
-
-  },600);
-}
 
 /* =========================================================
-   HADR TIMER
-   ========================================================= */
+   HADR
+========================================================= */
 
-let hTimerInterval = null;
-let hTimeLeft = 120;
+let hTimerInterval =
+  null;
+
+let hTimeLeft =
+  120;
 
 function openHadrTest() {
 
@@ -2872,11 +4035,15 @@ function openHadrTest() {
         !e.isICU
     );
 
-  if(pool.length === 0) {
+  if (
+    pool.length === 0
+  ) {
 
-    return alert(
+    alert(
       'يجب أن يكون لديك أوراد محفوظة مسبقاً للبدء.'
     );
+
+    return;
   }
 
   const target =
@@ -2892,17 +4059,20 @@ function openHadrTest() {
   ).textContent =
     target.label;
 
-  hTimeLeft = 120;
+  hTimeLeft =
+    120;
 
-  document.getElementById(
-    'hadrTimerDisplay'
-  ).textContent =
-    '02:00';
+  updateHadrTimerDisplay();
 
-  document.getElementById(
-    'hadrBtn'
-  ).style.display =
-    'block';
+  const btn =
+    document.getElementById(
+      'hadrBtn'
+    );
+
+  if (btn) {
+    btn.style.display =
+      'block';
+  }
 
   clearInterval(
     hTimerInterval
@@ -2915,76 +4085,52 @@ function openHadrTest() {
 
 function startHadr() {
 
-  ensureAudioReady();
-
-  document.getElementById(
-    'hadrBtn'
-  ).style.display =
-    'none';
-
   clearInterval(
     hTimerInterval
   );
 
+  const btn =
+    document.getElementById(
+      'hadrBtn'
+    );
+
+  if (btn) {
+    btn.style.display =
+      'none';
+  }
+
   hTimerInterval =
     setInterval(() => {
 
-      if(hTimeLeft <= 0) {
+      if (
+        hTimeLeft > 0
+      ) {
+
+        hTimeLeft--;
+
+        updateHadrTimerDisplay();
+
+      } else {
 
         clearInterval(
           hTimerInterval
         );
 
-        hTimerInterval = null;
+        hTimerInterval =
+          null;
 
-        finishHadr();
-
-        return;
-      }
-
-      hTimeLeft--;
-
-      updateHadrTimerDisplay();
-
-      if(hTimeLeft === 0) {
-
-        clearInterval(
-          hTimerInterval
+        playSound(
+          'gong'
         );
 
-        hTimerInterval = null;
+        alert(
+          'انتهى الوقت المخصص. ⏱️'
+        );
 
-        finishHadr();
+        closeHadr();
       }
 
-    },1000);
-}
-
-function updateHadrTimerDisplay() {
-
-  const minutes =
-    Math.floor(
-      hTimeLeft / 60
-    );
-
-  const seconds =
-    hTimeLeft % 60;
-
-  document.getElementById(
-    'hadrTimerDisplay'
-  ).textContent =
-    `${String(minutes).padStart(2,'0')}:${String(seconds).padStart(2,'0')}`;
-}
-
-function finishHadr() {
-
-  playSound('gong');
-
-  alert(
-    'انتهى الوقت المخصص. ⏱️'
-  );
-
-  closeHadr();
+    }, 1000);
 }
 
 function closeHadr() {
@@ -2993,40 +4139,64 @@ function closeHadr() {
     hTimerInterval
   );
 
-  hTimerInterval = null;
+  hTimerInterval =
+    null;
 
   closeModal(
     'hadrModal'
   );
 }
 
+
 /* =========================================================
-   TRACK / GOAL
-   ========================================================= */
+   SETTINGS
+========================================================= */
 
 function changeTrack() {
 
-  const val =
+  const select =
     document.getElementById(
       'trackSelect'
-    ).value;
+    );
 
-  if(val === '999') {
-
+  const custom =
     document.getElementById(
       'customGoal'
-    ).style.display =
-      'block';
+    );
 
-  } else {
+  if (!select)
+    return;
 
-    document.getElementById(
-      'customGoal'
-    ).style.display =
+  const val =
+    select.value;
+
+  if (
+    val === '999'
+  ) {
+
+    if (custom) {
+      custom.style.display =
+        'block';
+    }
+
+    return;
+  }
+
+  if (custom) {
+    custom.style.display =
       'none';
+  }
+
+  const goal =
+    Number(val);
+
+  if (
+    Number.isFinite(goal) &&
+    goal > 0
+  ) {
 
     appData.goal =
-      parseInt(val);
+      goal;
 
     saveData();
 
@@ -3034,85 +4204,175 @@ function changeTrack() {
   }
 }
 
-document
-  .getElementById('customGoal')
-  .addEventListener(
+const customGoalInput =
+  document.getElementById(
+    'customGoal'
+  );
+
+if (customGoalInput) {
+
+  customGoalInput.addEventListener(
     'change',
     e => {
 
+      const value =
+        Number(e.target.value);
+
+      if (
+        !Number.isFinite(value) ||
+        value < 1
+      ) {
+
+        e.target.value =
+          appData.goal;
+
+        return;
+      }
+
       appData.goal =
-        parseInt(e.target.value) ||
-        604;
+        Math.floor(value);
 
       saveData();
 
       renderAll();
     }
   );
+}
+
 
 /* =========================================================
-   EXPORT / IMPORT
-   ========================================================= */
+   EXPORT CSV
+========================================================= */
+
+function csvEscape(value) {
+
+  return `"${String(value ?? '')
+    .replace(/"/g, '""')
+    .replace(/\r?\n/g, ' ')}"`;
+}
 
 function exportCSV() {
 
   let csv =
     '\uFEFFالورد,ملاحظات,تاريخ الإضافة,عناية مركزة,المراجعة القادمة,تكرارات فعلية\n';
 
-  appData.entries.forEach(
-    e => {
+  appData.entries.forEach(e => {
 
-      csv +=
-        `"${e.label}","${e.note}","${e.date}","${e.isICU?'نعم':'لا'}","${e.nextReviewDate}","${e.reviewCount || 0}"\n`;
-    }
-  );
+    csv +=
+      [
+        e.label,
+        e.note,
+        e.date,
+        e.isICU
+          ? 'نعم'
+          : 'لا',
+        e.nextReviewDate,
+        e.reviewCount || 0
+      ]
+      .map(csvEscape)
+      .join(',') +
+      '\n';
+  });
 
   const link =
     document.createElement('a');
 
+  const blob =
+    new Blob(
+      [csv],
+      {
+        type:
+          'text/csv;charset=utf-8;'
+      }
+    );
+
   link.href =
     URL.createObjectURL(
-      new Blob(
-        [csv],
-        {
-          type:'text/csv;charset=utf-8;'
-        }
-      )
+      blob
     );
 
   link.download =
     `حفظي_${todayStr()}.csv`;
 
+  document.body.appendChild(
+    link
+  );
+
   link.click();
 
+  link.remove();
+
   setTimeout(() => {
-    URL.revokeObjectURL(link.href);
-  },1000);
+    URL.revokeObjectURL(
+      link.href
+    );
+  }, 1000);
 }
 
+
+/* =========================================================
+   EXPORT JSON
+========================================================= */
+
 function exportData() {
+
+  const json =
+    JSON.stringify(
+      appData,
+      null,
+      2
+    );
+
+  const blob =
+    new Blob(
+      [json],
+      {
+        type:
+          'application/json;charset=utf-8'
+      }
+    );
+
+  const url =
+    URL.createObjectURL(
+      blob
+    );
 
   const link =
     document.createElement('a');
 
   link.href =
-    'data:application/json;charset=utf-8,' +
-    encodeURIComponent(
-      JSON.stringify(appData)
-    );
+    url;
 
   link.download =
     `backup_${todayStr()}.json`;
 
+  document.body.appendChild(
+    link
+  );
+
   link.click();
+
+  link.remove();
+
+  setTimeout(() => {
+    URL.revokeObjectURL(
+      url
+    );
+  }, 1000);
 }
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
 
 function importData(e) {
 
   const file =
+    e.target.files &&
     e.target.files[0];
 
-  if(!file)
+  if (!file)
     return;
 
   const reader =
@@ -3128,91 +4388,101 @@ function importData(e) {
             evt.target.result
           );
 
-        if(
-          data.entries &&
-          confirm(
-            'استبدال البيانات الحالية؟'
+        if (
+          !data ||
+          !Array.isArray(
+            data.entries
           )
         ) {
 
-          appData = {
-
-            userName:
-              data.userName || '',
-
-            entries:
-              Array.isArray(data.entries)
-                ? data.entries
-                : [],
-
-            streak:
-              Number.isFinite(data.streak)
-                ? data.streak
-                : 0,
-
-            lastActive:
-              data.lastActive || '',
-
-            goal:
-              Number.isFinite(data.goal)
-                ? data.goal
-                : 604,
-
-            evalMode:
-              data.evalMode || 'weekly',
-
-            soundEnabled:
-              data.soundEnabled !== undefined
-                ? data.soundEnabled
-                : true
-          };
-
-          saveData();
-
-          loadData();
-
           alert(
-            'تم بنجاح!'
+            'ملف النسخة الاحتياطية غير صالح.'
           );
+
+          return;
         }
 
-      } catch(err) {
+        if (
+          !confirm(
+            'استبدال البيانات الحالية؟'
+          )
+        ) {
+          return;
+        }
+
+        appData =
+          normalizeAppData(
+            data
+          );
+
+        saveData();
+
+        loadData();
 
         alert(
-          'ملف تالف'
+          'تم استرجاع النسخة الاحتياطية بنجاح!'
         );
+
+      } catch (err) {
+
+        console.error(
+          err
+        );
+
+        alert(
+          'ملف النسخة الاحتياطية تالف أو غير صالح.'
+        );
+
+      } finally {
+
+        e.target.value =
+          '';
       }
     };
 
-  reader.readAsText(file);
-
-  e.target.value = '';
+  reader.readAsText(
+    file
+  );
 }
+
 
 /* =========================================================
    RENDERING
-   ========================================================= */
+========================================================= */
 
 function getEvaluatedCount() {
 
   return appData.entries.filter(
-    e => e.hasBeenEvaluated
+    e =>
+      e.hasBeenEvaluated
   ).length;
 }
 
 function renderItemHTML(e) {
 
+  normalizeEntry(e);
+
   const isICU =
-    e.isICU ? 'icu' : '';
+    e.isICU
+      ? 'icu'
+      : '';
 
   const noteHtml =
     e.note
-      ? `<div class="note-txt">📌 ${escapeHtml(e.note)}</div>`
+      ? `
+        <div class="note-txt">
+          📌 ${escapeHtml(e.note)}
+        </div>
+      `
       : '';
+
+  const today =
+    todayStr();
 
   const isDue =
     (
-      e.nextReviewDate <= todayStr() &&
+      typeof e.nextReviewDate === 'string' &&
+      e.nextReviewDate <= today &&
       e.hasBeenEvaluated
     );
 
@@ -3221,47 +4491,74 @@ function renderItemHTML(e) {
       ? 'due-review'
       : '';
 
-  if(e.phaseDays === undefined)
-    e.phaseDays = [];
-
   const phaseCount =
-    e.phaseDays.length;
+    Math.min(
+      7,
+      Array.isArray(e.phaseDays)
+        ? e.phaseDays.length
+        : 0
+    );
 
-  let metaText = '';
+  let metaText =
+    '';
 
-  if(!e.hasBeenEvaluated) {
+  if (
+    !e.hasBeenEvaluated
+  ) {
 
-    metaText =
-      `<span style="color:var(--primary); font-weight:bold;">
+    metaText = `
+      <span
+        style="
+          color:var(--primary);
+          font-weight:bold;
+        "
+      >
         ✨ ورد جديد (كرر ثم قيّم)
-      </span>`;
+      </span>
+    `;
 
-  } else if(isDue) {
+  } else if (isDue) {
 
-    metaText =
-      `<span style="color:var(--warning); font-weight:bold;">
+    metaText = `
+      <span
+        style="
+          color:var(--warning);
+          font-weight:bold;
+        "
+      >
         ⏰ مستحق للمراجعة (كرر ثم قيّم)
-      </span>`;
+      </span>
+    `;
 
   } else {
 
     metaText =
-      `المراجعة القادمة: ${e.nextReviewDate}`;
+      `المراجعة القادمة: ${escapeHtml(e.nextReviewDate)}`;
   }
 
   const reps =
-    e.sessionReps || 0;
+    Math.max(
+      0,
+      Number(e.sessionReps) || 0
+    );
 
   const isDone =
     reps >= 10;
 
-  let evaluationSection = '';
+  let evaluationSection =
+    '';
 
-  if(!e.hasBeenEvaluated || isDue) {
+  if (
+    !e.hasBeenEvaluated ||
+    isDue
+  ) {
 
-    if(phaseCount < 7) {
+    if (
+      phaseCount < 7
+    ) {
 
       evaluationSection = `
+
         <div
           style="
             font-size:11px;
@@ -3276,7 +4573,10 @@ function renderItemHTML(e) {
 
         <div
           class="q-btns"
-          style="grid-template-columns:1fr 1fr;"
+          style="
+            grid-template-columns:
+            1fr 1fr;
+          "
         >
 
           <button
@@ -3284,7 +4584,12 @@ function renderItemHTML(e) {
               background:rgba(76,175,80,0.1);
               border-color:var(--success);
             "
-            onclick="reviewEntry('${e.id}','daily_pass')"
+            onclick="
+              reviewEntry(
+                '${e.id}',
+                'daily_pass'
+              )
+            "
           >
             ✅ أتممت مراجعة اليوم
           </button>
@@ -3294,53 +4599,14 @@ function renderItemHTML(e) {
               background:rgba(244,67,54,0.1);
               border-color:var(--danger);
             "
-            onclick="reviewEntry('${e.id}','daily_fail')"
-          >
-            🔄 لم أتقنها
-          </button>
-
-        </div>
-      `;
-
-    } else if(appData.evalMode === 'weekly') {
-
-      evaluationSection = `
-        <div
-          style="
-            font-size:11px;
-            text-align:center;
-            margin-top:10px;
-            color:var(--secondary);
-          "
-        >
-          التقييم الأسبوعي لتحديد الموعد القادم:
-        </div>
-
-        <div
-          class="q-btns"
-          style="grid-template-columns:1fr 1fr;"
-        >
-
-          <button
-            style="
-              background:rgba(76,175,80,0.1);
-              border-color:var(--success);
+            onclick="
+              reviewEntry(
+                '${e.id}',
+                'daily_fail'
+              )
             "
-            onclick="reviewEntry('${e.id}','weekly_pass')"
           >
-            ✅ مراجعة ممتازة<br>
-            <span style="font-size:10px;">بعد 7 أيام</span>
-          </button>
-
-          <button
-            style="
-              background:rgba(244,67,54,0.1);
-              border-color:var(--danger);
-            "
-            onclick="reviewEntry('${e.id}','weekly_fail')"
-          >
-            🔴 أعد<br>
-            <span style="font-size:10px;">غداً</span>
+            🔄 لم أتقنها (إعادة التثبيت)
           </button>
 
         </div>
@@ -3348,78 +4614,164 @@ function renderItemHTML(e) {
 
     } else {
 
-      evaluationSection = `
-        <div
-          style="
-            font-size:11px;
-            text-align:center;
-            margin-top:10px;
-            color:var(--secondary);
-          "
-        >
-          تقييمك يحدد المراجعة القادمة:
-        </div>
+      if (
+        appData.evalMode ===
+        'weekly'
+      ) {
 
-        <div
-          class="q-btns"
-          style="grid-template-columns:1fr 1fr 1fr 1fr;"
-        >
+        evaluationSection = `
 
-          <button
+          <div
             style="
-              background:rgba(33,150,243,0.1);
-              border-color:var(--info);
+              font-size:11px;
+              text-align:center;
+              margin-top:10px;
+              color:var(--secondary);
             "
-            onclick="reviewEntry('${e.id}',4)"
           >
-            🔵 سهل
-          </button>
+            التقييم الأسبوعي لتحديد الموعد القادم:
+          </div>
 
-          <button
+          <div
+            class="q-btns"
             style="
-              background:rgba(76,175,80,0.1);
-              border-color:var(--success);
+              grid-template-columns:
+              1fr 1fr;
             "
-            onclick="reviewEntry('${e.id}',3)"
           >
-            🟢 تذكرته
-          </button>
 
-          <button
+            <button
+              style="
+                background:rgba(76,175,80,0.1);
+                border-color:var(--success);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  'weekly_pass'
+                )
+              "
+            >
+              ✅ مراجعة ممتازة (بعد 7 أيام)
+            </button>
+
+            <button
+              style="
+                background:rgba(244,67,54,0.1);
+                border-color:var(--danger);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  'weekly_fail'
+                )
+              "
+            >
+              🔴 أعد (غداً)
+            </button>
+
+          </div>
+        `;
+
+      } else {
+
+        evaluationSection = `
+
+          <div
             style="
-              background:rgba(255,193,7,0.1);
-              border-color:var(--warning);
+              font-size:11px;
+              text-align:center;
+              margin-top:10px;
+              color:var(--secondary);
             "
-            onclick="reviewEntry('${e.id}',2)"
           >
-            🟡 بصعوبة
-          </button>
+            التقييم لجدولة الموعد القادم:
+          </div>
 
-          <button
+          <div
+            class="q-btns"
             style="
-              background:rgba(244,67,54,0.1);
-              border-color:var(--danger);
+              grid-template-columns:
+              1fr 1fr 1fr 1fr;
             "
-            onclick="reviewEntry('${e.id}',1)"
           >
-            🔴 نسيت
-          </button>
 
-        </div>
-      `;
+            <button
+              style="
+                background:rgba(33,150,243,0.1);
+                border-color:var(--info);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  4
+                )
+              "
+            >
+              🔵 سهل
+            </button>
+
+            <button
+              style="
+                background:rgba(76,175,80,0.1);
+                border-color:var(--success);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  3
+                )
+              "
+            >
+              🟢 تذكرته
+            </button>
+
+            <button
+              style="
+                background:rgba(255,193,7,0.1);
+                border-color:var(--warning);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  2
+                )
+              "
+            >
+              🟡 بصعوبة
+            </button>
+
+            <button
+              style="
+                background:rgba(244,67,54,0.1);
+                border-color:var(--danger);
+              "
+              onclick="
+                reviewEntry(
+                  '${e.id}',
+                  1
+                )
+              "
+            >
+              🔴 نسيت
+            </button>
+
+          </div>
+        `;
+      }
     }
   }
 
-  /* 7-day tracker */
-  let boxesHtml = '';
+  let boxesHtml =
+    '';
 
-  for(
-    let i=0;
-    i<7;
+  for (
+    let i = 0;
+    i < 7;
     i++
   ) {
 
-    let stateClass =
+    const stateClass =
       i < phaseCount
         ? 'done'
         : '';
@@ -3428,7 +4780,7 @@ function renderItemHTML(e) {
       `<div class="t-box ${stateClass}"></div>`;
   }
 
-  let badge =
+  const badge =
     phaseCount < 7
 
       ? `
@@ -3440,6 +4792,7 @@ function renderItemHTML(e) {
             align-items:flex-end;
           "
         >
+
           <span class="phase-badge">
             تثبيت (يوم ${phaseCount}/7)
           </span>
@@ -3447,6 +4800,7 @@ function renderItemHTML(e) {
           <div class="phase-tracker">
             ${boxesHtml}
           </div>
+
         </div>
       `
 
@@ -3458,23 +4812,29 @@ function renderItemHTML(e) {
             color:var(--success);
           "
         >
-          استدامة (${appData.evalMode === 'weekly' ? 'أسبوعي' : 'أنكي'})
+          استدامة
+          (
+          ${
+            appData.evalMode === 'weekly'
+              ? 'أسبوعي'
+              : 'أنكي'
+          }
+          )
         </span>
       `;
 
   return `
+
     <div
       class="item ${isICU} ${dueCls}"
-      data-entry-id="${e.id}"
+      data-entry-id="${escapeHtml(e.id)}"
     >
 
       <div class="item-header">
 
         <div class="item-title">
 
-          <div
-            class="quran-font glow-target"
-          >
+          <div class="quran-font glow-target">
             ${escapeHtml(e.label)}
           </div>
 
@@ -3484,7 +4844,11 @@ function renderItemHTML(e) {
 
         <button
           class="del"
-          onclick="removeEntry('${e.id}')"
+          onclick="
+            removeEntry(
+              '${escapeHtml(e.id)}'
+            )
+          "
         >
           ✕
         </button>
@@ -3521,7 +4885,11 @@ function renderItemHTML(e) {
 
           <button
             class="rep-btn ${isDone ? 'done' : ''}"
-            onclick="addRep('${e.id}')"
+            onclick="
+              addRep(
+                '${escapeHtml(e.id)}'
+              )
+            "
           >
             📿 كررت غيباً (${reps})
           </button>
@@ -3549,22 +4917,28 @@ function renderItemHTML(e) {
 
 function loadMorePool() {
 
-  poolVisibleCount += 20;
+  poolVisibleCount +=
+    20;
 
   renderPool();
 }
 
 function renderPool() {
 
-  const q =
+  const search =
     document.getElementById(
       'searchInput'
-    ).value.trim().toLowerCase();
+    );
+
+  const q =
+    search
+      ? search.value.trim().toLowerCase()
+      : '';
 
   let pool =
     [...appData.entries];
 
-  if(q) {
+  if (q) {
 
     pool =
       pool.filter(
@@ -3576,10 +4950,32 @@ function renderPool() {
   }
 
   pool.sort(
-    (a,b) =>
-      a.nextReviewDate.localeCompare(
-        b.nextReviewDate
-      )
+    (a,b) => {
+
+      const aDate =
+        parseDateOnly(
+          a.nextReviewDate
+        );
+
+      const bDate =
+        parseDateOnly(
+          b.nextReviewDate
+        );
+
+      if (!aDate && !bDate)
+        return 0;
+
+      if (!aDate)
+        return 1;
+
+      if (!bDate)
+        return -1;
+
+      return (
+        aDate.getTime() -
+        bDate.getTime()
+      );
+    }
   );
 
   const list =
@@ -3587,7 +4983,11 @@ function renderPool() {
       'poolList'
     );
 
-  list.innerHTML = '';
+  if (!list)
+    return;
+
+  list.innerHTML =
+    '';
 
   const visiblePool =
     pool.slice(
@@ -3595,33 +4995,57 @@ function renderPool() {
       poolVisibleCount
     );
 
-  if(visiblePool.length === 0) {
+  if (
+    visiblePool.length === 0
+  ) {
 
     list.innerHTML =
-      '<div class="empty-state">لا يوجد أوراد في المخزون حتى الآن.</div>';
+      `
+        <div class="empty-state">
+          لا يوجد أوراد في المخزون حتى الآن.
+        </div>
+      `;
 
   } else {
 
     visiblePool.forEach(
       e => {
+
         list.innerHTML +=
           renderItemHTML(e);
       }
     );
   }
 
-  document.getElementById(
-    'poolTotalCount'
-  ).textContent =
-    pool.length;
+  const total =
+    document.getElementById(
+      'poolTotalCount'
+    );
 
-  document.getElementById(
-    'loadMoreBtn'
-  ).style.display =
-    pool.length > poolVisibleCount
-      ? 'block'
-      : 'none';
+  if (total) {
+    total.textContent =
+      pool.length;
+  }
+
+  const loadMore =
+    document.getElementById(
+      'loadMoreBtn'
+    );
+
+  if (loadMore) {
+
+    loadMore.style.display =
+      pool.length >
+      poolVisibleCount
+        ? 'block'
+        : 'none';
+  }
 }
+
+
+/* =========================================================
+   RENDER ALL
+========================================================= */
 
 function renderAll() {
 
@@ -3631,27 +5055,57 @@ function renderAll() {
   const evaluatedCount =
     getEvaluatedCount();
 
-  document.getElementById(
-    'statStreak'
-  ).textContent =
-    appData.streak;
+  /*
+    IMPORTANT:
+    The old version crashed here because
+    statStreak and statEvaluated were removed
+    from the Home UI but renderAll still tried
+    to access them.
+  */
 
-  document.getElementById(
-    'statEvaluated'
-  ).textContent =
-    evaluatedCount;
+  const statStreak =
+    document.getElementById(
+      'statStreak'
+    );
 
-  document.getElementById(
-    'statTotalAdded'
-  ).textContent =
-    appData.entries.length;
+  if (statStreak) {
+    statStreak.textContent =
+      appData.streak;
+  }
 
-  document.getElementById(
-    'statEvaluated2'
-  ).textContent =
-    evaluatedCount;
+  const statEvaluated =
+    document.getElementById(
+      'statEvaluated'
+    );
 
-  /* New today */
+  if (statEvaluated) {
+    statEvaluated.textContent =
+      evaluatedCount;
+  }
+
+  const statTotalAdded =
+    document.getElementById(
+      'statTotalAdded'
+    );
+
+  if (statTotalAdded) {
+    statTotalAdded.textContent =
+      appData.entries.length;
+  }
+
+  const statEvaluated2 =
+    document.getElementById(
+      'statEvaluated2'
+    );
+
+  if (statEvaluated2) {
+    statEvaluated2.textContent =
+      evaluatedCount;
+  }
+
+  /* -----------------------------------
+     NEW TODAY
+  ----------------------------------- */
 
   const newToday =
     appData.entries.filter(
@@ -3665,26 +5119,42 @@ function renderAll() {
       'memorizeTodayList'
     );
 
-  const newTodayEmptyState =
-    appData.entries.length === 0
+  if (newTodayList) {
 
-      ? '📖 ابدأ أول ورد لك اليوم.<br>اضغط <b>(+ أضف)</b> للبدء في الحفظ.'
+    const empty =
+      appData.entries.length === 0
 
-      : '📖 لا يوجد حفظ جديد اليوم.<br>اضغط <b>(+ أضف)</b> لإضافة ورد جديد.';
+        ? `
+          📖 ابدأ أول ورد لك اليوم.
+          <br>
+          اضغط <b>(+ أضف)</b>
+          للبدء في الحفظ.
+        `
 
-  newTodayList.innerHTML =
-    newToday.length
-      ? ''
-      : `<div class="empty-state">${newTodayEmptyState}</div>`;
+        : `
+          📖 لا يوجد حفظ جديد اليوم.
+          <br>
+          اضغط <b>(+ أضف)</b>
+          لإضافة ورد جديد.
+        `;
 
-  newToday.forEach(
-    e => {
-      newTodayList.innerHTML +=
-        renderItemHTML(e);
-    }
-  );
+    newTodayList.innerHTML =
+      newToday.length
+        ? ''
+        : `<div class="empty-state">${empty}</div>`;
 
-  /* Due today */
+    newToday.forEach(
+      e => {
+
+        newTodayList.innerHTML +=
+          renderItemHTML(e);
+      }
+    );
+  }
+
+  /* -----------------------------------
+     DUE TODAY
+  ----------------------------------- */
 
   const dueToday =
     appData.entries.filter(
@@ -3696,36 +5166,56 @@ function renderAll() {
         e.isICU
     );
 
-  document.getElementById(
-    'statDueToday'
-  ).textContent =
-    dueToday.length;
+  const statDue =
+    document.getElementById(
+      'statDueToday'
+    );
 
-  const dList =
+  if (statDue) {
+
+    statDue.textContent =
+      dueToday.length;
+  }
+
+  const dueList =
     document.getElementById(
       'dueTodayList'
     );
 
-  const reviewEmptyState =
-    appData.entries.length === 0
+  if (dueList) {
 
-      ? '📖 لا توجد أوراد بعد.<br>أضف أول ورد لك للبدء.'
+    const empty =
+      appData.entries.length === 0
 
-      : '🎉 خلصت مراجعات اليوم!<br>يمكنك إضافة ورد جديد للحفظ.';
+        ? `
+          📖 لا توجد أوراد بعد.
+          <br>
+          أضف أول ورد لك للبدء.
+        `
 
-  dList.innerHTML =
-    dueToday.length
-      ? ''
-      : `<div class="empty-state">${reviewEmptyState}</div>`;
+        : `
+          🎉 خلصت مراجعات اليوم!
+          <br>
+          يمكنك إضافة ورد جديد للحفظ.
+        `;
 
-  dueToday.forEach(
-    e => {
-      dList.innerHTML +=
-        renderItemHTML(e);
-    }
-  );
+    dueList.innerHTML =
+      dueToday.length
+        ? ''
+        : `<div class="empty-state">${empty}</div>`;
 
-  /* ICU */
+    dueToday.forEach(
+      e => {
+
+        dueList.innerHTML +=
+          renderItemHTML(e);
+      }
+    );
+  }
+
+  /* -----------------------------------
+     ICU
+  ----------------------------------- */
 
   const icuEntries =
     appData.entries.filter(
@@ -3737,63 +5227,106 @@ function renderAll() {
       'icuContainer'
     );
 
-  if(icuEntries.length > 0) {
+  if (icuContainer) {
 
-    icuContainer.style.display =
-      'block';
+    if (
+      icuEntries.length > 0
+    ) {
 
-    const icuList =
-      document.getElementById(
-        'icuList'
-      );
+      icuContainer.style.display =
+        'block';
 
-    icuList.innerHTML = '';
+      const icuList =
+        document.getElementById(
+          'icuList'
+        );
 
-    icuEntries.forEach(
-      e => {
-        icuList.innerHTML +=
-          renderItemHTML(e);
+      if (icuList) {
+
+        icuList.innerHTML =
+          '';
+
+        icuEntries.forEach(
+          e => {
+
+            icuList.innerHTML +=
+              renderItemHTML(e);
+          }
+        );
       }
-    );
 
-  } else {
+    } else {
 
-    icuContainer.style.display =
-      'none';
+      icuContainer.style.display =
+        'none';
+    }
   }
 
   renderPool();
 
-  /* Progress */
+  /* -----------------------------------
+     GOAL
+  ----------------------------------- */
 
-  document.getElementById(
-    'goalTextVal'
-  ).textContent =
-    `${appData.goal} ورد (باعتبار الورد صفحة)`;
+  const goalText =
+    document.getElementById(
+      'goalTextVal'
+    );
+
+  if (goalText) {
+
+    goalText.textContent =
+      `${appData.goal} ورد (باعتبار الورد صفحة)`;
+  }
+
+  const progress =
+    document.getElementById(
+      'trackProgress'
+    );
+
+  const trackText =
+    document.getElementById(
+      'trackText'
+    );
+
+  const safeGoal =
+    appData.goal > 0
+      ? appData.goal
+      : 604;
 
   const pct =
     Math.min(
-      (evaluatedCount / appData.goal) * 100,
+      (
+        evaluatedCount /
+        safeGoal
+      ) * 100,
       100
     );
 
-  document.getElementById(
-    'trackProgress'
-  ).style.width =
-    `${pct}%`;
+  if (progress) {
 
-  document.getElementById(
-    'trackText'
-  ).textContent =
-    `تم تقييم ${evaluatedCount} أوراد من أصل ${appData.goal} (${pct.toFixed(1)}%)`;
+    progress.style.width =
+      `${pct}%`;
+  }
+
+  if (trackText) {
+
+    trackText.textContent =
+      `تم تقييم ${evaluatedCount} أوراد من أصل ${safeGoal} (${pct.toFixed(1)}%)`;
+  }
 }
 
+
 /* =========================================================
-   START
-   ========================================================= */
+   INITIAL STATE
+========================================================= */
+
+updateMTimerDisplay();
+updateHadrTimerDisplay();
+updateMainTimerButton();
 
 loadData();
-</script>
 
+</script>
 </body>
 </html>
