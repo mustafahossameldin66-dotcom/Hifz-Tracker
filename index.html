@@ -8,9 +8,10 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <title>رفيق القرآن - المراجعة الذكية</title>
 
-<!-- أكواد اللوجو والأيقونة -->
-<link rel="icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="logo.png">
+<!-- إعدادات الأيقونات (Favicon & PWA) المحددة -->
+<link rel="icon" type="image/png" href="logo.png" sizes="32x32">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
 
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -106,6 +107,15 @@
   .empty-state { text-align: center; padding: 20px; font-size: 13px; line-height: 1.8; color: var(--secondary); background: rgba(201, 168, 106, 0.05); border: 1px dashed var(--border); border-radius: 10px; }
   .empty-state b { color: var(--primary); }
   .phase-badge { background: rgba(201, 168, 106, 0.1); border: 1px solid var(--primary); color: var(--primary); font-size: 10px; padding: 2px 8px; border-radius: 12px; margin-right: 6px; display: inline-block;}
+
+  /* Golden micro-interaction (الـ Glow) */
+  @keyframes goldenGlow {
+    0% { box-shadow: 0 0 0 rgba(201,168,106,0); text-shadow: none; border-color: var(--border); }
+    35% { box-shadow: 0 0 12px rgba(201,168,106,.65), 0 0 28px rgba(201,168,106,.22); text-shadow: 0 0 9px rgba(201,168,106,.65); border-color: var(--primary); }
+    100% { box-shadow: 0 0 0 rgba(201,168,106,0); text-shadow: none; border-color: var(--border); }
+  }
+  .golden-glow { animation: goldenGlow .75s ease-out; }
+  .golden-glow-text { animation: goldenGlow .7s ease-out; }
 </style>
 </head>
 <body>
@@ -422,6 +432,35 @@ const todayStr = () => getLocalDateStr();
 const daysBetween = (a, b) => Math.floor((new Date(b) - new Date(a)) / 86400000);
 const escapeHtml = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
 
+// --- Glow Animations ---
+function flashEntry(id, textGlow=false) {
+  requestAnimationFrame(() => {
+    const el = document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);
+    if(!el) return;
+    el.classList.remove('golden-glow');
+    void el.offsetWidth; // trigger reflow
+    el.classList.add('golden-glow');
+    if(textGlow) {
+      const t = el.querySelector('.glow-target');
+      if(t) {
+        t.classList.remove('golden-glow-text');
+        void t.offsetWidth;
+        t.classList.add('golden-glow-text');
+      }
+    }
+    setTimeout(() => el.classList.remove('golden-glow'), 850);
+  });
+}
+
+function flashStreak() {
+  const el = document.getElementById('statStreak');
+  if(!el) return;
+  el.classList.remove('golden-glow-text');
+  void el.offsetWidth;
+  el.classList.add('golden-glow-text');
+  setTimeout(() => el.classList.remove('golden-glow-text'), 850);
+}
+
 // --- Initialization ---
 function loadData() {
   document.body.setAttribute('data-theme', localStorage.getItem('hifz-theme') || 'dark');
@@ -532,10 +571,12 @@ function checkComeback() {
 function updateActive() {
   const today = todayStr();
   if (appData.lastActive === today) return;
+  const prev = appData.streak;
   if (daysBetween(appData.lastActive, today) === 1) appData.streak++;
   else appData.streak = 1;
   appData.lastActive = today;
   saveData();
+  if (appData.streak > prev) flashStreak();
 }
 
 // --- Navigation & Modals ---
@@ -657,6 +698,7 @@ function addRep(id) {
     
     saveData();
     renderAll();
+    flashEntry(id, true);
 }
 
 // 3-STAGE DYNAMIC LOGIC
@@ -671,6 +713,7 @@ function reviewEntry(id, q) {
   if (e.phaseDays === undefined) e.phaseDays = [];
 
   const today = todayStr();
+  let successful = false;
 
   if (e.phaseDays.length < 7) {
       if (q === 'daily_pass') {
@@ -681,6 +724,7 @@ function reviewEntry(id, q) {
               return;
           }
           e.interval = 1; 
+          successful = true;
       } else if (q === 'daily_fail') {
           e.phaseDays = []; 
           e.interval = 1; 
@@ -694,6 +738,7 @@ function reviewEntry(id, q) {
       if (appData.evalMode === 'weekly') {
           if (q === 'weekly_pass') {
               e.interval = 7; 
+              successful = true;
           } else if (q === 'weekly_fail') {
               e.interval = 1; 
           }
@@ -701,9 +746,11 @@ function reviewEntry(id, q) {
           if (q === 4) { 
             e.srsLevel++; e.ease += 0.15;
             e.interval = e.srsLevel === 1 ? 4 : Math.max(1, Math.round(e.interval * e.ease * 1.3));
+            successful = true;
           } else if (q === 3) { 
             e.srsLevel++;
             e.interval = e.srsLevel === 1 ? 1 : Math.max(1, Math.round(e.interval * e.ease));
+            successful = true;
           } else if (q === 2) { 
             e.ease = Math.max(1.3, e.ease - 0.15);
             e.interval = Math.max(1, Math.round((e.interval || 1) * 1.2));
@@ -729,6 +776,7 @@ function reviewEntry(id, q) {
   updateActive();
   saveData();
   renderAll();
+  if(successful) flashEntry(id, false);
 }
 
 // --- Smart Links ---
@@ -963,9 +1011,9 @@ function renderItemHTML(e) {
     : `<span class="phase-badge" style="border-color:var(--success); color:var(--success);">استدامة (${appData.evalMode==='weekly'?'أسبوعي':'أنكي'})</span>`;
 
   return `
-    <div class="item ${isICU} ${dueCls}">
+    <div class="item ${isICU} ${dueCls}" data-entry-id="${e.id}">
       <div class="item-header">
-        <div class="item-title"><div class="quran-font">${escapeHtml(e.label)}</div>${noteHtml}</div>
+        <div class="item-title"><div class="quran-font glow-target">${escapeHtml(e.label)}</div>${noteHtml}</div>
         <button class="del" onclick="removeEntry('${e.id}')">✕</button>
       </div>
       <div class="item-meta">
