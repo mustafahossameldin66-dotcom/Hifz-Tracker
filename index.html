@@ -68,9 +68,8 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 @media(max-width:460px){.qbtns{grid-template-columns:1fr}.constellation{grid-template-columns:repeat(6,1fr)}.fab{bottom:88px}.stats .stat{min-width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 /* =========================================================
-   PRINT — STATIC PREMIUM VERSION
-   نفس هوية التطبيق: ألوان + Glow + نجوم + مصابيح + ضباب
-   لكن ثابتة بدون أي حركة
+   PAPER EDITION — رفيق القرآن
+   نسخة ورقية قابلة للاستخدام وليست مجرد تقرير
 ========================================================= */
 
 .print-sheet{
@@ -80,83 +79,91 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 @media print{
 
   *{
-    -webkit-print-color-adjust:exact !important;
-    print-color-adjust:exact !important;
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
   }
 
   html,
   body{
-    margin:0 !important;
-    padding:0 !important;
-    background:#050806 !important;
-    color:#eef3ef !important;
+    margin:0!important;
+    padding:0!important;
+    background:#07100b!important;
   }
 
   body > *{
-    display:none !important;
+    display:none!important;
   }
 
   #printSheet{
-    display:block !important;
+    display:block!important;
     position:relative;
     width:100%;
     min-height:100vh;
     overflow:hidden;
+
+    direction:rtl;
+
     background:
       radial-gradient(
-        circle at 82% 4%,
-        rgba(212,175,55,.12),
-        transparent 28%
+        circle at 82% 5%,
+        rgba(212,175,55,.15),
+        transparent 27%
       ),
       radial-gradient(
-        circle at 12% 92%,
-        rgba(76,166,93,.07),
+        circle at 10% 90%,
+        rgba(76,166,93,.08),
         transparent 28%
       ),
       linear-gradient(
-        155deg,
-        #050806 0%,
-        #08110c 48%,
+        145deg,
+        #07100b 0%,
+        #0b1710 46%,
         #061009 100%
       );
 
     color:#eef3ef;
-    font-family:Tajawal,Arial,sans-serif;
-    direction:rtl;
-    padding:34px;
+
+    font-family:
+      Tajawal,
+      Arial,
+      sans-serif;
+
+    padding:24px;
   }
 
-  /* ---------- STATIC BACKGROUND ---------- */
+  /* =====================================================
+     STATIC BACKGROUND
+  ===================================================== */
 
-  .print-static-bg{
+  .paper-bg{
     position:absolute;
     inset:0;
-    overflow:hidden;
     pointer-events:none;
+    overflow:hidden;
     z-index:0;
   }
 
-  .print-mist{
+  .paper-mist{
     position:absolute;
     border-radius:50%;
-    pointer-events:none;
-    filter:blur(30px);
+    filter:blur(28px);
   }
 
-  /* ---------- GOLDEN LAMPS ---------- */
+  /* =====================================================
+     GOLDEN LAMPS
+  ===================================================== */
 
-  .print-lamp{
+  .paper-lamp{
     position:absolute;
     display:flex;
     flex-direction:column;
     align-items:center;
-    transform-origin:top center;
-    pointer-events:none;
   }
 
-  .print-lamp .wire{
+  .paper-lamp .wire{
     width:2px;
-    height:105px;
+    height:80px;
+
     background:
       linear-gradient(
         180deg,
@@ -165,644 +172,657 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
       );
   }
 
-  .print-lamp .body{
-    font-size:46px;
+  .paper-lamp .body{
+    font-size:38px;
     line-height:1;
+
     filter:
-      drop-shadow(0 0 8px rgba(212,175,55,.95))
-      drop-shadow(0 0 22px rgba(212,175,55,.60))
-      drop-shadow(0 0 42px rgba(212,175,55,.30));
+      drop-shadow(0 0 7px rgba(212,175,55,.95))
+      drop-shadow(0 0 18px rgba(212,175,55,.65))
+      drop-shadow(0 0 35px rgba(212,175,55,.35));
   }
 
-  .print-lamp .glow{
-    width:250px;
-    height:250px;
-    margin-top:-10px;
+  .paper-lamp .light{
+    width:190px;
+    height:190px;
+    margin-top:-8px;
+
     border-radius:50%;
+
     background:
       radial-gradient(
         circle,
-        rgba(255,215,80,.20) 0%,
-        rgba(212,175,55,.10) 24%,
-        rgba(212,175,55,.03) 48%,
-        transparent 72%
+        rgba(255,215,85,.17) 0%,
+        rgba(212,175,55,.09) 28%,
+        transparent 70%
       );
+
     filter:blur(5px);
   }
 
-  /* ---------- STATIC STARS ---------- */
+  /* =====================================================
+     GOLDEN STARS
+  ===================================================== */
 
-  .print-star{
+  .paper-star{
     position:absolute;
     color:#f5d879;
-    font-size:10px;
-    line-height:1;
+
     text-shadow:
-      0 0 6px rgba(212,175,55,.95),
-      0 0 16px rgba(212,175,55,.42);
+      0 0 6px rgba(212,175,55,.85),
+      0 0 15px rgba(212,175,55,.35);
   }
 
-  /* ---------- CONTENT SHELL ---------- */
+  /* =====================================================
+     PAGE
+  ===================================================== */
 
-  .print-shell{
+  .paper-page{
     position:relative;
     z-index:2;
-    max-width:1120px;
+
+    max-width:1050px;
+    min-height:calc(100vh - 48px);
+
     margin:0 auto;
-  }
 
-  .print-title{
-    text-align:center;
-    font:
-      700 38px/1.4
-      UthmanicHafs,
-      Amiri,
-      serif;
-
-    color:#d4af37;
-
-    margin:
-      4px
-      0
-      6px;
-
-    text-shadow:
-      0 0 12px rgba(212,175,55,.25),
-      0 0 28px rgba(212,175,55,.10);
-  }
-
-  .print-sub{
-    text-align:center;
-    color:#a6b2a7;
-    font-size:14px;
-    margin-bottom:24px;
-  }
-
-  .print-user{
-    text-align:center;
-    color:#e7cf70;
-    font-size:20px;
-    font-weight:800;
-    margin-bottom:22px;
-  }
-
-  /* ---------- STAT CARDS ---------- */
-
-  .print-grid{
-    display:grid;
-    grid-template-columns:
-      repeat(4,minmax(0,1fr));
-    gap:12px;
-    margin:18px 0;
-  }
-
-  .print-stat,
-  .print-card{
-    background:
-      linear-gradient(
-        145deg,
-        rgba(18,30,24,.92),
-        rgba(11,20,15,.90)
-      );
+    padding:28px;
 
     border:
       1px solid
-      rgba(212,175,55,.17);
+      rgba(212,175,55,.18);
 
-    border-radius:20px;
+    border-radius:24px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(13,25,18,.91),
+        rgba(7,16,11,.90)
+      );
 
     box-shadow:
-      0 14px 34px rgba(0,0,0,.24),
-      0 0 22px rgba(212,175,55,.035),
-      inset 0 1px 0 rgba(255,255,255,.035);
-
-    overflow:hidden;
+      0 18px 50px rgba(0,0,0,.35),
+      0 0 35px rgba(212,175,55,.045),
+      inset 0 1px 0 rgba(255,255,255,.04);
   }
 
-  .print-stat{
-    padding:17px;
+  /* =====================================================
+     HEADER
+  ===================================================== */
+
+  .paper-title{
     text-align:center;
-  }
-
-  .print-stat b{
-    display:block;
-    color:#d4af37;
-    font-size:31px;
-    line-height:1.15;
-    margin-bottom:5px;
-  }
-
-  .print-stat span{
-    color:#9aa89b;
-    font-size:12px;
-  }
-
-  /* ---------- SECTION CARDS ---------- */
-
-  .print-card{
-    padding:22px;
-    margin-bottom:16px;
-  }
-
-  .print-card h3{
-    margin:0 0 14px;
-    color:#d4af37;
 
     font:
-      700 21px/1.5
+      700 34px/1.5
       UthmanicHafs,
       Amiri,
       serif;
+
+    color:#d4af37;
+
+    text-shadow:
+      0 0 12px rgba(212,175,55,.22),
+      0 0 26px rgba(212,175,55,.10);
+
+    margin:0;
   }
 
-  /* ---------- GOAL ---------- */
+  .paper-subtitle{
+    text-align:center;
+    color:#9ba99e;
+    font-size:13px;
+    margin-top:4px;
+  }
 
-  .print-progress{
-    height:15px;
-    border-radius:999px;
-    overflow:hidden;
+  .paper-user{
+    text-align:center;
+    color:#e8d37b;
+    font-size:19px;
+    font-weight:800;
+    margin-top:10px;
+  }
 
-    background:
-      rgba(255,255,255,.055);
+  /* =====================================================
+     SECTION TITLE
+  ===================================================== */
+
+  .paper-section{
+    margin-top:18px;
+
+    padding:17px;
+
+    border-radius:18px;
 
     border:
       1px solid
       rgba(212,175,55,.15);
-  }
-
-  .print-progress > div{
-    height:100%;
-
-    background:
-      linear-gradient(
-        90deg,
-        #9e7400,
-        #d4af37,
-        #f2dc8b
-      );
-
-    box-shadow:
-      0 0 18px
-      rgba(212,175,55,.55);
-  }
-
-  /* ---------- INNER ITEMS ---------- */
-
-  .print-items{
-    display:grid;
-    grid-template-columns:
-      repeat(2,minmax(0,1fr));
-    gap:10px;
-  }
-
-  .print-item{
-    padding:14px;
-
-    border-radius:14px;
 
     background:
       linear-gradient(
         145deg,
-        rgba(255,255,255,.028),
-        rgba(0,0,0,.12)
+        rgba(212,175,55,.055),
+        rgba(255,255,255,.014)
       );
 
-    border:
-      1px solid
-      rgba(255,255,255,.055);
-
-    color:#cbd5cd;
-
-    line-height:1.75;
     page-break-inside:avoid;
   }
 
-  .print-item strong,
-  .print-item b{
-    color:#e7cf70;
+  .paper-section-title{
+    margin:0 0 12px;
+
+    color:#d4af37;
+
+    font:
+      700 20px/1.5
+      UthmanicHafs,
+      Amiri,
+      serif;
   }
 
-  /* ---------- METHODOLOGY ---------- */
+  /* =====================================================
+     GOAL
+  ===================================================== */
 
-  .print-method{
+  .paper-goal{
     display:grid;
-    grid-template-columns:
-      repeat(3,minmax(0,1fr));
-    gap:10px;
+    grid-template-columns:1fr 150px;
+    gap:18px;
+    align-items:center;
   }
 
-  .print-method-item{
-    padding:15px;
+  .paper-ring{
+    width:112px;
+    height:112px;
+    margin:auto;
 
-    border-radius:15px;
+    border-radius:50%;
+
+    background:
+      conic-gradient(
+        #d4af37 var(--pct),
+        rgba(255,255,255,.07) 0
+      );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+  }
+
+  .paper-ring::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+
+    border-radius:50%;
+
+    background:#0b1710;
+  }
+
+  .paper-ring span{
+    position:relative;
+    z-index:2;
+
+    color:#e8d37b;
+    font-size:19px;
+    font-weight:900;
+  }
+
+  /* =====================================================
+     PAPER CHECKLISTS
+  ===================================================== */
+
+  .check-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .check-item{
+    min-height:54px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:10px 12px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.12);
+
+    border-radius:13px;
+
+    background:
+      rgba(255,255,255,.022);
+  }
+
+  .checkbox{
+    width:20px;
+    height:20px;
+
+    flex:0 0 20px;
+
+    border:
+      2px solid
+      rgba(212,175,55,.55);
+
+    border-radius:5px;
+
+    background:
+      rgba(255,255,255,.02);
+  }
+
+  .check-item strong{
+    display:block;
+    color:#dfe7e1;
+    font-size:13px;
+  }
+
+  .check-item small{
+    display:block;
+    color:#89968d;
+    font-size:10px;
+    margin-top:2px;
+  }
+
+  /* =====================================================
+     DAILY WERD
+  ===================================================== */
+
+  .daily-werd{
+    border:
+      1px solid
+      rgba(212,175,55,.22);
 
     background:
       linear-gradient(
         145deg,
-        rgba(212,175,55,.075),
+        rgba(212,175,55,.08),
         rgba(255,255,255,.018)
       );
+
+    border-radius:18px;
+
+    padding:16px;
+  }
+
+  .werd-row{
+    display:grid;
+    grid-template-columns:
+      minmax(0,1.5fr)
+      110px
+      110px;
+
+    gap:10px;
+
+    align-items:center;
+
+    padding:11px 0;
+
+    border-bottom:
+      1px solid
+      rgba(255,255,255,.055);
+  }
+
+  .werd-row:last-child{
+    border-bottom:none;
+  }
+
+  .werd-name{
+    font:
+      700 18px/1.8
+      UthmanicHafs,
+      Amiri,
+      serif;
+
+    color:#f0d77a;
+  }
+
+  .paper-mini-box{
+    min-height:42px;
 
     border:
       1px solid
       rgba(212,175,55,.14);
 
-    page-break-inside:avoid;
-  }
+    border-radius:10px;
 
-  .print-method-item .num{
-    display:inline-flex;
-    width:29px;
-    height:29px;
-
+    display:flex;
     align-items:center;
     justify-content:center;
 
-    border-radius:50%;
-
-    background:#d4af37;
-    color:#101810;
-
-    font-weight:900;
-    font-size:12px;
-
-    margin-left:6px;
+    color:#abb7ae;
+    font-size:11px;
+    text-align:center;
   }
 
-  .print-method-item strong{
-    color:#e7cf70;
-    font-size:15px;
+  /* =====================================================
+     10 REPETITIONS
+  ===================================================== */
+
+  .rep-grid{
+    display:grid;
+    grid-template-columns:
+      repeat(10,1fr);
+
+    gap:6px;
+
+    margin-top:8px;
   }
 
-  .print-method-item span{
-    display:block;
-    color:#9aa89b;
-    font-size:12px;
-    margin-top:7px;
+  .rep-box{
+    height:34px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.28);
+
+    border-radius:8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#89968d;
+    font-size:11px;
   }
 
-  /* ---------- ENTRY TABLE ---------- */
+  /* =====================================================
+     7 DAY FIXATION
+  ===================================================== */
 
-  .print-table{
-    width:100%;
-    border-collapse:collapse;
-    margin-top:10px;
-    table-layout:fixed;
+  .seven-days{
+    display:grid;
+    grid-template-columns:
+      repeat(7,1fr);
+
+    gap:8px;
   }
 
-  .print-table th,
-  .print-table td{
+  .day-box{
+    min-height:72px;
+
     border:
       1px solid
       rgba(212,175,55,.16);
 
-    padding:9px;
+    border-radius:12px;
 
-    text-align:right;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
 
-    color:#d1d9d3;
+    gap:5px;
 
-    font-size:12px;
-
-    vertical-align:top;
-
-    word-break:break-word;
-  }
-
-  .print-table th{
     background:
-      rgba(212,175,55,.095);
-
-    color:#e7cf70;
-
-    font-weight:800;
-  }
-
-  .print-table tr{
-    page-break-inside:avoid;
-  }
-
-  /* ---------- FOOTER ---------- */
-
-  .print-footer{
-    text-align:center;
-
-    color:#89968d;
+      rgba(255,255,255,.02);
 
     font-size:11px;
+  }
 
-    margin-top:20px;
+  .day-box .circle{
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    border:
+      2px solid
+      rgba(212,175,55,.55);
+  }
+
+  /* =====================================================
+     METHODOLOGY
+  ===================================================== */
+
+  .method-grid{
+    display:grid;
+
+    grid-template-columns:
+      repeat(3,1fr);
+
+    gap:9px;
+  }
+
+  .method{
+    padding:13px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.13);
+
+    border-radius:13px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(212,175,55,.065),
+        rgba(255,255,255,.015)
+      );
+  }
+
+  .method .number{
+    display:inline-flex;
+
+    width:25px;
+    height:25px;
+
+    border-radius:50%;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#d4af37;
+    color:#07100b;
+
+    font-size:11px;
+    font-weight:900;
+
+    margin-left:5px;
+  }
+
+  .method strong{
+    color:#e7cf70;
+    font-size:13px;
+  }
+
+  .method p{
+    margin:6px 0 0;
+
+    color:#96a39a;
+    font-size:10px;
+    line-height:1.7;
+  }
+
+  /* =====================================================
+     SPIRITUAL / STUDY
+  ===================================================== */
+
+  .study-grid{
+    display:grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:10px;
+  }
+
+  .study-card{
+    padding:14px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.13);
+
+    border-radius:14px;
+
+    background:
+      rgba(255,255,255,.018);
+  }
+
+  .study-card h4{
+    margin:0 0 7px;
+
+    color:#d4af37;
+
+    font-size:14px;
+  }
+
+  .study-card p{
+    margin:0;
+
+    color:#abb5ae;
+
+    font-size:11px;
+    line-height:1.8;
+  }
+
+  /* =====================================================
+     NOTEBOOK
+  ===================================================== */
+
+  .notebook-lines{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .notebook-line{
+    height:34px;
+
+    border-bottom:
+      1px solid
+      rgba(212,175,55,.17);
+  }
+
+  /* =====================================================
+     WEEKLY / MONTHLY TRACKER
+  ===================================================== */
+
+  .tracker-grid{
+    display:grid;
+    grid-template-columns:
+      repeat(7,1fr);
+
+    gap:6px;
+  }
+
+  .tracker-cell{
+    min-height:42px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.12);
+
+    border-radius:8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:10px;
+
+    color:#8d9a91;
+  }
+
+  /* =====================================================
+     SIGNATURE / NOTES
+  ===================================================== */
+
+  .signature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+  }
+
+  .signature{
+    border-bottom:
+      1px solid
+      rgba(212,175,55,.25);
+
+    min-height:46px;
+
+    color:#89968d;
+    font-size:11px;
+
+    padding-top:20px;
+  }
+
+  /* =====================================================
+     FOOTER
+  ===================================================== */
+
+  .paper-footer{
+    margin-top:18px;
+
     padding-top:13px;
 
     border-top:
       1px solid
       rgba(212,175,55,.10);
+
+    text-align:center;
+
+    color:#77847b;
+
+    font-size:10px;
   }
 
-  /* ---------- PRINT PAGE BREAKS ---------- */
+  /* =====================================================
+     PAGE BREAKS
+  ===================================================== */
 
-  .print-page-break{
+  .paper-pagebreak{
     page-break-before:always;
   }
 
-  /* ---------- PAPER ---------- */
-
   @page{
-    size:auto;
+    size:A4;
     margin:10mm;
   }
 
-  /* ---------- SMALL SCREEN PRINT ---------- */
+  /* =====================================================
+     PRINT SIZE
+  ===================================================== */
 
   @media print and (max-width:800px){
 
     #printSheet{
-      padding:22px;
+      padding:14px;
     }
 
-    .print-grid{
-      grid-template-columns:
-        repeat(2,minmax(0,1fr));
+    .paper-page{
+      padding:19px;
+      border-radius:18px;
     }
 
-    .print-method{
-      grid-template-columns:
-        repeat(2,minmax(0,1fr));
-    }
-
-    .print-items{
+    .paper-goal,
+    .study-grid{
       grid-template-columns:1fr;
     }
 
-    .print-title{
-      font-size:30px;
-    }
-  }
-}  /* الخلفيات الضبابية الثابتة */
-  .print-static-bg{
-    position:absolute!important;
-    inset:0!important;
-    overflow:hidden!important;
-    pointer-events:none!important;
-    z-index:0!important;
-  }
-
-  .print-mist{
-    position:absolute!important;
-    border-radius:50%!important;
-    filter:blur(18px)!important;
-    pointer-events:none!important;
-  }
-
-  /* المصابيح الذهبية — ثابتة أثناء الطباعة */
-  .print-lamp{
-    position:absolute!important;
-    display:flex!important;
-    flex-direction:column!important;
-    align-items:center!important;
-    transform-origin:top center!important;
-  }
-
-  .print-lamp .wire{
-    width:2px!important;
-    height:92px!important;
-    background:linear-gradient(
-      #0000,
-      rgba(212,175,55,.5)
-    )!important;
-  }
-
-  .print-lamp .body{
-    font-size:42px!important;
-    line-height:1!important;
-    filter:
-      drop-shadow(0 0 10px rgba(212,175,55,.85))
-      drop-shadow(0 0 30px rgba(212,175,55,.42))!important;
-  }
-
-  .print-lamp .glow{
-    width:220px!important;
-    height:220px!important;
-    margin-top:-8px!important;
-    border-radius:50%!important;
-
-    background:
-      radial-gradient(
-        circle,
-        rgba(255,210,70,.18) 0%,
-        rgba(212,175,55,.08) 26%,
-        transparent 68%
-      )!important;
-
-    filter:blur(5px)!important;
-  }
-
-  /* النجوم الذهبية الثابتة */
-  .print-star{
-    position:absolute!important;
-    color:#f5d879!important;
-    text-shadow:
-      0 0 8px rgba(212,175,55,.9),
-      0 0 16px rgba(212,175,55,.35)!important;
-    opacity:.7!important;
-    animation:none!important;
-  }
-
-  /* جسم التقرير */
-  .print-shell{
-    position:relative!important;
-    z-index:2!important;
-    width:100%!important;
-    max-width:1050px!important;
-    margin:0 auto!important;
-  }
-
-  .print-title{
-    text-align:center!important;
-    font:
-      700 34px
-      UthmanicHafs,
-      Amiri,
-      serif!important;
-
-    color:#d4af37!important;
-    margin:6px 0 4px!important;
-
-    text-shadow:
-      0 0 18px rgba(212,175,55,.24)!important;
-  }
-
-  .print-sub{
-    text-align:center!important;
-    color:#a6b2a7!important;
-    margin-bottom:24px!important;
-  }
-
-  /* الإحصائيات */
-  .print-grid{
-    display:grid!important;
-    grid-template-columns:repeat(4,1fr)!important;
-    gap:12px!important;
-    margin:18px 0!important;
-  }
-
-  .print-stat,
-  .print-card{
-    background:rgba(18,30,24,.84)!important;
-    border:1px solid rgba(212,175,55,.18)!important;
-    border-radius:20px!important;
-
-    box-shadow:
-      0 16px 40px rgba(0,0,0,.22),
-      inset 0 1px 0 rgba(255,255,255,.03)!important;
-  }
-
-  .print-stat{
-    padding:16px!important;
-    text-align:center!important;
-  }
-
-  .print-stat b{
-    display:block!important;
-    color:#d4af37!important;
-    font-size:30px!important;
-    margin-bottom:4px!important;
-  }
-
-  .print-stat span{
-    color:#9aa89b!important;
-    font-size:12px!important;
-  }
-
-  /* الخانات */
-  .print-card{
-    padding:20px!important;
-    margin-bottom:16px!important;
-    break-inside:avoid!important;
-    page-break-inside:avoid!important;
-  }
-
-  .print-card h3{
-    margin:0 0 12px!important;
-    color:#d4af37!important;
-    font-size:20px!important;
-  }
-
-  /* Progress */
-  .print-progress{
-    height:14px!important;
-    border-radius:999px!important;
-    background:rgba(255,255,255,.06)!important;
-    overflow:hidden!important;
-    border:1px solid rgba(212,175,55,.16)!important;
-  }
-
-  .print-progress>div{
-    height:100%!important;
-    background:
-      linear-gradient(
-        90deg,
-        #a77d08,
-        #f1d97a
-      )!important;
-  }
-
-  /* محتوى داخلي */
-  .print-items{
-    display:grid!important;
-    grid-template-columns:1fr 1fr!important;
-    gap:10px!important;
-  }
-
-  .print-item{
-    padding:13px!important;
-    border-radius:14px!important;
-    background:rgba(255,255,255,.025)!important;
-    border:1px solid rgba(255,255,255,.06)!important;
-    break-inside:avoid!important;
-    page-break-inside:avoid!important;
-  }
-
-  /* جدول الأوراد */
-  .print-table{
-    width:100%!important;
-    border-collapse:collapse!important;
-    margin-top:10px!important;
-  }
-
-  .print-table th,
-  .print-table td{
-    border:1px solid rgba(212,175,55,.18)!important;
-    padding:8px!important;
-    text-align:right!important;
-  }
-
-  .print-table th{
-    background:rgba(212,175,55,.10)!important;
-    color:#d4af37!important;
-  }
-
-  .print-table tr{
-    break-inside:avoid!important;
-    page-break-inside:avoid!important;
-  }
-
-  /* أسفل التقرير */
-  .print-footer{
-    text-align:center!important;
-    color:#8f9b92!important;
-    font-size:12px!important;
-    margin-top:18px!important;
-  }
-
-  /* منع أي حركات أثناء الطباعة */
-  #printSheet *,
-  #printSheet *::before,
-  #printSheet *::after{
-    animation:none!important;
-    transition:none!important;
-  }
-
-  /* إعدادات الصفحة */
-  @page{
-    size:auto;
-    margin:10mm;
-  }
-
-  /* شاشات ضيقة */
-  @media print and (max-width:800px){
-    #printSheet{
-      padding:24px!important;
+    .method-grid{
+      grid-template-columns:1fr 1fr;
     }
 
-    .print-grid{
-      grid-template-columns:1fr 1fr!important;
+    .check-list{
+      grid-template-columns:1fr;
     }
 
-    .print-items{
-      grid-template-columns:1fr 1fr!important;
+    .werd-row{
+      grid-template-columns:1fr 80px;
     }
 
-    .print-title{
-      font-size:28px!important;
+    .werd-row .hide-mobile{
+      display:none;
     }
   }
 }
-/* === FINAL DESKTOP / SIDEBAR READABILITY FIX === */
-@media(min-width:992px){
-  body.device-laptop .wrap{width:calc(100vw - 310px)!important;max-width:none!important;margin-right:310px!important;margin-left:0!important;padding:46px 48px 70px!important;}
-  body.device-tablet .wrap, body.device-mobile .wrap{margin-left:0!important;}
-  body.device-laptop #settings .desktop-grid{grid-template-columns:minmax(0,1fr) minmax(360px,.92fr)!important;align-items:start!important;}
-  body.device-laptop #settings .card{overflow:visible!important;min-width:0!important;}
-  body.device-laptop #settings h1, body.device-laptop #settings h2, body.device-laptop #settings h3, body.device-laptop #settings p, body.device-laptop #settings label, body.device-laptop #settings .small, body.device-laptop #settings .sub{color:var(--text);}
-  body.device-laptop #settings .card h2{color:var(--gold)!important;}
-  body.device-laptop #settings .small, body.device-laptop #settings .sub{opacity:1!important;}
-  body.device-laptop #settings select, body.device-laptop #settings input{color:var(--text)!important;background:rgba(4,10,7,.68)!important;}
-  [data-theme=light] body.device-laptop #settings select, [data-theme=light] body.device-laptop #settings input{background:rgba(255,255,255,.9)!important;}
-  [data-theme=sepia] body.device-laptop #settings select, [data-theme=sepia] body.device-laptop #settings input{background:rgba(255,249,237,.92)!important;}
-  body.device-laptop .nav{right:24px!important;left:auto!important;}
-}
-
 /* === DEVICE EXPERIENCE ENGINE v9 === */
 body.device-mobile{--radius-device:14px}
 body.device-tablet{--radius-device:22px}
