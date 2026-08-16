@@ -2592,7 +2592,1188 @@ function downloadAchievement(){const a=document.createElement('a');a.href=$('sha
 async function shareAchievement(){if(!navigator.share)return downloadAchievement();try{const b=await new Promise(r=>$('shareCanvas').toBlob(r,'image/png'));const f=new File([b],`Rafiq_Achievement_${today()}.png`,{type:'image/png'});await navigator.share({title:'رفيق القرآن',text:'فضل الله عليّ 🤲',files:[f]})}catch{}}
 
 let hadrTimer=null,hadrLeft=120;function setHadr(minutes){hadrLeft=Math.max(60,Math.min(3600,Math.round(Number(minutes||2)*60)));updateHadr();}function updateHadr(){const m=Math.floor(hadrLeft/60),sec=hadrLeft%60;const el=$("hadrDisplay");if(el)el.textContent=`${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`;}function openHadr(){const e=pickPriorityEntry?.();$('hadrTarget').textContent=e?.label||'اختر وردًا متقنًا وابدأ القراءة السريعة';setHadr(2);openModal('hadrModal')}function startHadr(){clearInterval(hadrTimer);if(hadrLeft<=0)setHadr(2);$('hadrBtn').textContent='⏳ يعمل…';const started=Date.now();hadrTimer=setInterval(()=>{hadrLeft--;updateHadr();if(hadrLeft<=0){clearInterval(hadrTimer);const mins=Math.max(1,Math.round((Date.now()-started)/60000));data.totalFocusMinutes+=mins;logActivity('focus',mins);markActive();save();uiSound('done');haptic('done');$('hadrBtn').textContent='بدء المؤقت ▶';alert('انتهت جلسة الحَدْر ✅');}},1000)}function stopHadr(){clearInterval(hadrTimer);hadrTimer=null;setHadr(Math.max(1,Math.round(hadrLeft/60)));$('hadrBtn').textContent='بدء المؤقت ▶';}function closeHadr(){stopHadr();closeModal('hadrModal')}
-function printReport(){let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));$('printSheet').innerHTML=`<div class="print-page print-static-art"><div class="print-title">رفيق القرآن — تقرير الرحلة</div><div class="print-hero-art">✦　☾　✧　🪔　✧　☾　✦</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'—')}<br><b>الستريك:</b> ${data.streak}<br><b>الأوراد:</b> ${data.entries.length}<br><b>المراجعات:</b> ${data.entries.reduce((a,e)=>a+(e.reviewCount||0),0)}<br><b>الحروف التقديرية:</b> ${fmt(letters)}</div><div class="print-box"><b>المتشابهات والزلّات:</b><br>${data.mistakes.length?data.mistakes.map(m=>`• ${esc(m.title)} — ${esc(m.text)}`).join('<br>'):'لا توجد'}</div></div><div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table><tr><th>الورد</th><th>10 تكرارات</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.slice(0,25).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join('')}</table></div>`;window.print()}
+function printReport(){
+
+  const sheet = $('printSheet');
+
+  if(!sheet){
+    alert('صفحة الطباعة غير موجودة.');
+    return;
+  }
+
+  const evaluated =
+    data.entries.filter(
+      e => e.hasBeenEvaluated
+    ).length;
+
+  const letters =
+    data.entries.reduce(
+      (sum,e)=>
+        sum +
+        (e.baseLetters||500) *
+        (e.totalReps||0),
+      0
+    );
+
+  const reviews =
+    data.entries.reduce(
+      (sum,e)=>
+        sum +
+        (e.reviewCount||0),
+      0
+    );
+
+  const reps =
+    data.entries.reduce(
+      (sum,e)=>
+        sum +
+        (e.totalReps||0),
+      0
+    );
+
+  const activeDays =
+    Object.keys(
+      data.dailyLog||{}
+    ).length;
+
+  const pct =
+    data.goal
+      ? Math.min(
+          100,
+          evaluated /
+          data.goal *
+          100
+        )
+      : 0;
+
+
+  /* ===============================
+     STATIC STARS
+  =============================== */
+
+  let stars = '';
+
+  for(let i=0;i<46;i++){
+
+    stars += `
+      <span
+        class="paper-star"
+        style="
+          left:${(i*31)%97}%;
+          top:${(i*47)%95}%;
+          font-size:${7+(i%4)*2}px;
+        "
+      >✦</span>
+    `;
+  }
+
+
+  /* ===============================
+     WERDS
+  =============================== */
+
+  const todayEntries =
+    data.entries.filter(
+      e =>
+        e.date===today() &&
+        !e.hasBeenEvaluated
+    );
+
+  const dueEntries =
+    data.entries.filter(
+      e =>
+        (
+          e.hasBeenEvaluated &&
+          e.nextReviewDate<=today()
+        ) ||
+        e.isICU
+    );
+
+
+  function makeWerdRow(e){
+
+    const phase =
+      Array.isArray(e.phaseDays)
+        ? e.phaseDays.length
+        : 0;
+
+    return `
+      <div class="daily-werd">
+
+        <div class="werd-row">
+
+          <div>
+
+            <div class="werd-name">
+              ${esc(e.label)}
+            </div>
+
+            ${
+              e.note
+              ? `
+                <div style="
+                  color:#8f9b92;
+                  font-size:10px;
+                  margin-top:3px;
+                ">
+                  📌 ${esc(e.note)}
+                </div>
+              `
+              : ''
+            }
+
+          </div>
+
+          <div class="paper-mini-box">
+            ${e.isExactLetters
+              ? '🎯 حروف دقيقة'
+              : '📊 تقديري'}
+          </div>
+
+          <div class="paper-mini-box hide-mobile">
+
+            ${
+              e.hasBeenEvaluated
+
+              ? (
+                  e.nextReviewDate<=today()
+                  ? '⏰ مستحق'
+                  : '📅 '+e.nextReviewDate
+                )
+
+              : '✨ جديد'
+            }
+
+          </div>
+
+        </div>
+
+
+        <div style="
+          margin-top:10px;
+          color:#a1aea5;
+          font-size:11px;
+        ">
+
+          🔢 التكرارات اليوم:
+
+          <b style="color:#e7cf70">
+            ${e.sessionReps||0}
+          </b>
+
+          &nbsp; | &nbsp;
+
+          📚 الإجمالي:
+
+          <b style="color:#e7cf70">
+            ${e.totalReps||0}
+          </b>
+
+          &nbsp; | &nbsp;
+
+          🔄 التثبيت:
+
+          <b style="color:#e7cf70">
+            ${Math.min(phase,7)}/7
+          </b>
+
+        </div>
+
+
+        <div class="rep-grid">
+
+          ${[1,2,3,4,5,6,7,8,9,10]
+            .map(n=>`
+              <div class="rep-box">
+                ${n}
+              </div>
+            `)
+            .join('')
+          }
+
+        </div>
+
+
+        <div style="
+          margin-top:10px;
+          color:#9aa89b;
+          font-size:10px;
+        ">
+          ☐ تم التسميع &nbsp;&nbsp;
+          ☐ تم التصحيح &nbsp;&nbsp;
+          ☐ تم إتقان الورد
+        </div>
+
+      </div>
+    `;
+  }
+
+
+  /* ===============================
+     DAILY CHECKLIST
+  =============================== */
+
+  const dailyChecklist = [
+
+    [
+      'الحفظ الجديد',
+      'أضف الورد وحدد موضعه بدقة.'
+    ],
+
+    [
+      '10 تكرارات غيبًا',
+      'كرر الورد حتى بناء العضلة.'
+    ],
+
+    [
+      'التسميع',
+      'اختبر نفسك بدون نظر.'
+    ],
+
+    [
+      'التثبيت',
+      'سجل اليوم الصحيح في مرحلة 7 أيام.'
+    ],
+
+    [
+      'جوّد حفظك',
+      'راجع مخارج الحروف وأحكام التجويد.'
+    ],
+
+    [
+      'افهم الآية',
+      'راجع التفسير ومعاني الكلمات.'
+    ],
+
+    [
+      'المراجعة القديمة',
+      'راجع المستحق اليوم قبل إنهاء الجلسة.'
+    ],
+
+    [
+      'التربيط والمتشابهات',
+      'سجل أي موضع يسبب لك لخبطة.'
+    ]
+
+  ];
+
+
+  const checklistHTML =
+    dailyChecklist
+    .map(item=>`
+      <div class="check-item">
+
+        <div class="checkbox"></div>
+
+        <span>
+
+          <strong>
+            ${item[0]}
+          </strong>
+
+          <small>
+            ${item[1]}
+          </small>
+
+        </span>
+
+      </div>
+    `)
+    .join('');
+
+
+  /* ===============================
+     FIXATION DAYS
+  =============================== */
+
+  const sevenDays =
+    [1,2,3,4,5,6,7]
+    .map(n=>`
+      <div class="day-box">
+
+        <b style="color:#e7cf70">
+          اليوم ${n}
+        </b>
+
+        <span class="circle"></span>
+
+        <span>
+          ☐ أتقنت
+        </span>
+
+      </div>
+    `)
+    .join('');
+
+
+  /* ===============================
+     METHODOLOGY
+  =============================== */
+
+  const methodology = [
+
+    [
+      '01',
+      'الضبط والتجويد',
+      'البدء بضبط النطق والاستماع للحصري.'
+    ],
+
+    [
+      '02',
+      'التثبيت والتربيط',
+      'ربط المواضع والمتشابهات ومعالجة الزلات.'
+    ],
+
+    [
+      '03',
+      'السلاسة والانطلاق',
+      'الترديد والاستماع مع فارس عباد.'
+    ],
+
+    [
+      '04',
+      'بناء العضلة',
+      '10 تكرارات غيبًا ثم التسميع.'
+    ],
+
+    [
+      '05',
+      'التثبيت القريب',
+      '7 أيام متتالية لتثبيت الحفظ.'
+    ],
+
+    [
+      '06',
+      'المراجعة الذكية',
+      'أسبوعية أو Anki بحسب النظام المختار.'
+    ]
+
+  ];
+
+
+  const methodHTML =
+    methodology
+    .map(m=>`
+      <div class="method">
+
+        <div>
+          <span class="number">
+            ${m[0]}
+          </span>
+
+          <strong>
+            ${m[1]}
+          </strong>
+        </div>
+
+        <p>
+          ${m[2]}
+        </p>
+
+      </div>
+    `)
+    .join('');
+
+
+  /* ===============================
+     STUDY SECTION
+  =============================== */
+
+  const currentAyah =
+    typeof ayahToday === 'function'
+      ? ayahToday()
+      : null;
+
+  const study =
+    currentAyah
+      ? studyData[
+          `${currentAyah.s}:${currentAyah.a}`
+        ]
+      : null;
+
+
+  const tafsir =
+    study?.summary ||
+    'راجع التفسير الميسر للآية المختارة.';
+
+
+  const meanings =
+    study?.meanings ||
+    'اكتب الكلمات التي تحتاج إلى تثبيت معانيها هنا.';
+
+
+  const asbab =
+    study?.asbab ||
+    'يُرجى الرجوع إلى مصدر موثوق عند دراسة أسباب النزول.';
+
+
+  /* ===============================
+     MISTAKES
+  =============================== */
+
+  const mistakesHTML =
+    data.mistakes?.length
+
+      ? data.mistakes.map(m=>`
+          <div class="study-card">
+
+            <h4>
+              🧩 ${esc(m.title)}
+            </h4>
+
+            <p>
+              ${esc(m.text)}
+            </p>
+
+          </div>
+        `).join('')
+
+      : `
+        <div class="notebook-lines">
+
+          ${Array.from(
+            {length:7},
+            ()=>'<div class="notebook-line"></div>'
+          ).join('')}
+
+        </div>
+      `;
+
+
+  /* ===============================
+     PRINT BOOK
+  =============================== */
+
+  sheet.innerHTML = `
+
+    <!-- BACKGROUND -->
+
+    <div class="paper-bg">
+
+      ${stars}
+
+
+      <div
+        class="paper-mist"
+        style="
+          width:520px;
+          height:520px;
+          right:-180px;
+          top:-170px;
+          background:
+            radial-gradient(
+              circle,
+              rgba(212,175,55,.16),
+              transparent 70%
+            );
+        "
+      ></div>
+
+
+      <div
+        class="paper-mist"
+        style="
+          width:470px;
+          height:470px;
+          left:-170px;
+          bottom:-180px;
+          background:
+            radial-gradient(
+              circle,
+              rgba(76,166,93,.08),
+              transparent 70%
+            );
+        "
+      ></div>
+
+
+      <!-- LAMP 1 -->
+
+      <div
+        class="paper-lamp"
+        style="
+          right:5%;
+          top:-8px;
+        "
+      >
+
+        <span class="wire"></span>
+
+        <span class="body">
+          💡
+        </span>
+
+        <span class="light"></span>
+
+      </div>
+
+
+      <!-- LAMP 2 -->
+
+      <div
+        class="paper-lamp"
+        style="
+          left:7%;
+          top:50px;
+          transform:scale(.72);
+          opacity:.52;
+        "
+      >
+
+        <span class="wire"></span>
+
+        <span class="body">
+          💡
+        </span>
+
+        <span class="light"></span>
+
+      </div>
+
+
+      <!-- LAMP 3 -->
+
+      <div
+        class="paper-lamp"
+        style="
+          right:42%;
+          top:-35px;
+          transform:scale(.44);
+          opacity:.28;
+        "
+      >
+
+        <span class="wire"></span>
+
+        <span class="body">
+          💡
+        </span>
+
+        <span class="light"></span>
+
+      </div>
+
+    </div>
+
+
+    <!-- PAGE 1 -->
+
+    <div class="paper-page">
+
+      <h1 class="paper-title">
+        رفيق القرآن
+      </h1>
+
+      <div class="paper-subtitle">
+        دفتر الحفظ والمراجعة الذكية
+      </div>
+
+
+      ${
+        data.userName
+        ? `
+          <div class="paper-user">
+            🤍 ${esc(data.userName)}
+          </div>
+        `
+        : ''
+      }
+
+
+      <!-- GOAL -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🎯 مركز القيادة اليومي
+        </h2>
+
+        <div class="paper-goal">
+
+          <div>
+
+            <div style="
+              color:#aab6ad;
+              font-size:12px;
+            ">
+              الهدف:
+            </div>
+
+            <div style="
+              color:#e7cf70;
+              font-size:22px;
+              font-weight:900;
+              margin:3px 0 10px;
+            ">
+              ${data.goal}
+              ${esc(data.goalUnit)}
+            </div>
+
+            <div style="
+              color:#aab6ad;
+              font-size:11px;
+            ">
+              الإنجاز:
+              <b style="color:#e7cf70">
+                ${evaluated}
+              </b>
+              من
+              <b style="color:#e7cf70">
+                ${data.goal}
+              </b>
+            </div>
+
+          </div>
+
+
+          <div
+            class="paper-ring"
+            style="--pct:${pct}%"
+          >
+            <span>
+              ${pct.toFixed(0)}%
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- DAILY MISSION -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🧭 مهمتك اليوم
+        </h2>
+
+        <div class="check-list">
+
+          ${checklistHTML}
+
+        </div>
+
+      </section>
+
+
+      <!-- METHODOLOGY -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🌿 منهجيتي الشخصية للحفظ
+        </h2>
+
+        <div class="method-grid">
+
+          ${methodHTML}
+
+        </div>
+
+      </section>
+
+
+      <!-- TODAY WERDS -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🆕 أوراد الحفظ الجديد اليوم
+        </h2>
+
+        ${
+          todayEntries.length
+
+          ? todayEntries
+              .map(makeWerdRow)
+              .join('')
+
+          : `
+
+            <div
+              class="notebook-lines"
+            >
+
+              ${Array.from(
+                {length:5},
+                ()=>`
+                  <div class="notebook-line"></div>
+                `
+              ).join('')}
+
+            </div>
+
+          `
+        }
+
+      </section>
+
+
+      <!-- OLD REVIEW -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🔄 مراجعة المحفوظ القديم والمستحق اليوم
+        </h2>
+
+        ${
+          dueEntries.length
+
+          ? dueEntries
+              .map(makeWerdRow)
+              .join('')
+
+          : `
+
+            <div class="check-list">
+
+              <div class="check-item">
+                <div class="checkbox"></div>
+                <span>
+                  <strong>
+                    تم فحص المراجعات المستحقة
+                  </strong>
+                  <small>
+                    لا يوجد مستحق حاليًا.
+                  </small>
+                </span>
+              </div>
+
+              <div class="check-item">
+                <div class="checkbox"></div>
+                <span>
+                  <strong>
+                    تمت مراجعة المحفوظ القديم
+                  </strong>
+                  <small>
+                    مراجعة استدعائية بدون نظر.
+                  </small>
+                </span>
+              </div>
+
+            </div>
+
+          `
+        }
+
+      </section>
+
+
+      <!-- 7 DAYS -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📅 سجل تثبيت الورد — 7 أيام
+        </h2>
+
+        <div class="seven-days">
+
+          ${sevenDays}
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- PAGE 2 -->
+
+    <div class="paper-page paper-pagebreak">
+
+      <h1 class="paper-title">
+        📖 الفهم والتجويد
+      </h1>
+
+      <div class="paper-subtitle">
+        لا تحفظ فقط — افهم، جوّد، اربط، ثم سمّع
+      </div>
+
+
+      <!-- TAFSIR -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📝 التفسير الميسر
+        </h2>
+
+        <div class="study-card">
+
+          <h4>
+            ${currentAyah?.ref || 'الآية المختارة'}
+          </h4>
+
+          <p>
+            ${esc(tafsir)}
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- WORD MEANINGS -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📚 معاني الكلمات
+        </h2>
+
+        <div class="study-card">
+
+          <p>
+            ${esc(meanings)}
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- ASBAB -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📜 أسباب النزول
+        </h2>
+
+        <div class="study-card">
+
+          <p>
+            ${esc(asbab)}
+          </p>
+
+        </div>
+
+      </section>
+
+
+      <!-- TAJWEED -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🎙️ جوّد حفظك
+        </h2>
+
+        <div class="study-grid">
+
+          <div class="study-card">
+
+            <h4>
+              قاعدة اليوم
+            </h4>
+
+            <p>
+              راجع القاعدة التجويدية المرتبطة بالورد،
+              ثم طبّقها أثناء التسميع.
+            </p>
+
+          </div>
+
+          <div class="study-card">
+
+            <h4>
+              التطبيق العملي
+            </h4>
+
+            <p>
+              استمع للشيخ المقترح ثم كرر الآية
+              ببطء، ثم بسرعة طبيعية.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="notebook-lines"
+          style="margin-top:12px"
+        >
+
+          ${Array.from(
+            {length:5},
+            ()=>'<div class="notebook-line"></div>'
+          ).join('')}
+
+        </div>
+
+      </section>
+
+
+      <!-- MUTASHABIHAT -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🧩 المتشابهات والزلات
+        </h2>
+
+        <div class="study-grid">
+
+          ${mistakesHTML}
+
+        </div>
+
+      </section>
+
+
+      <!-- NOTES -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          ✍️ ملاحظات التسميع
+        </h2>
+
+        <div class="notebook-lines">
+
+          ${Array.from(
+            {length:8},
+            ()=>`
+              <div class="notebook-line"></div>
+            `
+          ).join('')}
+
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- PAGE 3 -->
+
+    <div class="paper-page paper-pagebreak">
+
+      <h1 class="paper-title">
+        📊 سجل الرحلة
+      </h1>
+
+      <div class="paper-subtitle">
+        متابعة طويلة المدى للحفظ والمراجعة
+      </div>
+
+
+      <!-- STATS -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📈 مؤشرات الرحلة
+        </h2>
+
+        <div class="check-list">
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${data.streak} يوم التزام
+              </strong>
+              <small>
+                أفضل سلسلة حالية
+              </small>
+            </span>
+          </div>
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${data.entries.length} ورد
+              </strong>
+              <small>
+                إجمالي الأوراد
+              </small>
+            </span>
+          </div>
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${reviews} مراجعة
+              </strong>
+              <small>
+                مراجعات مكتملة
+              </small>
+            </span>
+          </div>
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${reps} تكرار
+              </strong>
+              <small>
+                تكرارات غيبية
+              </small>
+            </span>
+          </div>
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${activeDays} يوم نشاط
+              </strong>
+              <small>
+                أيام استخدمت فيها التطبيق
+              </small>
+            </span>
+          </div>
+
+          <div class="check-item">
+            <div class="checkbox"></div>
+            <span>
+              <strong>
+                ${Math.round(data.totalFocusMinutes||0)} دقيقة
+              </strong>
+              <small>
+                إجمالي التركيز
+              </small>
+            </span>
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MONTHLY TRACKER -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🗓️ جدول المتابعة الأسبوعية
+        </h2>
+
+        <div class="tracker-grid">
+
+          ${[
+            'السبت',
+            'الأحد',
+            'الاثنين',
+            'الثلاثاء',
+            'الأربعاء',
+            'الخميس',
+            'الجمعة'
+          ]
+          .map(d=>`
+            <div class="tracker-cell">
+              ${d}
+            </div>
+          `)
+          .join('')}
+
+          ${Array.from(
+            {length:28},
+            (_,i)=>`
+              <div class="tracker-cell">
+                ${i+1}<br>☐
+              </div>
+            `
+          ).join('')}
+
+        </div>
+
+      </section>
+
+
+      <!-- ANNUAL NOTES -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          📝 ملاحظات الرحلة
+        </h2>
+
+        <div class="notebook-lines">
+
+          ${Array.from(
+            {length:12},
+            ()=>'<div class="notebook-line"></div>'
+          ).join('')}
+
+        </div>
+
+      </section>
+
+
+      <!-- SIGNATURE -->
+
+      <section class="paper-section">
+
+        <h2 class="paper-section-title">
+          🤍 عهد الاستمرار
+        </h2>
+
+        <div style="
+          color:#aab6ad;
+          font-size:12px;
+          line-height:2;
+        ">
+
+          أنا أتعهد أن أتعامل مع القرآن
+          كرحلة مستمرة:
+          حفظًا، وفهمًا، ومراجعة،
+          وعملاً بما تعلمت.
+
+        </div>
+
+        <div class="signature-grid">
+
+          <div class="signature">
+            الاسم
+          </div>
+
+          <div class="signature">
+            التاريخ
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOOTER -->
+
+      <div class="paper-footer">
+
+        رفيق القرآن
+        —
+        رحلة هادئة مع كتاب الله 🤍
+
+        <br>
+
+        هذه النسخة مصممة للاستخدام بالقلم
+        وليست مجرد تقرير إحصائي.
+
+      </div>
+
+    </div>
+
+  `;
+
+
+  /* ======================================
+     PRINT
+  ====================================== */
+
+  setTimeout(()=>{
+    window.print();
+  },200);
+
+}
 
 
 
