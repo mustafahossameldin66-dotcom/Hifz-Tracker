@@ -22,6 +22,7 @@
   --warning: #e09a1a; --warningBg: rgba(224,154,26,.12);
   --info: #4ba3ff; --infoBg: rgba(75,163,255,.12);
   --lamp-glow: rgba(212, 175, 55, 0.05); --lamp-size: 40vw; --lamp-opacity: 0.2;
+  --greenDim: rgba(58,145,76,.12); --yellowDim: rgba(219,140,22,.10); --redDim: rgba(181,75,75,.10);
 }
 [data-theme="light"] {
   --bg: #f2f5f3; --card: rgba(255, 255, 255, 0.85); --card-solid: #ffffff; --border: rgba(212,175,55,0.3); --text: #1b2620;
@@ -29,11 +30,13 @@
   --danger: #c93a3a; --dangerBg: rgba(201,58,58,.08); --input: rgba(255,255,255,0.9);
   --success: #2e8c42; --successBg: rgba(46,140,66,.08);
   --lamp-glow: rgba(212, 175, 55, 0.12);
+  --greenDim: rgba(46,140,66,.09); --yellowDim: rgba(217,119,6,.09); --redDim: rgba(201,58,58,.07);
 }
 [data-theme="sepia"] {
   --bg: #efe3c8; --card: rgba(246, 236, 212, 0.88); --card-solid: #f7ecd5; --border: rgba(129,95,35,.25); --text: #4a3b24;
   --gold: #8f6a1a; --goldDim: rgba(143,106,26,.15); --muted: #7c6a4f; --input: rgba(255,251,240,.9);
   --lamp-glow: rgba(143, 106, 26, 0.08);
+  --greenDim: rgba(100,140,80,.1); --yellowDim: rgba(160,110,30,.1); --redDim: rgba(180,80,80,.1);
 }
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; height: 100%; }
@@ -67,7 +70,7 @@ body.mode-3 .card, body.mode-3 .item, body.mode-3 .panel, body.mode-3 .nav {
   border: 1px solid var(--border); border-top: 1px solid rgba(255,255,255,0.08); border-left: 1px solid rgba(255,255,255,0.03);
   border-radius: var(--card-radius); box-shadow: 0 16px 40px rgba(0,0,0,0.25);
   transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
-  transform: translateZ(0); /* Hardware Accel */
+  transform: translateZ(0);
 }
 [data-theme="light"] body.mode-3 .card { border-top: 1px solid rgba(255,255,255,0.8); box-shadow: 0 16px 40px rgba(0,0,0,0.05); }
 body.mode-3 .card:hover, body.mode-3 .item:hover { transform: translateY(-4px) translateZ(0); box-shadow: 0 20px 45px rgba(0,0,0,0.3); border-color: var(--gold); }
@@ -117,11 +120,6 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; display: inli
 .t-box { width: 14px; height: 14px; border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; background: transparent; transition: all 0.3s;}
 .t-box.done { background: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.5); border-color: var(--gold);}
 
-.qbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
-.qbtns.anki-btns { grid-template-columns: repeat(4, 1fr); }
-.qbtns button { padding: 12px; border-radius: 12px; font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); }
-[data-theme="light"] .qbtns button, [data-theme="sepia"] .qbtns button { background: rgba(0,0,0,0.03); }
-
 /* Bottom Navigation */
 .nav { position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0; background: var(--card2); border-top: 1px solid var(--border); display: flex; justify-content: space-around; align-items: center; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); box-shadow: 0 -10px 30px rgba(0,0,0,.2); transition: all 0.4s;}
 .nav-item { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; font-size: 12px; font-weight: 700; color: var(--muted); cursor: pointer; padding: 10px 4px; border-radius: 16px; transition: all 0.3s; }
@@ -149,7 +147,7 @@ body.mode-3 .nav { bottom: 20px; left: 20px; right: 20px; width: auto; border-ra
 .modal, .splash { position: fixed; inset: 0; z-index: 4000; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 .modal.show, .splash.show { display: flex; animation: modalFadeIn 0.3s ease-out; }
 @keyframes modalFadeIn { from {opacity: 0; transform: scale(0.95);} to {opacity: 1; transform: scale(1);} }
-.box { width: min(680px, 100%); max-height: 85vh; overflow-y: auto; padding: 40px; background: var(--card-solid); border: 1px solid rgba(212,175,55,0.2); border-radius: 32px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
+.box { width: min(680px, 100%); max-height: 85vh; overflow-y: auto; padding: 40px; background: var(--card); border: 1px solid rgba(212,175,55,0.2); border-radius: 32px; position: relative; box-shadow: 0 30px 80px rgba(0,0,0,0.6); }
 .close-modal { position: absolute; top: 20px; left: 20px; background: var(--dangerBg); color: var(--danger); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; border: 1px solid rgba(181,75,75,0.2); transition: all 0.2s;}
 .close-modal:hover { background: var(--danger); color: #fff; transform: scale(1.1); }
 
@@ -162,10 +160,26 @@ body.mode-3 .nav { bottom: 20px; left: 20px; right: 20px; width: auto; border-ra
 /* Dynamic Fire & Glows */
 .streak-fire { display:inline-block; font-size:32px; animation: fireFlicker 1.5s infinite alternate ease-in-out; transform-origin: bottom center; filter: drop-shadow(0 0 10px rgba(224, 154, 26, 0.6)); }
 @keyframes fireFlicker { 0% { transform: scale(1) skewX(0deg); } 50% { transform: scale(1.05) skewX(2deg); } 100% { transform: scale(0.95) skewX(-2deg); } }
-.golden-glow { animation: goldenGlow 1.5s cubic-bezier(0.25, 1, 0.5, 1); position: relative; z-index: 5; }
-@keyframes goldenGlow{0%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}40%{box-shadow:0 10px 40px rgba(212,175,55,.3);border-color:var(--gold); transform:scale(1.01)}100%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border); transform:scale(1)}}
-.celebrate-glow { animation: celebrateGlow 1.5s cubic-bezier(0.25, 1, 0.5, 1); position: relative; z-index: 10; }
-@keyframes celebrateGlow{0%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}40%{box-shadow:0 10px 40px rgba(212,175,55,.5);border-color:var(--gold); transform:scale(1.02) translateY(-4px)}100%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border); transform:scale(1) translateY(0)}}
+
+@keyframes goldenGlow{
+  0%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}
+  40%{box-shadow:0 8px 30px rgba(212,175,55,.28),inset 0 0 14px rgba(212,175,55,.06);border-color:var(--gold)}
+  100%{box-shadow:0 0 0 rgba(212,175,55,0);border-color:var(--border)}
+}
+@keyframes goldenGlowText{
+  0%{color:inherit;text-shadow:none;transform:scale(1)}
+  40%{color:var(--gold);text-shadow:0 0 14px rgba(212,175,55,.5);transform:scale(1.025)}
+  100%{color:inherit;text-shadow:none;transform:scale(1)}
+}
+@keyframes celebrateGlow{
+  0%{transform:scale(1);box-shadow:0 0 0 rgba(212,175,55,0);}
+  40%{transform:scale(1.015) translateY(-3px);box-shadow:0 10px 38px rgba(212,175,55,.38);border-color:var(--gold)}
+  100%{transform:scale(1);box-shadow:0 0 0 rgba(212,175,55,0);}
+}
+
+.golden-glow{animation:goldenGlow 1s cubic-bezier(.16,1,.3,1);position:relative;z-index:5;}
+.golden-glow-text{animation:goldenGlowText 1s cubic-bezier(.16,1,.3,1);display:inline-block;}
+.celebrate-glow{animation:celebrateGlow 1.35s cubic-bezier(.16,1,.3,1);position:relative;z-index:10;}
 
 /* Deep Breathing */
 .breathe-circle { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--gold); margin: 30px auto; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: var(--gold); box-shadow: 0 0 30px rgba(212,175,55,0.3); }
@@ -176,7 +190,7 @@ body.mode-3 .nav { bottom: 20px; left: 20px; right: 20px; width: auto; border-ra
 .view { display: none; animation: fadeInSmooth 0.4s ease; }
 .view.active { display: block; }
 @keyframes fadeInSmooth { from{opacity:0; transform:translateY(15px)} to{opacity:1; transform:translateY(0)} }
-.fab { position: fixed; z-index: 1200; left: 24px; bottom: 100px; padding: 14px 24px; border-radius: 999px; background: var(--card-solid); color: var(--gold); border: 1px solid rgba(212,175,55,0.4); font-weight: 800; font-size: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.3); cursor: pointer; transition: all 0.3s; }
+.fab { position: fixed; z-index: 1200; left: 24px; bottom: 100px; padding: 14px 24px; border-radius: 999px; background: var(--card); color: var(--gold); border: 1px solid rgba(212,175,55,0.4); font-weight: 800; font-size: 16px; box-shadow: 0 10px 30px rgba(0,0,0,.3); cursor: pointer; transition: all 0.3s; }
 .fab:hover { transform: scale(1.05) translateY(-5px); box-shadow: 0 15px 40px rgba(212,175,55,0.4); border-color: var(--gold);}
 body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 @media(min-width:992px){ .fab { bottom: 40px; left: 40px;} body.mode-3 .fab { left: 40px;} }
@@ -198,7 +212,23 @@ body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20
   .print-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   .print-table th, .print-table td { border: 1px solid #777; padding: 8px; text-align: right; }
   @page { margin: 1cm; }
+  
+  /* Color Print Mode */
+  #printSheet.print-color .print-title { color: #d4af37 !important; border-bottom-color: #d4af37 !important; }
+  #printSheet.print-color .print-box { border-color: #d4af37 !important; }
+  #printSheet.print-color th { background-color: rgba(212,175,55,.15) !important; color: #111 !important; }
 }
+
+.qbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+.qbtns.anki-btns { grid-template-columns: repeat(4, 1fr); }
+.qbtns button { padding: 12px; border-radius: 12px; font-size: 14px; font-weight: bold; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--text); }
+[data-theme="light"] .qbtns button, [data-theme="sepia"] .qbtns button { background: rgba(0,0,0,0.03); }
+
+.rep-counter-container{margin-top:8px;padding:10px;border:1px dashed var(--border);border-radius:12px;background:var(--input)}
+.rep-counter-row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.rep-btn{background:var(--goldDim);color:var(--gold);border:1px solid var(--gold);padding:8px 12px;border-radius:8px;font-weight:800}
+.rep-btn.done{background:var(--success);color:#fff;border-color:var(--success)}
+
 </style>
 </head>
 <body class="mode-3">
@@ -209,7 +239,7 @@ body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20
 <div class="splash" id="dailySplash" onclick="closeDailySplash()">
   <div class="box" onclick="event.stopPropagation()" style="cursor:default; text-align:center;">
     <div style="color:var(--gold);font-weight:900;font-size:17px;margin-bottom:16px">📖 آية اليوم</div>
-    <div class="quran" id="splashAyah" style="font-size:32px!important;line-height:2.2"></div>
+    <div class="quran glow-target" id="splashAyah" style="font-size:32px!important;line-height:2.2"></div>
     <div class="small" id="splashRef" style="margin-top:16px; font-size:16px;"></div>
     <audio id="splashAudio" controls preload="none" style="width:100%;margin-top:24px;display:none;"></audio>
     <button class="action" id="playAyahBtn" style="width:100%;margin-top:16px;border:1px solid rgba(212,175,55,0.4);color:var(--gold);background:var(--goldDim);font-size:18px; padding:20px;" onclick="playDailyAyah(event)">▶ تشغيل آية اليوم</button>
@@ -245,7 +275,6 @@ body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20
   </div>
 </div>
 <div class="modal" id="sadaqahModal"><div class="box"><button class="close-modal" onclick="closeModal('sadaqahModal')">✕</button><h2 style="color:var(--gold);margin-top:0; font-size:26px;">🤲 أذكار وصدقة جارية</h2><div class="card" style="background:linear-gradient(145deg, rgba(212,175,55,0.1), rgba(0,0,0,0.2));border-color:rgba(212,175,55,0.3); border-width:2px; padding:32px;"><div class="quran" style="font-size:24px!important; text-shadow:0 2px 10px rgba(212,175,55,0.2);">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div><div style="font-size:19px;margin-top:20px;line-height:2.2; opacity:0.9;">نسأل الله أن يجعلها خالصةً لوجهه الكريم، وأن ينفع بها وينفعنا بها. وأرجو الدعاء لأخي بالشفاء العاجل.</div></div><div id="adhkarList"></div></div></div>
-
 <div class="modal" id="addModal"><div class="box"><button class="close-modal" onclick="closeModal('addModal')">✕</button><h2 style="color:var(--gold);margin:0; font-size:26px;">➕ إضافة ورد جديد</h2><div class="small" style="margin-top:10px; font-size:15px;">أدخل الورد كما ستتذكره؛ التطبيق يحاول التحديد التلقائي.</div><div class="card" style="padding:20px; margin-top:20px;"><div style="font-size:18px; margin-bottom:12px; font-weight:bold; color:var(--gold);">📖 بيانات الورد</div><label class="small" style="font-size:14px;">اسم الورد</label><input id="newLabel" placeholder="مثال: البقرة ص 48"><label class="small" style="font-size:14px;">ملاحظة شخصية (اختياري)</label><input id="newNote" placeholder="موضع صعب، متشابهات..." style="margin-bottom:0"></div><div class="card" style="padding:20px;"><div style="font-size:18px; margin-bottom:12px; font-weight:bold; color:var(--gold);">🔢 تقدير الحروف (عند تعذر الحساب الآلي)</div><div class="row"><div><label class="small">العدد</label><input id="unitCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div style="flex:2"><label class="small">الوحدة</label><select id="unitType" style="margin-bottom:0"><option value="500">صفحة ≈ 500 حرف</option><option value="50">آية ≈ 50 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="10000">جزء ≈ 10000 حرف</option></select></div></div></div><div class="card" style="border-color:rgba(181,75,75,.3);background:var(--dangerBg); padding:20px;"><label style="display:flex;align-items:center;gap:16px;color:var(--danger);font-weight:900;margin:0; font-size:17px; cursor:pointer;"><input id="icuCheckbox" type="checkbox" style="width:26px;height:26px;accent-color:var(--danger);margin:0"> 🏥 عناية مركزة — للآيات الصعبة</label></div><button class="main" id="addBtn" onclick="addEntry()" style="font-size:18px; padding:20px;">➕ إضافة لخطة اليوم</button></div></div>
 <div class="modal" id="oldModal"><div class="box"><button class="close-modal" onclick="closeModal('oldModal')">✕</button><h2 style="color:var(--gold);margin:0; font-size:26px;">📚 إضافة محفوظ سابق</h2><div class="small" style="margin-top:10px; font-size:15px;">سيبدأ مباشرة من مرحلة الاستدامة والمراجعة.</div><div class="card" style="padding:20px; margin-top:20px;"><div style="font-size:18px; margin-bottom:12px; font-weight:bold; color:var(--gold);">📖 بيانات المحفوظ</div><label class="small">اسم الورد المحفوظ</label><input id="oldLabel" placeholder="مثال: جزء عم أو الكهف ص 295"></div><div class="card" style="padding:20px;"><div style="font-size:18px; margin-bottom:12px; font-weight:bold; color:var(--gold);">🔢 تقدير احتياطي للحروف</div><div class="row"><div><label class="small">العدد</label><input id="oldCount" type="number" min="1" value="1" style="margin-bottom:0"></div><div style="flex:2"><label class="small">الوحدة</label><select id="oldType" style="margin-bottom:0"><option value="10000">جزء ≈ 10000 حرف</option><option value="500">صفحة ≈ 500 حرف</option><option value="1250">ربع حزب ≈ 1250 حرف</option><option value="50">آية ≈ 50 حرف</option></select></div></div></div><button class="main" id="oldBtn" onclick="addOldEntry()" style="font-size:18px; padding:20px;">📚 إضافة للمخزون</button></div></div>
 <div class="modal" id="notebookModal"><div class="box"><button class="close-modal" onclick="closeModal('notebookModal')">✕</button><h2 style="color:var(--gold); margin-bottom:20px; font-size:26px;">🧩 كشكول المتشابهات</h2><input id="mistakeTitle" placeholder="عنوان الموضع (مثال: البقرة وآل عمران)"><textarea id="mistakeText" placeholder="اكتب الفرق، الآية، أو ملاحظة التسميع"></textarea><div class="row"><select id="mistakeType" style="margin-bottom:0"><option value="متشابه">متشابه</option><option value="زلة">زلة/خطأ</option><option value="قاعدة">قاعدة</option></select><button class="main" onclick="addMistake()" style="margin-bottom:0">إضافة</button></div><div id="mistakeList" style="margin-top:24px"></div></div></div>
@@ -285,7 +314,7 @@ body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20
       </div>
     </div>
 
-    <!-- FOCUS MODE -->
+    <!-- FOCUS MODE (With Deep Breathing) -->
     <div id="focusView">
       <div class="card" style="text-align:center;border-color:rgba(212,175,55,0.4); padding:60px 20px;">
         <h2 style="justify-content:center;font-size:32px;margin-bottom:20px">⏱️ جلسة التركيز</h2>
@@ -546,6 +575,7 @@ body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20
 <script>
 'use strict';
 const STORAGE_KEY='rafiq-quran-ultimate-vfinal';
+const LEGACY_KEYS=['rafiq-quran-master-v6', 'rafiq-quran-master-v5','rafiq-quran-master-v4','rafiq-quran-master-v2','hifz-core-v4'];
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,graphicsLevel:1,theme:'dark',firstDate:'',totalFocusMinutes:0,restDays:[5],mistakes:[],streakFreezes:0,notifyEnabled:false,recitationVolume:1,reverseAmount:30,reverseUnit:'صفحة',reverseTarget:''};
 let data=structuredClone(DEFAULT),adhkarProgress={},poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,mediaRecorder=null,audioChunks=[],recordAudioUrl=null,zenCtx=null,zenGain=null,zenSource=null;
 
@@ -567,11 +597,25 @@ const fmt=n=>Number(n||0).toLocaleString('en-US');
 function loadData(){
   try{
     let raw=localStorage.getItem(STORAGE_KEY);
+    if(!raw){
+      for(const key of LEGACY_KEYS){
+        raw=localStorage.getItem(key);
+        if(raw) break;
+      }
+    }
     data=raw?normalize(JSON.parse(raw)):structuredClone(DEFAULT);
   }catch{data=structuredClone(DEFAULT)}
+
   try{let r=localStorage.getItem('rafiq-adhkar-vfinal');adhkarProgress=r?JSON.parse(r):{};}catch{adhkarProgress={}}
   adhkarList.forEach(([id])=>{if(!Number.isFinite(adhkarProgress[id]))adhkarProgress[id]=0});
-  data.entries.forEach(e=>{if(e.lastRepDate!==today())e.sessionReps=0});
+  
+  data.entries.forEach(e=>{
+    if(e.lastRepDate!==today()) e.sessionReps=0;
+    if(e.phaseDays.length===0 && e.hasBeenEvaluated) {
+      e.phaseDays=['legacy1','legacy2','legacy3','legacy4','legacy5','legacy6','legacy7'];
+    }
+  });
+  
   if(!data.firstDate&&data.entries.length)data.firstDate=data.entries.map(e=>e.date).sort()[0]||today();
 }
 function normalizeEntry(e){if(!e||typeof e!=='object')return null;return{id:String(e.id||`${Date.now()}-${Math.random()}`),label:String(e.label||'ورد'),note:String(e.note||''),isICU:!!e.isICU,date:e.date||today(),nextReviewDate:e.nextReviewDate||today(),quality:e.quality??null,interval:Number.isFinite(e.interval)?e.interval:0,ease:Number.isFinite(e.ease)?e.ease:2.5,srsLevel:Number.isFinite(e.srsLevel)?e.srsLevel:0,reviewCount:Number.isFinite(e.reviewCount)?e.reviewCount:0,hasBeenEvaluated:!!e.hasBeenEvaluated,sessionReps:Number.isFinite(e.sessionReps)?e.sessionReps:0,totalReps:Number.isFinite(e.totalReps)?e.totalReps:0,baseLetters:Number.isFinite(e.baseLetters)?e.baseLetters:500,isExactLetters:!!e.isExactLetters,lastRepDate:e.lastRepDate||today(),phaseDays:Array.isArray(e.phaseDays)?e.phaseDays:[],manualReps:Number.isFinite(e.manualReps)?e.manualReps:0,reviewReads:Number.isFinite(e.reviewReads)?e.reviewReads:0,failCount:Number.isFinite(e.failCount)?e.failCount:0}}
@@ -579,6 +623,34 @@ function normalize(x){const d=structuredClone(DEFAULT);if(!x||typeof x!=='object
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(data))}function saveAdhkar(){localStorage.setItem('rafiq-adhkar-vfinal',JSON.stringify(adhkarProgress))}
 
 /* EFFECTS & SOUNDS */
+function reflow(el){if(el)void el.offsetWidth;}
+function glowEntry(id,celebrate=false){
+  requestAnimationFrame(()=>{
+    const el=document.querySelector(`[data-entry-id="${CSS.escape(id)}"]`);
+    if(!el)return;
+    const cls=celebrate?'celebrate-glow':'golden-glow';
+    el.classList.remove('golden-glow','celebrate-glow');
+    reflow(el);
+    el.classList.add(cls);
+    const text=el.querySelector('.quran');
+    if(text){
+      text.classList.remove('golden-glow-text');
+      reflow(text);
+      text.classList.add('golden-glow-text');
+      setTimeout(()=>text.classList.remove('golden-glow-text'),1000);
+    }
+    setTimeout(()=>el.classList.remove(cls),celebrate?1350:1000);
+  });
+}
+function glowStreak(){
+  const el=$('streakStat');
+  if(!el)return;
+  el.classList.remove('golden-glow-text');
+  reflow(el);
+  el.classList.add('golden-glow-text');
+  setTimeout(()=>el.classList.remove('golden-glow-text'),1000);
+}
+
 function createParticles(x,y){
   if(data.graphicsLevel===1)return;
   for(let i=0;i<12;i++){
@@ -606,14 +678,33 @@ function changeGraphicsMode(){data.graphicsLevel=Number($('graphicsModeSelect').
 function applyGraphicsMode(){document.body.className=`mode-${data.graphicsLevel}`;document.body.dataset.theme=data.theme;updateLamp()}
 function updateLamp(){
   const l=$('spiritualLamp');if(!l||data.graphicsLevel!==3){document.documentElement.style.setProperty('--lamp-opacity','0');return;}
-  const t=today(),log=data.dailyLog[t]||{},dayScore=(log.save||0)*3+(log.review||0)*2+(log.rep||0)*0.15,streak=data.streak||0;
-  let intensity=Math.min(100,(streak*4)+(dayScore*8))/100; intensity=Math.max(0.15,intensity);
+  const t=today(),log=data.dailyLog[t]||{},ds=(log.save||0)*3+(log.review||0)*2+(log.rep||0)*0.15,streak=data.streak||0;
+  let intensity=Math.min(100,(streak*4)+(ds*8))/100; intensity=Math.max(0.15,intensity);
   document.documentElement.style.setProperty('--lamp-glow',`rgba(212,175,55,${0.08+(intensity*0.12)})`);
   document.documentElement.style.setProperty('--lamp-size',`${40+(intensity*40)}vw`);
   document.documentElement.style.setProperty('--lamp-opacity',0.3+(intensity*0.7));
 }
+function updateSpiritualLamp(){
+  const t = new Date();
+  const dayIndex=Math.floor((t-new Date(t.getFullYear(),0,0))/86400000);
+  const taj = tajweedData[dayIndex % tajweedData.length];
+  const titleEl = $('tajweedTitle');
+  if(titleEl) {
+    titleEl.textContent = taj.title;
+    titleEl.dataset.search = taj.search;
+  }
+  const ruleEl = $('tajweedRule');
+  if(ruleEl) ruleEl.textContent = taj.rule;
+}
 function timeGreeting(){const h=new Date().getHours(),n=data.userName||'يا صديقي';if(h>=2&&h<5)return `وقت الخلوات يا ${n}، هل من ركعتين؟ 🌌`;if(h<6)return `صباح الهمة والبركة يا ${n} 🌅`;if(h<12)return `صباح الخير يا ${n} ☀️`;if(h<17)return `طاب يومك يا ${n} 🌤️`;if(h<22)return `مساء الهدوء يا ${n} 🌙`;return `ليلة مباركة يا ${n} 🌌`}
-function updateGreeting(){ $('greeting').textContent=timeGreeting();$('todayLabel').textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});if(data.streak>0){$('streakNum').textContent=data.streak;$('streakFire').style.display='inline-block'}else{$('streakNum').textContent='0';$('streakFire').style.display='none'} }
+function updateGreeting(){ 
+  const g = $('greeting'); if(g) g.textContent=timeGreeting();
+  const tl = $('todayLabel'); if(tl) tl.textContent=new Date().toLocaleDateString('ar-EG',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  if(data.streak>0){
+    const sn = $('streakNum'); if(sNum) sNum.textContent=data.streak;
+    const sf = $('streakFire'); if(sFire) sFire.style.display='inline-block';
+  }
+}
 
 /* UI & NAVIGATION */
 function openModal(id){$(id)?.classList.add('show')}function closeModal(id){$(id)?.classList.remove('show')}
@@ -621,12 +712,22 @@ function saveWelcomeName(){const n=$('onboardName').value.trim();if(!n)return al
 function switchTab(id,el){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));$(id)?.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));el?.classList.add('active');
-  if(id==='progress'){renderProgress();renderCalendar();drawChart();}if(id==='schedule'){renderPlan('day');renderMistakes();}if(id==='settings'){renderSettings();}window.scrollTo(0,0)
+  if(id==='progress'){renderProgress();renderCalendar();drawChart();}if(id==='schedule'){renderPlan('day');renderMistakes();}if(id==='settings'){renderRestDaysSettings();}window.scrollTo(0,0)
 }
 
 /* ACTIVITY */
 function logActivity(k,a=1){const t=today();if(!data.dailyLog[t])data.dailyLog[t]={save:0,review:0,rep:0,focus:0};data.dailyLog[t][k]=(data.dailyLog[t][k]||0)+a;updateLamp();save()}
-function markActive(){const t=today();if(data.lastActive===t)return;const old=data.streak||0;data.streak=!data.lastActive?1:(dayDiff(data.lastActive,t)===1?old+1:1);data.lastActive=t;if(!data.firstDate)data.firstDate=t;if(data.streak>old&&data.streak%7===0){data.streakFreezes=Math.min(3,(data.streakFreezes||0)+1)}save()}
+function markActive(){
+  const t=today();if(data.lastActive===t)return false;
+  const old=data.streak||0;
+  data.streak=!data.lastActive?1:(dayDiff(data.lastActive,t)===1?old+1:1);
+  data.lastActive=t;if(!data.firstDate)data.firstDate=t;
+  if(data.streak>old&&data.streak%7===0){data.streakFreezes=Math.min(3,(data.streakFreezes||0)+1)}
+  save();
+  const increased=data.streak>old;
+  if(increased) setTimeout(glowStreak,100);
+  return increased;
+}
 
 /* SPLASH */
 function showDailySplash(){const t=today();if(localStorage.getItem('rafiq-splash-vfinal')===t||!data.userName)return;const item=dailyAyahs[0];$('splashAyah').textContent=item.text;$('splashRef').textContent=`${item.ref} — بصوت ${item.name}`;const a=$('splashAudio');a.style.display='block';a.src=`https://everyayah.com/data/${item.base}/${String(item.s).padStart(3,'0')}${String(item.a).padStart(3,'0')}.mp3`;a.volume=data.recitationVolume;a.onended=closeDailySplash;$('dailySplash').classList.add('show');localStorage.setItem('rafiq-splash-vfinal',t);setTimeout(()=>playDailyAyah(),350)}
@@ -635,8 +736,8 @@ function closeDailySplash(){const a=$('splashAudio');if(a){a.pause();a.currentTi
 
 /* ENTRIES & SWIPE */
 async function exactLetters(label){try{let url='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)url=`https://api.alquran.cloud/v1/page/${p[1]}/quran-uthmani`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);if(a)url=`https://api.alquran.cloud/v1/ayah/${s}:${a[1]}/quran-uthmani`}}if(!url)return null;const c=new AbortController();const tm=setTimeout(()=>c.abort(),7000);const r=await fetch(url,{signal:c.signal});clearTimeout(tm);if(!r.ok)return null;const j=await r.json();let txt=j?.data?.ayahs?j.data.ayahs.map(a=>a.text).join(''):(j?.data?.text||'');return txt.replace(/[^\u0621-\u064A]/g,'').length||null}catch{return null}}
-async function addEntry(){const label=$('newLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');const btn=$('addBtn');btn.disabled=true;btn.textContent='جاري الحساب…';try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('unitCount').value)||1)*(parseInt($('unitType').value)||500);const e=addEntryObj(label,$('newNote').value.trim(),$('icuCheckbox').checked,false,letters,exact);data.entries.push(e);logActivity('save');markActive();save();closeModal('addModal');renderAll();haptic('done');uiSound('click');$('newLabel').value='';$('newNote').value='';$('icuCheckbox').checked=false}catch(err){alert('تعذر إضافة الورد.')}finally{btn.disabled=false;btn.textContent='➕ إضافة لخطة اليوم'}}
-async function addOldEntry(){const label=$('oldLabel').value.trim();if(!label)return alert('اكتب الورد');const btn=$('oldBtn');btn.disabled=true;try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('oldCount').value)||1)*(parseInt($('oldType').value)||500);const e=addEntryObj(label,'',false,true,letters,exact);data.entries.push(e);logActivity('save');markActive();save();renderAll();closeModal('oldModal');$('oldLabel').value='';uiSound('click');}finally{btn.disabled=false;btn.textContent='📚 إضافة للمخزون'}}
+async function addEntry(){const label=$('newLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');const btn=$('addBtn');btn.disabled=true;btn.textContent='جاري الحساب…';try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('unitCount').value)||1)*(parseInt($('unitType').value)||500);const e=addEntryObj(label,$('newNote').value.trim(),$('icuCheckbox').checked,false,letters,exact);data.entries.push(e);logActivity('save');markActive();save();closeModal('addModal');renderAll();haptic('done');uiSound('click');$('newLabel').value='';$('newNote').value='';$('icuCheckbox').checked=false;setTimeout(()=>glowEntry(e.id,false),80);}catch(err){alert('تعذر إضافة الورد.')}finally{btn.disabled=false;btn.textContent='➕ إضافة لخطة اليوم'}}
+async function addOldEntry(){const label=$('oldLabel').value.trim();if(!label)return alert('اكتب الورد');const btn=$('oldBtn');btn.disabled=true;try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('oldCount').value)||1)*(parseInt($('oldType').value)||500);const e=addEntryObj(label,'',false,true,letters,exact);data.entries.push(e);logActivity('save');markActive();save();renderAll();closeModal('oldModal');$('oldLabel').value='';uiSound('click');setTimeout(()=>glowEntry(e.id,false),80);}finally{btn.disabled=false;btn.textContent='📚 إضافة للمخزون'}}
 function removeEntry(id){if(!confirm('تأكيد حذف الورد؟'))return;data.entries=data.entries.filter(e=>e.id!==id);save();renderAll()}
 
 function addEntryObj(label,note,icu,skip,letters,exact){return{id:`${Date.now()}-${Math.random().toString(36).slice(2,8)}`,label,note,isICU:!!icu,date:today(),nextReviewDate:today(),quality:null,interval:0,ease:2.5,srsLevel:0,reviewCount:0,hasBeenEvaluated:false,sessionReps:0,totalReps:0,baseLetters:letters,isExactLetters:exact,lastRepDate:today(),phaseDays:skip?['old1','old2','old3','old4','old5','old6','old7']:[],manualReps:0,reviewReads:0,failCount:0}}
@@ -644,9 +745,21 @@ function addEntryObj(label,note,icu,skip,letters,exact){return{id:`${Date.now()}
 function swipeReview(id,q,btn){const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);const e=data.entries.find(x=>x.id===id);if(!e)return;const phase=e.phaseDays?.length||0;if(phase<7&&(e.sessionReps||0)<10&&q!=='fail'&&!confirm('لم تكمل 10 تكرارات. هل تقيم؟'))return;reviewEntry(id,q);}
 function reviewEntry(id,q){
   const e=data.entries.find(x=>x.id===id);if(!e)return;const t=today();
-  if(!Array.isArray(e.phaseDays))e.phaseDays=[];let success=false;
+  if(!Array.isArray(e.phaseDays))e.phaseDays=[];let success=false, graduated=false;
   if(e.phaseDays.length<7){
-    if(q==='pass'){e.phaseDays.push(t);e.interval=1;success=true;}else{e.phaseDays=[];e.interval=1}
+    if(e.phaseDays.length){
+      const last=e.phaseDays.at(-1);
+      if(String(last).startsWith('20')&&dayDiff(last,t)>1){
+        e.phaseDays=[];alert('⚠️ انقطعت سلسلة التثبيت المتتالية. يبدأ الورد من اليوم الأول.')
+      }
+    }
+    if(q==='pass'){
+      if(e.phaseDays.includes(t))return alert('سجلت مراجعة اليوم بالفعل.');
+      e.phaseDays.push(t);e.interval=1;success=true;
+      if(e.phaseDays.length===7) graduated=true;
+    }else{
+      e.phaseDays=[];e.interval=1;
+    }
     e.hasBeenEvaluated=true;e.reviewCount++;e.reviewReads++;e.totalReps=(e.manualReps||0)+e.reviewReads;
   }else{
     e.hasBeenEvaluated=true;e.reviewCount++;e.reviewReads++;e.totalReps=(e.manualReps||0)+e.reviewReads;
@@ -659,15 +772,26 @@ function reviewEntry(id,q){
     }
   }
   const d=new Date();d.setDate(d.getDate()+e.interval);e.nextReviewDate=today(d);e.sessionReps=0;
+  if(e.isICU&&success&&confirm('أحسنت! إخراجه من العناية المركزة؟'))e.isICU=false;
   logActivity('review',1);markActive();save();renderAll();
-  uiSound(success?'ok':'click'); haptic(success?'done':'light');
+  
+  if(graduated){uiSound('done');setTimeout(()=>glowEntry(id,true),80);}
+  else if(success){uiSound('ok');setTimeout(()=>glowEntry(id,false),80);}
+  else{uiSound('click');}
 }
 function addRep(id,btn){
   const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);
   const e=data.entries.find(x=>x.id===id),t=today();if(!e)return;
   if(e.lastRepDate!==t)e.sessionReps=0;e.sessionReps++;e.manualReps=(e.manualReps||0)+1;e.totalReps=(e.manualReps||0)+(e.reviewReads||0);e.lastRepDate=t;
   logActivity('rep',1);markActive();save();renderAll();
-  uiSound(e.sessionReps>=10?'done':'click'); haptic(e.sessionReps>=10?'done':'light');
+  
+  if(e.sessionReps===10){
+    uiSound('done');
+    setTimeout(()=>glowEntry(id,true),80);
+  }else{
+    uiSound('click');
+    setTimeout(()=>glowEntry(id,false),80);
+  }
 }
 
 function smartLinks(label){let path='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)path=`page/${p[1]}`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);path=a?`${s}/${a[1]}`:`${s}`}else path=`search?q=${encodeURIComponent(label)}`}return`<div class="links"><a target="_blank" rel="noopener" href="https://quran.com/${path}">📖 المصحف</a><a target="_blank" rel="noopener" href="https://app.tarteel.ai/">🎤 ترتيل</a></div>`}
@@ -681,26 +805,40 @@ function entryHTML(e){
     else ev=`<div class="qbtns"><button style="color:var(--info);border-color:rgba(33,150,243,0.3)" onclick="swipeReview('${e.id}',4,this)">🔵 سهل</button><button style="background:var(--successDim);border-color:rgba(58,145,76,0.3);color:var(--success)" onclick="swipeReview('${e.id}',3,this)">🟢 تذكرته</button><button style="background:var(--yellowDim);border-color:rgba(219,140,22,0.3);color:var(--warning)" onclick="swipeReview('${e.id}',2,this)">🟡 بصعوبة</button><button style="background:var(--dangerDim);border-color:rgba(181,75,75,0.3);color:var(--danger)" onclick="swipeReview('${e.id}',1,this)">🔴 نسيت</button></div>`;
   }
   const dots=Array.from({length:7},(_,i)=>`<span class="t-box ${i<phase?'done':''}"></span>`).join('');
-  let metaText = !e.hasBeenEvaluated ? (isOldSkipped ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مراجعة مبدئية للمستوى</span>` : `<span style="color:var(--gold);font-weight:800; font-size:16px;">✨ ورد جديد</span>`) : (due ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مستحق للمراجعة</span>` : `<span style="font-size:15px; opacity:0.9;">المراجعة القادمة: ${esc(e.nextReviewDate)}</span>`);
+  let metaText = !e.hasBeenEvaluated ? (isOldSkipped ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مراجعة مبدئية لتحديد المستوى</span>` : `<span style="color:var(--gold);font-weight:800; font-size:16px;">✨ ورد جديد</span>`) : (due ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مستحق للمراجعة</span>` : `<span style="font-size:15px; opacity:0.9;">المراجعة القادمة: ${esc(e.nextReviewDate)}</span>`);
   
-  return`<div class="swipe-card" data-entry-id="${e.id}"><div class="swipe-backdrop"><span style="color:var(--success)">✅</span><span style="color:var(--danger)">🔄</span></div><div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}"><div class="item-header"><div class="item-title"><div class="quran">${esc(e.label)} ${e.isExactLetters?'<span style="font-size:16px; opacity:0.8;" title="مضبوط">🎯</span>':''}</div>${e.note?`<div class="note-txt" style="font-size:16px; margin-top:10px;">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:10px"><button class="action danger" style="padding:10px 14px;font-size:18px;border-radius:14px;" onclick="openRecorder('${encodeURIComponent(e.label)}')">🎤</button><button class="action" style="background:transparent;padding:10px; border:none; font-size:18px;" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker" style="margin-top:0">${phase<7?`<span class="phase-badge">تثبيت ${phase}/7</span>${dots}`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success);background:var(--successBg)">استدامة</span>`}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:16px;font-weight:800">${phase<7&&!e.hasBeenEvaluated?'الهدف: 10 تكرارات غيبًا':'تكرار إضافي (اختياري)'}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}',this)">📿 كررت (${reps})</button></div><div class="small" style="margin-top:4px;">${phase<7&&!e.hasBeenEvaluated?'': 'المراجعة غيبًا مرة أسبوعيًا كحد أدنى.'} (إجمالي: ${e.totalReps||0})</div></div>${ev}</div></div>`
+  let repLabel = (phase < 7 && !e.hasBeenEvaluated) ? 'الهدف: 10 تكرارات غيبًا' : 'تكرار إضافي (اختياري)';
+  let repHint = (phase < 7 && !e.hasBeenEvaluated) ? `إجمالي التكرارات: ${e.totalReps||0}` : `المراجعة غيبًا مرة أسبوعيًا كحد أدنى. (إجمالي: ${e.totalReps||0})`;
+
+  return`<div class="swipe-card" data-entry-id="${e.id}"><div class="swipe-backdrop"><span style="color:var(--success)">✅</span><span style="color:var(--danger)">🔄</span></div><div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}"><div class="item-header"><div class="item-title"><div class="quran">${esc(e.label)} ${e.isExactLetters?'<span style="font-size:16px; opacity:0.8;" title="مضبوط">🎯</span>':''}</div>${e.note?`<div class="note-txt" style="font-size:16px; margin-top:10px;">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:10px"><button class="action danger" style="padding:10px 14px;font-size:18px;border-radius:14px;" onclick="openRecorder('${encodeURIComponent(e.label)}')">🎤</button><button class="action" style="background:transparent;padding:10px; border:none; font-size:18px;" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker" style="margin-top:0">${phase<7?`<span class="phase-badge">تثبيت ${phase}/7</span>${dots}`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success);background:var(--successBg)">استدامة</span>`}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:16px;font-weight:800">${repLabel}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}',this)">📿 كررت (${reps})</button></div><div class="small" style="margin-top:4px;">${repHint}</div></div>${ev}</div></div>`
 }
 
-function renderPool(){const q=($('searchInput')?.value||'').trim().toLowerCase();let arr=[...data.entries];if(q)arr=arr.filter(e=>(e.label+' '+e.note).toLowerCase().includes(q));arr.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));$('poolCount').textContent=arr.length;$('poolList').innerHTML=arr.length?arr.slice(0,poolVisible).map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🌱 لم تضف أورادًا بعد.</div>';$('moreBtn').style.display=arr.length>poolVisible?'block':'none';attachSwipe()}
+function renderPool(){const q=($('searchInput')?.value||'').trim().toLowerCase();let arr=[...data.entries];if(q)arr=arr.filter(e=>(e.label+' '+e.note).toLowerCase().includes(q));arr.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));const pc=$('poolCount');if(pc)pc.textContent=arr.length;const pl=$('poolList');if(pl)pl.innerHTML=arr.length?arr.slice(0,poolVisible).map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🌱 لم تضف أورادًا بعد.</div>';const mb=$('moreBtn');if(mb)mb.style.display=arr.length>poolVisible?'block':'none';attachSwipe()}
 function loadMore(){poolVisible+=20;renderPool()}
 
 function renderAll(){
   const t=today(), newOnes=data.entries.filter(e=>e.date===t&&!e.hasBeenEvaluated), due=data.entries.filter(e=>(e.hasBeenEvaluated&&e.nextReviewDate<=t)||e.isICU), icu=data.entries.filter(e=>e.isICU);
-  if(data.restDays && data.restDays.includes(new Date().getDay())){ $('restDayBanner').style.display = 'block'; } else { $('restDayBanner').style.display = 'none'; }
-  $('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">📖 لا يوجد حفظ جديد اليوم.</div>';
-  $('dueCount').textContent=due.length;
-  $('dueList').innerHTML=due.length?due.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🎉 خلصت مراجعات اليوم!</div>';
-  $('icuCard').style.display=icu.length?'block':'none';
-  $('icuList').innerHTML=icu.map(entryHTML).join('');
+  
+  const banner = $('restDayBanner');
+  if(banner) {
+    if(data.restDays && data.restDays.includes(new Date().getDay())){ banner.style.display = 'block'; } else { banner.style.display = 'none'; }
+  }
+  
+  const nl = $('newList'); if(nl) nl.innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">📖 لا يوجد حفظ جديد اليوم.</div>';
+  
+  const dc = $('dueCount'); if(dc) dc.textContent=due.length;
+  const dl = $('dueList'); if(dl) dl.innerHTML=due.length?due.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🎉 خلصت مراجعات اليوم!</div>';
+  
+  const ic = $('icuCard'); if(ic) ic.style.display=icu.length?'block':'none';
+  const il = $('icuList'); if(il) il.innerHTML=icu.map(entryHTML).join('');
+  
   renderPool();
-  if($('progress').classList.contains('active')) { renderProgress(); renderCalendar(); drawChart(); }
-  if($('schedule').classList.contains('active')){ renderPlan('day'); renderMistakes(); }
-  updateSpiritualLamp(); attachSwipe();
+  
+  const progTab = $('progress'); if(progTab && progTab.classList.contains('active')) { renderProgress(); renderCalendar(); drawChart(); }
+  const schTab = $('schedule'); if(schTab && schTab.classList.contains('active')){ renderPlan('day'); renderMistakes(); }
+  
+  updateSpiritualLamp(); 
+  attachSwipe();
 }
 
 function attachSwipe(){
@@ -741,10 +879,10 @@ function renderPlan(period) {
     if(log) { doneSave += log.save||0; doneRev += log.review||0; doneRep += log.rep||0; }
   }
 
-  grid.innerHTML = `<div class="card" style="border-top: 4px solid rgba(224, 154, 26, 0.6); padding:24px;"><h3 style="color:var(--warning); margin:0 0 16px; font-size:22px;">🎯 ${titleTo}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما يجب إنجازه للالتزام بمسارك:</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات مجدولة:</b> ${dueCount} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>أوراد قيد التثبيت:</b> ${newCount} ورد</div><div style="font-size:15px; margin-top:16px; color:var(--muted)">• <b>هدف تقريبي مقترح:</b> حفظ ${goalFraction} ${data.goalUnit}</div></div><div class="card" style="border-top: 4px solid rgba(73, 167, 92, 0.6); padding:24px;"><h3 style="color:var(--success); margin:0 0 16px; font-size:22px;">🏆 ${titleDone}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما أتممته بفضل الله وتوفيقه:</div><div style="font-size:16px; margin-bottom:10px">• <b>حفظ جديد أُضيف:</b> ${doneSave} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات أُنجزت:</b> ${doneRev} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>تكرارات (غيباً):</b> ${doneRep} مرة</div></div>`;
+  if(grid) grid.innerHTML = `<div class="card" style="border-top: 4px solid rgba(224, 154, 26, 0.6); padding:24px;"><h3 style="color:var(--warning); margin:0 0 16px; font-size:22px;">🎯 ${titleTo}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما يجب إنجازه للالتزام بمسارك:</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات مجدولة:</b> ${dueCount} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>أوراد قيد التثبيت:</b> ${newCount} ورد</div><div style="font-size:15px; margin-top:16px; color:var(--muted)">• <b>هدف تقريبي مقترح:</b> حفظ ${goalFraction} ${data.goalUnit}</div></div><div class="card" style="border-top: 4px solid rgba(73, 167, 92, 0.6); padding:24px;"><h3 style="color:var(--success); margin:0 0 16px; font-size:22px;">🏆 ${titleDone}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما أتممته بفضل الله وتوفيقه:</div><div style="font-size:16px; margin-bottom:10px">• <b>حفظ جديد أُضيف:</b> ${doneSave} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات أُنجزت:</b> ${doneRev} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>تكرارات (غيباً):</b> ${doneRep} مرة</div></div>`;
 }
 
-function renderMistakes(){const box=$('mistakeList');box.innerHTML=data.mistakes.length?data.mistakes.map((m,i)=>`<div class="card" style="padding:20px; border-color:var(--info)"><div class="row" style="justify-content:space-between"><b style="font-size:18px;color:var(--info)">${esc(m.title)}</b><button class="action danger" style="padding:6px 10px;border:none;background:transparent" onclick="deleteMistake(${i})">✕</button></div><div style="font-size:16px;line-height:1.8; margin-top:12px;">${esc(m.text)}</div></div>`).join(''):'<div class="empty">لا توجد ملاحظات محفوظة.</div>'}
+function renderMistakes(){const box=$('mistakeList');if(!box)return; box.innerHTML=data.mistakes.length?data.mistakes.map((m,i)=>`<div class="card" style="padding:20px; border-color:var(--info)"><div class="row" style="justify-content:space-between"><b style="font-size:18px;color:var(--info)">${esc(m.title)}</b><button class="action danger" style="padding:6px 10px;border:none;background:transparent" onclick="deleteMistake(${i})">✕</button></div><div style="font-size:16px;line-height:1.8; margin-top:12px;">${esc(m.text)}</div></div>`).join(''):'<div class="empty">لا توجد ملاحظات محفوظة.</div>'}
 function addMistake(){const title=$('mistakeTitle').value.trim(),text=$('mistakeText').value.trim();if(!title||!text)return alert('اكتب العنوان والملاحظة');if(!Array.isArray(data.mistakes))data.mistakes=[];data.mistakes.unshift({title,text,type:$('mistakeType').value,date:today()});save();$('mistakeTitle').value='';$('mistakeText').value='';renderMistakes();closeModal('notebookModal')}
 function deleteMistake(i){data.mistakes.splice(i,1);save();renderMistakes();}
 
@@ -772,12 +910,25 @@ async function toggleRecord(){
 }
 
 function renderProgress(){
-  const ev=data.entries.filter(e=>e.hasBeenEvaluated).length,active=Object.keys(data.dailyLog).length;
-  $('streakStat').textContent=data.streak; $('entriesStat').textContent=data.entries.length; $('evalStat').textContent=ev;
+  const ev=data.entries.filter(e=>e.hasBeenEvaluated).length;
+  
+  const sNum = $('streakNum'); if(sNum) sNum.textContent=data.streak;
+  const sFire = $('streakFire'); if(sFire) sFire.style.display=data.streak>0?'inline-block':'none';
+  
+  const eStat = $('entriesStat'); if(eStat) eStat.textContent=data.entries.length;
+  const evStat = $('evalStat'); if(evStat) evStat.textContent=ev;
+  const actStat = $('activeDaysStat'); if(actStat) actStat.textContent=Object.keys(data.dailyLog).length;
+  
   const pct=data.goal?Math.min(100,ev/data.goal*100):0;
-  $('goalTitle').textContent=`الهدف: ${data.goal} ${data.goalUnit}`; $('goalProgress').style.width=pct+'%'; $('goalText').textContent=`إنجاز ${ev} من ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;
-  let letters=0; data.entries.forEach(e=>{letters+=(e.baseLetters||500)*(e.totalReps||0);});
-  $('letters').textContent=fmt(letters); $('hasanat').textContent=fmt(letters*10);
+  const gTitle = $('goalTitle'); if(gTitle) gTitle.textContent=`الهدف: ${data.goal} ${data.goalUnit}`; 
+  const gProg = $('goalProgress'); if(gProg) gProg.style.width=pct+'%'; 
+  const gText = $('goalText'); if(gText) gText.textContent=`إنجاز ${ev} من ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;
+  
+  let letters=0,ex=0,ap=0; data.entries.forEach(e=>{letters+=(e.baseLetters||500)*(e.totalReps||0);if(e.isExactLetters)ex++;else ap++});
+  const letStat = $('letters'); if(letStat) letStat.textContent=fmt(letters); 
+  const hasStat = $('hasanat'); if(hasStat) hasStat.textContent=fmt(letters*10);
+  const exStat = $('exactStat'); if(exStat) exStat.textContent=`${ex} ورد بدقة 🎯`;
+  const apStat = $('approxStat'); if(apStat) apStat.textContent=`و ${ap} تقريبًا 📊`;
   
   // Badges
   let badgesHtml = '';
@@ -785,43 +936,45 @@ function renderProgress(){
       const earned = condition({eval: ev, streak: data.streak});
       badgesHtml += `<div style="flex:1; min-width:120px; padding:16px; text-align:center; border:1px solid rgba(212,175,55,${earned?0.4:0.1}); background:rgba(212,175,55,${earned?0.1:0.02}); border-radius:16px; filter:grayscale(${earned?0:1}); opacity:${earned?1:0.5};"><div style="font-size:36px; margin-bottom:8px;">${icon}</div><b style="color:var(--gold); font-size:14px;">${name}</b><div class="small" style="margin-top:4px;">${desc}</div></div>`;
   });
-  $('badgesContainer').innerHTML = badgesHtml;
+  const bCont = $('badgesContainer'); if(bCont) bCont.innerHTML = badgesHtml;
 }
 
-function updateName(){const n=$('nameInput').value.trim();if(!n)return;data.userName=n;save();updateGreeting();haptic();alert('تم الحفظ')}
+function updateName(){const n=$('nameInput').value.trim();if(!n)return;data.userName=n;save();haptic();alert('تم الحفظ')}
 function changeEvalMode(){data.evalMode=$('evalMode').value;save();renderAll()}
 function changeGoal(){const v=$('goalSelect').value,b=$('customGoalBox');if(v==='custom'){b.style.display='block';return}b.style.display='none';const p=v.split(',');data.goal=Number(p[0]);data.goalUnit=p[1];save();renderProgress()}
 function saveCustomGoal(){const n=Number($('customGoalNum').value),u=$('customGoalUnit').value.trim();if(!n||!u)return alert('أدخل العدد والوحدة');data.goal=n;data.goalUnit=u;save();renderProgress();alert('تم')}
-function renderRestDaysSettings(){const d=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let h='';d.forEach((x,i)=>{const c=data.restDays?.includes(i)?'checked':'';h+=`<label style="background:var(--input);padding:14px 18px;border-radius:14px;border:1px solid var(--border);display:flex;gap:12px; font-size:16px; cursor:pointer;"><input type="checkbox" class="rest-cb" style="width:24px;height:24px;margin:0;accent-color:var(--gold);" value="${i}" ${c}> ${x}</label>`;});$('restDaysContainer').innerHTML=h;}
+function renderRestDaysSettings(){const d=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let h='';d.forEach((x,i)=>{const c=data.restDays?.includes(i)?'checked':'';h+=`<label style="background:var(--input);padding:14px 18px;border-radius:14px;border:1px solid var(--border);display:flex;gap:12px; font-size:16px; cursor:pointer;"><input type="checkbox" class="rest-cb" style="width:24px;height:24px;margin:0;accent-color:var(--gold);" value="${i}" ${c}> ${x}</label>`;});const rc=$('restDaysContainer');if(rc)rc.innerHTML=h;}
 function saveRestDays(){data.restDays=Array.from(document.querySelectorAll('.rest-cb:checked')).map(cb=>parseInt(cb.value));save();renderAll();alert('تم حفظ أيام الراحة!')}
 function exportJSON(){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data));a.download=`Rafiq_Backup_${today()}.json`;a.click()}
 function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const x=JSON.parse(ev.target.result);if(confirm('استبدال البيانات؟')){data=normalize(x);save();location.reload()}}catch{alert('ملف غير صالح')}};r.readAsText(f);e.target.value=''}
 
-function openShare(){const c=$('shareCanvas'),ctx=c.getContext('2d'),w=1200,h=760;c.width=w;c.height=h;const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#050806');g.addColorStop(1,'#132119');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle='#d4af37';ctx.font='bold 58px Tajawal, sans-serif';ctx.textAlign='center';ctx.fillText('فضل الله عليّ',w/2,120);ctx.fillStyle='#fff';ctx.font='bold 48px Tajawal, sans-serif';ctx.fillText(data.userName||'رفيق القرآن',w/2,200);ctx.font='bold 42px Tajawal, sans-serif';ctx.fillText(`🔥 ${data.streak} يوم التزام`,w/2,300);let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));ctx.fillText(`📖 ${fmt(letters)} حرف مقروء`,w/2,380);ctx.font='32px Tajawal, sans-serif';ctx.fillStyle='#9aa89a';ctx.fillText('رحلة مستمرة مع كتاب الله',w/2,500);ctx.font='26px Tajawal, sans-serif';ctx.fillStyle='#d4af37';ctx.fillText('رفيق القرآن',w/2,650);openModal('shareModal')}
+function openShare(){const c=$('shareCanvas'),ctx=c.getContext('2d');if(!ctx)return;const w=1200,h=760;c.width=w;c.height=h;const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#050806');g.addColorStop(1,'#132119');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle='#d4af37';ctx.font='bold 58px Tajawal, sans-serif';ctx.textAlign='center';ctx.fillText('فضل الله عليّ',w/2,120);ctx.fillStyle='#fff';ctx.font='bold 48px Tajawal, sans-serif';ctx.fillText(data.userName||'رفيق القرآن',w/2,200);ctx.font='bold 42px Tajawal, sans-serif';ctx.fillText(`🔥 ${data.streak} يوم التزام`,w/2,300);let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));ctx.fillText(`📖 ${fmt(letters)} حرف مقروء`,w/2,380);ctx.font='32px Tajawal, sans-serif';ctx.fillStyle='#9aa89a';ctx.fillText('رحلة مستمرة مع كتاب الله',w/2,500);ctx.font='26px Tajawal, sans-serif';ctx.fillStyle='#d4af37';ctx.fillText('رفيق القرآن',w/2,650);openModal('shareModal')}
 function downloadAchievement(){const a=document.createElement('a');a.href=$('shareCanvas').toDataURL('image/png');a.download=`Rafiq_Achievement_${today()}.png`;a.click()}
 async function shareAchievement(){if(!navigator.share)return downloadAchievement();try{const b=await new Promise(r=>$('shareCanvas').toBlob(r,'image/png'));const f=new File([b],`Rafiq_Achievement_${today()}.png`,{type:'image/png'});await navigator.share({title:'رفيق القرآن',text:'فضل الله عليّ 🤲',files:[f]})}catch{}}
 
 function resetApp(){if(!confirm('تنبيه خطير: هل أنت متأكد من مسح جميع بيانات التطبيق والعودة لنقطة الصفر؟'))return;if(prompt('اكتب "مسح" لتأكيد الحذف:')!=='مسح')return;localStorage.removeItem(STORAGE_KEY);localStorage.removeItem('rafiq-adhkar-vfinal');location.reload();}
 
-function buildPrint(){const box=$('printSheet');let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));let h=`<div class="print-page"><div class="print-title">رفيق القرآن — تقرير الرحلة</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'—')}<br><b>الأيام:</b> ${data.streak}<br><b>الأوراد:</b> ${data.entries.length}<br><b>المراجعات:</b> ${data.entries.reduce((a,e)=>a+(e.reviewCount||0),0)}<br><b>الحروف التقديرية:</b> ${fmt(letters)}</div>`;h+=`<div class="print-box"><b>ملاحظات المتشابهات:</b><br>${data.mistakes?.map(m=>`• ${esc(m.title)} — ${esc(m.text)}`).join('<br>')||'لا توجد'}</div></div>`;h+=`<div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table class="print-table"><tr><th>الورد</th><th>10 تكرارات</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.length?data.entries.slice(0,20).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join(''):`<tr><td colspan="10">أضف أورادك هنا بالقلم.</td></tr>`}</table></div>`;box.innerHTML=h}
-function printReport(){buildPrint();window.print()}
+function buildPrint(){const box=$('printSheet');if(!box)return;let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));let h=`<div class="print-page"><div class="print-title">رفيق القرآن — تقرير الرحلة</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'—')}<br><b>الأيام:</b> ${data.streak}<br><b>الأوراد:</b> ${data.entries.length}<br><b>المراجعات:</b> ${data.entries.reduce((a,e)=>a+(e.reviewCount||0),0)}<br><b>الحروف التقديرية:</b> ${fmt(letters)}</div>`;h+=`<div class="print-box"><b>ملاحظات:</b><br>${data.mistakes?.map(m=>`• ${esc(m.title)} — ${esc(m.text)}`).join('<br>')||'لا توجد'}</div></div>`;h+=`<div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table class="print-table"><tr><th>الورد</th><th>10 تكرارات</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.length?data.entries.slice(0,20).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join(''):`<tr><td colspan="10">أضف أورادك هنا بالقلم.</td></tr>`}</table></div>`;box.innerHTML=h}
+function printReport(){buildPrint();const st=$('printSheet');if(st){st.classList.add('print-color');setTimeout(()=>{window.print();st.classList.remove('print-color')},120)}}
+function printNow(mode){buildPrint();const st=$('printSheet');if(st){if(mode==='bw')st.style.filter='grayscale(100%) contrast(120%)';else{st.style.filter='none';st.classList.add('print-color')}closeModal('printModal');setTimeout(()=>{window.print();st.classList.remove('print-color')},120)}}
 
 function setTimer(m){clearInterval(timer);timeLeft=m*60;updTimer()}
 function setCustomTimer(){const m=Number($('customTimer').value);if(!Number.isFinite(m)||m<1||m>240)return alert('من 1 إلى 240 دقيقة');setTimer(m);$('customTimer').value=''}
-function updTimer(){$('mainTimer').textContent=`${String(Math.floor(timeLeft/60)).padStart(2,'0')}:${String(timeLeft%60).padStart(2,'0')}`}
+function updTimer(){const mt=$('mainTimer');if(mt)mt.textContent=`${String(Math.floor(timeLeft/60)).padStart(2,'0')}:${String(timeLeft%60).padStart(2,'0')}`}
 function startTimerWithBreathe(){
   if(timeLeft<=0)return alert('اختر المدة أولاً');
-  $('breatheGuide').style.display='block'; $('timerContainer').style.display='none';
+  const bg=$('breatheGuide'),tc=$('timerContainer');
+  if(bg)bg.style.display='block'; if(tc)tc.style.display='none';
   let bText=$('breatheText'), bCircle=$('breatheCircle');
-  bText.textContent='شهيق...'; bCircle.style.animation='breatheIn 2s ease-in forwards';
-  setTimeout(()=>{bText.textContent='زفير...'; bCircle.style.animation='breatheOut 2s ease-out forwards'}, 2000);
-  setTimeout(()=>{bText.textContent='استعن بالله'; setTimeout(()=>{ $('breatheGuide').style.display='none'; $('timerContainer').style.display='block'; startTimer(); }, 1500); }, 4000);
+  if(bText)bText.textContent='شهيق...'; if(bCircle)bCircle.style.animation='breatheIn 2s ease-in forwards';
+  setTimeout(()=>{if(bText)bText.textContent='زفير...'; if(bCircle)bCircle.style.animation='breatheOut 2s ease-out forwards'}, 2000);
+  setTimeout(()=>{if(bText)bText.textContent='استعن بالله'; setTimeout(()=>{ if(bg)bg.style.display='none'; if(tc)tc.style.display='block'; startTimer(); }, 1500); }, 4000);
 }
-function startTimer(){clearInterval(timer);const started=Date.now();timer=setInterval(()=>{timeLeft--;updTimer();if(timeLeft<=0){clearInterval(timer);const mins=Math.max(1,Math.round((Date.now()-start)/60000));data.totalFocusMinutes+=mins;logActivity('focus',mins);markActive();save();uiSound('done');haptic('done');alert('انتهت الجلسة!');stopFocus()}},1000);$('mainTimerBtn').textContent='⏳ يعمل...'}
-function stopFocus(){clearInterval(timer);timeLeft=0;updTimer();$('mainTimerBtn').textContent='▶ ابدأ بتركيز';document.body.classList.remove('focus-mode');if(zenCtx)toggleZenAudio();$('breatheGuide').style.display='none'; $('timerContainer').style.display='block';}
+function startTimer(){clearInterval(timer);const started=Date.now();timer=setInterval(()=>{timeLeft--;updTimer();if(timeLeft<=0){clearInterval(timer);const mins=Math.max(1,Math.round((Date.now()-started)/60000));data.totalFocusMinutes+=mins;logActivity('focus',mins);markActive();save();uiSound('done');haptic('done');alert('انتهت الجلسة!');stopFocus()}},1000);const mb=$('mainTimerBtn');if(mb)mb.textContent='⏳ يعمل...'}
+function stopFocus(){clearInterval(timer);timeLeft=0;updTimer();const mb=$('mainTimerBtn');if(mb)mb.textContent='▶ ابدأ بتركيز';document.body.classList.remove('focus-mode');if(zenCtx)toggleZenAudio();const bg=$('breatheGuide'),tc=$('timerContainer');if(bg)bg.style.display='none'; if(tc)tc.style.display='block';}
 
 function toggleZenAudio(type){
-  if(zenCtx){zenCtx.close();zenCtx=null;zenSource=null;zenGain=null;$('zenRainBtn').style.background='';$('zenFocusBtn').style.background='';return}
+  if(zenCtx){zenCtx.close();zenCtx=null;zenSource=null;zenGain=null;if($('zenRainBtn'))$('zenRainBtn').style.background='';if($('zenFocusBtn'))$('zenFocusBtn').style.background='';return}
   const A=window.AudioContext||window.webkitAudioContext;if(!A)return alert('الصوت غير مدعوم');
   zenCtx=new A();const buffer=zenCtx.createBuffer(1,zenCtx.sampleRate*2,zenCtx.sampleRate);const dataArr=buffer.getChannelData(0);
   for(let i=0;i<dataArr.length;i++){ let white=Math.random()*2-1; dataArr[i]=type==='brown'?(white+dataArr[i-1]||0)/2.5:white*0.2; }
@@ -829,37 +982,37 @@ function toggleZenAudio(type){
   const filter=zenCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=type==='brown'?400:1500;
   zenGain=zenCtx.createGain();zenGain.gain.value=type==='brown'?0.08:0.02;
   zenSource.connect(filter).connect(zenGain).connect(zenCtx.destination);zenSource.start();
-  if(type==='rain'){$('zenRainBtn').style.background='var(--infoBg)'}else{$('zenFocusBtn').style.background='var(--infoBg)'}
+  if(type==='rain'){if($('zenRainBtn'))$('zenRainBtn').style.background='var(--infoBg)'}else{if($('zenFocusBtn'))$('zenFocusBtn').style.background='var(--infoBg)'}
 }
 
-function updateSpiritualLamp(){
-  const t = new Date(), dayIndex=doy(t);
-  const taj = tajweedData[dayIndex % tajweedData.length];
-  $('tajweedTitle').textContent = taj.title;
-  $('tajweedRule').textContent = taj.rule;
-  $('tajweedTitle').dataset.search = taj.search;
-}
-
-function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth();document.getElementById('calTitle').textContent=new Date(y,m,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const first=new Date(y,m,1).getDay(),days=new Date(y,m+1,0).getDate();let h='<div class="cal-grid">';['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'].forEach(x=>h+=`<div class="cal-cell head">${x}</div>`);for(let i=0;i<first;i++)h+='<div class="cal-cell empty"></div>';for(let d=1;d<=days;d++){const dt=dateKey(new Date(y,m,d)),sc=dayScore(dt),log=data.dailyLog[dt];let cls='day-white',mark='—';if(sc>=6){cls='day-green';mark='✅'}else if(sc>0){cls='day-yellow';mark='•'}else if(dt<today()&&(data.firstDate&&dt>=data.firstDate)){cls='day-red';mark='✖'}h+=`<div class="cal-cell ${cls}" title="${dt}"><div class="day-num">${d}</div><div class="day-mark">${mark}</div><div class="day-mark">${log?`ح ${log.save||0} • م ${log.review||0} • ت ${log.rep||0}`:''}</div></div>`;}h+='</div>';document.getElementById('calendar').innerHTML=h}
+function renderCalendar(){const c=$('calendar');if(!c)return;const y=calendarDate.getFullYear(),m=calendarDate.getMonth();const ct=$('calTitle');if(ct)ct.textContent=new Date(y,m,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const first=new Date(y,m,1).getDay(),monthDays=new Date(y,m+1,0).getDate();let h='<div class="cal-grid">';['أحد','اثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'].forEach(x=>h+=`<div class="cal-cell head">${x}</div>`);for(let i=0;i<first;i++)h+='<div class="cal-cell empty"></div>';for(let d=1;d<=monthDays;d++){const dt=dateKey(new Date(y,m,d)),sc=dayScore(dt),log=data.dailyLog[dt];let cls='day-white',mark='—';if(sc>=6){cls='day-green';mark='✅'}else if(sc>0){cls='day-yellow';mark='•'}else if(dt<today()&&(data.firstDate&&dt>=data.firstDate)){cls='day-red';mark='✖'}h+=`<div class="cal-cell ${cls}" title="${dt}"><div class="day-num">${d}</div><div class="day-mark">${mark}</div><div class="day-mark">${log?`ح ${log.save||0} • م ${log.review||0} • ت ${log.rep||0}`:''}</div></div>`}h+='</div>';c.innerHTML=h}
 function changeMonth(delta){calendarDate.setMonth(calendarDate.getMonth()+delta);renderCalendar()}
-function drawChart(){const c=document.getElementById('activityChart');if(!c)return;const r=c.parentElement.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(300,r.width),h=Math.max(220,r.height);c.width=w*dpr;c.height=h*dpr;const ctx=c.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const days=[];const now=new Date();for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);days.push(today(d))}const vals=days.map(dayScore),max=Math.max(10,...vals);ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--border');ctx.lineWidth=1;for(let i=0;i<5;i++){const y=15+i*(h-35)/4;ctx.beginPath();ctx.moveTo(35,y);ctx.lineTo(w-10,y);ctx.stroke()}ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()})}
+function drawChart(){const c=$('activityChart');if(!c)return;const r=c.parentElement.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(300,r.width),h=Math.max(220,r.height);c.width=w*dpr;c.height=h*dpr;const ctx=c.getContext('2d');ctx.scale(dpr,dpr);ctx.clearRect(0,0,w,h);const days=[];const now=new Date();for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);days.push(today(d))}const vals=days.map(dayScore),max=Math.max(10,...vals);ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--border');ctx.lineWidth=1;for(let i=0;i<5;i++){const y=15+i*(h-35)/4;ctx.beginPath();ctx.moveTo(35,y);ctx.lineTo(w-10,y);ctx.stroke()}ctx.strokeStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.lineWidth=3;ctx.beginPath();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.stroke();vals.forEach((v,i)=>{const x=35+i*(w-50)/(vals.length-1),y=h-25-(v/max)*(h-45);ctx.fillStyle=getComputedStyle(document.body).getPropertyValue('--gold');ctx.beginPath();ctx.arc(x,y,3,0,Math.PI*2);ctx.fill()})}
+
+function myProfile(){const letters=data.entries.reduce((s,e)=>s+(e.baseLetters||500)*(e.totalReps||0),0);const evalCount=data.entries.filter(e=>e.hasBeenEvaluated).length;return{name:data.userName||'مستخدم',streak:data.streak||0,entries:data.entries.length,evaluated:evalCount,letters,activity:Object.keys(data.dailyLog).length,created:new Date().toISOString()}}
+function createProfileLink(){const raw=JSON.stringify(myProfile()),encoded=btoa(unescape(encodeURIComponent(raw))),url=location.href.split('#')[0]+'#profile='+encoded;const pl=$('profileLink');if(pl)pl.value=url}
+async function copyProfileLink(){const v=$('profileLink')?.value;if(!v)return createProfileLink();try{await navigator.clipboard.writeText(v);alert('تم النسخ ✅')}catch{alert('انسخ الرابط يدويًا.')}}
+function parseProfileLink(url){try{const m=(url||'').match(/#profile=([^&]+)/);if(!m)return null;return JSON.parse(decodeURIComponent(escape(atob(m[1]))))}catch{return null}}
+function boardsState(){try{return JSON.parse(localStorage.getItem(LEADER_KEY)||'{}')}catch{return{}}}function saveBoards(x){localStorage.setItem(LEADER_KEY,JSON.stringify(x))}
+function addLeader(){const board=$('boardName')?.value.trim()||'لوحتي',link=$('boardLink')?.value.trim(),p=parseProfileLink(link);if(!p)return alert('الرابط غير صالح.');const all=boardsState();all[board]=Array.isArray(all[board])?all[board]:[];all[board]=all[board].filter(x=>x.name!==p.name);all[board].push(p);saveBoards(all);renderBoards();if($('boardLink'))$('boardLink').value=''}
+function renderBoards(){const box=$('leaderBoards');if(!box)return;const all=boardsState();box.innerHTML='';Object.entries(all).forEach(([name,list])=>{const sortedList=[...list].sort((a,b)=>(b.evaluated+b.streak*2+b.activity)-(a.evaluated+a.streak*2+a.activity));const card=document.createElement('div');card.className='card';let h=`<div class="row"><h3 style="margin:0;flex:1;color:var(--info)">🏆 ${esc(name)}</h3><button class="action" style="background:var(--dangerDim);color:var(--danger)" onclick="deleteBoard('${encodeURIComponent(name)}')">حذف</button></div>`;sortedList.forEach((p,i)=>{h+=`<div class="leader-row"><div class="rank">#${i+1}</div><div class="lead-info"><b>${esc(p.name)}</b><div class="meta">أوراد ${p.entries} • تقييم ${p.evaluated} • 🔥 ${p.streak}</div></div><div class="lead-score">${formatN(p.letters)}</div><button class="action" style="padding:6px 8px;background:var(--dangerDim);color:var(--danger)" onclick="removePlayer('${encodeURIComponent(name)}','${encodeURIComponent(p.name)}')">✕</button></div>`});card.innerHTML=h;box.appendChild(card)})}
+function deleteBoard(name){const key=decodeURIComponent(name),all=boardsState();if(confirm(`حذف لوحة ${key}؟`)){delete all[key];saveBoards(all);renderBoards()}}
+function removePlayer(bn,pn){bn=decodeURIComponent(bn);pn=decodeURIComponent(pn);const b=boardsState();if(!b[bn])return;b[bn]=b[bn].filter(x=>x.name!==pn);if(!b[bn].length)delete b[bn];saveBoards(b);renderBoards()}
 
 function init(){
-  loadData(); document.body.dataset.theme=data.theme; applyGraphicsMode(); updateGreeting();
+  loadData(); document.body.dataset.theme=data.theme; applyGraphicsMode(); 
+  const g=$('graphicsModeSelect');if(g)g.value=data.graphicsLevel;
+  const th=$('themeSelect');if(th)th.value=data.theme;
+  const nInp=$('nameInput');if(nInp)nInp.value=data.userName;
+  const st=$('soundToggle');if(st)st.checked=data.soundEnabled;
   const tv=data.goal+','+data.goalUnit,tr=$('goalSelect');
-  if([...tr.options].some(o=>o.value===tv))tr.value=tv;else{tr.value='custom';$('customGoalBox').style.display='block';$('customGoalNum').value=data.goal;$('customGoalUnit').value=data.goalUnit}
-  $('graphicsModeSelect').value=data.graphicsLevel;
-  $('themeSelect').value=data.theme;
-  $('nameInput').value=data.userName;
-  $('soundToggle').checked=data.soundEnabled;
-  renderRestDaysSettings();
-  renderAdhkar(); renderAll();
+  if(tr){if([...tr.options].some(o=>o.value===tv))tr.value=tv;else{tr.value='custom';const cb=$('customGoalBox');if(cb)cb.style.display='block';const cn=$('customGoalNum');if(cn)cn.value=data.goal;const cu=$('customGoalUnit');if(cu)cu.value=data.goalUnit}}
+  renderRestDaysSettings(); renderAdhkar(); renderAll(); updateLamp();
   if(!data.userName) openModal('welcomeModal');
 }
 
 $('searchInput')?.addEventListener('input',renderPool);
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
-setInterval(updateGreeting,60000);
 init();
 </script>
 </body>
