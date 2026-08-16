@@ -6,10 +6,14 @@
 <meta name="theme-color" content="#07100c">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>رفيق القرآن — المراجعة الذكية | Ultimate</title>
-<link rel="icon" type="image/png" sizes="32x32" href="logo.png">
-<link rel="shortcut icon" type="image/png" href="logo.png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<title>رفيق القرآن — المراجعة الذكية | Supreme</title>
+<link rel="icon" type="image/png" sizes="512x512" href="./icon-512.png">
+<link rel="shortcut icon" type="image/png" href="./icon-512.png">
+<link rel="apple-touch-icon" sizes="192x192" href="./icon-192.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="رفيق القرآن">
+<meta name="apple-mobile-web-app-title" content="رفيق القرآن">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:UthmanicHafs;src:url('https://verses.quran.foundation/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2') format('woff2');font-display:swap}
@@ -393,9 +397,29 @@ body.device-tablet .lantern-art{opacity:.32;left:8%}.body.device-mobile .lantern
 <style>
 .print-static-art{position:relative;overflow:hidden;background:linear-gradient(145deg,#07100b,#122017);color:#f0f2f1;border:1px solid #b9922e;padding:24px;border-radius:18px}.print-static-art:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 10%,rgba(212,175,55,.15),transparent 22%),radial-gradient(circle at 82% 14%,rgba(73,167,92,.12),transparent 24%),radial-gradient(circle at 80% 82%,rgba(75,163,255,.06),transparent 25%);pointer-events:none}.print-hero-art{position:relative;z-index:1;text-align:center;color:#d4af37;font-size:28px;letter-spacing:6px;margin-bottom:10px}.print-static-art .print-box{position:relative;z-index:1;border-color:rgba(212,175,55,.45);background:rgba(255,255,255,.02)}
 </style>
+
+<style>
+/* SUPREME LIVE EMOJI LAMPS — additive visual layer */
+.emoji-lamps{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .8s ease}
+body.mode-3 .emoji-lamps{opacity:1}
+.emoji-lamp{position:absolute;top:-4px;display:flex;flex-direction:column;align-items:center;transform-origin:top center;filter:drop-shadow(0 0 14px rgba(212,175,55,.35))}
+.emoji-wire{width:2px;height:72px;background:linear-gradient(#0000,rgba(212,175,55,.45));box-shadow:0 0 10px rgba(212,175,55,.12)}
+.emoji-bulb{font-size:42px;line-height:1;filter:drop-shadow(0 0 8px rgba(255,215,80,.9)) drop-shadow(0 0 28px rgba(212,175,55,.48));animation:emojiSwing 5.5s ease-in-out infinite,emojiGlow 2.8s ease-in-out infinite alternate}
+.emoji-aura{width:220px;height:220px;margin-top:-8px;border-radius:50%;background:radial-gradient(circle,rgba(255,213,90,.16) 0%,rgba(212,175,55,.07) 25%,transparent 68%);filter:blur(6px);animation:emojiAura 4.2s ease-in-out infinite alternate}
+.el1{right:5%;transform:scale(.92);animation:lampDrift1 10s ease-in-out infinite alternate}.el2{right:31%;transform:scale(.58);opacity:.55;animation:lampDrift2 12s ease-in-out infinite alternate-reverse}.el3{left:8%;transform:scale(.66);opacity:.45;animation:lampDrift3 14s ease-in-out infinite alternate}
+@keyframes emojiSwing{0%,100%{transform:rotate(-2deg)}50%{transform:rotate(2.5deg)}}
+@keyframes emojiGlow{from{filter:drop-shadow(0 0 8px rgba(255,215,80,.75)) drop-shadow(0 0 22px rgba(212,175,55,.32))}to{filter:drop-shadow(0 0 13px rgba(255,225,100,1)) drop-shadow(0 0 38px rgba(212,175,55,.55))}}
+@keyframes emojiAura{from{transform:scale(.9);opacity:.55}to{transform:scale(1.14);opacity:.98}}
+@keyframes lampDrift1{from{margin-top:0}to{margin-top:18px}}@keyframes lampDrift2{from{margin-top:4px}to{margin-top:26px}}@keyframes lampDrift3{from{margin-top:12px}to{margin-top:-6px}}
+body.mode-2 .emoji-lamps{opacity:.22;filter:blur(1px)}
+body.device-mobile .emoji-lamps{display:none!important}
+body.device-tablet .emoji-lamp{transform:scale(.82)}
+@media(prefers-reduced-motion:reduce){.emoji-lamps,.emoji-bulb,.emoji-aura,.emoji-lamp{animation:none!important}.emoji-lamps{opacity:.18!important}}
+</style>
 </head>
 <body class="mode-1">
-<div id="goldenFog" class="golden-fog"></div><div id="starField" class="star-field" aria-hidden="true"></div><div class="lantern-art" aria-hidden="true"><div class="lantern-chain"></div><div class="lantern-cap"></div><div class="lantern-body">✦</div><div class="lantern-flame"></div></div><div class="decorative"></div><div id="spiritualLamp" class="spiritual-lamp"></div>
+<div id="goldenFog" class="golden-fog"></div><div id="starField" class="star-field" aria-hidden="true"></div>
+<div class="emoji-lamps" aria-hidden="true"><div class="emoji-lamp el1"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el2"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el3"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div></div><div class="lantern-art" aria-hidden="true"><div class="lantern-chain"></div><div class="lantern-cap"></div><div class="lantern-body">✦</div><div class="lantern-flame"></div></div><div class="decorative"></div><div id="spiritualLamp" class="spiritual-lamp"></div>
 <div class="splash" id="dailySplash"><div class="box"><div style="color:var(--gold);font-weight:900;font-size:18px">📖 آية اليوم</div><div id="splashAyah" class="quran" style="font-size:31px;margin:16px 0"></div><div id="splashRef" class="small"></div><audio id="splashAudio" controls preload="none" style="width:100%;margin:16px 0"></audio><button id="playAyahBtn" class="action" style="width:100%;color:var(--gold);border-color:var(--gold)" onclick="playDailyAyah(event)">▶ تشغيل الآية</button><div class="splash-progress"><div id="splashProgress"></div></div><div id="splashStatus" class="small" style="margin-top:8px">يمكنك التشغيل يدويًا إذا منع المتصفح التشغيل التلقائي.</div>
     <div class="splash-sadaqah">
       <div class="splash-sadaqah-icon">🤲</div>
@@ -477,7 +501,7 @@ body.device-tablet .lantern-art{opacity:.32;left:8%}.body.device-mobile .lantern
 
 <script>
 'use strict';
-const STORAGE_KEY='rafiq-quran-ultimate-v9',LEGACY_KEYS=['rafiq-quran-ultimate-v8','rafiq-quran-ultimate-v1','rafiq-quran-ultimate-vfinal','rafiq-quran-ultimate-v2','rafiq-quran-master-v15','rafiq-quran-master-v14'];
+const STORAGE_KEY='rafiq-quran-ultimate-supreme-v10',LEGACY_KEYS=['rafiq-quran-ultimate-v9','rafiq-quran-ultimate-v8','rafiq-quran-ultimate-vfinal','rafiq-quran-ultimate-v2','rafiq-quran-master-v15','rafiq-quran-master-v14','rafiq-quran-master-v13','rafiq-quran-master-v12','rafiq-quran-master-v6','rafiq-quran-master-v5','rafiq-quran-master-v4','rafiq-quran-master-v2','hifz-core-v4'];
 const ADHKAR_KEY='rafiq-adhkar-v9',SPLASH_KEY='rafiq-splash-v9',LEADER_KEY='rafiq-leaderboards-v9',DISPLAY_KEY='rafiq-display-profile-v1';
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,sfxVolume:.8,graphicsLevel:1,displayProfile:'auto',theme:'dark',firstDate:'',totalFocusMinutes:0,restDays:[5],mistakes:[],streakFreezes:0,notifyEnabled:false,recitationVolume:1,ambientVolume:.08,ambientType:'none',reverseAmount:30,reverseUnit:'صفحة',reverseTarget:'',lastNotificationDate:'',notifyHour:20,dailyReviewTarget:3,dailyRepTarget:10,dailyFocusTarget:20,lastBackupAt:'',mistakeReviewed:0,tajweedMastery:{}};
 let data=structuredClone(DEFAULT),adhkarProgress={},poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,sessionIndex=0,sessionQueue=[],mediaRecorder=null,audioChunks=[],recordAudioUrl=null,zenCtx=null,zenSource=null,zenGain=null;
