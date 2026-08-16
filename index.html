@@ -67,7 +67,762 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 @media(max-width:760px){.desktop-grid,.grid2,.plan-grid{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}.constellation{grid-template-columns:repeat(8,1fr)}.quran{font-size:22px}.timer{font-size:54px}.stats .stat{min-width:calc(50% - 6px)}.item-meta{flex-direction:column}.nav-item{font-size:10px}.nav .ico{font-size:18px}.wrap{padding:18px 12px}.card{padding:18px}.box{padding:20px}}
 @media(max-width:460px){.qbtns{grid-template-columns:1fr}.constellation{grid-template-columns:repeat(6,1fr)}.fab{bottom:88px}.stats .stat{min-width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-@media print{body>*:not(#printSheet){display:none!important}#printSheet{display:block!important;color:#111;background:#fff;padding:20px;font-family:Arial,sans-serif;direction:rtl}#printSheet .print-title{font-size:24px;font-weight:700;text-align:center;border-bottom:2px solid #222;padding-bottom:8px;margin-bottom:12px}#printSheet .print-box{border:1px solid #666;padding:10px;margin-bottom:9px}#printSheet table{width:100%;border-collapse:collapse}#printSheet th,#printSheet td{border:1px solid #777;padding:6px}#printSheet .print-page{page-break-after:always}@page{margin:1cm}}
+/* =========================================================
+   PAPER EDITION — رفيق القرآن
+   نسخة ورقية قابلة للاستخدام وليست مجرد تقرير
+========================================================= */
+
+.print-sheet{
+  display:none;
+}
+
+@media print{
+
+  *{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
+
+  html,
+  body{
+    margin:0!important;
+    padding:0!important;
+    background:#07100b!important;
+  }
+
+  body > *{
+    display:none!important;
+  }
+
+  #printSheet{
+    display:block!important;
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    overflow:hidden;
+
+    direction:rtl;
+
+    background:
+      radial-gradient(
+        circle at 82% 5%,
+        rgba(212,175,55,.15),
+        transparent 27%
+      ),
+      radial-gradient(
+        circle at 10% 90%,
+        rgba(76,166,93,.08),
+        transparent 28%
+      ),
+      linear-gradient(
+        145deg,
+        #07100b 0%,
+        #0b1710 46%,
+        #061009 100%
+      );
+
+    color:#eef3ef;
+
+    font-family:
+      Tajawal,
+      Arial,
+      sans-serif;
+
+    padding:24px;
+  }
+
+  /* =====================================================
+     STATIC BACKGROUND
+  ===================================================== */
+
+  .paper-bg{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:0;
+  }
+
+  .paper-mist{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(28px);
+  }
+
+  /* =====================================================
+     GOLDEN LAMPS
+  ===================================================== */
+
+  .paper-lamp{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+
+  .paper-lamp .wire{
+    width:2px;
+    height:80px;
+
+    background:
+      linear-gradient(
+        180deg,
+        transparent,
+        rgba(212,175,55,.58)
+      );
+  }
+
+  .paper-lamp .body{
+    font-size:38px;
+    line-height:1;
+
+    filter:
+      drop-shadow(0 0 7px rgba(212,175,55,.95))
+      drop-shadow(0 0 18px rgba(212,175,55,.65))
+      drop-shadow(0 0 35px rgba(212,175,55,.35));
+  }
+
+  .paper-lamp .light{
+    width:190px;
+    height:190px;
+    margin-top:-8px;
+
+    border-radius:50%;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(255,215,85,.17) 0%,
+        rgba(212,175,55,.09) 28%,
+        transparent 70%
+      );
+
+    filter:blur(5px);
+  }
+
+  /* =====================================================
+     GOLDEN STARS
+  ===================================================== */
+
+  .paper-star{
+    position:absolute;
+    color:#f5d879;
+
+    text-shadow:
+      0 0 6px rgba(212,175,55,.85),
+      0 0 15px rgba(212,175,55,.35);
+  }
+
+  /* =====================================================
+     PAGE
+  ===================================================== */
+
+  .paper-page{
+    position:relative;
+    z-index:2;
+
+    max-width:1050px;
+    min-height:calc(100vh - 48px);
+
+    margin:0 auto;
+
+    padding:28px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.18);
+
+    border-radius:24px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(13,25,18,.91),
+        rgba(7,16,11,.90)
+      );
+
+    box-shadow:
+      0 18px 50px rgba(0,0,0,.35),
+      0 0 35px rgba(212,175,55,.045),
+      inset 0 1px 0 rgba(255,255,255,.04);
+  }
+
+  /* =====================================================
+     HEADER
+  ===================================================== */
+
+  .paper-title{
+    text-align:center;
+
+    font:
+      700 34px/1.5
+      UthmanicHafs,
+      Amiri,
+      serif;
+
+    color:#d4af37;
+
+    text-shadow:
+      0 0 12px rgba(212,175,55,.22),
+      0 0 26px rgba(212,175,55,.10);
+
+    margin:0;
+  }
+
+  .paper-subtitle{
+    text-align:center;
+    color:#9ba99e;
+    font-size:13px;
+    margin-top:4px;
+  }
+
+  .paper-user{
+    text-align:center;
+    color:#e8d37b;
+    font-size:19px;
+    font-weight:800;
+    margin-top:10px;
+  }
+
+  /* =====================================================
+     SECTION TITLE
+  ===================================================== */
+
+  .paper-section{
+    margin-top:18px;
+
+    padding:17px;
+
+    border-radius:18px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.15);
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(212,175,55,.055),
+        rgba(255,255,255,.014)
+      );
+
+    page-break-inside:avoid;
+  }
+
+  .paper-section-title{
+    margin:0 0 12px;
+
+    color:#d4af37;
+
+    font:
+      700 20px/1.5
+      UthmanicHafs,
+      Amiri,
+      serif;
+  }
+
+  /* =====================================================
+     GOAL
+  ===================================================== */
+
+  .paper-goal{
+    display:grid;
+    grid-template-columns:1fr 150px;
+    gap:18px;
+    align-items:center;
+  }
+
+  .paper-ring{
+    width:112px;
+    height:112px;
+    margin:auto;
+
+    border-radius:50%;
+
+    background:
+      conic-gradient(
+        #d4af37 var(--pct),
+        rgba(255,255,255,.07) 0
+      );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    position:relative;
+  }
+
+  .paper-ring::after{
+    content:"";
+    position:absolute;
+    inset:8px;
+
+    border-radius:50%;
+
+    background:#0b1710;
+  }
+
+  .paper-ring span{
+    position:relative;
+    z-index:2;
+
+    color:#e8d37b;
+    font-size:19px;
+    font-weight:900;
+  }
+
+  /* =====================================================
+     PAPER CHECKLISTS
+  ===================================================== */
+
+  .check-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:9px;
+  }
+
+  .check-item{
+    min-height:54px;
+
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:10px 12px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.12);
+
+    border-radius:13px;
+
+    background:
+      rgba(255,255,255,.022);
+  }
+
+  .checkbox{
+    width:20px;
+    height:20px;
+
+    flex:0 0 20px;
+
+    border:
+      2px solid
+      rgba(212,175,55,.55);
+
+    border-radius:5px;
+
+    background:
+      rgba(255,255,255,.02);
+  }
+
+  .check-item strong{
+    display:block;
+    color:#dfe7e1;
+    font-size:13px;
+  }
+
+  .check-item small{
+    display:block;
+    color:#89968d;
+    font-size:10px;
+    margin-top:2px;
+  }
+
+  /* =====================================================
+     DAILY WERD
+  ===================================================== */
+
+  .daily-werd{
+    border:
+      1px solid
+      rgba(212,175,55,.22);
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(212,175,55,.08),
+        rgba(255,255,255,.018)
+      );
+
+    border-radius:18px;
+
+    padding:16px;
+  }
+
+  .werd-row{
+    display:grid;
+    grid-template-columns:
+      minmax(0,1.5fr)
+      110px
+      110px;
+
+    gap:10px;
+
+    align-items:center;
+
+    padding:11px 0;
+
+    border-bottom:
+      1px solid
+      rgba(255,255,255,.055);
+  }
+
+  .werd-row:last-child{
+    border-bottom:none;
+  }
+
+  .werd-name{
+    font:
+      700 18px/1.8
+      UthmanicHafs,
+      Amiri,
+      serif;
+
+    color:#f0d77a;
+  }
+
+  .paper-mini-box{
+    min-height:42px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.14);
+
+    border-radius:10px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#abb7ae;
+    font-size:11px;
+    text-align:center;
+  }
+
+  /* =====================================================
+     10 REPETITIONS
+  ===================================================== */
+
+  .rep-grid{
+    display:grid;
+    grid-template-columns:
+      repeat(10,1fr);
+
+    gap:6px;
+
+    margin-top:8px;
+  }
+
+  .rep-box{
+    height:34px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.28);
+
+    border-radius:8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    color:#89968d;
+    font-size:11px;
+  }
+
+  /* =====================================================
+     7 DAY FIXATION
+  ===================================================== */
+
+  .seven-days{
+    display:grid;
+    grid-template-columns:
+      repeat(7,1fr);
+
+    gap:8px;
+  }
+
+  .day-box{
+    min-height:72px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.16);
+
+    border-radius:12px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    gap:5px;
+
+    background:
+      rgba(255,255,255,.02);
+
+    font-size:11px;
+  }
+
+  .day-box .circle{
+    width:24px;
+    height:24px;
+
+    border-radius:50%;
+
+    border:
+      2px solid
+      rgba(212,175,55,.55);
+  }
+
+  /* =====================================================
+     METHODOLOGY
+  ===================================================== */
+
+  .method-grid{
+    display:grid;
+
+    grid-template-columns:
+      repeat(3,1fr);
+
+    gap:9px;
+  }
+
+  .method{
+    padding:13px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.13);
+
+    border-radius:13px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(212,175,55,.065),
+        rgba(255,255,255,.015)
+      );
+  }
+
+  .method .number{
+    display:inline-flex;
+
+    width:25px;
+    height:25px;
+
+    border-radius:50%;
+
+    align-items:center;
+    justify-content:center;
+
+    background:#d4af37;
+    color:#07100b;
+
+    font-size:11px;
+    font-weight:900;
+
+    margin-left:5px;
+  }
+
+  .method strong{
+    color:#e7cf70;
+    font-size:13px;
+  }
+
+  .method p{
+    margin:6px 0 0;
+
+    color:#96a39a;
+    font-size:10px;
+    line-height:1.7;
+  }
+
+  /* =====================================================
+     SPIRITUAL / STUDY
+  ===================================================== */
+
+  .study-grid{
+    display:grid;
+
+    grid-template-columns:
+      1fr 1fr;
+
+    gap:10px;
+  }
+
+  .study-card{
+    padding:14px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.13);
+
+    border-radius:14px;
+
+    background:
+      rgba(255,255,255,.018);
+  }
+
+  .study-card h4{
+    margin:0 0 7px;
+
+    color:#d4af37;
+
+    font-size:14px;
+  }
+
+  .study-card p{
+    margin:0;
+
+    color:#abb5ae;
+
+    font-size:11px;
+    line-height:1.8;
+  }
+
+  /* =====================================================
+     NOTEBOOK
+  ===================================================== */
+
+  .notebook-lines{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .notebook-line{
+    height:34px;
+
+    border-bottom:
+      1px solid
+      rgba(212,175,55,.17);
+  }
+
+  /* =====================================================
+     WEEKLY / MONTHLY TRACKER
+  ===================================================== */
+
+  .tracker-grid{
+    display:grid;
+    grid-template-columns:
+      repeat(7,1fr);
+
+    gap:6px;
+  }
+
+  .tracker-cell{
+    min-height:42px;
+
+    border:
+      1px solid
+      rgba(212,175,55,.12);
+
+    border-radius:8px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:10px;
+
+    color:#8d9a91;
+  }
+
+  /* =====================================================
+     SIGNATURE / NOTES
+  ===================================================== */
+
+  .signature-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+  }
+
+  .signature{
+    border-bottom:
+      1px solid
+      rgba(212,175,55,.25);
+
+    min-height:46px;
+
+    color:#89968d;
+    font-size:11px;
+
+    padding-top:20px;
+  }
+
+  /* =====================================================
+     FOOTER
+  ===================================================== */
+
+  .paper-footer{
+    margin-top:18px;
+
+    padding-top:13px;
+
+    border-top:
+      1px solid
+      rgba(212,175,55,.10);
+
+    text-align:center;
+
+    color:#77847b;
+
+    font-size:10px;
+  }
+
+  /* =====================================================
+     PAGE BREAKS
+  ===================================================== */
+
+  .paper-pagebreak{
+    page-break-before:always;
+  }
+
+  @page{
+    size:A4;
+    margin:10mm;
+  }
+
+  /* =====================================================
+     PRINT SIZE
+  ===================================================== */
+
+  @media print and (max-width:800px){
+
+    #printSheet{
+      padding:14px;
+    }
+
+    .paper-page{
+      padding:19px;
+      border-radius:18px;
+    }
+
+    .paper-goal,
+    .study-grid{
+      grid-template-columns:1fr;
+    }
+
+    .method-grid{
+      grid-template-columns:1fr 1fr;
+    }
+
+    .check-list{
+      grid-template-columns:1fr;
+    }
+
+    .werd-row{
+      grid-template-columns:1fr 80px;
+    }
+
+    .werd-row .hide-mobile{
+      display:none;
+    }
+  }
+}
 
 /* === FINAL DESKTOP / SIDEBAR READABILITY FIX === */
 @media(min-width:992px){
