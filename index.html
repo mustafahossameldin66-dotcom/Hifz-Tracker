@@ -67,8 +67,314 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 @media(max-width:760px){.desktop-grid,.grid2,.plan-grid{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}.constellation{grid-template-columns:repeat(8,1fr)}.quran{font-size:22px}.timer{font-size:54px}.stats .stat{min-width:calc(50% - 6px)}.item-meta{flex-direction:column}.nav-item{font-size:10px}.nav .ico{font-size:18px}.wrap{padding:18px 12px}.card{padding:18px}.box{padding:20px}}
 @media(max-width:460px){.qbtns{grid-template-columns:1fr}.constellation{grid-template-columns:repeat(6,1fr)}.fab{bottom:88px}.stats .stat{min-width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
-@media print{body>*:not(#printSheet){display:none!important}#printSheet{display:block!important;color:#111;background:#fff;padding:20px;font-family:Arial,sans-serif;direction:rtl}#printSheet .print-title{font-size:24px;font-weight:700;text-align:center;border-bottom:2px solid #222;padding-bottom:8px;margin-bottom:12px}#printSheet .print-box{border:1px solid #666;padding:10px;margin-bottom:9px}#printSheet table{width:100%;border-collapse:collapse}#printSheet th,#printSheet td{border:1px solid #777;padding:6px}#printSheet .print-page{page-break-after:always}@page{margin:1cm}}
+@media print{
+  /* تثبيت الألوان والخلفيات */
+  *{
+    -webkit-print-color-adjust:exact!important;
+    print-color-adjust:exact!important;
+  }
 
+  html,body{
+    margin:0!important;
+    padding:0!important;
+    width:100%!important;
+    min-height:100%!important;
+    background:#050806!important;
+    color:#eef3ef!important;
+  }
+
+  body{
+    overflow:visible!important;
+  }
+
+  /* إخفاء واجهة التطبيق فقط أثناء الطباعة */
+  body > *:not(#printSheet){
+    display:none!important;
+  }
+
+  #printSheet{
+    display:block!important;
+    position:relative!important;
+    width:100%!important;
+    min-height:100vh!important;
+    margin:0!important;
+    padding:38px!important;
+    overflow:hidden!important;
+
+    direction:rtl!important;
+    color:#eef3ef!important;
+
+    background:
+      radial-gradient(
+        circle at 82% 8%,
+        rgba(212,175,55,.13),
+        transparent 28%
+      ),
+      radial-gradient(
+        circle at 12% 88%,
+        rgba(76,166,93,.07),
+        transparent 30%
+      ),
+      linear-gradient(
+        160deg,
+        #050806 0%,
+        #0b160f 52%,
+        #07100b 100%
+      )!important;
+
+    font-family:Tajawal,Arial,sans-serif!important;
+  }
+
+  /* الخلفيات الضبابية الثابتة */
+  .print-static-bg{
+    position:absolute!important;
+    inset:0!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+    z-index:0!important;
+  }
+
+  .print-mist{
+    position:absolute!important;
+    border-radius:50%!important;
+    filter:blur(18px)!important;
+    pointer-events:none!important;
+  }
+
+  /* المصابيح الذهبية — ثابتة أثناء الطباعة */
+  .print-lamp{
+    position:absolute!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    transform-origin:top center!important;
+  }
+
+  .print-lamp .wire{
+    width:2px!important;
+    height:92px!important;
+    background:linear-gradient(
+      #0000,
+      rgba(212,175,55,.5)
+    )!important;
+  }
+
+  .print-lamp .body{
+    font-size:42px!important;
+    line-height:1!important;
+    filter:
+      drop-shadow(0 0 10px rgba(212,175,55,.85))
+      drop-shadow(0 0 30px rgba(212,175,55,.42))!important;
+  }
+
+  .print-lamp .glow{
+    width:220px!important;
+    height:220px!important;
+    margin-top:-8px!important;
+    border-radius:50%!important;
+
+    background:
+      radial-gradient(
+        circle,
+        rgba(255,210,70,.18) 0%,
+        rgba(212,175,55,.08) 26%,
+        transparent 68%
+      )!important;
+
+    filter:blur(5px)!important;
+  }
+
+  /* النجوم الذهبية الثابتة */
+  .print-star{
+    position:absolute!important;
+    color:#f5d879!important;
+    text-shadow:
+      0 0 8px rgba(212,175,55,.9),
+      0 0 16px rgba(212,175,55,.35)!important;
+    opacity:.7!important;
+    animation:none!important;
+  }
+
+  /* جسم التقرير */
+  .print-shell{
+    position:relative!important;
+    z-index:2!important;
+    width:100%!important;
+    max-width:1050px!important;
+    margin:0 auto!important;
+  }
+
+  .print-title{
+    text-align:center!important;
+    font:
+      700 34px
+      UthmanicHafs,
+      Amiri,
+      serif!important;
+
+    color:#d4af37!important;
+    margin:6px 0 4px!important;
+
+    text-shadow:
+      0 0 18px rgba(212,175,55,.24)!important;
+  }
+
+  .print-sub{
+    text-align:center!important;
+    color:#a6b2a7!important;
+    margin-bottom:24px!important;
+  }
+
+  /* الإحصائيات */
+  .print-grid{
+    display:grid!important;
+    grid-template-columns:repeat(4,1fr)!important;
+    gap:12px!important;
+    margin:18px 0!important;
+  }
+
+  .print-stat,
+  .print-card{
+    background:rgba(18,30,24,.84)!important;
+    border:1px solid rgba(212,175,55,.18)!important;
+    border-radius:20px!important;
+
+    box-shadow:
+      0 16px 40px rgba(0,0,0,.22),
+      inset 0 1px 0 rgba(255,255,255,.03)!important;
+  }
+
+  .print-stat{
+    padding:16px!important;
+    text-align:center!important;
+  }
+
+  .print-stat b{
+    display:block!important;
+    color:#d4af37!important;
+    font-size:30px!important;
+    margin-bottom:4px!important;
+  }
+
+  .print-stat span{
+    color:#9aa89b!important;
+    font-size:12px!important;
+  }
+
+  /* الخانات */
+  .print-card{
+    padding:20px!important;
+    margin-bottom:16px!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+
+  .print-card h3{
+    margin:0 0 12px!important;
+    color:#d4af37!important;
+    font-size:20px!important;
+  }
+
+  /* Progress */
+  .print-progress{
+    height:14px!important;
+    border-radius:999px!important;
+    background:rgba(255,255,255,.06)!important;
+    overflow:hidden!important;
+    border:1px solid rgba(212,175,55,.16)!important;
+  }
+
+  .print-progress>div{
+    height:100%!important;
+    background:
+      linear-gradient(
+        90deg,
+        #a77d08,
+        #f1d97a
+      )!important;
+  }
+
+  /* محتوى داخلي */
+  .print-items{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+  }
+
+  .print-item{
+    padding:13px!important;
+    border-radius:14px!important;
+    background:rgba(255,255,255,.025)!important;
+    border:1px solid rgba(255,255,255,.06)!important;
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+
+  /* جدول الأوراد */
+  .print-table{
+    width:100%!important;
+    border-collapse:collapse!important;
+    margin-top:10px!important;
+  }
+
+  .print-table th,
+  .print-table td{
+    border:1px solid rgba(212,175,55,.18)!important;
+    padding:8px!important;
+    text-align:right!important;
+  }
+
+  .print-table th{
+    background:rgba(212,175,55,.10)!important;
+    color:#d4af37!important;
+  }
+
+  .print-table tr{
+    break-inside:avoid!important;
+    page-break-inside:avoid!important;
+  }
+
+  /* أسفل التقرير */
+  .print-footer{
+    text-align:center!important;
+    color:#8f9b92!important;
+    font-size:12px!important;
+    margin-top:18px!important;
+  }
+
+  /* منع أي حركات أثناء الطباعة */
+  #printSheet *,
+  #printSheet *::before,
+  #printSheet *::after{
+    animation:none!important;
+    transition:none!important;
+  }
+
+  /* إعدادات الصفحة */
+  @page{
+    size:auto;
+    margin:10mm;
+  }
+
+  /* شاشات ضيقة */
+  @media print and (max-width:800px){
+    #printSheet{
+      padding:24px!important;
+    }
+
+    .print-grid{
+      grid-template-columns:1fr 1fr!important;
+    }
+
+    .print-items{
+      grid-template-columns:1fr 1fr!important;
+    }
+
+    .print-title{
+      font-size:28px!important;
+    }
+  }
+}
 /* === FINAL DESKTOP / SIDEBAR READABILITY FIX === */
 @media(min-width:992px){
   body.device-laptop .wrap{width:calc(100vw - 310px)!important;max-width:none!important;margin-right:310px!important;margin-left:0!important;padding:46px 48px 70px!important;}
