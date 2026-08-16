@@ -67,65 +67,478 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 @media(max-width:760px){.desktop-grid,.grid2,.plan-grid{grid-template-columns:1fr}.badges{grid-template-columns:repeat(2,1fr)}.constellation{grid-template-columns:repeat(8,1fr)}.quran{font-size:22px}.timer{font-size:54px}.stats .stat{min-width:calc(50% - 6px)}.item-meta{flex-direction:column}.nav-item{font-size:10px}.nav .ico{font-size:18px}.wrap{padding:18px 12px}.card{padding:18px}.box{padding:20px}}
 @media(max-width:460px){.qbtns{grid-template-columns:1fr}.constellation{grid-template-columns:repeat(6,1fr)}.fab{bottom:88px}.stats .stat{min-width:100%}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+/* =========================================================
+   PRINT — STATIC PREMIUM VERSION
+   نفس هوية التطبيق: ألوان + Glow + نجوم + مصابيح + ضباب
+   لكن ثابتة بدون أي حركة
+========================================================= */
+
+.print-sheet{
+  display:none;
+}
+
 @media print{
-  /* تثبيت الألوان والخلفيات */
+
   *{
-    -webkit-print-color-adjust:exact!important;
-    print-color-adjust:exact!important;
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
   }
 
-  html,body{
-    margin:0!important;
-    padding:0!important;
-    width:100%!important;
-    min-height:100%!important;
-    background:#050806!important;
-    color:#eef3ef!important;
-  }
-
+  html,
   body{
-    overflow:visible!important;
+    margin:0 !important;
+    padding:0 !important;
+    background:#050806 !important;
+    color:#eef3ef !important;
   }
 
-  /* إخفاء واجهة التطبيق فقط أثناء الطباعة */
-  body > *:not(#printSheet){
-    display:none!important;
+  body > *{
+    display:none !important;
   }
 
   #printSheet{
-    display:block!important;
-    position:relative!important;
-    width:100%!important;
-    min-height:100vh!important;
-    margin:0!important;
-    padding:38px!important;
-    overflow:hidden!important;
-
-    direction:rtl!important;
-    color:#eef3ef!important;
-
+    display:block !important;
+    position:relative;
+    width:100%;
+    min-height:100vh;
+    overflow:hidden;
     background:
       radial-gradient(
-        circle at 82% 8%,
-        rgba(212,175,55,.13),
+        circle at 82% 4%,
+        rgba(212,175,55,.12),
         transparent 28%
       ),
       radial-gradient(
-        circle at 12% 88%,
+        circle at 12% 92%,
         rgba(76,166,93,.07),
-        transparent 30%
+        transparent 28%
       ),
       linear-gradient(
-        160deg,
+        155deg,
         #050806 0%,
-        #0b160f 52%,
-        #07100b 100%
-      )!important;
+        #08110c 48%,
+        #061009 100%
+      );
 
-    font-family:Tajawal,Arial,sans-serif!important;
+    color:#eef3ef;
+    font-family:Tajawal,Arial,sans-serif;
+    direction:rtl;
+    padding:34px;
   }
 
-  /* الخلفيات الضبابية الثابتة */
+  /* ---------- STATIC BACKGROUND ---------- */
+
+  .print-static-bg{
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .print-mist{
+    position:absolute;
+    border-radius:50%;
+    pointer-events:none;
+    filter:blur(30px);
+  }
+
+  /* ---------- GOLDEN LAMPS ---------- */
+
+  .print-lamp{
+    position:absolute;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    transform-origin:top center;
+    pointer-events:none;
+  }
+
+  .print-lamp .wire{
+    width:2px;
+    height:105px;
+    background:
+      linear-gradient(
+        180deg,
+        transparent,
+        rgba(212,175,55,.58)
+      );
+  }
+
+  .print-lamp .body{
+    font-size:46px;
+    line-height:1;
+    filter:
+      drop-shadow(0 0 8px rgba(212,175,55,.95))
+      drop-shadow(0 0 22px rgba(212,175,55,.60))
+      drop-shadow(0 0 42px rgba(212,175,55,.30));
+  }
+
+  .print-lamp .glow{
+    width:250px;
+    height:250px;
+    margin-top:-10px;
+    border-radius:50%;
+    background:
+      radial-gradient(
+        circle,
+        rgba(255,215,80,.20) 0%,
+        rgba(212,175,55,.10) 24%,
+        rgba(212,175,55,.03) 48%,
+        transparent 72%
+      );
+    filter:blur(5px);
+  }
+
+  /* ---------- STATIC STARS ---------- */
+
+  .print-star{
+    position:absolute;
+    color:#f5d879;
+    font-size:10px;
+    line-height:1;
+    text-shadow:
+      0 0 6px rgba(212,175,55,.95),
+      0 0 16px rgba(212,175,55,.42);
+  }
+
+  /* ---------- CONTENT SHELL ---------- */
+
+  .print-shell{
+    position:relative;
+    z-index:2;
+    max-width:1120px;
+    margin:0 auto;
+  }
+
+  .print-title{
+    text-align:center;
+    font:
+      700 38px/1.4
+      UthmanicHafs,
+      Amiri,
+      serif;
+
+    color:#d4af37;
+
+    margin:
+      4px
+      0
+      6px;
+
+    text-shadow:
+      0 0 12px rgba(212,175,55,.25),
+      0 0 28px rgba(212,175,55,.10);
+  }
+
+  .print-sub{
+    text-align:center;
+    color:#a6b2a7;
+    font-size:14px;
+    margin-bottom:24px;
+  }
+
+  .print-user{
+    text-align:center;
+    color:#e7cf70;
+    font-size:20px;
+    font-weight:800;
+    margin-bottom:22px;
+  }
+
+  /* ---------- STAT CARDS ---------- */
+
+  .print-grid{
+    display:grid;
+    grid-template-columns:
+      repeat(4,minmax(0,1fr));
+    gap:12px;
+    margin:18px 0;
+  }
+
+  .print-stat,
+  .print-card{
+    background:
+      linear-gradient(
+        145deg,
+        rgba(18,30,24,.92),
+        rgba(11,20,15,.90)
+      );
+
+    border:
+      1px solid
+      rgba(212,175,55,.17);
+
+    border-radius:20px;
+
+    box-shadow:
+      0 14px 34px rgba(0,0,0,.24),
+      0 0 22px rgba(212,175,55,.035),
+      inset 0 1px 0 rgba(255,255,255,.035);
+
+    overflow:hidden;
+  }
+
+  .print-stat{
+    padding:17px;
+    text-align:center;
+  }
+
+  .print-stat b{
+    display:block;
+    color:#d4af37;
+    font-size:31px;
+    line-height:1.15;
+    margin-bottom:5px;
+  }
+
+  .print-stat span{
+    color:#9aa89b;
+    font-size:12px;
+  }
+
+  /* ---------- SECTION CARDS ---------- */
+
+  .print-card{
+    padding:22px;
+    margin-bottom:16px;
+  }
+
+  .print-card h3{
+    margin:0 0 14px;
+    color:#d4af37;
+
+    font:
+      700 21px/1.5
+      UthmanicHafs,
+      Amiri,
+      serif;
+  }
+
+  /* ---------- GOAL ---------- */
+
+  .print-progress{
+    height:15px;
+    border-radius:999px;
+    overflow:hidden;
+
+    background:
+      rgba(255,255,255,.055);
+
+    border:
+      1px solid
+      rgba(212,175,55,.15);
+  }
+
+  .print-progress > div{
+    height:100%;
+
+    background:
+      linear-gradient(
+        90deg,
+        #9e7400,
+        #d4af37,
+        #f2dc8b
+      );
+
+    box-shadow:
+      0 0 18px
+      rgba(212,175,55,.55);
+  }
+
+  /* ---------- INNER ITEMS ---------- */
+
+  .print-items{
+    display:grid;
+    grid-template-columns:
+      repeat(2,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .print-item{
+    padding:14px;
+
+    border-radius:14px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(255,255,255,.028),
+        rgba(0,0,0,.12)
+      );
+
+    border:
+      1px solid
+      rgba(255,255,255,.055);
+
+    color:#cbd5cd;
+
+    line-height:1.75;
+    page-break-inside:avoid;
+  }
+
+  .print-item strong,
+  .print-item b{
+    color:#e7cf70;
+  }
+
+  /* ---------- METHODOLOGY ---------- */
+
+  .print-method{
+    display:grid;
+    grid-template-columns:
+      repeat(3,minmax(0,1fr));
+    gap:10px;
+  }
+
+  .print-method-item{
+    padding:15px;
+
+    border-radius:15px;
+
+    background:
+      linear-gradient(
+        145deg,
+        rgba(212,175,55,.075),
+        rgba(255,255,255,.018)
+      );
+
+    border:
+      1px solid
+      rgba(212,175,55,.14);
+
+    page-break-inside:avoid;
+  }
+
+  .print-method-item .num{
+    display:inline-flex;
+    width:29px;
+    height:29px;
+
+    align-items:center;
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:#d4af37;
+    color:#101810;
+
+    font-weight:900;
+    font-size:12px;
+
+    margin-left:6px;
+  }
+
+  .print-method-item strong{
+    color:#e7cf70;
+    font-size:15px;
+  }
+
+  .print-method-item span{
+    display:block;
+    color:#9aa89b;
+    font-size:12px;
+    margin-top:7px;
+  }
+
+  /* ---------- ENTRY TABLE ---------- */
+
+  .print-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+    table-layout:fixed;
+  }
+
+  .print-table th,
+  .print-table td{
+    border:
+      1px solid
+      rgba(212,175,55,.16);
+
+    padding:9px;
+
+    text-align:right;
+
+    color:#d1d9d3;
+
+    font-size:12px;
+
+    vertical-align:top;
+
+    word-break:break-word;
+  }
+
+  .print-table th{
+    background:
+      rgba(212,175,55,.095);
+
+    color:#e7cf70;
+
+    font-weight:800;
+  }
+
+  .print-table tr{
+    page-break-inside:avoid;
+  }
+
+  /* ---------- FOOTER ---------- */
+
+  .print-footer{
+    text-align:center;
+
+    color:#89968d;
+
+    font-size:11px;
+
+    margin-top:20px;
+    padding-top:13px;
+
+    border-top:
+      1px solid
+      rgba(212,175,55,.10);
+  }
+
+  /* ---------- PRINT PAGE BREAKS ---------- */
+
+  .print-page-break{
+    page-break-before:always;
+  }
+
+  /* ---------- PAPER ---------- */
+
+  @page{
+    size:auto;
+    margin:10mm;
+  }
+
+  /* ---------- SMALL SCREEN PRINT ---------- */
+
+  @media print and (max-width:800px){
+
+    #printSheet{
+      padding:22px;
+    }
+
+    .print-grid{
+      grid-template-columns:
+        repeat(2,minmax(0,1fr));
+    }
+
+    .print-method{
+      grid-template-columns:
+        repeat(2,minmax(0,1fr));
+    }
+
+    .print-items{
+      grid-template-columns:1fr;
+    }
+
+    .print-title{
+      font-size:30px;
+    }
+  }
+}  /* الخلفيات الضبابية الثابتة */
   .print-static-bg{
     position:absolute!important;
     inset:0!important;
