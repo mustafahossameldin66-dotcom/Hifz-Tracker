@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>رفيق القرآن — المراجعة الذكية</title>
+<link rel="icon" type="image/png" href="logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 @font-face{font-family:UthmanicHafs;src:url('https://verses.quran.foundation/fonts/quran/hafs/uthmanic_hafs/UthmanicHafs1Ver18.woff2') format('woff2');font-display:swap}
@@ -71,9 +72,10 @@ body.mode-3 .card, body.mode-3 .item, body.mode-3 .panel, body.mode-3 .nav {
   border: 1px solid rgba(212,175,55,0.15); border-top: 1px solid rgba(255,255,255,0.06);
   border-radius: var(--card-radius); box-shadow: 0 16px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.02);
   transition: all var(--transition-speed) cubic-bezier(0.25, 1, 0.5, 1);
+  transform: translateZ(0); /* Hardware Accel */
 }
 [data-theme=light] body.mode-3 .card, [data-theme=light] body.mode-3 .item, [data-theme=light] body.mode-3 .panel, [data-theme=light] body.mode-3 .nav { border: 1px solid rgba(212,175,55,0.25); border-top: 1px solid rgba(255,255,255,0.6); box-shadow: 0 16px 40px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.4); }
-body.mode-3 .card:hover, body.mode-3 .item:hover { transform: translateY(-4px); box-shadow: 0 20px 45px rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.25); }
+body.mode-3 .card:hover, body.mode-3 .item:hover { transform: translateY(-4px) translateZ(0); box-shadow: 0 20px 45px rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.25); }
 
 /* =========================================
    GENERAL UI & LAYOUT
@@ -97,14 +99,14 @@ h1 { font-size: 32px; color: var(--gold); margin: 0; line-height: 1.4; text-shad
 .note-txt { font-size: 14px; color: var(--muted); margin-top: 8px; opacity: 0.9;}
 
 /* INPUTS & BUTTONS */
-input, select, textarea { width: 100%; padding: 16px 20px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px; font: inherit; outline: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); font-size: 15px;}
+input, select, textarea { width: 100%; padding: 16px 20px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 16px; margin-bottom: 16px; font: inherit; outline: none; transition: all 0.4s; font-size: 15px;}
 textarea { min-height: 100px; resize: vertical; }
-input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.15); transform: scale(1.01); background: rgba(212,175,55,0.03);}
+input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.15); background: rgba(212,175,55,0.03);}
 button { font: inherit; border: 0; cursor: pointer; outline: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px;}
-.main { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--gold), #b3912a); color: #0a110e; font-weight: 800; border-radius: 18px; font-size: 17px; box-shadow: 0 8px 25px rgba(212,175,55,0.25); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); position: relative;}
-.main:hover { box-shadow: 0 12px 35px rgba(212,175,55,0.4); transform: translateY(-3px) scale(1.01); }
+.main { width: 100%; padding: 18px; background: linear-gradient(135deg, var(--gold), #b3912a); color: #0a110e; font-weight: 800; border-radius: 18px; font-size: 17px; box-shadow: 0 8px 25px rgba(212,175,55,0.25); transition: all 0.4s; position: relative;}
+.main:hover { box-shadow: 0 12px 35px rgba(212,175,55,0.4); transform: translateY(-3px); }
 .main:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important;}
-.action { padding: 14px 20px; border-radius: 16px; background: rgba(255,255,255,0.04); color: var(--text); font-weight: 700; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); border: 1px solid var(--border); font-size: 15px;}
+.action { padding: 14px 20px; border-radius: 16px; background: rgba(255,255,255,0.04); color: var(--text); font-weight: 700; transition: all 0.4s; border: 1px solid var(--border); font-size: 15px;}
 [data-theme=light] .action, [data-theme=sepia] .action { background: rgba(0,0,0,0.03); }
 .action:hover { background: var(--goldDim); color: var(--gold); border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(212,175,55,0.15);}
 .huge { font-size: 20px; padding: 24px; margin-bottom: 24px; border-radius: 22px;}
@@ -115,14 +117,14 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; display: inli
   background: var(--card2); border-top: 1px solid var(--border); 
   display: flex; justify-content: space-around; align-items: center;
   padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); 
-  box-shadow: 0 -10px 30px rgba(0,0,0,.2); transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 -10px 30px rgba(0,0,0,.2); transition: all 0.4s;
 }
 .nav-item { 
   flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
   font-size: 12px; font-weight: 700; color: var(--muted); cursor: pointer; 
-  padding: 10px 4px; border-radius: 16px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
+  padding: 10px 4px; border-radius: 16px; transition: all 0.4s; 
 }
-.nav .ico { font-size: 24px; line-height: 1; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); display: block;}
+.nav .ico { font-size: 24px; line-height: 1; transition: all 0.4s; display: block;}
 .nav-item.active { color: var(--gold); background: var(--goldDim); }
 .nav-item.active .ico { transform: translateY(-4px) scale(1.2); filter: drop-shadow(0 6px 12px rgba(212,175,55,0.4)); }
 
@@ -149,7 +151,7 @@ body.mode-2 .nav, body.mode-3 .nav {
 }
 
 /* WIDGETS */
-.view { display: none; animation: fadeInSmooth 0.5s cubic-bezier(0.25, 1, 0.5, 1); }
+.view { display: none; animation: fadeInSmooth 0.5s ease; }
 .view.active { display: block; }
 @keyframes fadeInSmooth { from{opacity:0; transform:translateY(15px)} to{opacity:1; transform:translateY(0)} }
 
@@ -157,7 +159,7 @@ body.mode-2 .nav, body.mode-3 .nav {
 .swipe-backdrop { position:absolute; inset:0; display:flex; align-items:center; justify-content:space-between; padding:0 30px; font-size:32px; font-weight:900; pointer-events:none; border-radius:var(--card-radius); }
 .swipe-card { position:relative; z-index:2; touch-action: pan-y; transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1); }
 
-.particle { position: absolute; pointer-events: none; border-radius: 50%; opacity: 1; animation: pop 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+.particle { position: absolute; pointer-events: none; border-radius: 50%; opacity: 1; animation: pop 1s cubic-bezier(0.25, 1, 0.5, 1) forwards; z-index: 100;}
 @keyframes pop { 0% { transform: translate(0,0) scale(1); opacity: 1; } 100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; } }
 
 /* Dynamic Fire Streak */
@@ -191,7 +193,7 @@ body.mode-2 .nav, body.mode-3 .nav {
 .rep-btn.done { background: var(--success); color: #fff; border-color: var(--success); box-shadow: 0 4px 15px rgba(58,145,76,0.3);}
 .qbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
 .qbtns button { padding: 14px; border-radius: 14px; background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 15px; font-weight: 700; transition: all 0.3s;}
-.qbtns button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+.qbtns button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); border-color: var(--gold);}
 .phase-badge { background: var(--goldDim); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); font-size: 12px; padding: 6px 12px; border-radius: 20px; font-weight: 700; white-space: nowrap; }
 .t-box { width: 14px; height: 14px; border: 1px solid rgba(212,175,55,0.5); border-radius: 50%; background: transparent; transition: all 0.4s;}
 .t-box.done { background: var(--gold); box-shadow: 0 0 10px rgba(212,175,55,0.6); border-color: var(--gold);}
@@ -255,7 +257,7 @@ body.mode-2 .nav, body.mode-3 .nav {
     <div style="color:var(--gold);font-weight:900;font-size:17px;margin-bottom:16px">📖 آية اليوم</div>
     <div class="quran" id="splashAyah" style="font-size:32px!important;line-height:2.2"></div>
     <div class="small" id="splashRef" style="margin-top:16px; font-size:16px;"></div>
-    <audio id="splashAudio" controls preload="none" style="width:100%;margin-top:24px"></audio>
+    <audio id="splashAudio" controls preload="none" style="width:100%;margin-top:24px;display:none;"></audio>
     <button class="action" id="playAyahBtn" style="width:100%;margin-top:16px;border:1px solid rgba(212,175,55,0.4);color:var(--gold);background:var(--goldDim);font-size:18px; padding:20px;" onclick="playDailyAyah(event)">▶ تشغيل آية اليوم</button>
     <div class="small" style="margin-top:24px; opacity:0.6; font-size:14px;">(اضغط خارج البطاقة لتخطي الشاشة)</div>
   </div>
@@ -319,7 +321,7 @@ body.mode-2 .nav, body.mode-3 .nav {
   <section id="home" class="view active">
     <div class="header">
       <div>
-        <h1>خطة اليوم يا <span id="displayName">صديقي</span> 📅</h1>
+        <h1 id="greeting">خطة اليوم 📅</h1>
         <div class="sub" id="todayLabel" style="font-size:16px; margin-top:8px; opacity:0.8;"></div>
       </div>
     </div>
@@ -348,7 +350,7 @@ body.mode-2 .nav, body.mode-3 .nav {
       </div>
     </div>
 
-    <!-- FOCUS MODE (With Deep Breathing) -->
+    <!-- FOCUS MODE -->
     <div id="focusView">
       <div class="card" style="text-align:center;border-color:rgba(212,175,55,0.4); padding:60px 20px;">
         <h2 style="justify-content:center;font-size:32px;margin-bottom:20px">⏱️ جلسة التركيز</h2>
@@ -543,7 +545,6 @@ body.mode-2 .nav, body.mode-3 .nav {
     
     <div class="desktop">
       <div>
-        <!-- GRAPHICS ENGINE SETTING -->
         <div class="card" style="border-color:var(--gold); border-width: 2px;">
           <h2 style="font-size:22px;">✨ مستوى الجرافيك والأداء</h2>
           <p class="sub" style="margin-bottom:24px; font-size:16px; line-height:1.8; opacity:0.9;">اختر ما يناسب جهازك لضمان أداء سلس. (المستوى 3 يحتوي على خلفية المصباح الحيّة 💡).</p>
@@ -625,7 +626,7 @@ body.mode-2 .nav, body.mode-3 .nav {
 <script>
 'use strict';
 const STORAGE_KEY='rafiq-quran-ultimate-vfinal',ADHKAR_KEY='rafiq-adhkar-ultimate-vfinal',SPLASH_KEY='rafiq-splash-ultimate-vfinal',LEADER_KEY='rafiq-leaderboards-ultimate-vfinal';
-const LEGACY_KEYS=['rafiq-quran-ultimate-v2','rafiq-quran-ultimate-v1','rafiq-quran-master-v15'];
+const LEGACY_KEYS=['rafiq-quran-ultimate-v2','rafiq-quran-ultimate-v1','rafiq-quran-master-v15','rafiq-quran-master-v14'];
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,graphicsLevel:1,theme:'dark',firstDate:'',totalFocusMinutes:0,restDays:[5],mistakes:[],streakFreezes:0,notifyEnabled:false,recitationVolume:1,reverseAmount:30,reverseUnit:'صفحة',reverseTarget:''};
 let data=structuredClone(DEFAULT),adhkarProgress={},poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,sessionIndex=0,sessionQueue=[],mediaRecorder=null,audioChunks=[],recordAudioUrl=null,zenCtx=null,zenGain=null,zenSource=null,splashAudio=null;
 const surahNames=['الفاتحة','البقرة','آل عمران','النساء','المائدة','الأنعام','الأعراف','الأنفال','التوبة','يونس','هود','يوسف','الرعد','إبراهيم','الحجر','النحل','الإسراء','الكهف','مريم','طه','الأنبياء','الحج','المؤمنون','النور','الفرقان','الشعراء','النمل','القصص','العنكبوت','الروم','لقمان','السجدة','الأحزاب','سبأ','فاطر','يس','الصافات','ص','الزمر','غافر','فصلت','الشورى','الزخرف','الدخان','الجاثية','الأحقاف','محمد','الفتح','الحجرات','ق','الذاريات','الطور','النجم','القمر','الرحمن','الواقعة','الحديد','المجادلة','الحشر','الممتحنة','الصف','الجمعة','المنافقون','التغابن','الطلاق','التحريم','الملك','القلم','الحاقة','المعارج','نوح','الجن','المزمل','المدثر','القيامة','الإنسان','المرسلات','النبأ','النازعات','عبس','التكوير','الانفطار','المطففين','الانشقاق','البروج','الطارق','الأعلى','الغاشية','الفجر','البلد','الشمس','الليل','الضحى','الشرح','التين','العلق','القدر','البينة','الزلزلة','العاديات','القارعة','التكاثر','العصر','الهمزة','الفيل','قريش','الماعون','الكوثر','الكافرون','النصر','المسد','الإخلاص','الفلق','الناس'];
@@ -637,7 +638,11 @@ const dailyAyahs=[{s:9,a:104,text:'أَلَمْ يَعْلَمُوا أَنَّ 
 const tajweedData=[{title:'الإظهار الحلقي',rule:'إذا جاءت النون الساكنة وبعدها حرف حلقي فالنطق واضح.',yt:'sLv9OMs3o3U',search:'الإظهار الحلقي فارس عنتر'},{title:'الإخفاء الشفوي',rule:'ميم ساكنة بعدها باء: إخفاء مع غنة.',yt:'NE2cc2NxO0E',search:'الإخفاء الشفوي فارس عنتر'}];
 const BADGES=[['start','خطوة الألف ميل','🌱',s=>s.eval>0,'قيّمت أول ورد'],['streak7','شعلة الأسبوع','🔥',s=>s.streak>=7,'7 أيام متتالية'],['juz30','جزء عم','🌟',s=>s.eval>=23,'حفظ 23 صفحة'],['streak30','نور الثلاثين','🏆',s=>s.streak>=30,'30 يوم متتالية']];
 
-const $=id=>document.getElementById(id);const today=(d=new Date())=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};const dayDiff=(a,b)=>Math.floor((new Date(b)-new Date(a))/86400000);const esc=s=>{const d=document.createElement('div');d.textContent=s??'';return d.innerHTML};const fmt=n=>Number(n||0).toLocaleString('en-US');
+const $=id=>document.getElementById(id);
+const today=(d=new Date())=>{const x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const dayDiff=(a,b)=>Math.floor((new Date(b)-new Date(a))/86400000);
+const esc=s=>{const d=document.createElement('div');d.textContent=s??'';return d.innerHTML};
+const fmt=n=>Number(n||0).toLocaleString('en-US');
 
 /* DATA LOAD & NORMALIZE */
 function loadData(){
@@ -699,15 +704,15 @@ function logActivity(k,a=1){const t=today();if(!data.dailyLog[t])data.dailyLog[t
 function markActive(){const t=today();if(data.lastActive===t)return;const old=data.streak||0;data.streak=!data.lastActive?1:(dayDiff(data.lastActive,t)===1?old+1:1);data.lastActive=t;if(!data.firstDate)data.firstDate=t;if(data.streak>old&&data.streak%7===0){data.streakFreezes=Math.min(3,(data.streakFreezes||0)+1)}save()}
 
 /* SPLASH */
-function showDailySplash(){const t=today();if(localStorage.getItem(SPLASH_KEY)===t||!data.userName)return;const item=dailyAyahs[doy(new Date())%dailyAyahs.length];$('splashAyah').textContent=item.text;$('splashRef').textContent=`${item.ref} — بصوت ${item.name}`;const a=$('splashAudio');a.style.display='block';a.src=`https://everyayah.com/data/${item.base}/${String(item.s).padStart(3,'0')}${String(item.a).padStart(3,'0')}.mp3`;a.volume=data.recitationVolume;a.onended=closeDailySplash;a.ontimeupdate=()=>{$('splashProgress').style.width=(a.duration?Math.min(100,a.currentTime/a.duration*100):0)+'%'};$('dailySplash').classList.add('show');localStorage.setItem(SPLASH_KEY,t);setTimeout(()=>playDailyAyah(),350)}
-function playDailyAyah(e){e?.stopPropagation();const a=$('splashAudio');a.play().then(()=>{$('playAyahBtn').textContent='🔊 التلاوة تعمل الآن';$('splashStatus').textContent='ستُغلق الشاشة تلقائيًا عند نهاية التلاوة.'}).catch(()=>{$('splashStatus').textContent='اضغط تشغيل يدويًا من مشغل الصوت.'})}
+function showDailySplash(){const t=today();if(localStorage.getItem(SPLASH_KEY)===t||!data.userName)return;const item=dailyAyahs[0];$('splashAyah').textContent=item.text;$('splashRef').textContent=`${item.ref} — بصوت ${item.name}`;const a=$('splashAudio');a.style.display='block';a.src=`https://everyayah.com/data/${item.base}/${String(item.s).padStart(3,'0')}${String(item.a).padStart(3,'0')}.mp3`;a.volume=data.recitationVolume;a.onended=closeDailySplash;$('dailySplash').classList.add('show');localStorage.setItem(SPLASH_KEY,t);setTimeout(()=>playDailyAyah(),350)}
+function playDailyAyah(e){e?.stopPropagation();const a=$('splashAudio');a.play().then(()=>{$('playAyahBtn').textContent='🔊 التلاوة تعمل الآن';}).catch(()=>{});}
 function skipSplash(e){e?.stopPropagation();closeDailySplash()}
 function closeDailySplash(){const a=$('splashAudio');if(a){a.pause();a.currentTime=0;a.onended=null}$('dailySplash').classList.remove('show')}
 
 /* ENTRIES & SWIPE */
 async function exactLetters(label){try{let url='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)url=`https://api.alquran.cloud/v1/page/${p[1]}/quran-uthmani`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);if(a)url=`https://api.alquran.cloud/v1/ayah/${s}:${a[1]}/quran-uthmani`}}if(!url)return null;const c=new AbortController();const tm=setTimeout(()=>c.abort(),7000);const r=await fetch(url,{signal:c.signal});clearTimeout(tm);if(!r.ok)return null;const j=await r.json();let txt=j?.data?.ayahs?j.data.ayahs.map(a=>a.text).join(''):(j?.data?.text||'');return txt.replace(/[^\u0621-\u064A]/g,'').length||null}catch{return null}}
-async function addEntry(){const label=$('newLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');const btn=$('addBtn');btn.disabled=true;btn.textContent='جاري الحساب…';try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('unitCount').value)||1)*(parseInt($('unitType').value)||500);const e=addEntryObj(label,$('newNote').value.trim(),$('icuCheckbox').checked,false,letters,exact);data.entries.push(e);logActivity('save');markActive();save();closeModal('addModal');renderAll();haptic('done');uiSound('click');$('newLabel').value='';$('newNote').value='';$('icuCheckbox').checked=false}catch(err){alert('تعذر إضافة الورد.')}finally{btn.disabled=false;btn.textContent='إضافة لخطة اليوم'}}
-async function addOldEntry(){const label=$('oldLabel').value.trim();if(!label)return alert('اكتب الورد');const btn=$('oldBtn');btn.disabled=true;btn.textContent='جاري الحساب…';try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('oldCount').value)||1)*(parseInt($('oldType').value)||500);const e=addEntryObj(label,'',false,true,letters,exact);data.entries.push(e);logActivity('save');markActive();save();closeModal('oldModal');renderAll();haptic();uiSound('click');$('oldLabel').value=''}finally{btn.disabled=false;btn.textContent='إضافة للمخزون'}}
+async function addEntry(){const label=$('newLabel').value.trim();if(!label)return alert('اكتب الورد أولًا');const btn=$('addBtn');btn.disabled=true;btn.textContent='جاري الحساب…';try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('unitCount').value)||1)*(parseInt($('unitType').value)||500);const e=addEntryObj(label,$('newNote').value.trim(),$('icuCheckbox').checked,false,letters,exact);data.entries.push(e);logActivity('save');markActive();save();closeModal('addModal');renderAll();haptic('done');uiSound('click');$('newLabel').value='';$('newNote').value='';$('icuCheckbox').checked=false}catch(err){alert('تعذر إضافة الورد.')}finally{btn.disabled=false;btn.textContent='➕ إضافة لخطة اليوم'}}
+async function addOldEntry(){const label=$('oldLabel').value.trim();if(!label)return alert('اكتب الورد');const btn=$('oldBtn');btn.disabled=true;try{let letters=await exactLetters(label),exact=letters!==null;if(letters===null)letters=(parseInt($('oldCount').value)||1)*(parseInt($('oldType').value)||500);const e=addEntryObj(label,'',false,true,letters,exact);data.entries.push(e);logActivity('save');markActive();save();renderAll();closeModal('oldModal');$('oldLabel').value='';uiSound('click');}finally{btn.disabled=false;btn.textContent='📚 إضافة للمخزون'}}
 function removeEntry(id){if(!confirm('تأكيد حذف الورد؟'))return;data.entries=data.entries.filter(e=>e.id!==id);save();renderAll()}
 
 function swipeReview(id,q,btn){const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);const e=data.entries.find(x=>x.id===id);if(!e)return;const phase=e.phaseDays?.length||0;if(phase<7&&(e.sessionReps||0)<10&&q!=='fail'&&!confirm('لم تكمل 10 تكرارات. هل تقيم؟'))return;reviewEntry(id,q);}
@@ -715,46 +720,137 @@ function reviewEntry(id,q){const e=data.entries.find(x=>x.id===id);if(!e)return;
 function addRep(id,btn){const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);const e=data.entries.find(x=>x.id===id);if(!e)return;const t=today();if(e.lastRepDate!==t)e.sessionReps=0;e.sessionReps++;e.manualReps=(e.manualReps||0)+1;e.totalReps=(e.manualReps||0)+(e.reviewReads||0);e.lastRepDate=t;logActivity('rep');markActive();save();renderAll();const done=e.sessionReps===10;uiSound(done?'done':'click');haptic(done?'done':'light');}
 
 function smartLinks(label){let path='';const p=label.match(/(?:ص|صفحة|صفحه)\s*(\d+)/);if(p)path=`page/${p[1]}`;else{let s=-1;for(let i=0;i<surahNames.length;i++){if(label.includes(surahNames[i])){s=i+1;break}}if(s!==-1){const a=label.match(/(?:آية|اية|آيه|ايه)\s*(\d+)/)||label.match(/\s(\d+)/);path=a?`${s}/${a[1]}`:`${s}`}else path=`search?q=${encodeURIComponent(label)}`}return `<div class="links"><a target="_blank" rel="noopener" href="https://quran.com/${path}">📖 المصحف</a><a target="_blank" rel="noopener" href="https://app.tarteel.ai/">🎤 ترتيل</a></div>`}
-function entryHTML(e){const due=e.hasBeenEvaluated&&e.nextReviewDate<=today(),phase=e.phaseDays.length,reps=e.sessionReps||0;const isOldSkipped=(phase>=7&&!e.hasBeenEvaluated);let ev='';if(!e.hasBeenEvaluated||due){if(phase<7)ev=`<div class="small" style="margin-top:12px">📍 تثبيت يومي</div><div class="qbtns"><button class="success" onclick="swipeReview('${e.id}','pass',this)">✅ أتممت اليوم</button><button class="danger" onclick="swipeReview('${e.id}','fail')">🔄 لم أتقنها</button></div>`;else if(data.evalMode==='weekly')ev=`<div class="qbtns"><button class="success" onclick="swipeReview('${e.id}','pass',this)">✅ ممتازة (موعد بعد 7 أيام)</button><button class="danger" onclick="swipeReview('${e.id}','fail')">🔴 أعد غدًا</button></div>`;else ev=`<div class="qbtns"><button class="info" onclick="swipeReview('${e.id}',4,this)">🔵 سهل</button><button class="success" onclick="swipeReview('${e.id}',3,this)">🟢 تذكرته</button><button class="warning" onclick="swipeReview('${e.id}',2)">🟡 بصعوبة</button><button class="danger" onclick="swipeReview('${e.id}',1)">🔴 نسيت</button></div>`}const dots=Array.from({length:7},(_,i)=>`<span class="t-box ${i<phase?'done':''}"></span>`).join('');let metaText=!e.hasBeenEvaluated?(isOldSkipped?`<span style="color:var(--warning);font-weight:800">⏰ مراجعة لتحديد المستوى</span>`:`<span style="color:var(--gold);font-weight:800">✨ ورد جديد</span>`):(due?`<span style="color:var(--warning);font-weight:800">⏰ مستحق للمراجعة</span>`:`المراجعة القادمة: ${esc(e.nextReviewDate)}`);const sUrl=`https://www.youtube.com/results?search_query=تطبيق+أحكام+التجويد+${encodeURIComponent(e.label)}`;return `<div class="swipe-card" data-entry-id="${e.id}"><div class="swipe-backdrop"><span style="color:var(--success)">✅</span><span style="color:var(--danger)">🔄</span></div><div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}"><div class="item-header"><div class="item-title"><div class="quran">${esc(e.label)} ${e.isExactLetters?'<span style="font-size:16px;opacity:0.8" title="محسوب بدقة">🎯</span>':''}</div>${e.note?`<div class="note-txt">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:10px"><button class="action danger" style="padding:10px;border-radius:14px" onclick="openRecorder('${encodeURIComponent(e.label)}')">🎤</button><button class="action info" style="padding:10px;border-radius:14px" onclick="window.open('${sUrl}', '_blank')">🔍</button><button class="action" style="padding:10px;border:none;background:transparent" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker"><span class="phase-badge">${phase<7?`تثبيت ${phase}/7`:'استدامة'}</span>${phase<7?dots:''}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span>${phase<7&&!e.hasBeenEvaluated?'الهدف: 10 تكرارات غيبًا':'تكرار إضافي'}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}',this)">📿 كررت (${reps})</button></div></div>${ev}</div></div>`}
-function attachSwipe(){document.querySelectorAll('.swipe-card').forEach(card=>{let x0=0,active=false;card.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;active=true},{passive:true});card.addEventListener('touchmove',e=>{if(!active)return;const dx=e.touches[0].clientX-x0;if(Math.abs(dx)>25)card.style.transform=`translateX(${dx*0.5}px)`},{passive:true});card.addEventListener('touchend',e=>{active=false;card.style.transform='none';const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)<80)return;const id=card.dataset.entryId;if(dx>0)swipeReview(id,'pass');else swipeReview(id,'fail')})})}
-
-function renderPool(){const q=($('searchInput')?.value||'').trim().toLowerCase();let arr=[...data.entries];if(q)arr=arr.filter(e=>(e.label+' '+e.note).toLowerCase().includes(q));arr.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));$('poolCount').textContent=arr.length;$('poolList').innerHTML=arr.length?arr.slice(0,poolVisible).map(entryHTML).join(''):'<div class="empty" style="font-size:16px">🌱 لم تضف أورادًا بعد.</div>';$('moreBtn').style.display=arr.length>poolVisible?'block':'none';attachSwipe()}
-function loadMore(){poolVisible+=20;renderPool()}
-function renderAll(){const t=today(),newOnes=data.entries.filter(e=>e.date===t&&!e.hasBeenEvaluated),due=data.entries.filter(e=>(e.hasBeenEvaluated&&e.nextReviewDate<=t)||e.isICU),icu=data.entries.filter(e=>e.isICU);if(data.restDays&&data.restDays.includes(new Date().getDay())){$('restDayBanner').style.display='block'}else{$('restDayBanner').style.display='none'}$('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="empty" style="font-size:17px">📖 لا يوجد حفظ جديد اليوم.</div>';$('dueCount').textContent=due.length;$('dueList').innerHTML=due.length?due.map(entryHTML).join(''):'<div class="empty" style="font-size:17px">🎉 خلصت مراجعات اليوم!</div>';$('icuCard').style.display=icu.length?'block':'none';$('icuList').innerHTML=icu.map(entryHTML).join('');renderPool();if($('progress').classList.contains('active'))renderProgress();if($('schedule').classList.contains('active'))renderPlan('day');updateLamp();attachSwipe()}
-
-function switchPlan(period,btn){document.querySelectorAll('.plan-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderPlan(period)}
-function renderPlan(period){const t=today();let daysLookback=0,daysLookahead=0,titleTo='',titleDone='',goalFraction=0;if(period==='day'){daysLookback=0;daysLookahead=0;titleTo="مطلوب اليوم";titleDone="إنجاز اليوم";goalFraction=Math.ceil(data.goal/365)}else if(period==='week'){daysLookback=7;daysLookahead=7;titleTo="خطة الأسبوع";titleDone="حصاد الأسبوع";goalFraction=Math.ceil(data.goal/52)}else if(period==='month'){daysLookback=30;daysLookahead=30;titleTo="خطة الشهر";titleDone="حصاد الشهر";goalFraction=Math.ceil(data.goal/12)}else if(period==='year'){daysLookback=365;daysLookahead=365;titleTo="خطة السنة";titleDone="حصاد السنة";goalFraction=data.goal}let dueCount=0,newCount=0;const dAhead=new Date();dAhead.setDate(dAhead.getDate()+daysLookahead);const targetDateStr=dateKey(dAhead);data.entries.forEach(e=>{if(!e.hasBeenEvaluated)newCount++;else if(e.nextReviewDate<=targetDateStr)dueCount++});let doneSave=0,doneRev=0,doneRep=0;for(let i=0;i<=daysLookback;i++){const d=new Date();d.setDate(d.getDate()-i);const log=data.dailyLog[dateKey(d)];if(log){doneSave+=log.save||0;doneRev+=log.review||0;doneRep+=log.rep||0}}$('planGrid').innerHTML=`<div class="card" style="border-top:4px solid var(--warning)"><h3 style="color:var(--warning);margin:0 0 16px 0">🎯 ${titleTo}</h3><div class="small" style="margin-bottom:12px;font-size:15px">ما يجب إنجازه:</div><div style="font-size:16px;margin-bottom:8px">• <b>مراجعات:</b> ${dueCount} ورد</div><div style="font-size:16px;margin-bottom:8px">• <b>تثبيت:</b> ${newCount} ورد</div><div class="small" style="margin-top:12px;color:var(--muted)">الهدف المقترح: حفظ ${goalFraction} ${data.goalUnit}</div></div><div class="card" style="border-top:4px solid var(--success)"><h3 style="color:var(--success);margin:0 0 16px 0">🏆 ${titleDone}</h3><div class="small" style="margin-bottom:12px;font-size:15px">ما أتممته بفضل الله:</div><div style="font-size:16px;margin-bottom:8px">• <b>حفظ جديد:</b> ${doneSave} ورد</div><div style="font-size:16px;margin-bottom:8px">• <b>مراجعات:</b> ${doneRev} ورد</div><div style="font-size:16px">• <b>تكرارات:</b> ${doneRep} مرة</div></div>`}
-
-/* PROGRESS & CHARTS */
-function renderProgress(){const ev=data.entries.filter(e=>e.hasBeenEvaluated).length,active=Object.keys(data.dailyLog).length;$('streakNum').textContent=data.streak;$('streakFire').style.display=data.streak>0?'inline-block':'none';$('entriesStat').textContent=data.entries.length;$('evalStat').textContent=ev;$('activeDaysStat').textContent=active;const pct=data.goal?Math.min(100,ev/data.goal*100):0;$('goalTitle').textContent=`الهدف: ${data.goal} ${data.goalUnit}`;$('goalProgress').style.width=pct+'%';$('goalText').textContent=`إنجاز ${ev} من ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));$('letters').textContent=fmt(letters);$('hasanat').textContent=fmt(letters*10);renderBadges();renderCalendar();drawChart();renderHeatmap();renderConstellation();renderMistakes()}
-function renderCalendar(){const y=calendarDate.getFullYear(),m=calendarDate.getMonth();$('calTitle').textContent=new Date(y,m,1).toLocaleDateString('ar-EG',{month:'long',year:'numeric'});const first=new Date(y,m,1).getDay(),max=new Date(y,m+1,0).getDate();let h='<div class="cal-grid">';['أحد','اثن','ثلث','أرب','خمي','جمع','سبت'].forEach(x=>h+=`<div class="cal-cell cal-head">${x}</div>`);for(let i=0;i<first;i++)h+='<div class="cal-cell" style="border:none"></div>';for(let d=1;d<=max;d++){const dt=today(new Date(y,m,d)),sc=dayScore(dt),log=data.dailyLog[dt];let c='day-white';if(sc>=6)c='day-green';else if(sc>0)c='day-yellow';else if(dt<today()&&data.firstDate&&dt>=data.firstDate)c='day-red';h+=`<div class="cal-cell ${c}"><b style="font-size:13px">${d}</b><div style="color:var(--muted)">${log?`ح ${log.save||0} م ${log.review||0}`:''}</div></div>`}h+='</div>';$('calendar').innerHTML=h}
-function changeMonth(d){calendarDate.setMonth(calendarDate.getMonth()+d);renderCalendar()}
-function drawChart(){const c=$('activityChart');if(!c)return;const r=c.parentElement.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(300,r.width),h=Math.max(180,r.height);c.width=w*dpr;c.height=h*dpr;const x=c.getContext('2d');x.setTransform(dpr,0,0,dpr,0,0);x.clearRect(0,0,w,h);const vals=[];for(let i=29;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);vals.push(dayScore(today(d)))}const max=Math.max(10,...vals);x.strokeStyle=getComputedStyle(document.body).getPropertyValue('--border');x.lineWidth=1;for(let g=0;g<4;g++){const yy=10+g*(h-20)/3;x.beginPath();x.moveTo(10,yy);x.lineTo(w-10,yy);x.stroke()}x.strokeStyle=getComputedStyle(document.body).getPropertyValue('--gold');x.lineWidth=3;x.lineJoin='round';x.beginPath();vals.forEach((v,i)=>{const xx=10+i*(w-20)/(vals.length-1),yy=h-10-(v/max)*(h-20);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.stroke()}
-function dayScore(d){const x=data.dailyLog[d]||{};return(x.save||0)*3+(x.review||0)*2+(x.rep||0)*.15+(x.focus||0)*.04}
-function renderHeatmap(){const h=$('heatmap');const end=new Date();const cells=[];for(let i=363;i>=0;i--){const d=new Date(end);d.setDate(end.getDate()-i);const sc=dayScore(today(d));let c='heat';if(sc>=10)c+=' l4';else if(sc>=6)c+=' l3';else if(sc>2)c+=' l2';else if(sc>0)c+=' l1';cells.push(`<div class="${c}" title="${today(d)}"></div>`)}h.innerHTML=cells.join('')}
-function renderConstellation(){const done=new Set();data.entries.forEach(e=>{if(e.hasBeenEvaluated){for(let i=0;i<surahNames.length;i++){if(e.label.includes(surahNames[i]))done.add(i);}}});$('constellation').innerHTML=surahNames.map((s,i)=>`<div class="star ${done.has(i)?'on':''}" title="${s}">★</div>`).join('')}
-function renderBadges(){const s={eval:data.entries.filter(e=>e.hasBeenEvaluated).length,streak:data.streak,reviews:data.entries.reduce((a,e)=>a+(e.reviewCount||0),0),focus:data.totalFocusMinutes||0,entries:data.entries.length};$('badgesContainer').innerHTML=BADGES.map(b=>{const ok=b[3](s);return `<div class="badge-card ${ok?'unlocked':''}"><div class="badge-icon">${b[2]}</div><b style="font-size:16px">${b[1]}</b><div class="small" style="margin-top:4px">${b[4]}</div></div>`}).join('')}
-
-/* NOTEBOOK */
-function renderMistakes(){const box=$('mistakeList');box.innerHTML=data.mistakes.length?data.mistakes.map((m,i)=>`<div class="card" style="padding:20px"><div class="row" style="justify-content:space-between"><b style="font-size:18px;color:var(--gold)">${esc(m.title)}</b><button class="action danger" style="padding:6px 10px;border:none;background:transparent" onclick="deleteMistake(${i})">✕</button></div><div class="badge gold" style="margin:12px 0">${esc(m.type)}</div><div style="font-size:16px;line-height:1.8">${esc(m.text)}</div></div>`).join(''):'<div class="empty">لا توجد ملاحظات محفوظة.</div>'}
-function addMistake(){const title=$('mistakeTitle').value.trim(),text=$('mistakeText').value.trim();if(!title||!text)return alert('اكتب العنوان والملاحظة');if(!Array.isArray(data.mistakes))data.mistakes=[];data.mistakes.unshift({title,text,type:$('mistakeType').value,date:today()});save();$('mistakeTitle').value='';$('mistakeText').value='';renderMistakes();closeModal('notebookModal')}
-function deleteMistake(i){data.mistakes.splice(i,1);save();renderMistakes()}
-
-/* ZEN AUDIO & FOCUS */
-function toggleZenAudio(type){
-  if(zenCtx){zenCtx.close();zenCtx=null;zenSource=null;zenGain=null;$('zenRainBtn').style.background='';$('zenFocusBtn').style.background='';return}
-  const A=window.AudioContext||window.webkitAudioContext;if(!A)return alert('الصوت غير مدعوم');
-  zenCtx=new A();const buffer=zenCtx.createBuffer(1,zenCtx.sampleRate*2,zenCtx.sampleRate);const dataArr=buffer.getChannelData(0);
-  for(let i=0;i<dataArr.length;i++){
-    let white=Math.random()*2-1;
-    dataArr[i]=type==='brown'?(white+dataArr[i-1]||0)/2.5:white*0.2; // Simple Brown vs White/Pink mix
+function entryHTML(e){
+  const due=e.hasBeenEvaluated&&e.nextReviewDate<=today(),phase=e.phaseDays?.length||0,reps=e.sessionReps||0;
+  const isOldSkipped = (phase >= 7 && !e.hasBeenEvaluated); 
+  let ev='';
+  if(!e.hasBeenEvaluated||due){
+    if(phase<7)ev=`<div class="small" style="text-align:center;margin-top:14px; font-size:14px;">📍 التقييم اليومي لفترة التثبيت</div><div class="qbtns"><button style="background:var(--successDim);border-color:rgba(58,145,76,0.3);color:var(--success)" onclick="swipeReview('${e.id}','pass',this)">✅ أتممت اليوم</button><button style="background:var(--dangerDim);border-color:rgba(181,75,75,0.3);color:var(--danger)" onclick="swipeReview('${e.id}','fail',this)">🔄 لم أتقنها</button></div>`;
+    else if(data.evalMode==='weekly')ev=`<div class="qbtns"><button style="background:var(--successDim);border-color:rgba(58,145,76,0.3);color:var(--success)" onclick="swipeReview('${e.id}','pass',this)">✅ ممتازة (موعد بعد 7 أيام)</button><button style="background:var(--dangerDim);border-color:rgba(181,75,75,0.3);color:var(--danger)" onclick="swipeReview('${e.id}','fail',this)">🔴 أعد غدًا</button></div>`;
+    else ev=`<div class="qbtns"><button style="color:var(--info);border-color:rgba(33,150,243,0.3)" onclick="swipeReview('${e.id}',4,this)">🔵 سهل</button><button style="background:var(--successDim);border-color:rgba(58,145,76,0.3);color:var(--success)" onclick="swipeReview('${e.id}',3,this)">🟢 تذكرته</button><button style="background:var(--yellowDim);border-color:rgba(219,140,22,0.3);color:var(--warning)" onclick="swipeReview('${e.id}',2,this)">🟡 بصعوبة</button><button style="background:var(--dangerDim);border-color:rgba(181,75,75,0.3);color:var(--danger)" onclick="swipeReview('${e.id}',1,this)">🔴 نسيت</button></div>`;
   }
-  zenSource=zenCtx.createBufferSource();zenSource.buffer=buffer;zenSource.loop=true;
-  const filter=zenCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=type==='brown'?400:1500;
-  zenGain=zenCtx.createGain();zenGain.gain.value=type==='brown'?0.08:0.02;
-  zenSource.connect(filter).connect(zenGain).connect(zenCtx.destination);zenSource.start();
-  if(type==='rain'){$('zenRainBtn').style.background='var(--infoBg)'}else{$('zenFocusBtn').style.background='var(--infoBg)'}
+  const dots=Array.from({length:7},(_,i)=>`<span class="t-box ${i<phase?'done':''}"></span>`).join('');
+  let metaText = !e.hasBeenEvaluated ? (isOldSkipped ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مراجعة لتحديد المستوى</span>` : `<span style="color:var(--gold);font-weight:800; font-size:16px;">✨ ورد جديد</span>`) : (due ? `<span style="color:var(--warning);font-weight:800; font-size:16px;">⏰ مستحق للمراجعة</span>` : `<span style="font-size:15px; opacity:0.9;">المراجعة القادمة: ${esc(e.nextReviewDate)}</span>`);
+  const encLabel = encodeURIComponent(e.label);
+  const searchUrl = `https://www.youtube.com/results?search_query=تطبيق+أحكام+التجويد+${encLabel}`;
+
+  return`<div class="swipe-card" data-entry-id="${e.id}"><div class="swipe-backdrop"><span style="color:var(--success)">✅</span><span style="color:var(--danger)">🔄</span></div><div class="item ${e.isICU?'icu':''} ${due||isOldSkipped?'due':''}"><div class="item-header"><div class="item-title"><div class="quran">${esc(e.label)} ${e.isExactLetters?'<span style="font-size:16px; opacity:0.8;" title="مضبوط">🎯</span>':''}</div>${e.note?`<div class="note-txt" style="font-size:16px; margin-top:10px;">📌 ${esc(e.note)}</div>`:''}</div><div style="display:flex;gap:10px"><button class="action danger" style="padding:10px 14px;font-size:18px;background:var(--dangerDim);color:var(--danger);border:1px solid rgba(181,75,75,0.4); border-radius:14px;" onclick="openRecorder('${esc(e.label.replace(/'/g,"\\'") )}')" title="اختبر نفسك">🎤</button><button class="action info" style="padding:10px 14px;font-size:18px;background:rgba(33,150,243,.1);color:var(--info);border:1px solid rgba(33,150,243,.4); border-radius:14px;" onclick="window.open('${searchUrl}', '_blank')" title="استخراج أحكام الورد">🔍</button><button class="action" style="background:transparent;padding:10px; border:none; font-size:18px;" onclick="removeEntry('${e.id}')">✕</button></div></div><div class="item-meta"><div>${metaText}</div><div class="phase-tracker" style="margin-top:0">${phase<7?`<span class="phase-badge">تثبيت ${phase}/7</span>${dots}`:`<span class="phase-badge" style="border-color:var(--success);color:var(--success);background:var(--successDim)">استدامة</span>`}</div></div>${smartLinks(e.label)}<div class="rep-counter-container"><div class="rep-counter-row"><span style="font-size:16px;font-weight:800">${phase<7&&!e.hasBeenEvaluated?'الهدف: 10 تكرارات غيبًا':'تكرار إضافي'}</span><button class="rep-btn ${reps>=10?'done':''}" onclick="addRep('${e.id}',this)">📿 كررت (${reps})</button></div></div>${ev}</div></div>`
 }
+
+function renderPool(){const q=($('searchInput')?.value||'').trim().toLowerCase();let arr=[...data.entries];if(q)arr=arr.filter(e=>(e.label+' '+e.note).toLowerCase().includes(q));arr.sort((a,b)=>a.nextReviewDate.localeCompare(b.nextReviewDate));$('poolCount').textContent=arr.length;$('poolList').innerHTML=arr.length?arr.slice(0,poolVisible).map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🌱 لم تضف أورادًا بعد.</div>';$('moreBtn').style.display=arr.length>poolVisible?'block':'none';attachSwipe()}
+function loadMore(){poolVisible+=20;renderPool()}
+
+function renderAll(){
+  const t=today(), newOnes=data.entries.filter(e=>e.date===t&&!e.hasBeenEvaluated), due=data.entries.filter(e=>(e.hasBeenEvaluated&&e.nextReviewDate<=t)||e.isICU), icu=data.entries.filter(e=>e.isICU);
+  const todayIdx = new Date().getDay();
+  if(data.restDays && data.restDays.includes(todayIdx)){ $('restDayBanner').style.display = 'block'; } else { $('restDayBanner').style.display = 'none'; }
+  $('newList').innerHTML=newOnes.length?newOnes.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">📖 لا يوجد حفظ جديد اليوم.</div>';
+  $('dueCount').textContent=due.length;
+  $('dueList').innerHTML=due.length?due.map(entryHTML).join(''):'<div class="empty" style="font-size:17px; opacity:0.8;">🎉 خلصت مراجعات اليوم!</div>';
+  $('icuCard').style.display=icu.length?'block':'none';
+  $('icuList').innerHTML=icu.map(entryHTML).join('');
+  renderPool();
+  if($('progress').classList.contains('active')) renderProgress();
+  if($('schedule').classList.contains('active')){ renderPlan('day'); }
+  updateSpiritualLamp();
+}
+
+/* NATIVE SWIPE HANDLING */
+function attachSwipe(){
+  document.querySelectorAll('.swipe-card').forEach(card=>{
+    let x0=0, active=false;
+    card.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;active=true;},{passive:true});
+    card.addEventListener('touchmove',e=>{
+      if(!active)return;
+      const dx=e.touches[0].clientX-x0;
+      if(Math.abs(dx)>25) card.style.transform=`translateX(${dx*0.5}px)`;
+    },{passive:true});
+    card.addEventListener('touchend',e=>{
+      active=false; card.style.transform='none';
+      const dx=e.changedTouches[0].clientX-x0;
+      if(Math.abs(dx)<90)return;
+      const id=card.dataset.entryId;
+      if(dx>0) swipeReview(id,'pass', card); else swipeReview(id,'fail', card);
+    })
+  });
+}
+
+function switchPlan(period, btn) { document.querySelectorAll('.plan-tab').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderPlan(period); }
+function renderPlan(period) {
+  const grid = $('planGrid'); const t = today();
+  let daysLookback = 0, daysLookahead = 0, titleTo = '', titleDone = '', goalFraction = 0;
+  if(period === 'day') { daysLookback = 0; daysLookahead = 0; titleTo="مطلوب اليوم"; titleDone="إنجاز اليوم"; goalFraction = Math.ceil(data.goal / 365); }
+  else if(period === 'week') { daysLookback = 7; daysLookahead = 7; titleTo="خطة الأسبوع"; titleDone="حصاد الأسبوع"; goalFraction = Math.ceil(data.goal / 52); }
+  else if(period === 'month') { daysLookback = 30; daysLookahead = 30; titleTo="خطة الشهر"; titleDone="حصاد الشهر"; goalFraction = Math.ceil(data.goal / 12); }
+  else if(period === 'year') { daysLookback = 365; daysLookahead = 365; titleTo="خطة السنة"; titleDone="حصاد السنة"; goalFraction = data.goal; }
+
+  let dueCount = 0, newCount = 0;
+  const dAhead = new Date(); dAhead.setDate(dAhead.getDate() + daysLookahead); const targetDateStr = dateKey(dAhead);
+  data.entries.forEach(e => { if(!e.hasBeenEvaluated) newCount++; else if(e.nextReviewDate <= targetDateStr) dueCount++; });
+
+  let doneSave = 0, doneRev = 0, doneRep = 0;
+  for(let i=0; i<=daysLookback; i++){
+    const d = new Date(); d.setDate(d.getDate() - i); const log = data.dailyLog[dateKey(d)];
+    if(log) { doneSave += log.save||0; doneRev += log.review||0; doneRep += log.rep||0; }
+  }
+
+  grid.innerHTML = `<div class="card" style="border-top: 4px solid rgba(224, 154, 26, 0.6); padding:24px;"><h3 style="color:var(--warning); margin:0 0 16px; font-size:22px;">🎯 ${titleTo}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما يجب إنجازه للالتزام بمسارك:</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات مجدولة:</b> ${dueCount} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>أوراد قيد التثبيت:</b> ${newCount} ورد</div><div style="font-size:15px; margin-top:16px; color:var(--muted)">• <b>هدف تقريبي مقترح:</b> حفظ ${goalFraction} ${data.goalUnit}</div></div><div class="card" style="border-top: 4px solid rgba(73, 167, 92, 0.6); padding:24px;"><h3 style="color:var(--success); margin:0 0 16px; font-size:22px;">🏆 ${titleDone}</h3><div class="small" style="margin-bottom:16px; font-size:15px; opacity:0.9;">ما أتممته بفضل الله وتوفيقه:</div><div style="font-size:16px; margin-bottom:10px">• <b>حفظ جديد أُضيف:</b> ${doneSave} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>مراجعات أُنجزت:</b> ${doneRev} ورد</div><div style="font-size:16px; margin-bottom:10px">• <b>تكرارات (غيباً):</b> ${doneRep} مرة</div></div>`;
+}
+
+function openTajweed(){const id=$('tajweedTitle').dataset.yt,search=$('tajweedTitle').dataset.search;$('ytIframe').src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;$('ytSearchHint').textContent=search;$('ytExternalLink').href=`https://youtu.be/${id}`;openModal('tajweedModal')}
+function closeTajweed(){ $('ytIframe').src = ''; closeModal('tajweedModal'); }
+
+function openRecorder(labelEnc){const label=decodeURIComponent(labelEnc);$('recordTarget').textContent=label;$('playbackAudio').style.display='none';const btn=$('recordBtn'); btn.classList.remove('recording'); btn.innerHTML='🎤';$('recordStatus').textContent='اضغط للبدء (بدون إنترنت، بياناتك لا تخرج من هاتفك)';if(recordAudioUrl) URL.revokeObjectURL(recordAudioUrl);openModal('recordModal');}
+function closeRecordModal(){if(mediaRecorder && mediaRecorder.state==='recording') mediaRecorder.stop(); closeModal('recordModal');}
+async function toggleRecord(){
+  const btn = $('recordBtn'), status = $('recordStatus');
+  if (mediaRecorder && mediaRecorder.state === "recording") { mediaRecorder.stop(); btn.classList.remove('recording'); btn.innerHTML = '🎤'; return; }
+  try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = e => { if(e.data.size > 0) audioChunks.push(e.data); };
+      mediaRecorder.onstop = () => {
+          const blob = new Blob(audioChunks, { type: 'audio/webm' });
+          recordAudioUrl = URL.createObjectURL(blob);
+          $('playbackAudio').src = recordAudioUrl; $('playbackAudio').style.display = 'block';
+          stream.getTracks().forEach(t => t.stop());
+      };
+      audioChunks = []; mediaRecorder.start();
+      btn.classList.add('recording'); btn.innerHTML = '⏹'; status.textContent = 'جارٍ التسجيل…';
+  } catch(e) { alert('تأكد من إعطاء صلاحية الميكروفون للمتصفح.'); }
+}
+
+function renderAdhkar(){const box=$('adhkarList');if(!box)return;box.innerHTML='';adhkarList.forEach(([id,text,target])=>{const c=adhkarProgress[id]||0,done=c>=target;box.innerHTML+=`<div class="card" style="padding:24px;border:1px solid rgba(212,175,55,0.2);margin-bottom:16px"><div class="row" style="justify-content:space-between;margin-bottom:16px"><div class="quran-font" style="font-size:24px">${esc(text)}</div><div style="color:var(--gold);font-weight:900;font-size:20px">${fmt(c)} / ${target}</div></div><button class="action ${done?'success':''}" style="width:100%;font-size:18px;padding:16px" onclick="incDhikr('${id}',this)">${done?'✅ تم':'📿 كرر'}</button></div>`});}
+function incDhikr(id,btn){const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);adhkarProgress[id]=(adhkarProgress[id]||0)+1;saveAdhkar();renderAdhkar();const target=adhkarList.find(x=>x[0]===id)[2];uiSound(adhkarProgress[id]===target?'done':'click');haptic(adhkarProgress[id]===target?'done':'light')}
+function openSadaqah(){renderAdhkar();openModal('sadaqahModal')}
+
+function renderProgress(){
+  const ev=data.entries.filter(e=>e.hasBeenEvaluated).length,active=Object.keys(data.dailyLog).length;
+  $('streakStat').textContent=data.streak; $('entriesStat').textContent=data.entries.length; $('evalStat').textContent=ev; $('activeDaysStat').textContent=active;
+  const pct=data.goal?Math.min(100,ev/data.goal*100):0;
+  $('goalTitle').textContent=`الهدف: ${data.goal} ${data.goalUnit}`; $('goalProgress').style.width=pct+'%'; $('goalText').textContent=`إنجاز ${ev} من ${data.goal} ${data.goalUnit} (${pct.toFixed(1)}%)`;
+  let letters=0; data.entries.forEach(e=>{letters+=(e.baseLetters||500)*(e.totalReps||0);});
+  $('letters').textContent=fmt(letters); $('hasanat').textContent=fmt(letters*10);
+  renderBadges();
+}
+
+function updateName(){const n=$('nameInput').value.trim();if(!n)return;data.userName=n;save();updateGreeting();haptic();alert('تم الحفظ')}
+function changeEvalMode(){data.evalMode=$('evalMode').value;save();renderAll()}
+function changeGoal(){const v=$('goalSelect').value,b=$('customGoalBox');if(v==='custom'){b.style.display='block';return}b.style.display='none';const p=v.split(',');data.goal=Number(p[0]);data.goalUnit=p[1];save();renderProgress()}
+function saveCustomGoal(){data.goal=Number($('customGoalNum').value);data.goalUnit=$('customGoalUnit').value.trim();save();renderProgress();alert('تم')}
+function renderRestDaysSettings(){const d=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];let h='';d.forEach((x,i)=>{const c=data.restDays?.includes(i)?'checked':'';h+=`<label style="background:var(--input);padding:14px 18px;border-radius:14px;border:1px solid var(--border);display:flex;gap:12px; font-size:16px; cursor:pointer;"><input type="checkbox" class="rest-cb" style="width:24px;height:24px;margin:0;accent-color:var(--gold);" value="${i}" ${c}> ${x}</label>`;});$('restDaysContainer').innerHTML=h;}
+function saveRestDays(){data.restDays=Array.from(document.querySelectorAll('.rest-cb:checked')).map(cb=>parseInt(cb.value));save();renderAll();alert('تم حفظ أيام الراحة!')}
+function exportJSON(){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data));a.download=`Rafiq_Backup_${today()}.json`;a.click()}
+function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const x=JSON.parse(ev.target.result);if(confirm('استبدال البيانات؟')){data=normalize(x);save();location.reload()}}catch{alert('ملف غير صالح')}};r.readAsText(f);e.target.value=''}
+function exportCSV(){const q=s=>`"${String(s??'').replaceAll('"','""')}"`;let c='\uFEFFالورد,التاريخ,المراجعة القادمة,التكرارات,المراجعات\n';data.entries.forEach(e=>c+=`${q(e.label)},${q(e.date)},${q(e.nextReviewDate)},${e.totalReps||0},${e.reviewCount||0}\n`);const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([c],{type:'text/csv;charset=utf-8'}));a.download=`Rafiq_${today()}.csv`;a.click()}
+function resetApp(){if(prompt('اكتب "حذف" للتأكيد:')!=='حذف')return;localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(ADHKAR_KEY);localStorage.removeItem(SPLASH_KEY);location.reload()}
+
+function openShare(){const c=$('shareCanvas'),ctx=c.getContext('2d'),w=1200,h=760;c.width=w;c.height=h;const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#050806');g.addColorStop(1,'#132119');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle='#d4af37';ctx.font='bold 58px Tajawal, sans-serif';ctx.textAlign='center';ctx.fillText('فضل الله عليّ',w/2,120);ctx.fillStyle='#fff';ctx.font='bold 48px Tajawal, sans-serif';ctx.fillText(data.userName||'رفيق القرآن',w/2,200);ctx.font='bold 42px Tajawal, sans-serif';ctx.fillText(`🔥 ${data.streak} يوم التزام`,w/2,300);let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));ctx.fillText(`📖 ${fmt(letters)} حرف مقروء`,w/2,380);ctx.font='32px Tajawal, sans-serif';ctx.fillStyle='#9aa89a';ctx.fillText('رحلة مستمرة مع كتاب الله',w/2,500);ctx.font='26px Tajawal, sans-serif';ctx.fillStyle='#d4af37';ctx.fillText('رفيق القرآن',w/2,650);openModal('shareModal')}
+function downloadAchievement(){const a=document.createElement('a');a.href=$('shareCanvas').toDataURL('image/png');a.download=`Rafiq_Achievement_${today()}.png`;a.click()}
+async function shareAchievement(){if(!navigator.share)return downloadAchievement();try{const b=await new Promise(r=>$('shareCanvas').toBlob(r,'image/png'));const f=new File([b],`Rafiq_Achievement_${today()}.png`,{type:'image/png'});await navigator.share({title:'رفيق القرآن',text:'فضل الله عليّ 🤲',files:[f]})}catch{}}
+
+function buildPrint(){const box=$('printSheet');let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));let h=`<div class="print-page"><div class="print-title">رفيق القرآن — تقرير الرحلة</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'—')}<br><b>الأيام:</b> ${data.streak}<br><b>الأوراد:</b> ${data.entries.length}<br><b>المراجعات:</b> ${data.entries.reduce((a,e)=>a+(e.reviewCount||0),0)}<br><b>الحروف التقديرية:</b> ${fmt(letters)}</div>`;h+=`<div class="print-box"><b>ملاحظات:</b><br>${data.mistakes?.map(m=>`• ${esc(m.title)} — ${esc(m.text)}`).join('<br>')||'لا توجد'}</div></div>`;h+=`<div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table class="print-table"><tr><th>الورد</th><th>10 تكرارات</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.length?data.entries.slice(0,20).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join(''):`<tr><td colspan="10">أضف أورادك هنا بالقلم.</td></tr>`}</table></div>`;box.innerHTML=h}
+function printReport(){buildPrint();window.print()}
 
 function setTimer(m){clearInterval(timer);timeLeft=m*60;updTimer()}
 function setCustomTimer(){const m=Number($('customTimer').value);if(!Number.isFinite(m)||m<1||m>240)return alert('من 1 إلى 240 دقيقة');setTimer(m);$('customTimer').value=''}
@@ -765,51 +861,35 @@ function startTimerWithBreathe(){
   let bText=$('breatheText'), bCircle=$('breatheCircle');
   bText.textContent='شهيق...'; bCircle.style.animation='breatheIn 2s ease-in forwards';
   setTimeout(()=>{bText.textContent='زفير...'; bCircle.style.animation='breatheOut 2s ease-out forwards'}, 2000);
-  setTimeout(()=>{
-    bText.textContent='استعن بالله'; 
-    setTimeout(()=>{
-      $('breatheGuide').style.display='none'; $('timerContainer').style.display='block';
-      startTimer();
-    }, 1500);
-  }, 4000);
+  setTimeout(()=>{bText.textContent='استعن بالله'; setTimeout(()=>{ $('breatheGuide').style.display='none'; $('timerContainer').style.display='block'; startTimer(); }, 1500); }, 4000);
 }
 function startTimer(){clearInterval(timer);const started=Date.now();timer=setInterval(()=>{timeLeft--;updTimer();if(timeLeft<=0){clearInterval(timer);const mins=Math.max(1,Math.round((Date.now()-started)/60000));data.totalFocusMinutes+=mins;logActivity('focus',mins);markActive();save();uiSound('done');haptic('done');alert('انتهت الجلسة!');stopFocus()}},1000);$('mainTimerBtn').textContent='⏳ يعمل...'}
 function stopFocus(){clearInterval(timer);timeLeft=0;updTimer();$('mainTimerBtn').textContent='▶ ابدأ بتركيز';document.body.classList.remove('focus-mode');if(zenCtx)toggleZenAudio();$('breatheGuide').style.display='none'; $('timerContainer').style.display='block';}
 
-/* RECORDING */
-function openRecorder(labelEnc){const label=decodeURIComponent(labelEnc);$('recordTarget').textContent=label;$('playbackAudio').style.display='none';$('recordStatus').textContent='اضغط للتسجيل';$('recordBtn').textContent='🎤';$('recordBtn').classList.remove('recording');openModal('recordModal')}
-async function toggleRecord(){if(mediaRecorder&&mediaRecorder.state==='recording'){mediaRecorder.stop();return}if(!navigator.mediaDevices?.getUserMedia)return alert('التسجيل غير مدعوم هنا');if(zenCtx)toggleZenAudio();try{const s=await navigator.mediaDevices.getUserMedia({audio:true});audioChunks=[];mediaRecorder=new MediaRecorder(s);mediaRecorder.ondataavailable=e=>e.data.size&&audioChunks.push(e.data);mediaRecorder.onstop=()=>{const blob=new Blob(audioChunks,{type:'audio/webm'});if(recordAudioUrl)URL.revokeObjectURL(recordAudioUrl);recordAudioUrl=URL.createObjectURL(blob);$('playbackAudio').src=recordAudioUrl;$('playbackAudio').style.display='block';$('recordStatus').textContent='استمع لتسجيلك ثم قارن بالمصحف';s.getTracks().forEach(t=>t.stop());$('recordBtn').classList.remove('recording');$('recordBtn').textContent='🎤'};mediaRecorder.start();$('recordBtn').classList.add('recording');$('recordBtn').textContent='⏹';$('recordStatus').textContent='جارٍ التسجيل…'}catch{alert('اسمح للمتصفح باستخدام الميكروفون')}}
-function closeRecordModal(){if(mediaRecorder?.state==='recording')mediaRecorder.stop();closeModal('recordModal')}
+function toggleZenAudio(type){
+  if(zenCtx){zenCtx.close();zenCtx=null;zenSource=null;zenGain=null;$('zenRainBtn').style.background='';$('zenFocusBtn').style.background='';return}
+  const A=window.AudioContext||window.webkitAudioContext;if(!A)return alert('الصوت غير مدعوم');
+  zenCtx=new A();const buffer=zenCtx.createBuffer(1,zenCtx.sampleRate*2,zenCtx.sampleRate);const dataArr=buffer.getChannelData(0);
+  for(let i=0;i<dataArr.length;i++){ let white=Math.random()*2-1; dataArr[i]=type==='brown'?(white+dataArr[i-1]||0)/2.5:white*0.2; }
+  zenSource=zenCtx.createBufferSource();zenSource.buffer=buffer;zenSource.loop=true;
+  const filter=zenCtx.createBiquadFilter();filter.type='lowpass';filter.frequency.value=type==='brown'?400:1500;
+  zenGain=zenCtx.createGain();zenGain.gain.value=type==='brown'?0.08:0.02;
+  zenSource.connect(filter).connect(zenGain).connect(zenCtx.destination);zenSource.start();
+  if(type==='rain'){$('zenRainBtn').style.background='var(--infoBg)'}else{$('zenFocusBtn').style.background='var(--infoBg)'}
+}
 
-/* ADHKAR */
-function renderAdhkar(){const box=$('adhkarList');box.innerHTML=adhkarList.map(([id,t,n])=>{const c=adhkarProgress[id]||0,done=c>=n;return `<div class="card" style="padding:24px;border:1px solid rgba(212,175,55,0.2)"><div class="row" style="justify-content:space-between;margin-bottom:16px"><div class="quran" style="font-size:24px">${esc(t)}</div><div style="color:var(--gold);font-weight:900;font-size:20px">${fmt(c)} / ${n}</div></div><button class="action ${done?'success':''}" style="width:100%;font-size:18px;padding:16px" onclick="incDhikr('${id}',this)">${done?'✅ تم':'📿 كرر'}</button></div>`}).join('')}
-function incDhikr(id,btn){const rect=btn?.getBoundingClientRect();if(rect)createParticles(rect.left+rect.width/2,rect.top+rect.height/2);adhkarProgress[id]=(adhkarProgress[id]||0)+1;saveAdhkar();renderAdhkar();const target=adhkarList.find(x=>x[0]===id)[2];uiSound(adhkarProgress[id]===target?'done':'click');haptic(adhkarProgress[id]===target?'done':'light')}
-function openSadaqah(){renderAdhkar();openModal('sadaqahModal')}
+function init(){
+  loadData(); document.body.dataset.theme=data.theme; applyGraphicsMode(); updateGreeting();
+  const tv=data.goal+','+data.goalUnit,tr=$('goalSelect');
+  if([...tr.options].some(o=>o.value===tv))tr.value=tv;else{tr.value='custom';$('customGoalBox').style.display='block';$('customGoalNum').value=data.goal;$('customGoalUnit').value=data.goalUnit}
+  renderAdhkar(); renderAll(); updateLamp();
+  if(!data.userName) openModal('welcomeModal');
+  else setTimeout(showDailySplash, 500);
+}
 
-/* SETTINGS & SHARE */
-function renderSettings(){$('themeSelect').value=data.theme;$('graphicsModeSelect').value=data.graphicsLevel;$('evalMode').value=data.evalMode;$('soundToggle').checked=data.soundEnabled;$('recitationVolume').value=data.recitationVolume;$('nameInput').value=data.userName;renderRestDays();}
-function renderRestDays(){const names=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];$('restDaysContainer').innerHTML=names.map((n,i)=>`<label class="badge ${data.restDays.includes(i)?'gold':''}" style="padding:10px 16px;font-size:16px;border-radius:14px;cursor:pointer"><input type="checkbox" class="rest-cb" value="${i}" ${data.restDays.includes(i)?'checked':''} style="width:20px;height:20px;margin:0;accent-color:var(--gold)"> ${n}</label>`).join('')}
-function saveRestDays(){data.restDays=Array.from(document.querySelectorAll('.rest-cb:checked')).map(cb=>parseInt(cb.value));save();renderAll();alert('تم حفظ أيام الراحة!')}
-function updateName(){const n=$('nameInput').value.trim();if(!n)return;data.userName=n;save();updateGreeting();haptic()}
-function changeEvalMode(){data.evalMode=$('evalMode').value;save();renderAll()}
-function changeGoal(){const v=$('goalSelect').value;if(v==='custom'){$('customGoalBox').style.display='block';return}$('customGoalBox').style.display='none';const [n,u]=v.split(',');data.goal=Number(n);data.goalUnit=u;save();renderProgress()}
-function saveCustomGoal(){const n=Number($('customGoalNum').value),u=$('customGoalUnit').value.trim();if(!n||!u)return alert('أدخل العدد والوحدة');data.goal=n;data.goalUnit=u;save();renderProgress();alert('تم الحفظ')}
-function exportJSON(){const a=document.createElement('a');a.href='data:application/json;charset=utf-8,'+encodeURIComponent(JSON.stringify(data));a.download=`Rafiq_Backup_${today()}.json`;a.click()}
-function importJSON(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{try{const x=JSON.parse(ev.target.result);if(confirm('استبدال البيانات؟')){data=normalize(x);save();location.reload()}}catch{alert('ملف غير صالح')}};r.readAsText(f);e.target.value=''}
-
-function openShare(){const c=$('shareCanvas'),ctx=c.getContext('2d'),w=1200,h=760;c.width=w;c.height=h;const g=ctx.createLinearGradient(0,0,w,h);g.addColorStop(0,'#050806');g.addColorStop(1,'#132119');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);ctx.fillStyle='#d4af37';ctx.font='bold 58px Tajawal, sans-serif';ctx.textAlign='center';ctx.fillText('فضل الله عليّ',w/2,120);ctx.fillStyle='#fff';ctx.font='bold 48px Tajawal, sans-serif';ctx.fillText(data.userName||'رفيق القرآن',w/2,200);ctx.font='bold 42px Tajawal, sans-serif';ctx.fillText(`🔥 ${data.streak} يوم التزام`,w/2,300);let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));ctx.fillText(`📖 ${fmt(letters)} حرف مقروء`,w/2,380);ctx.font='32px Tajawal, sans-serif';ctx.fillStyle='#9aa89a';ctx.fillText('رحلة مستمرة مع كتاب الله',w/2,500);ctx.font='26px Tajawal, sans-serif';ctx.fillStyle='#d4af37';ctx.fillText('رفيق القرآن',w/2,650);openModal('shareModal')}
-function downloadAchievement(){const a=document.createElement('a');a.href=$('shareCanvas').toDataURL('image/png');a.download=`Rafiq_Achievement_${today()}.png`;a.click()}
-async function shareAchievement(){if(!navigator.share)return downloadAchievement();try{const b=await new Promise(r=>$('shareCanvas').toBlob(r,'image/png'));const f=new File([b],`Rafiq_Achievement_${today()}.png`,{type:'image/png'});await navigator.share({title:'رفيق القرآن',text:'فضل الله عليّ 🤲',files:[f]})}catch{}}
-
-/* PRINT */
-function buildPrint(){const box=$('printSheet');let letters=0;data.entries.forEach(e=>letters+=(e.baseLetters||500)*(e.totalReps||0));let h=`<div class="print-page"><div class="print-title">رفيق القرآن — تقرير الرحلة</div><div class="print-box"><b>الاسم:</b> ${esc(data.userName||'—')}<br><b>الأيام:</b> ${data.streak}<br><b>الأوراد:</b> ${data.entries.length}<br><b>المراجعات:</b> ${data.entries.reduce((a,e)=>a+(e.reviewCount||0),0)}<br><b>الحروف התقديرية:</b> ${fmt(letters)}</div>`;h+=`<div class="print-box"><b>المتشابهات والملاحظات:</b><br>${data.mistakes.map(m=>`• ${esc(m.title)} — ${esc(m.text)}`).join('<br>')||'لا توجد'}</div></div>`;h+=`<div class="print-page"><div class="print-title">📚 سجل الأوراد</div><table class="print-table"><tr><th>الورد</th><th>10 تكرارات</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>التقييم</th></tr>${data.entries.length?data.entries.slice(0,20).map(e=>`<tr><td>${esc(e.label)}</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐</td><td>☐ ممتاز ☐ وسط ☐ نسيت</td></tr>`).join(''):`<tr><td colspan="10">أضف أورادك هنا بالقلم.</td></tr>`}</table></div>`;box.innerHTML=h}
-function printReport(){buildPrint();window.print()}
-
-function init(){loadData();document.body.dataset.theme=data.theme;applyGraphicsMode();updateGreeting();renderSettings();renderAll();checkComeback();setTimeout(showDailySplash,500);}
 $('searchInput')?.addEventListener('input',renderPool);
 document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
 setInterval(updateGreeting,60000);
-window.addEventListener('resize',()=>{if($('progress')?.classList.contains('active')){renderCalendar();drawChart()}});
 init();
 </script>
 </body>
