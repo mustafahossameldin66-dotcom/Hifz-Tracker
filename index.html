@@ -165,6 +165,76 @@ body.device-laptop .ultimate-hero{min-height:230px;padding:30px;border-radius:32
 @keyframes installPulse{50%{box-shadow:0 0 0 6px rgba(212,175,55,.09)}}
 @media(max-width:760px){.hero-row,.diagnostic-grid{grid-template-columns:1fr}.review-actions{grid-template-columns:1fr}.quick-strip{grid-template-columns:repeat(2,1fr)}}
 
+
+/* === FINAL SIDEBAR LAYOUT FIX — ZERO OVERLAP ON LAPTOP/DESKTOP === */
+@media (min-width: 1200px){
+  body.device-laptop{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) 284px!important;
+    column-gap:24px!important;
+    align-items:start!important;
+    padding-bottom:0!important;
+    min-height:100vh!important;
+    overflow-x:hidden!important;
+  }
+  body.device-laptop .wrap{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:auto!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:46px 48px 70px!important;
+    min-width:0!important;
+  }
+  body.device-laptop .nav{
+    grid-column:2!important;
+    grid-row:1!important;
+    position:sticky!important;
+    top:24px!important;
+    right:auto!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:260px!important;
+    height:calc(100vh - 48px)!important;
+    max-height:calc(100vh - 48px)!important;
+    margin:24px 0 24px 0!important;
+    align-self:start!important;
+    z-index:2000!important;
+  }
+  body.device-laptop .fab{
+    right:310px!important;
+    left:auto!important;
+    bottom:34px!important;
+  }
+  body.device-laptop .desktop-grid{
+    grid-template-columns:minmax(0,1.35fr) minmax(300px,.65fr)!important;
+    min-width:0!important;
+  }
+  body.device-laptop .desktop-grid > *,
+  body.device-laptop .card,
+  body.device-laptop .item,
+  body.device-laptop .panel{
+    min-width:0!important;
+    max-width:100%!important;
+  }
+}
+
+/* Extra-wide screens: keep a comfortable visual gutter beside the sidebar. */
+@media (min-width: 1500px){
+  body.device-laptop{grid-template-columns:minmax(0,1fr) 300px!important;column-gap:28px!important;}
+  body.device-laptop .nav{width:272px!important;}
+  body.device-laptop .fab{right:326px!important;}
+}
+
+/* Prevent long controls/text from forcing the content column underneath the sidebar. */
+body.device-laptop input,
+body.device-laptop select,
+body.device-laptop textarea,
+body.device-laptop button{
+  min-width:0;
+  max-width:100%;
+}
+
 </style>
 <style>
 .splash-sadaqah{margin-top:18px;padding:16px 18px;border:1px solid rgba(212,175,55,.22);border-radius:18px;background:linear-gradient(145deg,rgba(212,175,55,.07),rgba(73,167,92,.045));text-align:right}
