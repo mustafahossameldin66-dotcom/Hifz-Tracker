@@ -839,6 +839,15 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
   }
 }
 
+/* === STUDY RECITATION COMPARISON === */
+.study-compare-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.study-compare-actions .action{flex:1;min-width:190px;text-align:center;text-decoration:none}
+.study-compare-list{display:grid;gap:10px}
+.study-compare-row{padding:12px;border:1px solid var(--border);border-radius:16px;background:var(--surface3)}
+.study-compare-ref{font-weight:900;color:var(--gold);margin-bottom:8px}
+.study-compare-row audio{display:block}
+@media(max-width:760px){.study-compare-actions .action{min-width:100%}}
+
 /* === FINAL DESKTOP / SIDEBAR READABILITY FIX === */
 @media(min-width:992px){
   body.device-laptop .wrap{width:calc(100vw - 310px)!important;max-width:none!important;margin-right:310px!important;margin-left:0!important;padding:46px 48px 70px!important;}
@@ -1143,6 +1152,14 @@ body.mode-1 .quote,body.mode-1 .notebook,body.mode-1 .stat,body.mode-1 .badge-ca
   -webkit-backdrop-filter:none !important;
 }
 
+
+/* MAXIMUM TAJWEED VISUALIZATION */
+.taj-legend{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.taj-legend span{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border:1px solid var(--border);border-radius:999px;background:var(--input);font-size:11px;color:var(--muted)}.taj-legend i{width:9px;height:9px;border-radius:50%;display:inline-block;box-shadow:0 0 8px currentColor}.taj-inspector{margin:14px 0;padding:16px;border:1px solid rgba(212,175,55,.24);border-radius:18px;background:linear-gradient(145deg,var(--goldDim),var(--input));min-height:112px}.taj-character-verse{padding:18px 12px;margin-top:12px;border:1px solid var(--border);border-radius:18px;background:rgba(0,0,0,.08);text-align:center;line-height:2.7;word-break:break-word}.taj-word{display:inline-block;margin:0 3px}.taj-letter{display:inline-block;position:relative;padding:2px 1px;border-radius:7px;cursor:pointer;transition:transform .15s,box-shadow .15s,background .15s,color .15s;text-shadow:0 0 0 transparent}.taj-letter::after{content:'';position:absolute;left:10%;right:10%;bottom:1px;height:2px;border-radius:999px;background:var(--taj-color);opacity:.18;transition:opacity .15s,height .15s}.taj-letter:hover,.taj-letter.selected{transform:translateY(-2px) scale(1.06);background:color-mix(in srgb,var(--taj-color) 15%,transparent);box-shadow:0 0 16px color-mix(in srgb,var(--taj-color) 28%,transparent),inset 0 0 0 1px color-mix(in srgb,var(--taj-color) 25%,transparent);text-shadow:0 0 12px color-mix(in srgb,var(--taj-color) 35%,transparent)}.taj-letter:hover::after,.taj-letter.selected::after{opacity:.9;height:3px}.taj-verse-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0}.study-verse-rule-card{overflow:hidden}.study-verse-rule-card+.study-verse-rule-card{margin-top:12px}
+@supports not (color:color-mix(in srgb, red 10%, transparent)){.taj-letter:hover,.taj-letter.selected{background:rgba(212,175,55,.12);box-shadow:0 0 16px rgba(212,175,55,.18)}}
+@media(max-width:700px){.taj-character-verse{font-size:25px;line-height:2.85;padding:14px 6px}.taj-letter{padding:1px 0}.taj-inspector{position:sticky;bottom:8px;z-index:20}.taj-verse-tools .action{flex:1;min-width:120px}}
+
+.taj-rule-encyclopedia{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:18px;background:var(--input)}.taj-rule-library{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.taj-lib{padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:rgba(0,0,0,.06);opacity:.72}.taj-lib.detected{border-color:rgba(76,166,93,.35);background:var(--successBg);opacity:1;box-shadow:0 0 15px rgba(76,166,93,.08)}.taj-lib>div{display:flex;align-items:center;justify-content:space-between;gap:8px}.taj-lib b{color:var(--text);font-size:13px}.taj-lib span{font-size:10px;color:var(--success);font-weight:900}.taj-lib small{display:block;margin-top:5px;color:var(--muted);line-height:1.65}.taj-word-map{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:18px;background:rgba(0,0,0,.045)}.taj-word-verse+.taj-word-verse{margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}.taj-word-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}.taj-word-card{display:flex;flex-direction:column;align-items:stretch;justify-content:center;text-align:right;gap:5px;padding:12px;border-radius:14px;border:1px solid var(--border);background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(212,175,55,.035));color:var(--text);cursor:pointer;transition:.18s}.taj-word-card:hover,.taj-word-card.selected-word{transform:translateY(-2px);border-color:var(--gold);box-shadow:0 0 18px rgba(212,175,55,.12)}.taj-word-card small{color:var(--muted);font-size:11px;line-height:1.55}.selected-word{outline:2px solid rgba(212,175,55,.26);outline-offset:2px}
+@media(max-width:700px){.taj-rule-library,.taj-word-grid{grid-template-columns:1fr}.taj-lib{padding:9px}.taj-word-card{padding:10px}}
 </style>
 <style>
 .splash-sadaqah{margin-top:18px;padding:16px 18px;border:1px solid rgba(212,175,55,.22);border-radius:18px;background:linear-gradient(145deg,rgba(212,175,55,.07),rgba(73,167,92,.045));text-align:right}
@@ -2284,15 +2301,13 @@ body.mode-2 .app-shell > .nav,body.mode-3 .app-shell > .nav{background:var(--uni
       <button class="study-tab active" data-study-tab="all" onclick="switchStudyTab('all')">✨ الكل</button>
       <button class="study-tab" data-study-tab="tajweed" onclick="switchStudyTab('tajweed')">🎙️ جوّد حفظك</button>
       <button class="study-tab" data-study-tab="tafsir" onclick="switchStudyTab('tafsir')">📖 التفسير</button>
-      <button class="study-tab" data-study-tab="words" onclick="switchStudyTab('words')">🔎 معاني الكلمات</button>
-      <button class="study-tab" data-study-tab="asbab" onclick="switchStudyTab('asbab')">🕊️ أسباب النزول</button>
+      <button class="study-tab" data-study-tab="comparison" onclick="switchStudyTab('comparison')">🎧 مقارنة التلاوة</button>
     </div>
     <div id="studyVerses" class="study-verse-list"></div>
-    <section class="study-panel study-section-tajweed" data-study-section="tajweed"><div class="study-panel-title">🎙️ جوّد حفظك</div><div class="study-lead">سنحاول تحديد أحكام التجويد الظاهرة في الورد تلقائيًا، مع شرح عملي بسيط. النتائج الآلية إرشادية وليست بديلًا عن التلقي من شيخ.</div><div id="studyTajweedRules"></div></section>
+    <section class="study-panel study-section-tajweed" data-study-section="tajweed"><div class="study-panel-title">🎙️ جوّد حفظك</div><div class="study-lead">نستخرج أحكام التجويد الظاهرة في الورد تلقائيًا ونشرحها بطريقة عملية وبسيطة، ثم نعرض أمثلة من آيات وردك نفسها. النتائج الآلية إرشادية وليست بديلًا عن التلقي من شيخ.</div><div id="studyTajweedRules"></div></section>
     <section class="study-panel study-section-tafsir" data-study-section="tafsir"><div class="study-panel-title">📖 التفسير الميسّر</div><div class="study-source">المصدر: التفسير الميسّر عبر QuranEnc.com، مع حفظ ما تم تحميله محليًا للمراجعة لاحقًا.</div><div id="studyTafsir"></div></section>
-    <section class="study-panel study-section-words" data-study-section="words"><div class="study-panel-title">🔎 معاني الكلمات</div><div class="study-source">معاني غريب القرآن الكاملة متاحة عبر إصدار مجمع الملك فهد؛ المعروض محليًا يبيّن الكلمات الموجودة في القاموس المدمج، ويمكن فتح المصدر عند الحاجة.</div><div id="studyWords"></div><a class="action info" href="https://qurancomplex.gov.sa/kfgqpc-books-muyassarghareeb/" target="_blank" rel="noopener" style="display:inline-flex;margin-top:10px;text-decoration:none">📚 فتح الميسّر في غريب القرآن</a></section>
-    <section class="study-panel study-section-asbab" data-study-section="asbab"><div class="study-panel-title">🕊️ أسباب النزول</div><div class="study-source">ليس لكل آية سبب نزول خاص ثابت، وقد تتعدد الروايات؛ لذلك نعرض هنا ما لدينا بصياغة حذرة، مع إتاحة الرجوع للمصادر المتخصصة.</div><div id="studyAsbab"></div><div class="study-links"><a class="action info" id="studyAsbabSearch" target="_blank" rel="noopener">🔎 ابحث عن سبب النزول</a><a class="action" href="https://quranpedia.net/book/242" target="_blank" rel="noopener">📚 كتاب أسباب النزول للواحدي</a><a class="action" href="https://awkafonline.gov.eg/content-sections/116/4764/%D8%A3%D8%B3%D8%A8%D8%A7%D8%A8-%D8%A7%D9%84%D9%86%D8%B2%D9%88%D9%84" target="_blank" rel="noopener">🧭 منهج التحقق والفهم</a></div></section>
-    <section class="study-panel"><div class="study-panel-title">🎥 فيديو التطبيق</div><div id="studyVideoNote" class="study-source">الفيديو مكمل للشرح وليس شرطًا لعمل هذه الميزة أوفلاين.</div><div class="study-video"><div id="studyVideoPlaceholder" class="study-video-placeholder">🎬 <b>فيديو تجويد مناسب للورد</b><div class="small" style="margin-top:6px">سيظهر عند الاتصال أو يمكنك فتح البحث مباشرة.</div></div><iframe id="studyVideoFrame" style="display:none;width:100%;aspect-ratio:16/9;border:0" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen loading="lazy"></iframe></div><div class="study-links"><button class="action info" id="studyVideoBtn" onclick="loadStudyVideo()">▶ تشغيل الفيديو</button><a id="studyVideoExternal" class="action info" target="_blank" rel="noopener" style="text-decoration:none">🔗 فتح على يوتيوب</a></div></section>
+    <section class="study-panel study-section-comparison" data-study-section="comparison"><div class="study-panel-title">🎧 قارن تلاوتك بالورد</div><div class="study-source">استمع للورد مع الحصري لضبط النطق والأداء، أو افتح تطبيقًا/فيديو مناسبًا لفارس عنتر، أو ابحث عن فيديو مخصص للصفحة نفسها إذا كان متاحًا.</div><div id="studyRecitationCompare"></div></section>
+    <section class="study-panel"><div class="study-panel-title">🎥 فيديو تجويد الورد</div><div id="studyVideoNote" class="study-source">الفيديو مكمل للشرح وليس شرطًا لعمل هذه الميزة أوفلاين.</div><div class="study-video"><div id="studyVideoPlaceholder" class="study-video-placeholder">🎬 <b>فيديو تجويد مناسب للورد</b><div class="small" style="margin-top:6px">سيظهر عند الاتصال أو يمكنك فتح البحث مباشرة.</div></div><iframe id="studyVideoFrame" style="display:none;width:100%;aspect-ratio:16/9;border:0" allow="autoplay;fullscreen;picture-in-picture" allowfullscreen loading="lazy"></iframe></div><div class="study-links"><button class="action info" id="studyVideoBtn" onclick="loadStudyVideo()">▶ تشغيل الفيديو</button><a id="studyVideoExternal" class="action info" target="_blank" rel="noopener" style="text-decoration:none">🔗 فتح على يوتيوب</a></div></section>
     <div class="study-actions"><button class="action" onclick="speakStudySummary()">🔊 اسمع الشرح المختصر</button><button class="action info" onclick="practiceStudyVerse()">🎤 سمّع الورد</button><button class="action success" onclick="markStudyViewed()">✅ علّمتُه للمراجعة</button></div>
   </div>
 </div></div>
@@ -3795,14 +3810,6 @@ function printReport(){
 /* === VERSE STUDY HUB: JOOD HIFZ + TAFSIR + GHAREEB + ASBAB === */
 const STUDY_CACHE_KEY='rafiq-study-cache-v1';
 let currentStudyRefs=[],currentStudyEntryId=null,currentStudyVideoId=null;
-const offlineWordMeanings={
-  'غاسق':'الليل إذا أظلم ودخل في كل شيء','وقب':'دخل وتعمّق وأظلم','الصمد':'السيد المقصود في الحوائج','الفلق':'الصبح المنفلق من ظلمة الليل','أبابيل':'جماعات متتابعة','سِجّيل':'طين متحجر أو محروق','القارعة':'القيامة التي تقرع القلوب','كَبَد':'مشقة وتعب','العهن':'الصوف المصبوغ','الكوثر':'الخير الكثير، ومنه نهر الكوثر','الزكاة':'النماء والطهارة، وشرعًا حق واجب في المال بشروطه','التقوى':'امتثال أوامر الله واجتناب نواهيه مع مراقبته','الفلاح':'الظفر بالمطلوب والنجاة من المكروه','الفتنة':'الابتلاء والاختبار، ويختلف معناها بحسب السياق','البرهان':'الحجة الواضحة القاطعة','السَّكينة':'الطمأنينة والثبات','البغي':'التعدي والظلم وطلب ما ليس بحق','الصدقات':'ما يُعطى ابتغاء مرضاة الله من صدقة','الربا':'الزيادة المحرمة في بعض المعاملات المالية','الخُسر':'النقصان والهلاك وذهاب الربح','الهمز':'الطعن والعيب والإيذاء بالقول أو الإشارة'
-};
-const verifiedAsbab={
-  '58:1-4':{text:'ورد في سبب نزول صدر سورة المجادلة حديث خولة بنت ثعلبة رضي الله عنها مع زوجها أوس بن الصامت في الظهار؛ فجاءت إلى النبي ﷺ تشكو وتجادله، فنزل صدر السورة في بيان الحكم.',source:'مذكور في كتب التفسير وأسباب النزول، مع اختلاف بعض الروايات في التفاصيل.'},
-  '80:1-10':{text:'ورد أن عبد الله بن أم مكتوم رضي الله عنه جاء إلى النبي ﷺ وهو مشغول بدعوة بعض سادة قريش، فنزل صدر سورة عبس مؤدبًا وموضحًا أن الإقبال على طالب الهدى هو المقصود.',source:'ذكره المفسرون في سبب نزول صدر سورة عبس.'},
-  '24:6-9':{text:'ارتبط نزول آيات اللعان بقصة هلال بن أمية رضي الله عنه وزوجته، وبالحاجة إلى بيان الحكم عند اتهام الزوج زوجته مع عدم وجود أربعة شهداء.',source:'سبب نزول مشهور في كتب التفسير وأحاديث اللعان.'}
-};
 function getStudyCache(){try{return JSON.parse(localStorage.getItem(STUDY_CACHE_KEY)||'{}')}catch{return{}}}
 function setStudyCache(cache){try{localStorage.setItem(STUDY_CACHE_KEY,JSON.stringify(cache))}catch{}}
 function cacheStudy(key,value){const c=getStudyCache();c[key]=value;const keys=Object.keys(c);if(keys.length>180)delete c[keys[0]];setStudyCache(c)}
@@ -3826,7 +3833,7 @@ async function getStudyVerses(refs){
     if(ref.page){
       const key='page:'+ref.page,cache=getStudyCache();let j=cache[key];
       if(!j&&navigator.onLine){try{j=await fetchJSON(`https://api.alquran.cloud/v1/page/${ref.page}/quran-uthmani`);cacheStudy(key,j)}catch{}}
-      const arr=j?.data?.ayahs||[];out.push(...arr.slice(0,12).map(a=>({sura:a.surah?.number,aya:a.numberInSurah,text:a.text,globalAyah:a.number,ref:(a.surah?.englishName||'السورة')+' — '+a.numberInSurah})));
+      const arr=j?.data?.ayahs||[];out.push(...arr.slice(0,30).map(a=>({sura:a.surah?.number,aya:a.numberInSurah,text:a.text,globalAyah:a.number,ref:(a.surah?.englishName||'السورة')+' — '+a.numberInSurah})));
     }else{
       const key=`ayah:${ref.sura}:${ref.aya}`,cache=getStudyCache();let j=cache[key];
       if(!j&&navigator.onLine){try{j=await fetchJSON(`https://api.alquran.cloud/v1/ayah/${ref.sura}:${ref.aya}/quran-uthmani`);cacheStudy(key,j)}catch{}}
@@ -3841,40 +3848,274 @@ async function getTafsir(sura,aya){
   try{const j=await fetchJSON(`https://quranenc.com/api/v1/translation/aya/arabic_moyassar/${sura}/${aya}`);const r=j?.result?.[0]||j?.result;if(r){const v={translation:String(r.translation||''),footnotes:String(r.footnotes||'')};cacheStudy(key,v);return v}}catch{}
   return null;
 }
-function stripMarks(s){return String(s||'').replace(/[ًٌٍَُِّْـ]/g,'')}
-function autoTajweedForText(text){
-  const raw=String(text||''), rules=[];
-  const tests=[
-    [/نْ\s*[ء-ي]*[ءأإٱهـعحغخ]|[ًٌٍ]\s*[ءأإٱهـعحغخ]/,'الإظهار الحلقي','انطق النون أو التنوين بوضوح قبل حروف الحلق.'],
-    [/نْ\s*[ب]|[ًٌٍ]\s*[ب]/,'الإقلاب','حوّل صوت النون إلى ميم مخفاة مع غنة قبل الباء.'],
-    [/نْ\s*[لر]|[ًٌٍ]\s*[لر]/,'الإدغام بغير غنة','أدخل النون أو التنوين في اللام أو الراء بدون غنة مستقلة.'],
-    [/نْ\s*[ينمو]|[ًٌٍ]\s*[ينمو]/,'الإدغام بغنة','أدمج في الحرف التالي مع غنة.'],
-    [/مْ\s*ب/,'الإخفاء الشفوي','أخفِ الميم قبل الباء مع غنة عند الشفتين.'],
-    [/مْ\s*م/,'الإدغام الشفوي','أدغم الميمين فتظهر ميم مشددة مع غنة.'],
-    [/مْ\s*[ء-ي]/,'الإظهار الشفوي','أظهر الميم الساكنة بوضوح إذا لم يأت بعدها ميم أو باء.'],
-    [/[قطبجد]ْ/,'القلقلة','أظهر ارتداد صوت الحرف الساكن بلطف من غير إضافة حركة.']
-  ];
-  tests.forEach(([re,name,tip])=>{if(re.test(raw)&&!rules.some(x=>x.name===name))rules.push({name,tip})});
-  if(/[اوي]َ|وُ|يِ/.test(stripMarks(raw)))rules.push({name:'المد الطبيعي (ترشيح)',tip:'راجع حروف المد، والأصل أن يكون المد الطبيعي حركتين إذا لم يوجد سبب للمد الفرعي.'});
-  return rules;
+function stripTajweedMarks(s){return String(s||'').replace(/[ۖۗۚۛۙۜۢ۩ـ]/g,'')}
+
+/*
+ * MAXIMUM-PRACTICAL TAJWEED ENGINE
+ * ---------------------------------
+ * This layer does two things:
+ * 1) detects a broad set of observable Tajweed patterns in Qur'anic Uthmani text;
+ * 2) breaks every Arabic grapheme (letter + its harakat) down individually.
+ *
+ * It is intentionally labelled "إرشادي" because some Tajweed decisions depend on
+ * the exact Uthmani glyphs, recitation riwayah, waqf/ibtida', and teacher transmission.
+ * It therefore never claims that regex alone replaces a qualified reciter/teacher.
+ */
+const TAJWEED_RULES={
+  izhar_halqi:{name:'الإظهار الحلقي',color:'#61b5ff',tip:'النون الساكنة أو التنوين قبل ء هـ ع ح غ خ: تُنطق النون/التنوين بوضوح من غير إدغام.',basis:'نْ/تنوين + ء هـ ع ح غ خ'},
+  idgham_ghunnah:{name:'الإدغام بغنة',color:'#65d48a',tip:'إدغام النون الساكنة أو التنوين في ي ن م و مع غنة.',basis:'نْ/تنوين + ي ن م و'},
+  idgham_no_ghunnah:{name:'الإدغام بغير غنة',color:'#7ea8ff',tip:'إدغام النون الساكنة أو التنوين في ل أو ر بلا غنة مستقلة.',basis:'نْ/تنوين + ل ر'},
+  iqlab:{name:'الإقلاب',color:'#d7a74f',tip:'النون الساكنة أو التنوين قبل الباء تُقلب ميمًا مخفاة مع غنة.',basis:'نْ/تنوين + ب'},
+  ikhfa:{name:'الإخفاء الحقيقي',color:'#b993ff',tip:'إخفاء النون الساكنة أو التنوين مع غنة قبل أحد حروف الإخفاء الخمسة عشر.',basis:'نْ/تنوين + حروف الإخفاء'},
+  ikhfa_shafawi:{name:'الإخفاء الشفوي',color:'#b97dff',tip:'الميم الساكنة قبل الباء: إخفاء الميم مع غنة من الشفتين.',basis:'مْ + ب'},
+  idgham_shafawi:{name:'الإدغام الشفوي',color:'#75ddbe',tip:'الميم الساكنة قبل الميم: إدغام الميم في الميم مع الغنة.',basis:'مْ + م'},
+  izhar_shafawi:{name:'الإظهار الشفوي',color:'#6cb2ff',tip:'إظهار الميم الساكنة إذا لم يأت بعدها باء أو ميم.',basis:'مْ + غير ب/م'},
+  ghunnah_nun:{name:'غنة النون المشددة',color:'#55d79a',tip:'النون المشددة: غنة لازمة مقدارها حركتان.',basis:'نّ'},
+  ghunnah_mim:{name:'غنة الميم المشددة',color:'#55d79a',tip:'الميم المشددة: غنة لازمة مقدارها حركتان.',basis:'مّ'},
+  qalqalah:{name:'القلقلة',color:'#ff9a63',tip:'في حروف قطب جد عند السكون: يُسمع ارتداد لطيف للصوت من غير توليد حركة.',basis:'ق ط ب ج د ساكنة'},
+  qalqalah_waqf:{name:'القلقلة عند الوقف',color:'#ff9a63',tip:'إذا وُقِف على كلمة تنتهي بأحد حروف قطب جد، يحصل السكون العارض والقلقلة بحسب الموضع.',basis:'آخر الكلمة + وقف محتمل'},
+  lam_shams:{name:'اللام الشمسية',color:'#f5ce65',tip:'لام التعريف تُدغم في الحرف الشمسي، ويُشدد الحرف التالي.',basis:'الـ + ت ث د ذ ر ز س ش ص ض ط ظ ل ن'},
+  lam_qamar:{name:'اللام القمرية',color:'#6bb7ff',tip:'لام التعريف تُظهر بوضوح قبل الحرف القمري.',basis:'الـ + ا ب ج ح خ ع غ ف ق ك م ه و ي'},
+  lafz_jalala_heavy:{name:'لفظ الجلالة — تفخيم اللام',color:'#e4b64d',tip:'لام لفظ الجلالة تُفخم إذا سبقها فتح أو ضم، أو عند الابتداء.',basis:'قبل «الله»: فتح/ضم أو ابتداء'},
+  lafz_jalala_light:{name:'لفظ الجلالة — ترقيق اللام',color:'#91b8ff',tip:'لام لفظ الجلالة تُرقق إذا سبقها كسر أصلي.',basis:'قبل «الله»: كسر'},
+  ra_heavy:{name:'تفخيم الراء',color:'#e2a454',tip:'الراء تُفخم في مواضع الفتح والضم، وفي عدد من حالات السكون المشهورة.',basis:'رَ/رُ أو سياق يقتضي التفخيم'},
+  ra_light:{name:'ترقيق الراء',color:'#8db6ff',tip:'الراء تُرقق في مواضع الكسر، وفي مواضع السكون التي يسبقها كسر أصلي ونحوها.',basis:'رِ أو سياق يقتضي الترقيق'},
+  tafkhim:{name:'تفخيم حروف الاستعلاء',color:'#e7a55e',tip:'حروف خص ضغط قظ أصلها التفخيم، وتزداد قوة التفخيم بحسب الحركة.',basis:'خ ص ض غ ط ق ظ'},
+  alif_follows:{name:'الألف تتبع ما قبلها',color:'#e5cf77',tip:'الألف المدية تتبع الحرف الذي قبلها في التفخيم والترقيق.',basis:'ألف مدية'},
+  madd_natural:{name:'المد الطبيعي',color:'#72d7ae',tip:'حرف مد لا يأتي بعده همز ولا سكون أصلي؛ الأصل حركتان.',basis:'ا بعد فتح / و بعد ضم / ي بعد كسر'},
+  madd_badl:{name:'مد البدل',color:'#8fc7ff',tip:'تقدم الهمزة على حرف المد في الكلمة، ويُراعى مقدار المد في رواية حفص.',basis:'همز + حرف مد'},
+  madd_muttasil:{name:'المد الواجب المتصل',color:'#f4c85f',tip:'حرف المد يتبعه همز في الكلمة نفسها.',basis:'حرف مد + همز في كلمة واحدة'},
+  madd_munfasil:{name:'المد الجائز المنفصل',color:'#9ec8ff',tip:'حرف المد في آخر كلمة وبعده همز في أول الكلمة التالية.',basis:'حرف مد + همز في كلمتين'},
+  madd_lazim:{name:'المد اللازم',color:'#ff8d8d',tip:'بعد حرف المد سكون أصلي ثابت وصلاً ووقفًا، ومنه ما يكون مع التشديد.',basis:'حرف مد + سكون أصلي/تشديد'},
+  madd_arid:{name:'المد العارض للسكون',color:'#ffd06d',tip:'عند الوقف على كلمة بعد حرف المد ينشأ سكون عارض، فيجوز المد بأوجهه المعروفة عند حفص.',basis:'حرف مد + وقف'},
+  madd_leen:{name:'مد اللين',color:'#7ed1d4',tip:'واو أو ياء ساكنة قبلها فتح، ويظهر حكمها عند الوقف في مواضعها.',basis:'وْ/يْ بعد فتح'},
+  madd_iwadh:{name:'مد العوض عند الوقف',color:'#d7a95c',tip:'عند الوقف على تنوين الفتح في غير تاء التأنيث وما استثني، يُبدل التنوين ألفًا بمقدار حركتين.',basis:'تنوين فتح + وقف'},
+  silah_sughra:{name:'صلة صغرى لهاء الضمير',color:'#73c9b1',tip:'هاء الضمير بين متحركين قد توصل بواو/ياء خفيفة من غير همز بعدها، مع مراعاة موضعها وشروطها.',basis:'هاء الضمير بين متحركين'},
+  silah_kubra:{name:'صلة كبرى لهاء الضمير',color:'#9ec8ff',tip:'هاء الضمير بعدها همز؛ يظهر فيها مد الصلة الكبرى بحسب الرواية.',basis:'هاء الضمير + همز'},
+  idgham_mithlayn:{name:'إدغام متماثلين',color:'#6fd3b5',tip:'إذا التقى حرفان متماثلان وكان الأول ساكنًا والثاني متحركًا قد يقع الإدغام بحسب الموضع.',basis:'حرف ساكن + مثله متحرك'},
+  idgham_mutajanisayn:{name:'إدغام متجانسين',color:'#73b7df',tip:'إدغام حرفين متجانسين في المخرج مع اختلاف الصفة في المواضع المقررة، مثل بعض صور الدال والتاء والطاء ونحوها.',basis:'حروف متجانسة في المخرج'},
+  idgham_mutaqaribayn:{name:'إدغام متقاربين',color:'#8bb9e7',tip:'إدغام حرفين متقاربين في المخرج أو الصفة في المواضع المشهورة عند أهل الأداء.',basis:'حروف متقاربة'},
+  izhar_mutlaq:{name:'الإظهار المطلق',color:'#75a9d5',tip:'إظهار النون الساكنة إذا جاء بعدها الواو أو الياء في الكلمة نفسها في المواضع المعروفة، مثل الدنيا وبنيان وصنوان وقنوان.',basis:'نْ + و/ي داخل الكلمة'},
+  madd_tamkin:{name:'مد التمكين',color:'#69cfb3',tip:'مد يُراعى عند اجتماع ياءات المد ونحوها في مواضع مخصوصة لمنع الإدغام المخلّ وضبط القراءة.',basis:'اجتماع ياءات المد في مواضع مخصوصة'},
+  madd_farq:{name:'مد الفرق',color:'#ffb86b',tip:'مد خاص في مواضع معدودة بسبب اجتماع همزة الاستفهام مع همزة الوصل في صيغة مخصوصة، ويُؤخذ من المصحف والرواية.',basis:'مواضع مخصوصة نحو «ءَآللَّهُ»'},
+  madd_lazim_kalimi_muthaqqal:{name:'مد لازم كلمي مثقل',color:'#ff8b73',tip:'بعد حرف المد سكون أصلي مدغم في كلمة واحدة ويكون الحرف التالي مشددًا.',basis:'مد + تشديد في الكلمة'},
+  madd_lazim_kalimi_mukhaffaf:{name:'مد لازم كلمي مخفف',color:'#ff9d8d',tip:'بعد حرف المد سكون أصلي مخفف في كلمة واحدة، وهو من النوادر في القرآن.',basis:'مد + سكون أصلي بلا تشديد'},
+  madd_lazim_harfi:{name:'مد لازم حرفي',color:'#f28b9c',tip:'يظهر في بعض فواتح السور والحروف المقطعة، ويؤخذ ضبطه من الرسم والرواية.',basis:'الحروف المقطعة في أوائل السور'},
+  hamzat_wasl:{name:'همزة وصل',color:'#a8a8a8',tip:'تُثبت في الابتداء وتسقط في الوصل بحسب الموضع.',basis:'ٱ أو همزة وصل في الرسم'},
+  hamzat_qat:{name:'همزة قطع',color:'#cfa5ff',tip:'تُحقق الهمزة في الابتداء والوصل.',basis:'أ / إ / ؤ / ئ'},
+  dagger_alif:{name:'الألف الخنجرية',color:'#f0d77a',tip:'علامة الألف الصغيرة جزء من الضبط العثماني وتدل على ألف مدية في موضعها.',basis:'ٰ'},
+  ta_marbuta:{name:'التاء المربوطة عند الوقف',color:'#d6aa63',tip:'في الوصل تُنطق تاءً وفي الوقف هاءً في الأصل.',basis:'ة في آخر الكلمة'},
+  waqf_mark:{name:'علامة وقف في المصحف',color:'#9bb7aa',tip:'علامات الوقف العثمانية توجّه القارئ إلى مواضع الوقف أو الوصل، ويجب أخذها من المصحف.',basis:'ۖ ۗ ۚ ۛ ۙ ونحوها'}
+};
+
+const TAJWEED_LETTER_INFO={
+  'ء':['الهمزة','أقصى الحلق','محققة'], 'ا':['الألف','الجوف عند المد','تتبع ما قبلها في التفخيم والترقيق'], 'ٱ':['ألف بهمزة وصل','الجوف عند المد','همزة الوصل تسقط في الوصل'],
+  'ب':['الباء','بين الشفتين','انفتاح/انفجار الصوت بلا قلقلة إلا في مواضعها'], 'ت':['التاء','طرف اللسان مع أصول الثنايا العليا','مهموسة'], 'ث':['الثاء','طرف اللسان مع أطراف الثنايا العليا','مهموسة رخوة'], 'ج':['الجيم','وسط اللسان','شديدة/مجهورة، وقد تقع فيها القلقلة إن سكنت'],
+  'ح':['الحاء','وسط الحلق','مهموسة'], 'خ':['الخاء','أدنى الحلق','مفخمة'], 'د':['الدال','طرف اللسان مع أصول الثنايا العليا','شديدة، وتقلقل عند السكون'], 'ذ':['الذال','طرف اللسان مع أطراف الثنايا العليا','مجهورة رخوة'], 'ر':['الراء','طرف اللسان','تفخيم/ترقيق بحسب السياق'],
+  'ز':['الزاي','طرف اللسان مع أصول الثنايا','صفير'], 'س':['السين','طرف اللسان مع أصول الثنايا','صفير مهموس'], 'ش':['الشين','وسط اللسان','تفشي'], 'ص':['الصاد','طرف اللسان مع أصول الثنايا','صفير مفخم'], 'ض':['الضاد','إحدى حافتي اللسان مع الأضراس العليا','استعلاء واستطالة'],
+  'ط':['الطاء','طرف اللسان مع أصول الثنايا العليا','استعلاء وإطباق وقلقلة عند السكون'], 'ظ':['الظاء','طرف اللسان مع أطراف الثنايا العليا','استعلاء'], 'ع':['العين','وسط الحلق','مجهورة رخوة'], 'غ':['الغين','أدنى الحلق','مفخمة في الأصل'], 'ف':['الفاء','بطن الشفة السفلى مع أطراف الثنايا العليا','مهموسة'], 'ق':['القاف','أقصى اللسان مع الحنك الأعلى','استعلاء وقلقلة عند السكون'],
+  'ك':['الكاف','أقصى اللسان أسفل من مخرج القاف','مهموسة'], 'ل':['اللام','أدنى حافتي اللسان إلى منتهى طرفه','مرققة في الأصل، وتفخم في لام الجلالة بحسب ما قبلها'], 'م':['الميم','بين الشفتين','غنة عند التشديد وبعض أحكام الميم الساكنة'], 'ن':['النون','طرف اللسان','غنة، وتظهر أحكامها مع السكون/التنوين'], 'ه':['الهاء','أقصى الحلق','مهموسة'], 'و':['الواو','الشفتان/الجوف عند المد','حرف مد عند شروطه، وحرف لين في مواضعه'], 'ي':['الياء','وسط اللسان/الجوف عند المد','حرف مد عند شروطه، وحرف لين في مواضعه']
+};
+const TAJ_TRANSLIT={ء:"ʾ",ا:'ā',ٱ:'a',ب:'b',ت:'t',ث:'th',ج:'j',ح:'ḥ',خ:'kh',د:'d',ذ:'dh',ر:'r',ز:'z',س:'s',ش:'sh',ص:'ṣ',ض:'ḍ',ط:'ṭ',ظ:'ẓ',ع:'ʿ',غ:'gh',ف:'f',ق:'q',ك:'k',ل:'l',م:'m',ن:'n',ه:'h',و:'w',ي:'y'};
+const HARAKA=[['َ','a','فتحة'],['ُ','u','ضمة'],['ِ','i','كسرة'],['ً','an','تنوين فتح'],['ٌ','un','تنوين ضم'],['ٍ','in','تنوين كسر'],['ْ','ْ','سكون'],['ّ','ّ','شدة'],['ٰ','ā','ألف خنجرية']];
+const SUN_LETTERS=new Set('تثدذرزسشصضطظلن'.split(''));
+const MUQATTAAT_WORDS=new Set(['الم','المص','الر','المر','كهيعص','طه','طسم','طس','يس','ص','حم','عسق','ق','ن']);
+const QAMAR_LETTERS=new Set('ابجحخعغفقكمهوي'.split(''));
+const IHKFA_LETTERS=new Set('تثجدذزسشصضطظفقك'.split(''));
+const QALQALAH=new Set('قطبجد'.split(''));
+const HEAVY=new Set('خصضغطقظ'.split(''));
+function isArabicBase(ch){return /[ء-يٱ]/.test(ch)}
+function hasMark(g,m){return (g?.marks||[]).includes(m)}
+function firstMark(g){for(const x of g?.marks||[])if(/[ًٌٍَُِْٰ]/.test(x))return x;return ''}
+function lastLetterIndex(tokens,i){for(let j=i-1;j>=0;j--)if(tokens[j].type==='g')return j;return -1}
+function nextLetterIndex(tokens,i){for(let j=i+1;j<tokens.length;j++)if(tokens[j].type==='g')return j;return -1}
+function sameWordNext(tokens,i){for(let j=i+1;j<tokens.length;j++){if(tokens[j].type==='space')return -1;if(tokens[j].type==='g')return j}return -1}
+function prevWordLast(tokens,i){for(let j=i-1;j>=0;j--){if(tokens[j].type==='space')break;if(tokens[j].type==='g')return j}return -1}
+function wordBounds(tokens,i){let a=i,b=i;while(a>0&&tokens[a-1].type!=='space')a--;while(b<tokens.length-1&&tokens[b+1].type!=='space')b++;return[a,b]}
+function splitQuranGraphemes(text){
+  const out=[];let cur=null;
+  for(const ch of String(text||'')){
+    if(isArabicBase(ch)){
+      cur={type:'g',base:ch,marks:[],raw:ch};out.push(cur);
+    }else if(/[\u064B-\u065F\u0670\u06D6-\u06ED]/.test(ch)&&cur){cur.marks.push(ch);cur.raw+=ch}
+    else if(/\s/.test(ch)){out.push({type:'space',raw:ch})}
+    else {out.push({type:'punct',raw:ch})}
+  }
+  return out;
 }
-function renderStudyTajweed(verses){const box=$('studyTajweedRules');if(!box)return;const all=[];verses.forEach(v=>autoTajweedForText(v.text).forEach(r=>{if(!all.some(x=>x.name===r.name))all.push(r)}));let html='';if(all.length){html+=all.map((r,i)=>`<div class="study-rule"><div class="study-rule-head"><span class="study-rule-name">${i+1}. ${esc(r.name)}</span><span class="badge gold">مقترح</span></div><div class="study-rule-text">${esc(r.tip)}</div></div>`).join('')}else{html+='<div class="study-asbab-empty">لم يتم العثور على حكم واضح آليًا بهذه القواعد المبسطة. استخدم الأمثلة الآتية مع المصحف أو الشيخ للتأكد من تفاصيل الأداء.</div>'}html += `<div class="study-verse-rules"><div class="study-panel-title" style="font-size:18px">🧩 الحكم داخل كل آية</div>${verses.map(v=>{const rules=autoTajweedForText(v.text);return `<div class="study-verse-rule-card"><div class="study-verse-ref">${esc(v.ref)}</div><div class="study-verse-text" style="font-size:22px">${esc(v.text)}</div><div class="study-rule-chips">${rules.length?rules.map(r=>`<span class="badge gold">${esc(r.name)}</span>`).join(''):'<span class="small">لا يظهر حكم آلي واضح في هذه الآية بالقواعد المبسطة.</span>'}</div></div>`}).join('')}</div>`;box.innerHTML=html}
+function graphemeHaraka(g){
+  const m=g?.marks||[];const sh=m.includes('ّ'),suk=m.includes('ْ');
+  const h=m.find(x=>['َ','ُ','ِ','ً','ٌ','ٍ'].includes(x));
+  if(h)return HARAKA.find(x=>x[0]===h)?.[2]||'';
+  if(suk)return 'سكون';
+  if(sh)return 'شدة';
+  if(m.includes('ٰ'))return 'ألف خنجرية';
+  return 'بدون حركة ظاهرة';
+}
+function graphemePronunciation(g){
+  const base=g?.base||'', marks=g?.marks||[];let root=TAJ_TRANSLIT[base]||base;
+  if(base==='ٱ')root='a';
+  if(base==='آ')return 'ā (آ)';
+  const h=marks.find(x=>['َ','ُ','ِ','ً','ٌ','ٍ'].includes(x));
+  let vowel=h?({ 'َ':'a','ُ':'u','ِ':'i','ً':'an','ٌ':'un','ٍ':'in'}[h]||''):'';
+  if(marks.includes('ٰ'))vowel='ā';
+  if(marks.includes('ّ'))root+=root;
+  if(marks.includes('ْ'))vowel='';
+  return root+vowel;
+}
+function detectNoonRule(tokens,i){
+  const g=tokens[i];if(!g)return null;
+  const isNun=g.base==='ن'&&hasMark(g,'ْ');
+  const tanween=['ً','ٌ','ٍ'].some(m=>hasMark(g,m));
+  if(!isNun&&!tanween)return null;
+  const j=nextLetterIndex(tokens,i);if(j<0)return null;
+  const [,wordEnd]=wordBounds(tokens,i);
+  const n=tokens[j].base;
+  /* Noon sakinah before ya/waw inside the same word is Izhar Mutlaq in the
+     well-known exceptional words; do not mislabel it as Idgham with ghunnah. */
+  if(j<=wordEnd && (n==='ي'||n==='و'))return 'izhar_mutlaq';
+  if(j<=wordEnd)return null;
+  if('ءأإٱهـعحغخ'.includes(n))return 'izhar_halqi';
+  if('ينمو'.includes(n))return 'idgham_ghunnah';
+  if('لر'.includes(n))return 'idgham_no_ghunnah';
+  if(n==='ب')return 'iqlab';
+  if(IHKFA_LETTERS.has(n))return 'ikhfa';
+  return null;
+}
+function detectMeemRule(tokens,i){
+  const g=tokens[i];if(!g||g.base!=='م'||!hasMark(g,'ْ'))return null;const j=nextLetterIndex(tokens,i);if(j<0)return null;const n=tokens[j].base;if(n==='ب')return 'ikhfa_shafawi';if(n==='م')return 'idgham_shafawi';return 'izhar_shafawi';
+}
+function normalizedWord(tokens,a,b){return tokens.slice(a,b+1).filter(x=>x.type==='g').map(x=>x.base).join('').replace(/ٱ/g,'ا')}
+function isLafzJalala(tokens,a,b){return normalizedWord(tokens,a,b).includes('الله')}
+function isWordStartAl(tokens,i){const [a,b]=wordBounds(tokens,i);const chars=tokens.slice(a,b+1).filter(x=>x.type==='g');return chars.length>=2 && (chars[0].base==='ا'||chars[0].base==='ٱ')&&chars[1].base==='ل'}
+function isMadLetter(tokens,i){const g=tokens[i];if(!g||g.type!=='g')return false;const p=lastLetterIndex(tokens,i);if(p<0)return false;const pb=tokens[p].base;const h=firstMark(tokens[p]);return (g.base==='ا'&&h==='َ')||(g.base==='و'&&h==='ُ'&&(hasMark(g,'ْ')||g.marks.length===0))||(g.base==='ي'&&h==='ِ'&&(hasMark(g,'ْ')||g.marks.length===0));}
+function nextTokenAcrossWord(tokens,i){for(let j=i+1;j<tokens.length;j++)if(tokens[j].type==='g')return j;return -1}
+function classifyMad(tokens,i){if(!isMadLetter(tokens,i))return [];
+  const out=['madd_natural'];const g=tokens[i];const [a,b]=wordBounds(tokens,i);const nSame=nextLetterIndex(tokens,i);const nextAny=nextTokenAcrossWord(tokens,i);const afterSame=nSame>=0&&nSame<=b?nSame:-1;
+  if(afterSame>=0 && tokens[afterSame].base==='ء')out.unshift('madd_muttasil');
+  else if(nextAny>=0&&nextAny>b&&tokens[nextAny].base==='ء')out.unshift('madd_munfasil');
+  if(afterSame>=0&&(hasMark(tokens[afterSame],'ْ')||hasMark(tokens[afterSame],'ّ')))out.unshift('madd_lazim');
+  if(i===b)out.push('madd_arid');
+  return [...new Set(out)];
+}
+function detectGeneralIdgham(tokens,i){
+  const g=tokens[i];if(!g||!hasMark(g,'ْ'))return [];
+  const j=nextLetterIndex(tokens,i);if(j<0)return [];
+  const n=tokens[j].base,p=g.base;
+  const out=[];
+  if(p===n && p!=='ن' && p!=='م')out.push('idgham_mithlayn');
+  const pairs=[['ت','د'],['د','ت'],['ت','ط'],['ط','ت'],['ذ','ظ'],['ظ','ذ'],['ب','م'],['ث','ذ'],['ذ','ث']];
+  if(pairs.some(x=>x[0]===p&&x[1]===n))out.push('idgham_mutajanisayn');
+  const near=[['ل','ر'],['ق','ك'],['ك','ق']];
+  if(near.some(x=>x[0]===p&&x[1]===n))out.push('idgham_mutaqaribayn');
+  return out;
+}
+function isMaddBadalAt(tokens,i){
+  const g=tokens[i];if(!g)return false;
+  if(g.base==='آ')return true;
+  const p=lastLetterIndex(tokens,i);if(p<0)return false;
+  return tokens[p].base==='أ' && (g.base==='ا'||g.base==='و'||g.base==='ي');
+}
+function wordIsMuqattaat(tokens,a,b){return MUQATTAAT_WORDS.has(normalizedWord(tokens,a,b))}
+function enrichGrapheme(tokens,i){
+  const g=tokens[i];if(!g||g.type!=='g')return{rules:[],haraka:'',pronunciation:''};
+  const rules=[];const add=id=>{if(TAJWEED_RULES[id]&&!rules.includes(id))rules.push(id)};
+  const p=lastLetterIndex(tokens,i),n=nextLetterIndex(tokens,i);const [a,b]=wordBounds(tokens,i);
+  detectGeneralIdgham(tokens,i).forEach(add);
+  if(wordIsMuqattaat(tokens,a,b)){add('madd_lazim_harfi');}
+  if(isMaddBadalAt(tokens,i))add('madd_badl');
+  if(g.base==='ا'&&i===a&&g.base==='ا'&&tokens[a]?.raw?.startsWith('ا')){
+    /* Initial alif in many words is a Hamzat Wasl carrier; the Uthmani glyph ٱ is handled below. */
+  }
+  const noon=detectNoonRule(tokens,i);if(noon)add(noon);
+  const meem=detectMeemRule(tokens,i);if(meem)add(meem);
+  if(g.base==='ن'&&hasMark(g,'ّ'))add('ghunnah_nun');if(g.base==='م'&&hasMark(g,'ّ'))add('ghunnah_mim');
+  if(QALQALAH.has(g.base)&&hasMark(g,'ْ'))add('qalqalah');
+  if(QALQALAH.has(g.base)&&i===b&&!['َ','ُ','ِ','ً','ٌ','ٍ'].some(m=>hasMark(g,m)))add('qalqalah_waqf');
+  if(g.base==='ل'&&isWordStartAl(tokens,i)&&n>=0){if(SUN_LETTERS.has(tokens[n].base))add('lam_shams');else if(QAMAR_LETTERS.has(tokens[n].base))add('lam_qamar')}
+  if(g.base==='ل'&&isLafzJalala(tokens,a,b)){const pp=prevWordLast(tokens,a);if(pp<0) add('lafz_jalala_heavy'); else {const h=firstMark(tokens[pp]);if(h==='ِ')add('lafz_jalala_light');else add('lafz_jalala_heavy')}}
+  if(HEAVY.has(g.base))add('tafkhim');
+  if(g.base==='ا'&&isMadLetter(tokens,i))add('alif_follows');
+  classifyMad(tokens,i).forEach(id=>{
+    if(id==='madd_lazim'){
+      const j=nextLetterIndex(tokens,i);
+      if(j>=0&&hasMark(tokens[j],'ّ'))add('madd_lazim_kalimi_muthaqqal');
+      else add('madd_lazim_kalimi_mukhaffaf');
+    }else add(id);
+  });
+  if((g.base==='و'||g.base==='ي')&&hasMark(g,'ْ')&&p>=0&&firstMark(tokens[p])==='َ')add('madd_leen');
+  if(g.base==='ه'&&(hasMark(g,'ِ')||hasMark(g,'ُ'))){const nn=nextLetterIndex(tokens,i);if(nn>0&&nn<tokens.length-1){const next=tokens[nn].base;if(next==='ء')add('silah_kubra');else add('silah_sughra')}}
+  if(g.base==='ٱ')add('hamzat_wasl');
+  if('أإؤئ'.includes(g.base))add('hamzat_qat');
+  if(g.marks.includes('ٰ'))add('dagger_alif');
+  if(g.base==='ة'&&i===b)add('ta_marbuta');
+  const rawBetween=tokens.slice(Math.max(0,i-1),Math.min(tokens.length,i+2)).map(x=>x.raw||'').join('');if(/[ۖۗۚۛۙ]/.test(rawBetween))add('waqf_mark');
+  if(g.base==='ر'){if(hasMark(g,'ِ'))add('ra_light');else if(hasMark(g,'َ')||hasMark(g,'ُ'))add('ra_heavy');else if(hasMark(g,'ْ')){const ph=p>=0?firstMark(tokens[p]):'';if(ph==='ِ')add('ra_light');else if(ph==='َ'||ph==='ُ')add('ra_heavy')}}
+  return{rules,haraka:graphemeHaraka(g),pronunciation:graphemePronunciation(g),mkh:TAJWEED_LETTER_INFO[g.base]||['الحرف','مخرجه غير محدد تلقائيًا','راجع الضبط'],token:g};
+}
+function autoTajweedForText(text){
+  const tokens=splitQuranGraphemes(text),map=new Map(),rules=[];
+  tokens.forEach((g,i)=>{if(g.type!=='g')return;const e=enrichGrapheme(tokens,i);map.set(i,e);e.rules.forEach(r=>{if(!rules.includes(r))rules.push(r)})});
+  return rules.map(id=>({name:TAJWEED_RULES[id].name,tip:TAJWEED_RULES[id].tip,basis:TAJWEED_RULES[id].basis,id}));
+}
+function tajweedRulePrimary(rules){return rules?.[0]||''}
+function makeTajweedGraphemeHTML(g,e,index){
+  const rules=(e.rules||[]).map(id=>TAJWEED_RULES[id]);
+  const primary=rules[0]?.color||'var(--gold)';
+  const title=[e.haraka,e.pronunciation,e.mkh?.[0],e.mkh?.[1],...rules.map(r=>r.name)].filter(Boolean).join(' — ');
+  return `<span class="taj-letter" data-letter-index="${index}" data-letter="${esc(g.base)}" data-haraka="${esc(e.haraka)}" data-pron="${esc(e.pronunciation)}" data-rules="${esc(rules.map(r=>r.name).join('، '))}" data-makhraj="${esc(e.mkh?.[1]||'')}" data-sifa="${esc(e.mkh?.[2]||'')}" title="${esc(title)}" style="--taj-color:${primary}">${esc(g.raw)}</span>`;
+}
+function renderCharacterMap(text,prefix=''){
+  const tokens=splitQuranGraphemes(text);let html='',word='',wordIndex=0;const allRules=[];
+  const flush=()=>{if(!word)return;html+=`<span class="taj-word" data-word-index="${wordIndex++}">${word}</span>`;word=''};
+  tokens.forEach((g,i)=>{if(g.type==='space'){flush();html+=' ';return}if(g.type!=='g'){word+=esc(g.raw);return}const e=enrichGrapheme(tokens,i);e.rules.forEach(r=>{if(!allRules.includes(r))allRules.push(r)});word+=makeTajweedGraphemeHTML(g,e,i)});flush();
+  return{html,rules:allRules};
+}
+function renderStudyTajweed(verses){
+  const box=$('studyTajweedRules');if(!box)return;
+  const allRules=[];const verseBlocks=[];
+  for(const v of verses){const cm=renderCharacterMap(v.text,'');cm.rules.forEach(r=>{if(!allRules.includes(r))allRules.push(r)});verseBlocks.push({v,cm})}
+  let html=`<div class="study-source"><b>🎯 وضع التحليل الأقصى:</b> كل حرف مشكّل يظهر كعنصر مستقل. اضغط على أي حرف لترى الحركة، النطق التقريبي، المخرج والصفة، وأحكام التجويد المرصودة حوله. هذا التحليل آلي مساعد، أمّا الأداء النهائي فيُضبط بالمصحف والتلقي.</div>`;
+  html+=`<div class="taj-legend"><span><i style="background:#72d7ae"></i>مد</span><span><i style="background:#65d48a"></i>غنة</span><span><i style="background:#61b5ff"></i>إظهار/إدغام</span><span><i style="background:#ff9a63"></i>قلقلة</span><span><i style="background:#e7a55e"></i>تفخيم/ترقيق</span><span><i style="background:#b993ff"></i>إخفاء/إقلاب</span></div>`;
+  if(allRules.length){html+=`<div class="study-rule-grid">${allRules.map((id,i)=>{const r=TAJWEED_RULES[id];return `<div class="study-rule"><div class="study-rule-head"><span class="study-rule-name">${i+1}. ${esc(r.name)}</span><span class="badge gold">موجود في الورد</span></div><div class="study-rule-text">${esc(r.tip)}</div><div class="study-rule-basis">🔎 ${esc(r.basis)}</div></div>`}).join('')}</div>`}
+  html+=`<div class="taj-rule-encyclopedia"><div class="study-panel-title" style="font-size:18px">📚 خريطة جميع قواعد التجويد المدعومة</div><div class="small" style="margin-bottom:10px">المظلّل «موجود في الورد» ظهر في النص الحالي، والباقي موسوعة مرجعية يمكن الرجوع إليها أثناء التعلم.</div><div class="taj-rule-library">${Object.entries(TAJWEED_RULES).map(([id,r])=>`<div class="taj-lib ${allRules.includes(id)?'detected':''}"><div><b>${esc(r.name)}</b><span>${allRules.includes(id)?'✓ موجود في هذا الورد':'مرجع'}</span></div><small>${esc(r.tip)}</small></div>`).join('')}</div></div>`;
+  html+=`<div class="taj-word-map"><div class="study-panel-title" style="font-size:18px">🧩 كل كلمة: ما الذي يحدث فيها؟</div>${verseBlocks.map(({v},vi)=>{const tt=splitQuranGraphemes(v.text);const words=[];let st=null;for(let i=0;i<=tt.length;i++){const boundary=i===tt.length||tt[i]?.type==='space';if(boundary&&st!==null){const en=i-1;const w=tt.slice(st,i).filter(x=>x.type==='g').map(x=>x.raw).join('');const rr=[];for(let k=st;k<=en;k++){if(tt[k]?.type==='g')enrichGrapheme(tt,k).rules.forEach(id=>{if(!rr.includes(id))rr.push(id)})}words.push({w,rr});st=null}else if(tt[i]?.type==='g'&&st===null)st=i}return `<div class="taj-word-verse"><div class="study-verse-ref">${esc(v.ref)}</div><div class="taj-word-grid">${words.map((w,wi)=>`<button class="taj-word-card" onclick="focusTajweedWord(${vi},${wi})"><span class="quran">${esc(w.w)}</span><small>${w.rr.length?w.rr.map(id=>esc(TAJWEED_RULES[id].name)).join(' • '):'لا حكم ظاهر آليًا'}</small></button>`).join('')}</div></div>`}).join('')}</div>`;
+  html+=`<div class="taj-inspector" id="tajLetterInspector"><div class="small">اختر أي حرف من النص لتفاصيله.</div><div id="tajInspectorLetter" class="quran" style="color:var(--gold);font-size:30px">—</div><div id="tajInspectorText" class="small">—</div></div>`;
+  html+=`<div class="study-verse-rules" style="margin-top:16px">${verseBlocks.map(({v,cm},idx)=>`<div class="study-verse-rule-card"><div class="study-verse-ref">${esc(v.ref)}</div><div class="taj-verse-tools"><button class="action shine-sound" onclick="playStudyRecitation(${idx},'husary')">🎧 استماع الحصري</button><button class="action info" onclick="openStudyFaresVideo(${idx})">🎥 فارس عنتر</button><button class="action" onclick="selectAllTajweedVerse(${idx})">🧩 إبراز الأحكام</button></div><div class="taj-character-verse" id="tajVerse-${idx}">${cm.html}</div><div class="study-rule-chips" style="margin-top:12px">${cm.rules.length?cm.rules.map(r=>`<span class="badge gold">${esc(TAJWEED_RULES[r].name)}</span>`).join(''):'<span class="small">لا يظهر حكم آلي واضح.</span>'}</div><div class="small" style="margin-top:8px">مرّر الفأرة على الحرف أو اضغط عليه لمعرفة الحركة والمخرج والصفة والحكم.</div></div>`).join('')}</div>`;
+  box.innerHTML=html;
+  box.querySelectorAll('.taj-letter').forEach(el=>el.addEventListener('click',()=>inspectTajweedLetter(el)));
+}
+function inspectTajweedLetter(el){
+  document.querySelectorAll('.taj-letter.selected').forEach(x=>x.classList.remove('selected'));el.classList.add('selected');
+  const l=$('tajInspectorLetter'),t=$('tajInspectorText');if(l)l.textContent=el.dataset.letter||'—';
+  if(t)t.innerHTML=`<b>${esc(el.dataset.haraka||'')}</b> • <b>${esc(el.dataset.pron||'')}</b><br><span style="color:var(--muted)">المخرج:</span> ${esc(el.dataset.makhraj||'غير متاح')}<br><span style="color:var(--muted)">صفة بارزة:</span> ${esc(el.dataset.sifa||'غير متاح')}<br><span style="color:var(--muted)">الحكم:</span> ${esc(el.dataset.rules||'لا حكم إضافي ظاهر آليًا')}`;
+}
+function focusTajweedWord(verseIndex,wordIndex){
+  const verse=document.querySelector(`#tajVerse-${verseIndex}`);if(!verse)return;
+  const words=verse.querySelectorAll('.taj-word');words.forEach(w=>w.classList.remove('selected-word'));
+  const target=words[wordIndex];if(target){target.classList.add('selected-word');target.scrollIntoView({behavior:'smooth',block:'center'});const first=target.querySelector('.taj-letter');if(first)inspectTajweedLetter(first)}
+}
+function selectAllTajweedVerse(i){document.querySelectorAll(`#tajVerse-${i} .taj-letter`).forEach(x=>x.classList.add('selected'));document.querySelector(`#tajVerse-${i}`)?.scrollIntoView({behavior:'smooth',block:'center'});toast('تم إبراز الحروف التي ظهر فيها حكم تجويد آليًا ✨')}
+function openStudyFaresVideo(i){const row=document.querySelectorAll('#studyRecitationCompare .study-compare-row')[i];const ref=row?.querySelector('.study-compare-ref')?.textContent||'';const q='فارس عنتر '+ref+' تجويد';window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(q),'_blank')}
 function renderStudyTafsir(items){const box=$('studyTafsir');if(!box)return;box.innerHTML=items.length?items.map(v=>`<div class="study-tafsir-item"><div class="study-tafsir-ref">${esc(v.ref)}</div><div>${v.tafsir?esc(v.tafsir.translation):'<span style="color:var(--muted)">التفسير يحتاج اتصالًا لأول تحميل هذه الآية.</span>'}</div>${v.tafsir?.footnotes?`<div class="small" style="margin-top:7px">${esc(v.tafsir.footnotes)}</div>`:''}</div>`).join(''):'<div class="study-asbab-empty">لا يوجد تفسير متاح لهذا الورد الآن.</div>'}
-function renderStudyWords(verses){const found=[];Object.entries(offlineWordMeanings).forEach(([word,meaning])=>{if(verses.some(v=>stripMarks(v.text).includes(stripMarks(word))))found.push({word,meaning})});const box=$('studyWords');if(!box)return;box.innerHTML=found.length?`<div class="study-word-grid">${found.map(x=>`<div class="study-word"><b>${esc(x.word)}</b><div class="small" style="margin-top:4px">${esc(x.meaning)}</div></div>`).join('')}</div>`:'<div class="study-asbab-empty">لا توجد كلمة من القاموس المحلي المدمج لهذا الورد. يمكنك فتح مصدر «الميسّر في غريب القرآن» للبحث الكامل.</div>'}
-function keyForAsbab(v){return `${v.sura}:${v.aya}`}
-function findAsbab(verses){for(const k of Object.keys(verifiedAsbab)){const m=k.match(/^(\d+):(\d+)-(\d+)$/);if(!m)continue;const a=Number(m[2]),b=Number(m[3]);if(verses.some(v=>v.sura===Number(m[1])&&v.aya>=a&&v.aya<=b))return verifiedAsbab[k]}return null}
-function renderStudyAsbab(verses){const box=$('studyAsbab');if(!box)return;const r=findAsbab(verses);if(r){box.innerHTML=`<div class="study-asbab-card"><b style="color:var(--gold)">📜 سبب نزول مشهور</b><div style="margin-top:7px">${esc(r.text)}</div><div class="small" style="margin-top:8px">${esc(r.source)}</div></div>`}else{box.innerHTML='<div class="study-asbab-empty">لا يوجد سبب نزول مُدرج في قاعدة التطبيق لهذه الآية. وهذا لا يعني بالضرورة عدم وجود رواية؛ فليس لكل آية سبب نزول خاص ثابت، وقد تتعدد الروايات ويحتاج ترجيحها إلى الرجوع للمصادر المختصة.</div>'}}
-function getVideoForStudy(verses){let text=verses.map(v=>v.text).join(' '),rules=autoTajweedForText(text);let matched=null;if(rules.length){const map={ 'الإظهار الحلقي':'sLv9OMs3o3U','الإخفاء الحقيقي':'NE2cc2NxO0E','الإدغام بغنة':'NE2cc2NxO0E','الإدغام بغير غنة':'EHU9AjqvAP8','الإقلاب':'F1LP-8LOlRw','الإظهار الشفوي':'sLv9OMs3o3U','الإخفاء الشفوي':'NE2cc2NxO0E','الإدغام الشفوي':'EHU9AjqvAP8','القلقلة':'EHU9AjqvAP8','المد الطبيعي (ترشيح)':'F1LP-8LOlRw'};matched=map[rules[0].name]||null}
-  return {id:matched,search:'تجويد '+verses.map(v=>`${surahNames[v.sura-1]} آية ${v.aya}`).join(' ')}
+function getVideoForStudy(verses){const first=verses?.[0],pageRef=currentStudyRefs?.find(x=>x.page);const label=pageRef?`${surahNames[first?.sura-1]||'السورة'} صفحة ${pageRef.page}`:(first?`${surahNames[first.sura-1]} آية ${first.aya}`:'الورد الحالي');const rules=autoTajweedForText(verses.map(v=>v.text).join(' '));const extra=rules[0]?` أحكام ${rules[0].name}`:'';return{id:null,search:`تجويد ${label} فارس عنتر${extra}`,pageSearch:`تجويد ${label} فارس عنتر`}}
+function recitationAudioUrl(sura,aya,reciter='Husary_128kbps'){return `https://everyayah.com/data/${reciter}/${String(sura).padStart(3,'0')}${String(aya).padStart(3,'0')}.mp3`}
+function playStudyRecitation(i,reciter='husary'){const rows=document.querySelectorAll('#studyRecitationCompare .study-compare-row');if(i<0||i>=rows.length)return;const row=rows[i],audio=row.querySelector(`audio[data-reciter="${reciter}"]`);document.querySelectorAll('#studyRecitationCompare audio').forEach(a=>{if(a!==audio)a.pause()});document.querySelectorAll('#studyRecitationCompare .study-compare-row').forEach(r=>r.classList.remove('active-recitation'));row.classList.add('active-recitation');if(audio){audio.currentTime=0;audio.play().catch(()=>{});}}
+function renderStudyRecitationCompare(verses){
+  const box=$('studyRecitationCompare');if(!box)return;const list=verses.slice(0,30);const pageRef=currentStudyRefs?.find(x=>x.page);if(!list.length){box.innerHTML='<div class="study-asbab-empty">لا توجد آيات محددة للمقارنة الآن.</div>';return}
+  const label=pageRef?`${surahNames[list[0].sura-1]} صفحة ${pageRef.page}`:(list.length===1?list[0].ref:`${surahNames[list[0].sura-1]} — ${list.length} آيات`);
+  const rows=list.map((v,i)=>{const s=surahNames[v.sura-1];const yt='https://www.youtube.com/results?search_query='+encodeURIComponent(`فارس عنتر ${s} آية ${v.aya}`);return `<div class="study-compare-row" data-index="${i}"><div class="study-compare-ref">${esc(v.ref)}</div><div class="study-verse-text" style="font-size:22px;margin-bottom:10px">${esc(v.text)}</div><div class="study-compare-audios"><div class="study-reciter-card"><b>🎧 الحصري — استماع مباشر</b><audio controls preload="none" data-reciter="husary" src="${recitationAudioUrl(v.sura,v.aya,'Husary_128kbps')}" onended="playStudyRecitation(${i+1},'husary')"></audio></div><div class="study-reciter-card"><b>🎥 فارس عنتر — تطبيق الآية</b><button class="action info" style="width:100%" onclick="window.open('${yt}','_blank')">🔎 افتح فيديو الآية</button></div></div><div class="study-compare-nav"><button class="action" onclick="playStudyRecitation(${i},'husary')">▶ الحصري</button><button class="action info" onclick="window.open('${yt}','_blank')">🎥 فارس عنتر</button><button class="action" onclick="playStudyRecitation(${Math.min(i+1,list.length-1)},'husary')">التالي ›</button></div></div>`}).join('');
+  const pageHusary=pageRef?`https://everyayah.com/data/Husary_128kbps/Page${String(pageRef.page).padStart(3,'0')}.mp3`:'';
+  box.innerHTML=`<div class="study-compare-player"><div class="study-compare-head"><div><div class="study-compare-title">🎧 مقارنة التلاوة آيةً آيةً</div><div class="small">${esc(label)}</div></div><span class="badge gold">الحصري مباشر • فارس عنتر فيديو</span></div><div class="study-compare-nav">${pageHusary?`<a class="action" href="${pageHusary}" target="_blank" rel="noopener">▶ تشغيل الحصري للصفحة كاملة</a>`:''}<button class="action info" onclick="playStudyRecitation(0,'husary')">▶ ابدأ من الآية الأولى</button></div><div class="small" style="margin-top:9px">الحصري ينتقل تلقائيًا للآية التالية بعد انتهاء الحالية. فارس عنتر مخصص لكل آية عبر بحث فيديو مباشر بنفس السورة ورقم الآية.</div></div><div class="study-compare-list" style="margin-top:12px">${rows}</div>`;
 }
 function switchStudyTab(tab){document.querySelectorAll('.study-tab').forEach(b=>b.classList.toggle('active',b.dataset.studyTab===tab));document.querySelectorAll('[data-study-section]').forEach(s=>s.classList.toggle('study-section-hidden',tab!=='all'&&s.dataset.studySection!==tab))}
 function openStudyForEntry(id){const e=data.entries.find(x=>x.id===id);if(!e)return toast('لم أجد هذا الورد.');currentStudyEntryId=id;currentStudyRefs=parseStudyRefs(e.label);$('studyRefTitle').textContent=e.label;$('studyLoading').classList.add('show');$('studyContent').style.display='none';$('studyModal').classList.add('show');switchStudyTab('all');loadStudyPayload()}
 async function loadStudyPayload(){
-  const verses=await getStudyVerses(currentStudyRefs);if(!verses.length){$('studyLoading').classList.remove('show');$('studyContent').style.display='block';$('studyVerses').innerHTML='<div class="study-asbab-empty">لم أستطع تحديد الآية من اسم الورد. جرّب صيغة مثل: «البقرة آية 255» أو «الكهف آيات 1-5» أو «البقرة ص 48».</div>';$('studyTafsir').innerHTML='';$('studyTajweedRules').innerHTML='';$('studyWords').innerHTML='';$('studyAsbab').innerHTML='';return}
+  const verses=await getStudyVerses(currentStudyRefs);if(!verses.length){$('studyLoading').classList.remove('show');$('studyContent').style.display='block';$('studyVerses').innerHTML='<div class="study-asbab-empty">لم أستطع تحديد الآية من اسم الورد. جرّب صيغة مثل: «البقرة آية 255» أو «الكهف آيات 1-5» أو «البقرة ص 48».</div>';$('studyTafsir').innerHTML='';$('studyTajweedRules').innerHTML='';return}
   $('studyVerses').innerHTML=verses.map(v=>`<div class="study-verse"><div class="study-verse-ref">${esc(v.ref)}</div><div class="study-verse-text">${esc(v.text)}</div></div>`).join('');
-  renderStudyTajweed(verses);renderStudyWords(verses);renderStudyAsbab(verses);
-  const items=[];for(const v of verses.slice(0,12)){const t=await getTafsir(v.sura,v.aya);items.push({...v,tafsir:t})}renderStudyTafsir(items);
-  const vid=getVideoForStudy(verses);currentStudyVideoId=vid.id;const queryUrl='https://www.youtube.com/results?search_query='+encodeURIComponent(vid.search);$('studyVideoExternal').href=queryUrl;$('studyVideoFrame').style.display='none';$('studyVideoPlaceholder').style.display='block';$('studyVideoBtn').textContent=vid.id?'▶ تشغيل فيديو الحكم الأقرب':'🔎 ابحث عن تطبيق الحكم';$('studyVideoNote').textContent=navigator.onLine?(vid.id?'تم اختيار فيديو مناسب للحكم المكتشف، ويمكنك أيضًا فتح نتائج البحث.':'لم يتم اكتشاف حكم فيديو محدد؛ استخدم البحث المقترح.'):'📴 الفيديو إضافة اختيارية؛ كل الشرح الأساسي متاح الآن بدون إنترنت.';const asbabQuery=verses.map(v=>`${surahNames[v.sura-1]} ${v.aya}`).join(' ');$('studyAsbabSearch').href='https://www.google.com/search?q='+encodeURIComponent('سبب نزول '+asbabQuery);
+  renderStudyTajweed(verses);
+  const items=[];for(const v of verses.slice(0,30)){const t=await getTafsir(v.sura,v.aya);items.push({...v,tafsir:t})}renderStudyTafsir(items);
+  renderStudyRecitationCompare(verses);const vid=getVideoForStudy(verses);currentStudyVideoId=vid.id;const queryUrl='https://www.youtube.com/results?search_query='+encodeURIComponent(vid.search);$('studyVideoExternal').href=queryUrl;$('studyVideoFrame').style.display='none';$('studyVideoPlaceholder').style.display='block';$('studyVideoBtn').textContent=vid.id?'▶ تشغيل فيديو الحكم الأقرب':'🔎 ابحث عن تطبيق الحكم';$('studyVideoNote').textContent=navigator.onLine?(vid.id?'تم اختيار فيديو مناسب للحكم المكتشف، ويمكنك أيضًا فتح نتائج البحث.':'لم يتم اكتشاف حكم فيديو محدد؛ استخدم البحث المقترح.'):'📴 الفيديو إضافة اختيارية؛ كل الشرح الأساسي متاح الآن بدون إنترنت.';
   $('studyOnlineState').textContent=navigator.onLine?'🌐 اتصال متاح — التفسير يحمّل ويُحفظ':'📴 أوفلاين — استخدم البيانات المحفوظة';$('studyOnlineState').style.color=navigator.onLine?'var(--success)':'var(--warning)';
   $('studyLoading').classList.remove('show');$('studyContent').style.display='block';
 }
