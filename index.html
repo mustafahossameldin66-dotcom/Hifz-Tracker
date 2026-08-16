@@ -250,6 +250,129 @@ body.device-laptop button{
   max-width:100%;
 }
 
+
+/* ===== FINAL UX PATCH: readable quick controls + true reserved sidebar + home command center ===== */
+.quick-card{color:var(--text)!important;text-decoration:none!important;border-color:rgba(212,175,55,.14)!important;background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(212,175,55,.025))!important}
+.quick-card b{color:var(--text)!important;font-weight:900!important}
+.quick-card .q-ico{color:var(--gold)!important;text-shadow:0 0 12px rgba(212,175,55,.25)!important}
+.quick-card:hover b,.quick-card:hover .q-ico{color:var(--gold)!important}
+/* The sidebar always lives in its own reserved column on larger screens. */
+@media (min-width: 992px){
+  body{display:block!important;overflow-x:hidden!important}
+  body.device-laptop .nav,
+  body.device-tablet .nav{z-index:1500!important}
+  body.device-laptop .wrap{width:calc(100vw - 380px)!important;max-width:none!important;margin-right:380px!important;margin-left:0!important;padding:28px 54px 80px!important}
+  body.device-laptop .nav{right:24px!important;left:auto!important;width:320px!important;top:24px!important;bottom:24px!important}
+  body.device-laptop .wrap > section{min-width:0!important;max-width:none!important}
+  body.device-laptop .desktop-grid{grid-template-columns:minmax(0,1fr)!important;gap:18px!important}
+  body.device-laptop #settings .desktop-grid,
+  body.device-laptop #progress .desktop-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}
+  body.device-laptop .desktop-grid > *, body.device-laptop .grid2 > *{min-width:0!important}
+  body.device-laptop .card,.body.device-laptop .item,.body.device-laptop .panel{min-width:0!important;overflow:hidden!important}
+  body.device-laptop .wrap input, body.device-laptop .wrap select, body.device-laptop .wrap textarea{min-width:0!important}
+  body.device-tablet .wrap{width:100%!important;max-width:980px!important;margin:0 auto!important;padding:24px 22px 140px!important}
+  body.device-tablet .nav{left:18px!important;right:18px!important;bottom:18px!important;width:auto!important;top:auto!important;height:auto!important}
+}
+/* Ultra-wide screens: keep breathing room while still reserving the rail. */
+@media (min-width: 1500px){
+  body.device-laptop .wrap{width:calc(100vw - 410px)!important;margin-right:410px!important;padding-left:72px!important;padding-right:72px!important}
+  body.device-laptop .nav{width:330px!important;right:28px!important}
+}
+/* Home command center */
+.home-command{margin-bottom:18px;border:1px solid rgba(212,175,55,.24)!important;background:linear-gradient(145deg,rgba(212,175,55,.085),rgba(73,167,92,.035) 50%,rgba(75,163,255,.025))!important}
+.home-command-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.home-command-step{padding:16px;border:1px solid var(--border);border-radius:18px;background:var(--surface3);min-width:0}
+.home-command-step .hc-num{display:inline-flex;width:34px;height:34px;border-radius:50%;align-items:center;justify-content:center;background:var(--goldDim);border:1px solid rgba(212,175,55,.25);color:var(--gold);font-weight:900;margin-bottom:8px}
+.home-command-step strong{display:block;color:var(--text);font-size:16px;margin-bottom:3px}
+.home-command-step small{display:block;color:var(--muted);line-height:1.8}
+.home-command-foot{display:grid;grid-template-columns:1.2fr .8fr;gap:12px;margin-top:12px}
+.home-command-panel{padding:15px 16px;border-radius:18px;background:var(--input);border:1px solid var(--border)}
+.home-command-panel b{color:var(--gold)}
+.home-command-chip{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;margin:4px 4px 0 0;border-radius:999px;border:1px solid var(--border);background:var(--surface3);font-size:12px;color:var(--text)}
+.home-old-review{border-color:rgba(77,165,255,.25)!important;background:linear-gradient(145deg,var(--infoBg),rgba(75,163,255,.015))!important}
+@media(max-width:900px){.home-command-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-command-foot{grid-template-columns:1fr}}
+@media(max-width:560px){.home-command-grid{grid-template-columns:1fr}.quick-strip{grid-template-columns:repeat(2,1fr)!important}}
+/* Splash must feel like a daily entrance screen, not a tiny modal. */
+#dailySplash .box{max-width:860px!important;border:1px solid rgba(212,175,55,.28)!important;background:linear-gradient(145deg,rgba(15,27,20,.97),rgba(6,13,9,.97))!important;box-shadow:0 30px 100px rgba(0,0,0,.58),0 0 50px rgba(212,175,55,.08)!important}
+#dailySplash .splash-sadaqah{background:linear-gradient(145deg,rgba(212,175,55,.11),rgba(73,167,92,.05))!important}
+#dailySplash .splash-sadaqah-title{color:var(--gold)!important}
+#dailySplash .splash-sadaqah-text{color:#f1f4f1!important}
+
+/* ===== FINAL SURFACE HARMONY =====
+   All app cards, inner boxes, stats and Settings controls use the same visual surface family as Home.
+*/
+:root{
+  --ui-surface-a:rgba(20,35,26,.78);
+  --ui-surface-b:rgba(8,15,11,.58);
+  --ui-surface-inner:rgba(13,24,18,.68);
+  --ui-control:rgba(10,18,14,.48);
+}
+[data-theme="light"]{
+  --ui-surface-a:rgba(255,255,255,.93);
+  --ui-surface-b:rgba(241,247,244,.80);
+  --ui-surface-inner:rgba(249,251,250,.86);
+  --ui-control:rgba(255,255,255,.84);
+}
+[data-theme="sepia"]{
+  --ui-surface-a:rgba(250,239,217,.95);
+  --ui-surface-b:rgba(235,220,190,.82);
+  --ui-surface-inner:rgba(246,235,211,.88);
+  --ui-control:rgba(255,249,237,.86);
+}
+
+/* The same card color treatment everywhere */
+.card,.item,.panel,.plan-box,.planbox,.quote,.notebook,.stat,.badge-card{
+  background:linear-gradient(145deg,var(--ui-surface-a),var(--ui-surface-b)) !important;
+  border-color:var(--border) !important;
+}
+
+/* Home accent cards keep their identity, while inheriting the same depth */
+#home .card{background:linear-gradient(145deg,var(--ui-surface-a),var(--ui-surface-b)) !important}
+#home .card[style*="var(--goldDim)"],#home .card[style*="var(--successBg)"]{
+  background:linear-gradient(145deg,var(--ui-surface-a),var(--ui-surface-b)) !important;
+}
+
+/* Inner boxes / stats / planners should feel like the same family, not another app */
+.plan-box,.planbox,.quote,.notebook,.stat,.badge-card,.rep-box{
+  background:linear-gradient(145deg,var(--ui-surface-inner),var(--ui-surface-b)) !important;
+}
+
+/* Settings: inputs and selectors match the application's surface language */
+#settings input,#settings select,#settings textarea,
+#settings .action,
+#settings .badge{
+  background:linear-gradient(145deg,var(--ui-control),rgba(255,255,255,.018)) !important;
+  border-color:var(--border) !important;
+}
+[data-theme="light"] #settings input,[data-theme="light"] #settings select,[data-theme="light"] #settings textarea,
+[data-theme="light"] #settings .action,[data-theme="light"] #settings .badge{
+  background:linear-gradient(145deg,var(--ui-control),rgba(255,255,255,.66)) !important;
+}
+[data-theme="sepia"] #settings input,[data-theme="sepia"] #settings select,[data-theme="sepia"] #settings textarea,
+[data-theme="sepia"] #settings .action,[data-theme="sepia"] #settings .badge{
+  background:linear-gradient(145deg,var(--ui-control),rgba(255,251,241,.58)) !important;
+}
+
+/* Preserve special-state cards by tinting the shared surface rather than changing the palette */
+.item.due{background:linear-gradient(145deg,var(--warningBg),var(--ui-surface-b)) !important}
+.item.icu{background:linear-gradient(145deg,var(--dangerBg),var(--ui-surface-b)) !important}
+
+/* Ultra mode: same Home surface + premium glass depth */
+body.mode-3 .card,body.mode-3 .item,body.mode-3 .panel,body.mode-3 .plan-box,body.mode-3 .planbox,
+body.mode-3 .quote,body.mode-3 .notebook,body.mode-3 .stat,body.mode-3 .badge-card{
+  background:linear-gradient(145deg,var(--ui-surface-a),var(--ui-surface-b)) !important;
+  backdrop-filter:blur(22px) !important;
+  -webkit-backdrop-filter:blur(22px) !important;
+}
+
+/* Fast mode keeps the exact same palette, only removes effects */
+body.mode-1 .card,body.mode-1 .item,body.mode-1 .panel,body.mode-1 .plan-box,body.mode-1 .planbox,
+body.mode-1 .quote,body.mode-1 .notebook,body.mode-1 .stat,body.mode-1 .badge-card{
+  background:var(--surface2) !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+}
+
 </style>
 <style>
 .splash-sadaqah{margin-top:18px;padding:16px 18px;border:1px solid rgba(212,175,55,.22);border-radius:18px;background:linear-gradient(145deg,rgba(212,175,55,.07),rgba(73,167,92,.045));text-align:right}
@@ -264,17 +387,23 @@ body.device-laptop button{
 /* === ROHANI BACKGROUND / GOLDEN DUST === */
 .golden-fog{position:fixed;inset:-12%;z-index:0;pointer-events:none;opacity:.42;background:radial-gradient(ellipse at 18% 20%,rgba(212,175,55,.12),transparent 23%),radial-gradient(ellipse at 78% 16%,rgba(212,175,55,.08),transparent 20%),radial-gradient(ellipse at 70% 78%,rgba(73,167,92,.08),transparent 28%);filter:blur(22px);animation:fogDrift 26s ease-in-out infinite alternate}
 .star-field{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;opacity:0;transition:opacity .8s ease}
-.star-field .gold-star{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(242,216,122,.85);box-shadow:0 0 6px rgba(212,175,55,.72),0 0 14px rgba(212,175,55,.16);animation:starFloat var(--dur) ease-in-out infinite;animation-delay:var(--delay)}
+.star-field .gold-star{position:absolute;width:3px;height:3px;border-radius:50%;background:rgba(246,222,133,.9);box-shadow:0 0 7px rgba(212,175,55,.82),0 0 18px rgba(212,175,55,.24);animation:starFloat var(--dur) ease-in-out infinite;animation-delay:var(--delay);will-change:transform}
 .lantern-art{position:fixed;top:7px;left:18%;z-index:1;pointer-events:none;opacity:0;transform:translateY(-6px);transition:opacity .8s ease}
 .lantern-chain{width:1px;height:38px;background:linear-gradient(var(--gold),transparent);margin:auto}
 .lantern-cap{width:44px;height:8px;border-radius:50%;background:rgba(212,175,55,.55);box-shadow:0 0 18px rgba(212,175,55,.25)}
 .lantern-body{width:34px;height:46px;margin:1px auto 0;border:1px solid rgba(212,175,55,.55);border-radius:8px 8px 12px 12px;background:linear-gradient(180deg,rgba(212,175,55,.18),rgba(212,175,55,.05));color:var(--gold2);display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(212,175,55,.12),inset 0 0 15px rgba(212,175,55,.08);font-size:14px}
 .lantern-flame{width:8px;height:13px;border-radius:60% 40% 55% 45%;margin:-23px auto 0;background:#f2d87a;box-shadow:0 0 18px rgba(242,216,122,.9),0 0 38px rgba(212,175,55,.35);animation:flamePulse 1.7s ease-in-out infinite alternate}
-body.mode-2 .golden-fog{opacity:.30}.device-tablet.mode-2 .star-field{opacity:.35}
-body.mode-3 .golden-fog{opacity:.58}.body.device-laptop.mode-3 .golden-fog{opacity:.7}.body.device-laptop .star-field{opacity:.58}.body.device-laptop .lantern-art{opacity:.72}
-body.device-tablet .lantern-art{opacity:.32;left:8%}.body.device-mobile .lantern-art{opacity:.18;left:6%;transform:scale(.8)}
+body.mode-2 .golden-fog{opacity:.30}.device-tablet.mode-2 .star-field{opacity:.48}
+body.mode-3 .golden-fog{opacity:.58}
+body.device-laptop.mode-3 .golden-fog{opacity:.78}
+body.device-laptop .star-field{opacity:.72}
+body.device-laptop .lantern-art{opacity:.82}
+body.device-tablet .star-field{display:block!important;opacity:.62!important}
+body.device-tablet .lantern-art{opacity:.48;left:8%}
+body.device-mobile .star-field{display:block!important;opacity:.34!important}
+body.device-mobile .lantern-art{opacity:.28;left:6%;transform:scale(.8)}
 @keyframes fogDrift{from{transform:translate3d(-2%,0,0) scale(.98)}to{transform:translate3d(3%,2%,0) scale(1.04)}}
-@keyframes starFloat{0%,100%{transform:translate3d(0,0,0) scale(.7);opacity:.22}50%{transform:translate3d(var(--dx),var(--dy),0) scale(1.25);opacity:.95}}
+@keyframes starFloat{0%,100%{transform:translate3d(0,0,0) scale(.88)}50%{transform:translate3d(var(--dx),var(--dy),0) scale(1.12)}}
 @keyframes flamePulse{from{transform:scale(.88);opacity:.75}to{transform:scale(1.16);opacity:1}}
 @media(prefers-reduced-motion:reduce){.golden-fog,.gold-star,.lantern-flame{animation:none!important}.star-field{opacity:.18!important}.lantern-art{opacity:.25!important}}
 
@@ -411,16 +540,954 @@ body.mode-3 .emoji-lamps{opacity:1}
 @keyframes emojiGlow{from{filter:drop-shadow(0 0 8px rgba(255,215,80,.75)) drop-shadow(0 0 22px rgba(212,175,55,.32))}to{filter:drop-shadow(0 0 13px rgba(255,225,100,1)) drop-shadow(0 0 38px rgba(212,175,55,.55))}}
 @keyframes emojiAura{from{transform:scale(.9);opacity:.55}to{transform:scale(1.14);opacity:.98}}
 @keyframes lampDrift1{from{margin-top:0}to{margin-top:18px}}@keyframes lampDrift2{from{margin-top:4px}to{margin-top:26px}}@keyframes lampDrift3{from{margin-top:12px}to{margin-top:-6px}}
-body.mode-2 .emoji-lamps{opacity:.22;filter:blur(1px)}
-body.device-mobile .emoji-lamps{display:none!important}
+body.mode-2 .emoji-lamps{opacity:.5;filter:blur(.4px)}
+body.device-tablet .emoji-lamps{opacity:.62!important}
+body.device-laptop .emoji-lamps{opacity:.92!important}
+body.device-mobile .emoji-lamps{display:block!important;opacity:.28!important;filter:blur(.25px)}
 body.device-tablet .emoji-lamp{transform:scale(.82)}
 @media(prefers-reduced-motion:reduce){.emoji-lamps,.emoji-bulb,.emoji-aura,.emoji-lamp{animation:none!important}.emoji-lamps{opacity:.18!important}}
+</style>
+
+<style id="absolute-sidebar-final-fix">
+/* FINAL SIDEBAR FIX — content always has its own lane */
+@media (min-width: 992px){
+  body.device-laptop{
+    display:block!important;
+    padding:0!important;
+    overflow-x:hidden!important;
+    position:relative!important;
+  }
+  body.device-laptop .nav{
+    position:fixed!important;
+    top:20px!important;
+    right:20px!important;
+    left:auto!important;
+    bottom:20px!important;
+    width:250px!important;
+    max-width:250px!important;
+    height:calc(100vh - 40px)!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    z-index:2000!important;
+    box-sizing:border-box!important;
+  }
+  body.device-laptop .wrap{
+    width:auto!important;
+    max-width:none!important;
+    margin:0 290px 0 0!important;
+    padding:20px 28px 70px!important;
+    box-sizing:border-box!important;
+    min-width:0!important;
+  }
+  body.device-laptop .wrap > .view{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  body.device-laptop .wrap .desktop,
+  body.device-laptop .wrap .desktop-grid,
+  body.device-laptop .wrap .home-overview{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  body.device-laptop .wrap .desktop > *,
+  body.device-laptop .wrap .desktop-grid > *,
+  body.device-laptop .wrap .home-overview > *{
+    min-width:0!important;
+    max-width:100%!important;
+  }
+  body.device-laptop .wrap .card,
+  body.device-laptop .wrap .item,
+  body.device-laptop .wrap .panel,
+  body.device-laptop .wrap .planbox,
+  body.device-laptop .wrap .quote{
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  body.device-laptop .wrap input,
+  body.device-laptop .wrap select,
+  body.device-laptop .wrap textarea,
+  body.device-laptop .wrap button,
+  body.device-laptop .wrap canvas{
+    max-width:100%!important;
+    min-width:0!important;
+  }
+  body.device-laptop .fab{right:280px!important;left:auto!important;bottom:28px!important}
+}
+
+@media (min-width: 1250px){
+  body.device-laptop .nav{width:270px!important;max-width:270px!important}
+  body.device-laptop .wrap{margin-right:315px!important;padding-left:44px!important;padding-right:44px!important}
+  body.device-laptop .fab{right:305px!important}
+}
+
+@media (min-width: 1600px){
+  body.device-laptop .nav{width:285px!important;max-width:285px!important}
+  body.device-laptop .wrap{margin-right:330px!important;padding-left:68px!important;padding-right:68px!important}
+  body.device-laptop .fab{right:320px!important}
+}
+
+/* When the available content lane gets narrow, never force side-by-side cards. */
+@media (min-width: 992px) and (max-width: 1250px){
+  body.device-laptop .desktop,
+  body.device-laptop .desktop-grid,
+  body.device-laptop .grid2,
+  body.device-laptop .plan-grid,
+  body.device-laptop .home-overview{
+    grid-template-columns:1fr!important;
+  }
+}
+</style>
+
+
+<style id="final-sidebar-zero-overlap">
+/* FINAL SIDEBAR ARCHITECTURE — LEFT RAIL, NEVER OVERLAPS CONTENT */
+@media (min-width: 992px){
+  body.device-laptop{
+    display:block !important;
+    position:relative !important;
+    min-height:100vh !important;
+    padding:0 !important;
+    overflow-x:hidden !important;
+  }
+
+  body.device-laptop .nav{
+    position:fixed !important;
+    top:24px !important;
+    left:24px !important;
+    right:auto !important;
+    bottom:24px !important;
+    width:252px !important;
+    max-width:252px !important;
+    height:auto !important;
+    max-height:calc(100vh - 48px) !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    z-index:1500 !important;
+    box-sizing:border-box !important;
+    border-radius:30px !important;
+    padding:22px 14px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    gap:9px !important;
+    scrollbar-width:thin !important;
+    scrollbar-color:rgba(212,175,55,.30) transparent !important;
+    background:linear-gradient(165deg,rgba(12,24,17,.97),rgba(5,12,8,.94)) !important;
+    border:1px solid rgba(212,175,55,.20) !important;
+    box-shadow:0 30px 80px rgba(0,0,0,.56),inset 0 1px 0 rgba(255,255,255,.05),0 0 45px rgba(212,175,55,.04) !important;
+  }
+
+  body.device-laptop .nav::after{
+    content:'رفيق القرآن' !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex:0 0 62px !important;
+    color:var(--gold) !important;
+    font:700 24px Amiri,serif !important;
+    text-shadow:0 0 18px rgba(212,175,55,.22) !important;
+    border-bottom:1px solid rgba(212,175,55,.11) !important;
+    margin-bottom:4px !important;
+    position:relative !important;
+  }
+
+  body.device-laptop .nav-item{
+    flex:0 0 auto !important;
+    width:100% !important;
+    min-height:58px !important;
+    display:flex !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:13px !important;
+    padding:12px 14px !important;
+    border-radius:17px !important;
+    font-size:15px !important;
+    color:var(--muted) !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+  }
+
+  body.device-laptop .nav .ico{
+    width:40px !important;
+    height:40px !important;
+    min-width:40px !important;
+    flex:0 0 40px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border-radius:12px !important;
+    font-size:21px !important;
+    background:rgba(255,255,255,.025) !important;
+    border:1px solid rgba(212,175,55,.08) !important;
+  }
+
+  body.device-laptop .nav-item.active{
+    color:var(--gold) !important;
+    background:linear-gradient(135deg,rgba(212,175,55,.13),rgba(212,175,55,.045)) !important;
+    border:1px solid rgba(212,175,55,.24) !important;
+    box-shadow:0 12px 30px rgba(0,0,0,.20),0 0 24px rgba(212,175,55,.05) !important;
+  }
+
+  body.device-laptop .nav-item.active::before{
+    content:'' !important;
+    position:absolute !important;
+    left:0 !important;
+    top:10px !important;
+    bottom:10px !important;
+    width:4px !important;
+    border-radius:999px !important;
+    background:linear-gradient(180deg,transparent,var(--gold),transparent) !important;
+    box-shadow:0 0 12px rgba(212,175,55,.65) !important;
+  }
+
+  /* Reserve the rail on the LEFT. This is the key fix. */
+  body.device-laptop .wrap{
+    width:calc(100% - 326px) !important;
+    max-width:none !important;
+    margin-left:326px !important;
+    margin-right:0 !important;
+    padding:24px 44px 70px !important;
+    min-width:0 !important;
+  }
+
+  body.device-laptop .wrap > .view,
+  body.device-laptop .wrap .desktop,
+  body.device-laptop .wrap .desktop-grid,
+  body.device-laptop .wrap .home-overview{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+
+  body.device-laptop .wrap .desktop,
+  body.device-laptop .wrap .desktop-grid{
+    grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr) !important;
+    gap:24px !important;
+  }
+
+  body.device-laptop .wrap .card,
+  body.device-laptop .wrap .item,
+  body.device-laptop .wrap .panel,
+  body.device-laptop .wrap .planbox,
+  body.device-laptop .wrap .quote,
+  body.device-laptop .wrap input,
+  body.device-laptop .wrap select,
+  body.device-laptop .wrap textarea,
+  body.device-laptop .wrap button,
+  body.device-laptop .wrap canvas{
+    min-width:0 !important;
+    max-width:100% !important;
+  }
+
+  body.device-laptop .fab{
+    left:auto !important;
+    right:36px !important;
+    bottom:34px !important;
+    z-index:1400 !important;
+  }
+}
+
+@media (min-width: 1500px){
+  body.device-laptop .nav{width:270px !important;max-width:270px !important;}
+  body.device-laptop .wrap{width:calc(100% - 356px) !important;margin-left:356px !important;padding-left:64px !important;padding-right:64px !important;}
+}
+
+@media (min-width: 992px) and (max-width: 1240px){
+  body.device-laptop .wrap .desktop,
+  body.device-laptop .wrap .desktop-grid,
+  body.device-laptop .wrap .grid2,
+  body.device-laptop .wrap .plan-grid,
+  body.device-laptop .wrap .home-overview{
+    grid-template-columns:1fr !important;
+  }
+}
+
+
+/* ============================================================
+   SUPREME FINAL POLISH — UNIFIED PANELS + NON-OVERLAPPING DOCK
+   The command-center surface becomes the visual language of the
+   whole app, while desktop navigation is moved into a real layout
+   column (not a fixed overlay).
+============================================================ */
+:root{
+  --unified-panel-bg:linear-gradient(145deg,rgba(212,175,55,.080),rgba(73,167,92,.032) 52%,rgba(75,163,255,.022)),var(--surface);
+  --unified-panel-border:rgba(212,175,55,.18);
+  --unified-panel-shadow:0 18px 55px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.028),0 0 28px rgba(212,175,55,.035);
+  --unified-panel-hover:0 24px 72px rgba(0,0,0,.30),0 0 34px rgba(212,175,55,.14),inset 0 1px 0 rgba(255,255,255,.05);
+}
+[data-theme=light]{
+  --unified-panel-bg:linear-gradient(145deg,rgba(212,175,55,.075),rgba(73,167,92,.025) 52%,rgba(75,163,255,.018)),rgba(255,255,255,.78);
+  --unified-panel-border:rgba(157,118,30,.22);
+  --unified-panel-shadow:0 18px 46px rgba(33,55,43,.10),inset 0 1px 0 rgba(255,255,255,.72),0 0 24px rgba(162,119,0,.035);
+  --unified-panel-hover:0 24px 60px rgba(33,55,43,.15),0 0 28px rgba(162,119,0,.10),inset 0 1px 0 rgba(255,255,255,.88);
+}
+[data-theme=sepia]{
+  --unified-panel-bg:linear-gradient(145deg,rgba(212,175,55,.075),rgba(105,130,75,.028) 52%,rgba(143,106,26,.020)),rgba(247,237,215,.82);
+  --unified-panel-border:rgba(129,95,35,.24);
+  --unified-panel-shadow:0 18px 46px rgba(91,70,37,.11),inset 0 1px 0 rgba(255,255,255,.60),0 0 24px rgba(143,106,26,.035);
+  --unified-panel-hover:0 24px 60px rgba(91,70,37,.16),0 0 28px rgba(143,106,26,.10),inset 0 1px 0 rgba(255,255,255,.72);
+}
+
+/* One visual language everywhere: same glass, same transparency, same aura. */
+.card,.item,.panel,.planbox,.quote,.stat,.badge-card,.quick-card,
+.home-command,.home-command-panel,.home-goal-card,.methodology-home,
+.mission,.mission-card,.ultimate-hero{
+  background:var(--unified-panel-bg)!important;
+  border:1px solid var(--unified-panel-border)!important;
+  box-shadow:var(--unified-panel-shadow)!important;
+  backdrop-filter:blur(18px)!important;
+  -webkit-backdrop-filter:blur(18px)!important;
+}
+
+/* Keep state colors, but retain the same family of transparency. */
+.item.due{background:linear-gradient(145deg,var(--warningBg),rgba(212,175,55,.035) 48%,transparent),var(--surface)!important}
+.item.icu{background:linear-gradient(145deg,var(--dangerBg),rgba(212,175,55,.025) 48%,transparent),var(--surface)!important}
+
+/* Command-center glow becomes the standard interaction language. */
+.card,.item,.panel,.planbox,.quote,.stat,.badge-card,.quick-card,
+.home-command,.home-command-panel,.mission,.mission-card,.ultimate-hero{
+  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .35s ease,background .35s ease!important;
+}
+.card:hover,.item:hover,.panel:hover,.planbox:hover,.quote:hover,.stat:hover,.badge-card:hover,.quick-card:hover,
+.home-command:hover,.home-command-panel:hover,.mission:hover,.mission-card:hover,.ultimate-hero:hover{
+  transform:translateY(-4px);
+  border-color:rgba(212,175,55,.34)!important;
+  box-shadow:var(--unified-panel-hover)!important;
+}
+
+/* The navigation is now a true in-flow control dock. It cannot cover content. */
+.app-shell{display:block;min-height:100vh}
+
+@media (min-width:992px){
+  body.device-laptop .app-shell,
+  body.device-tablet .app-shell{
+    display:grid!important;
+    grid-template-columns:300px minmax(0,1fr)!important;
+    gap:28px!important;
+    align-items:start!important;
+    width:100%!important;
+    max-width:none!important;
+    margin:0!important;
+    padding:24px 24px 40px!important;
+    direction:ltr!important;
+  }
+
+  /* Left control dock — normal document flow + sticky within its own column. */
+  body.device-laptop .app-shell > .nav,
+  body.device-tablet .app-shell > .nav{
+    grid-column:1!important;
+    grid-row:1!important;
+    position:sticky!important;
+    top:24px!important;
+    width:100%!important;
+    height:calc(100vh - 48px)!important;
+    max-height:calc(100vh - 48px)!important;
+    margin:0!important;
+    padding:18px 14px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:stretch!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    border-radius:30px!important;
+    border:1px solid var(--unified-panel-border)!important;
+    background:var(--unified-panel-bg)!important;
+    box-shadow:var(--unified-panel-shadow)!important;
+    backdrop-filter:blur(24px)!important;
+    -webkit-backdrop-filter:blur(24px)!important;
+    direction:rtl!important;
+    scrollbar-width:thin!important;
+    scrollbar-color:rgba(212,175,55,.28) transparent!important;
+    z-index:5!important;
+  }
+
+  body.device-laptop .app-shell > .nav::before,
+  body.device-tablet .app-shell > .nav::before{
+    content:'لوحة القيادة';
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:62px;
+    flex:0 0 62px;
+    margin-bottom:8px;
+    border-radius:18px;
+    color:var(--gold);
+    font:700 25px/1.2 Amiri,serif;
+    background:linear-gradient(145deg,rgba(212,175,55,.09),rgba(73,167,92,.03));
+    border:1px solid rgba(212,175,55,.12);
+    text-shadow:0 0 18px rgba(212,175,55,.22);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
+  }
+
+  body.device-laptop .app-shell > .nav::after,
+  body.device-tablet .app-shell > .nav::after{
+    content:'اختصاراتك • محفوظاتك • رحلتك';
+    order:99;
+    display:block;
+    margin-top:auto;
+    padding:14px 8px 4px;
+    border-top:1px solid rgba(212,175,55,.09);
+    color:var(--muted);
+    font-size:11px;
+    text-align:center;
+    line-height:1.9;
+  }
+
+  body.device-laptop .app-shell > .nav .nav-item,
+  body.device-tablet .app-shell > .nav .nav-item{
+    position:relative!important;
+    z-index:2!important;
+    flex:0 0 auto!important;
+    width:100%!important;
+    min-height:58px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:13px!important;
+    padding:11px 13px!important;
+    border-radius:17px!important;
+    background:transparent!important;
+    color:var(--muted)!important;
+    border:1px solid transparent!important;
+    box-shadow:none!important;
+    font-size:14px!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    transition:.28s ease!important;
+  }
+
+  body.device-laptop .app-shell > .nav .nav-item:hover,
+  body.device-tablet .app-shell > .nav .nav-item:hover{
+    transform:translateX(3px)!important;
+    color:var(--gold)!important;
+    background:linear-gradient(145deg,rgba(212,175,55,.075),rgba(255,255,255,.018))!important;
+    border-color:rgba(212,175,55,.14)!important;
+    box-shadow:0 10px 28px rgba(0,0,0,.13),0 0 20px rgba(212,175,55,.05)!important;
+  }
+
+  body.device-laptop .app-shell > .nav .nav-item.active,
+  body.device-tablet .app-shell > .nav .nav-item.active{
+    color:var(--gold)!important;
+    background:linear-gradient(145deg,rgba(212,175,55,.14),rgba(73,167,92,.035))!important;
+    border-color:rgba(212,175,55,.24)!important;
+    box-shadow:0 14px 32px rgba(0,0,0,.17),0 0 24px rgba(212,175,55,.07)!important;
+  }
+
+  body.device-laptop .app-shell > .nav .nav-item.active::before,
+  body.device-tablet .app-shell > .nav .nav-item.active::before{
+    content:'';
+    position:absolute;
+    right:0;
+    top:10px;
+    bottom:10px;
+    width:4px;
+    border-radius:999px;
+    background:linear-gradient(180deg,transparent,var(--gold),transparent);
+    box-shadow:0 0 12px rgba(212,175,55,.6);
+  }
+
+  body.device-laptop .app-shell > .nav .ico,
+  body.device-tablet .app-shell > .nav .ico{
+    width:40px!important;
+    height:40px!important;
+    min-width:40px!important;
+    flex:0 0 40px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border-radius:12px!important;
+    background:rgba(255,255,255,.025)!important;
+    border:1px solid rgba(212,175,55,.09)!important;
+    font-size:21px!important;
+  }
+
+  /* Main content occupies the other grid column and is never covered. */
+  body.device-laptop .app-shell > .wrap,
+  body.device-tablet .app-shell > .wrap{
+    grid-column:2!important;
+    grid-row:1!important;
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+    margin:0!important;
+    padding:16px 18px 80px!important;
+    direction:rtl!important;
+  }
+
+  body.device-laptop .app-shell > .wrap > .view,
+  body.device-tablet .app-shell > .wrap > .view{
+    min-width:0!important;
+    max-width:none!important;
+    width:100%!important;
+  }
+
+  /* Keep grids readable in the content column. */
+  body.device-laptop .app-shell > .wrap .desktop-grid,
+  body.device-laptop .app-shell > .wrap .desktop{
+    grid-template-columns:minmax(0,1.12fr) minmax(280px,.88fr)!important;
+  }
+
+  body.device-tablet .app-shell > .wrap .desktop-grid,
+  body.device-tablet .app-shell > .wrap .desktop{
+    grid-template-columns:1fr!important;
+  }
+
+  /* The FAB is positioned inside the content side, never over the dock. */
+  body.device-laptop .app-shell > .wrap .fab,
+  body.device-tablet .app-shell > .wrap .fab{
+    position:sticky!important;
+    z-index:10!important;
+    bottom:auto!important;
+    left:auto!important;
+    right:auto!important;
+    float:left!important;
+    margin:0 0 12px 0!important;
+  }
+}
+
+/* Small screens: keep the familiar bottom dock. */
+@media (max-width:991px){
+  .app-shell{display:block!important}
+  .app-shell > .wrap{width:100%!important;max-width:none!important;margin:0!important}
+  .app-shell > .nav{position:fixed!important;left:8px!important;right:8px!important;bottom:8px!important;top:auto!important;width:auto!important;height:auto!important;border-radius:22px!important}
+}
+
+/* The sidebar shares exactly the same panel family as the command center. */
+body.mode-1 .app-shell > .nav{background:var(--surface2)!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+body.mode-2 .app-shell > .nav,body.mode-3 .app-shell > .nav{background:var(--unified-panel-bg)!important;box-shadow:var(--unified-panel-shadow)!important}
+
+/* Make command-center-like transparency the default for nested cards too. */
+.home-command-step,.daily-step,.home-command-panel,.quick-card,.planbox,.notebook,
+.tajweed-hero,.tajweed-example,.tajweed-quiz,.study-panel,.method-card,.mission-card{
+  background:linear-gradient(145deg,rgba(255,255,255,.028),rgba(212,175,55,.035)),var(--surface3)!important;
+  border-color:rgba(212,175,55,.14)!important;
+}
+
+
+/* =========================================================
+   FINAL NAVIGATION REPLACEMENT — NO SIDEBAR / NO OVERLAP
+   The desktop sidebar is intentionally removed. Navigation is
+   a normal-flow, centered command rail so it can never cover content.
+========================================================= */
+@media (min-width: 761px){
+  body.device-laptop,
+  body.device-tablet,
+  body.device-mobile,
+  body{padding-bottom:0!important;display:block!important;min-height:100vh!important;}
+
+  .wrap,
+  body.device-laptop .wrap,
+  body.device-tablet .wrap,
+  body.device-mobile .wrap{
+    width:100%!important;
+    max-width:1320px!important;
+    margin:0 auto!important;
+    padding:30px 28px 70px!important;
+  }
+
+  .nav,
+  body.device-laptop .nav,
+  body.device-tablet .nav,
+  body.device-mobile .nav{
+    position:sticky!important;
+    top:14px!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    z-index:1200!important;
+    width:min(1180px,calc(100% - 32px))!important;
+    height:auto!important;
+    margin:14px auto 24px!important;
+    padding:10px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:8px!important;
+    border-radius:24px!important;
+    background:linear-gradient(135deg,rgba(15,25,19,.90),rgba(7,14,10,.84))!important;
+    border:1px solid rgba(212,175,55,.18)!important;
+    box-shadow:0 18px 50px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.045),0 0 32px rgba(212,175,55,.05)!important;
+    backdrop-filter:blur(22px)!important;
+    -webkit-backdrop-filter:blur(22px)!important;
+    overflow:auto!important;
+    scrollbar-width:none!important;
+  }
+  .nav::-webkit-scrollbar{display:none!important}
+  .nav::before{
+    content:'رفيق القرآن';
+    flex:0 0 auto;
+    display:flex!important;
+    align-items:center;
+    justify-content:center;
+    min-width:120px;
+    padding:10px 16px;
+    color:var(--gold)!important;
+    font:700 22px Amiri,serif!important;
+    text-shadow:0 0 18px rgba(212,175,55,.22)!important;
+    border-left:1px solid rgba(212,175,55,.10)!important;
+  }
+  .nav::after{content:none!important;display:none!important}
+  .nav-footer{display:none!important}
+
+  .nav-item,
+  body.device-laptop .nav-item,
+  body.device-tablet .nav-item{
+    position:relative!important;
+    z-index:2!important;
+    flex:0 0 auto!important;
+    width:auto!important;
+    min-width:120px!important;
+    min-height:54px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:9px!important;
+    padding:11px 16px!important;
+    border-radius:16px!important;
+    font-size:14px!important;
+    white-space:nowrap!important;
+    border:1px solid transparent!important;
+    color:var(--muted)!important;
+    background:transparent!important;
+  }
+  .nav-item.active{
+    color:var(--gold)!important;
+    background:linear-gradient(135deg,var(--goldDim),rgba(212,175,55,.05))!important;
+    border-color:rgba(212,175,55,.22)!important;
+    box-shadow:0 8px 26px rgba(212,175,55,.10),inset 0 1px 0 rgba(255,255,255,.04)!important;
+  }
+  .nav-item:hover{
+    color:var(--gold)!important;
+    border-color:rgba(212,175,55,.16)!important;
+    background:rgba(212,175,55,.06)!important;
+    transform:translateY(-2px)!important;
+  }
+  .nav .ico,
+  body.device-laptop .nav .ico,
+  body.device-tablet .nav .ico{
+    width:30px!important;
+    height:30px!important;
+    flex:0 0 30px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:0!important;
+    font-size:20px!important;
+  }
+
+  body.mode-1 .nav{background:var(--surface2)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;box-shadow:0 10px 28px rgba(0,0,0,.12)!important}
+}
+
+@media (max-width: 760px){
+  .nav,
+  body.device-mobile .nav,
+  body.device-tablet .nav,
+  body.device-laptop .nav{
+    position:fixed!important;
+    left:8px!important;
+    right:8px!important;
+    bottom:8px!important;
+    top:auto!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    z-index:3000!important;
+    display:flex!important;
+    flex-direction:row!important;
+    gap:4px!important;
+    padding:7px!important;
+    border-radius:22px!important;
+    overflow:hidden!important;
+  }
+  .nav::before,.nav::after{display:none!important;content:none!important}
+  .nav-footer{display:none!important}
+  .nav-item,
+  body.device-mobile .nav-item,
+  body.device-tablet .nav-item,
+  body.device-laptop .nav-item{
+    min-width:0!important;
+    flex:1 1 0!important;
+    width:auto!important;
+    min-height:54px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:3px!important;
+    padding:8px 3px!important;
+    border-radius:15px!important;
+    font-size:10px!important;
+    white-space:normal!important;
+  }
+  .nav .ico{width:auto!important;height:auto!important;flex:none!important;font-size:18px!important}
+  .wrap{padding-bottom:120px!important}
+}
+
+
+
+/* =========================================================
+   FINAL NAV v2 — TOP COMMAND BAR / NO SIDEBAR / NO OVERLAP
+   Desktop + tablet: navigation lives in normal document flow at top.
+   Mobile: familiar bottom dock.
+========================================================= */
+@media (min-width:761px){
+  body,
+  body.device-laptop,
+  body.device-tablet,
+  body.device-mobile{
+    display:block!important;
+    width:100%!important;
+    min-height:100vh!important;
+    padding:0 0 40px!important;
+    overflow-x:hidden!important;
+  }
+
+  .nav,
+  body.device-laptop .nav,
+  body.device-tablet .nav,
+  body.device-mobile .nav{
+    position:sticky!important;
+    top:12px!important;
+    right:auto!important;
+    left:auto!important;
+    bottom:auto!important;
+    width:min(1240px,calc(100% - 36px))!important;
+    max-width:1240px!important;
+    height:auto!important;
+    min-height:72px!important;
+    margin:12px auto 22px!important;
+    padding:9px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:8px!important;
+    border-radius:24px!important;
+    border:1px solid rgba(212,175,55,.20)!important;
+    border-top:1px solid rgba(255,255,255,.05)!important;
+    background:linear-gradient(135deg,rgba(14,24,18,.92),rgba(7,14,10,.88))!important;
+    box-shadow:0 18px 55px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.045),0 0 36px rgba(212,175,55,.055)!important;
+    backdrop-filter:blur(24px)!important;
+    -webkit-backdrop-filter:blur(24px)!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scrollbar-width:none!important;
+    isolation:isolate!important;
+  }
+  .nav::-webkit-scrollbar{display:none!important}
+  [data-theme=light] .nav{background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(244,248,245,.90))!important}
+  [data-theme=sepia] .nav{background:linear-gradient(135deg,rgba(248,238,216,.94),rgba(239,227,200,.91))!important}
+
+  .nav::before{
+    content:'رفيق القرآن';
+    position:relative!important;
+    z-index:1!important;
+    flex:0 0 auto!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    min-width:150px!important;
+    height:52px!important;
+    padding:0 18px!important;
+    border-radius:17px!important;
+    border:1px solid rgba(212,175,55,.13)!important;
+    background:linear-gradient(145deg,rgba(212,175,55,.10),rgba(73,167,92,.035))!important;
+    color:var(--gold)!important;
+    font:700 24px/1 Amiri,serif!important;
+    text-shadow:0 0 18px rgba(212,175,55,.24)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035),0 0 20px rgba(212,175,55,.035)!important;
+  }
+  .nav::after{content:none!important;display:none!important}
+  .nav-footer{display:none!important}
+
+  .nav-item,
+  body.device-laptop .nav-item,
+  body.device-tablet .nav-item{
+    position:relative!important;
+    z-index:2!important;
+    flex:1 1 0!important;
+    width:auto!important;
+    min-width:145px!important;
+    min-height:52px!important;
+    padding:10px 15px!important;
+    margin:0!important;
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:9px!important;
+    border-radius:16px!important;
+    border:1px solid transparent!important;
+    background:transparent!important;
+    color:var(--muted)!important;
+    font-size:14px!important;
+    font-weight:800!important;
+    white-space:nowrap!important;
+    cursor:pointer!important;
+    transition:transform .28s cubic-bezier(.16,1,.3,1),background .28s ease,border-color .28s ease,color .28s ease,box-shadow .28s ease!important;
+  }
+  .nav-item:hover{
+    transform:translateY(-2px)!important;
+    color:var(--gold)!important;
+    background:linear-gradient(145deg,rgba(212,175,55,.07),rgba(255,255,255,.015))!important;
+    border-color:rgba(212,175,55,.15)!important;
+    box-shadow:0 10px 30px rgba(0,0,0,.14),0 0 22px rgba(212,175,55,.08)!important;
+  }
+  .nav-item.active{
+    color:var(--gold)!important;
+    background:linear-gradient(145deg,rgba(212,175,55,.15),rgba(73,167,92,.035))!important;
+    border-color:rgba(212,175,55,.24)!important;
+    box-shadow:0 12px 32px rgba(0,0,0,.15),0 0 26px rgba(212,175,55,.10),inset 0 1px 0 rgba(255,255,255,.04)!important;
+  }
+  .nav-item.active::after{
+    content:''!important;
+    position:absolute!important;
+    inset:auto 18% 4px 18%!important;
+    height:2px!important;
+    border-radius:999px!important;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent)!important;
+    box-shadow:0 0 10px rgba(212,175,55,.7)!important;
+  }
+  .nav .ico,
+  body.device-laptop .nav .ico,
+  body.device-tablet .nav .ico{
+    width:34px!important;
+    height:34px!important;
+    min-width:34px!important;
+    flex:0 0 34px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin:0!important;
+    border-radius:11px!important;
+    background:rgba(255,255,255,.025)!important;
+    border:1px solid rgba(212,175,55,.08)!important;
+    font-size:20px!important;
+    transition:transform .28s ease,filter .28s ease,box-shadow .28s ease!important;
+  }
+  .nav-item:hover .ico{transform:scale(1.08);filter:drop-shadow(0 4px 10px rgba(212,175,55,.20))}
+  .nav-item.active .ico{transform:scale(1.08);filter:drop-shadow(0 5px 12px rgba(212,175,55,.24))}
+
+  /* Content is full-width and always below the nav. No sidebar reservation. */
+  .wrap,
+  body.device-laptop .wrap,
+  body.device-tablet .wrap,
+  body.device-mobile .wrap,
+  body.device-laptop .app-shell > .wrap,
+  body.device-tablet .app-shell > .wrap{
+    width:100%!important;
+    max-width:1320px!important;
+    margin:0 auto!important;
+    padding:0 28px 70px!important;
+    min-width:0!important;
+  }
+  .wrap > .view,
+  body.device-laptop .wrap > .view,
+  body.device-tablet .wrap > .view{width:100%!important;max-width:none!important;min-width:0!important}
+
+  /* Keep internal two-column layouts only where space allows. */
+  .desktop-grid{grid-template-columns:minmax(0,1.22fr) minmax(300px,.78fr)!important}
+  .desktop{grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr)!important}
+  .home-overview{grid-template-columns:minmax(0,1.16fr) minmax(300px,.84fr)!important}
+
+  /* Floating actions stay in content flow instead of living beside a sidebar. */
+  .fab,
+  body.device-laptop .wrap .fab,
+  body.device-tablet .wrap .fab{
+    position:fixed!important;
+    z-index:1400!important;
+    left:24px!important;
+    right:auto!important;
+    bottom:24px!important;
+    margin:0!important;
+  }
+}
+
+@media (max-width:760px){
+  body,
+  body.device-laptop,
+  body.device-tablet,
+  body.device-mobile{padding-bottom:110px!important;display:block!important}
+  .nav,
+  body.device-laptop .nav,
+  body.device-tablet .nav,
+  body.device-mobile .nav{
+    position:fixed!important;
+    left:8px!important;
+    right:8px!important;
+    bottom:8px!important;
+    top:auto!important;
+    width:auto!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:7px!important;
+    display:flex!important;
+    flex-direction:row!important;
+    gap:4px!important;
+    border-radius:22px!important;
+    z-index:3000!important;
+    overflow:hidden!important;
+  }
+  .nav::before,.nav::after{display:none!important;content:none!important}
+  .nav-footer{display:none!important}
+  .nav-item,
+  body.device-laptop .nav-item,
+  body.device-tablet .nav-item,
+  body.device-mobile .nav-item{
+    min-width:0!important;
+    width:auto!important;
+    flex:1 1 0!important;
+    min-height:52px!important;
+    padding:7px 3px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:3px!important;
+    border-radius:15px!important;
+    font-size:10px!important;
+    white-space:normal!important;
+  }
+  .nav .ico{width:auto!important;height:auto!important;min-width:0!important;flex:none!important;font-size:18px!important;background:transparent!important;border:0!important}
+  .wrap{width:100%!important;max-width:none!important;margin:0 auto!important;padding:18px 12px 20px!important}
+}
+</style>
+
+<style id="v12-missing-features-polish">
+/* V12: visible identity + daily entrance + knowledge hub */
+.home-identity-card{position:relative;overflow:hidden;background:linear-gradient(145deg,var(--unified-panel-bg),rgba(212,175,55,.04))!important;border-color:rgba(212,175,55,.24)!important}
+.home-identity-card::after{content:"";position:absolute;inset:auto -12% -60% -12%;height:150px;background:radial-gradient(circle,rgba(212,175,55,.15),transparent 68%);pointer-events:none;animation:identityBreath 7s ease-in-out infinite alternate}
+.home-identity-kicker{color:var(--muted);font-size:13px;font-weight:800;letter-spacing:.2px}
+.home-name{font:700 34px/1.3 UthmanicHafs,Amiri,serif;color:var(--gold);margin-top:4px;text-shadow:0 0 18px rgba(212,175,55,.14)}
+.home-identity-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;position:relative;z-index:1}
+.daily-ayah-home{background:linear-gradient(145deg,rgba(212,175,55,.085),rgba(73,167,92,.035) 55%,rgba(75,163,255,.02)),var(--surface)!important;border-color:rgba(212,175,55,.24)!important}
+.daily-ayah-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.daily-ayah-home-text{font-size:30px;text-align:center;margin:14px 0 8px;color:var(--gold);text-shadow:0 0 18px rgba(212,175,55,.10)}
+.daily-ayah-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
+.home-tazkirah-card{background:linear-gradient(145deg,rgba(73,167,92,.055),rgba(212,175,55,.035)),var(--surface)!important;border-color:rgba(73,167,92,.22)!important}
+.home-tazkirah-text{font-family:Amiri,serif;font-size:17px;line-height:2.15}
+.tazkirah-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+#dailySplash .box{max-width:900px!important}
+#dailySplash .daily-splash-name{font:700 24px/1.5 Amiri,serif;color:var(--gold);margin-top:6px}
+#dailySplash .splash-sadaqah{box-shadow:0 0 30px rgba(212,175,55,.05),inset 0 1px 0 rgba(255,255,255,.03)}
+@keyframes identityBreath{from{transform:translateX(-2%) scale(.98)}to{transform:translateX(2%) scale(1.04)}}
+@media(max-width:700px){.daily-ayah-home-text{font-size:24px;line-height:2.15}.daily-ayah-actions{grid-template-columns:1fr}.home-name{font-size:30px}}
+/* Absolute desktop guarantee: top navigation only, no fixed side rail. */
+@media(min-width:761px){
+  body.device-laptop .nav,body.device-tablet .nav,.nav{position:sticky!important;top:12px!important;right:auto!important;left:auto!important;bottom:auto!important;width:min(1240px,calc(100% - 36px))!important;max-width:1240px!important;height:auto!important;margin:12px auto 22px!important;display:flex!important;flex-direction:row!important}
+  body.device-laptop .wrap,body.device-tablet .wrap,.wrap{width:100%!important;max-width:1320px!important;margin:0 auto!important;padding:0 28px 70px!important}
+}
 </style>
 </head>
 <body class="mode-1">
 <div id="goldenFog" class="golden-fog"></div><div id="starField" class="star-field" aria-hidden="true"></div>
-<div class="emoji-lamps" aria-hidden="true"><div class="emoji-lamp el1"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el2"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el3"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div></div><div class="lantern-art" aria-hidden="true"><div class="lantern-chain"></div><div class="lantern-cap"></div><div class="lantern-body">✦</div><div class="lantern-flame"></div></div><div class="decorative"></div><div id="spiritualLamp" class="spiritual-lamp"></div>
-<div class="splash" id="dailySplash"><div class="box"><div style="color:var(--gold);font-weight:900;font-size:18px">📖 آية اليوم</div><div id="splashAyah" class="quran" style="font-size:31px;margin:16px 0"></div><div id="splashRef" class="small"></div><audio id="splashAudio" controls preload="none" style="width:100%;margin:16px 0"></audio><button id="playAyahBtn" class="action" style="width:100%;color:var(--gold);border-color:var(--gold)" onclick="playDailyAyah(event)">▶ تشغيل الآية</button><div class="splash-progress"><div id="splashProgress"></div></div><div id="splashStatus" class="small" style="margin-top:8px">يمكنك التشغيل يدويًا إذا منع المتصفح التشغيل التلقائي.</div>
+<div class="emoji-lamps" aria-hidden="true"><div class="emoji-lamp el1"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el2"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el3"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div><div class="emoji-lamp el4"><span class="emoji-wire"></span><span class="emoji-bulb">💡</span><span class="emoji-aura"></span></div></div><div class="lantern-art" aria-hidden="true"><div class="lantern-chain"></div><div class="lantern-cap"></div><div class="lantern-body">✦</div><div class="lantern-flame"></div></div><div class="decorative"></div><div id="spiritualLamp" class="spiritual-lamp"></div>
+<div class="splash" id="dailySplash"><div class="box"><div style="color:var(--gold);font-weight:900;font-size:18px">📖 آية اليوم</div><div id="splashAyah" class="quran" style="font-size:31px;margin:16px 0"></div><div id="splashWelcomeName" class="daily-splash-name"></div><div id="splashRef" class="small"></div><audio id="splashAudio" controls preload="none" style="width:100%;margin:16px 0"></audio><button id="playAyahBtn" class="action" style="width:100%;color:var(--gold);border-color:var(--gold)" onclick="playDailyAyah(event)">▶ تشغيل الآية</button><div class="splash-progress"><div id="splashProgress"></div></div><div id="splashStatus" class="small" style="margin-top:8px">يمكنك التشغيل يدويًا إذا منع المتصفح التشغيل التلقائي.</div>
     <div class="splash-sadaqah">
       <div class="splash-sadaqah-icon">🤲</div>
       <div class="splash-sadaqah-title">صدقة جارية عن أخي، ووالديَّ، وأهلي، ومن أحبهم.</div>
@@ -471,8 +1538,28 @@ body.device-tablet .emoji-lamp{transform:scale(.82)}
 <div class="modal" id="hadrModal"><div class="box" style="text-align:center"><button class="close" onclick="closeHadr()">✕</button><h2 style="color:var(--gold);margin:0">⏱️ مؤقت الحَدْر</h2><div class="small">إيقاع قراءة أسرع لورد متقن؛ لا تستخدمه بدل مرحلة الإتقان أو لضغط النطق.</div><div id="hadrTarget" class="quran" style="margin:18px 0;font-size:23px"></div><div class="timer" id="hadrDisplay">02:00</div><div class="hadr-presets"><button class="action" onclick="setHadr(1)">1 د</button><button class="action" onclick="setHadr(2)">2 د</button><button class="action" onclick="setHadr(3)">3 د</button><button class="action" onclick="setHadr(5)">5 د</button></div><div class="row"><input id="hadrCustom" type="number" min="1" max="60" placeholder="دقائق" style="margin:0"><button class="action" onclick="setHadr(Number($('hadrCustom').value)||2)">تخصيص</button></div><button class="main" id="hadrBtn" style="margin-top:12px" onclick="startHadr()">بدء المؤقت ▶</button><button class="action danger" style="width:100%;margin-top:8px" onclick="stopHadr()">إيقاف</button><div class="hadr-note" style="margin-top:14px">✅ المبدأ: السرعة تأتي بعد الإتقان، لا قبله.</div></div></div>
 <div class="wrap">
 <section id="home" class="view active">
-  <div class="header"><div><h1 id="greeting">خطة اليوم</h1><div id="todayLabel" class="sub"></div></div><div class="row"><button class="action" onclick="toggleTheme()">🌓</button><button class="action" onclick="openModal('reverseModal')">🧮</button></div></div>
-  
+  <div class="header"><div><h1 id="greeting">خطة اليوم</h1><div id="todayLabel" class="sub"></div></div><div class="row"><button class="action" onclick="openDailyWelcome()">📖 آية اليوم</button><button class="action" onclick="toggleTheme()">🌓</button><button class="action" onclick="openModal('reverseModal')">🧮</button></div></div>
+
+  <div id="homeIdentity" class="card home-identity-card">
+    <div class="home-identity-kicker">🌿 رفيق رحلتك</div>
+    <div id="homeName" class="home-name">يا صديقي</div>
+    <div id="homeWelcomeLine" class="small">كل يوم جديد فرصة هادئة للعودة إلى كتاب الله.</div>
+    <div class="home-identity-actions">
+      <button class="action" onclick="openDailyWelcome()">✨ افتح ترحيب اليوم</button>
+      <button class="action" onclick="openModal('guideModal')">🌿 منهجيتي</button>
+    </div>
+  </div>
+
+  <div id="dailyAyahHomeCard" class="card daily-ayah-home">
+    <div class="daily-ayah-head"><div><h2>📖 آية اليوم</h2><div id="dailyAyahHomeRef" class="small">—</div></div><button class="action info" onclick="openDailyWelcome()">🔊 استماع + الصدقة</button></div>
+    <div id="dailyAyahHomeText" class="quran daily-ayah-home-text">—</div>
+    <div class="daily-ayah-actions">
+      <button class="action" onclick="openDailyStudy()">📚 التفسير الميسّر + أسباب النزول</button>
+      <button class="action" onclick="openDailyTajweedStudy()">🎙️ جوّد حفظك</button>
+      <button class="action" onclick="openSadaqah()">🤲 الصدقة الجارية لأخي</button>
+    </div>
+  </div>
+
 <div class="ultimate-hero">
   <div class="hero-row">
     <div class="hero-copy"><h2>مركز القيادة اليومي ✨</h2><p>جلسة واحدة مركزة اليوم أفضل من خطة مثالية لا تُنفّذ.</p><div class="hero-actions"><button class="main" style="flex:1" onclick="openQuickReview()">⚡ مراجعة سريعة</button><button class="action" style="flex:1" onclick="openMistakeDrill()">🧠 اختبار الزلات</button></div></div>
@@ -481,10 +1568,27 @@ body.device-tablet .emoji-lamp{transform:scale(.82)}
   <div class="mission-grid"><div class="mission"><div class="mission-head"><span>📚 المراجعات</span><span id="missionReviewText" class="mission-num">0/3</span></div><div class="mini-progress"><div id="missionReviewBar"></div></div></div><div class="mission"><div class="mission-head"><span>📿 التكرارات</span><span id="missionRepText" class="mission-num">0/10</span></div><div class="mini-progress"><div id="missionRepBar"></div></div></div><div class="mission"><div class="mission-head"><span>⏱️ التركيز</span><span id="missionFocusText" class="mission-num">0/20د</span></div><div class="mini-progress"><div id="missionFocusBar"></div></div></div></div>
 </div>
 <div class="quick-strip"><button class="quick-card" onclick="openSadaqah()"><span class="q-ico">🤲</span><b>الصدقة والأذكار</b></button><button class="quick-card" onclick="toggleFocus()"><span class="q-ico">⏱️</span><b>جلسة تركيز</b></button><button class="quick-card" onclick="openModal('reverseModal')"><span class="q-ico">🧮</span><b>حاسبة الختمة</b></button><button class="quick-card" onclick="openModal('diagnosticModal');runDiagnostics()"><span class="q-ico">🧪</span><b>صحة التطبيق</b></button><button class="quick-card" onclick="openHadr()"><span class="q-ico">⏱️</span><b>الحَدْر</b></button></div>
+<div id="homeCommandCenter" class="card home-command">
+  <div class="row" style="justify-content:space-between;gap:12px;align-items:flex-start">
+    <div><h2 style="margin:0;color:var(--gold)">🧭 خطتك من هنا</h2><div class="small" id="homeCommandLead">كل ما تحتاجه للحفظ والمراجعة موجود قدامك في الصفحة الرئيسية.</div></div>
+    <span class="badge gold">اليوم</span>
+  </div>
+  <div class="home-command-grid" style="margin-top:14px">
+    <div class="home-command-step"><span class="hc-num">1</span><strong>ماذا ستحفظ؟</strong><small id="homeCommandNew">—</small></div>
+    <div class="home-command-step"><span class="hc-num">2</span><strong>كيف تحفظه؟</strong><small>الحصري لضبط التلاوة → أمل ثابت للربط والمتشابهات → فارس عباد للسلاسة.</small></div>
+    <div class="home-command-step"><span class="hc-num">3</span><strong>كيف تثبته؟</strong><small>10 تكرارات غيبًا كحد أدنى، ثم مراجعة يومية حتى 7 أيام متتالية.</small></div>
+    <div class="home-command-step"><span class="hc-num">4</span><strong>متى تراجعه؟</strong><small id="homeCommandSchedule">بعد التثبيت: أسبوعيًا أو بنظام أنكي حسب اختيارك.</small></div>
+  </div>
+  <div class="home-command-foot">
+    <div class="home-command-panel"><b>📚 المحفوظ القديم</b><div class="small" id="homeOldReviewSummary" style="margin-top:5px">—</div><div id="homeOldReviewChips" style="margin-top:6px"></div></div>
+    <div class="home-command-panel home-old-review"><b>⏰ الأولوية الآن</b><div class="small" id="homePrioritySummary" style="margin-top:5px">—</div><div class="study-actions" style="grid-template-columns:1fr 1fr;margin-top:8px"><button class="action" onclick="openQuickReview()">⚡ ابدأ المراجعة</button><button class="action" onclick="openModal('oldModal')">+ محفوظ قديم</button></div></div>
+  </div>
+</div>
+
 
 <div id="homeContent">
     <div id="restDayBanner" class="card" style="display:none;border-color:var(--success);background:var(--successBg)"><h2 style="color:var(--success)">☕ يوم راحة</h2><div>راحة من الحفظ الجديد، مع استمرار المراجعة الخفيفة وقراءة سورة الكهف يوم الجمعة.</div></div>
-    <div class="desktop-grid"><div><button class="main huge" onclick="toggleFocus()">▶ ابدأ جلسة المراجعة والتركيز</button><div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0;color:var(--text)">🆕 حفظ اليوم</h2><button class="action" onclick="openModal('addModal')">+ أضف</button></div><div id="newList" style="margin-top:16px"></div></div><div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0;color:var(--warning)">🔄 مستحق اليوم</h2><span class="badge gold" id="dueCount">0</span></div><div id="dueList" style="margin-top:16px"></div></div></div><div><div class="card"><h2>📊 ملخص سريع</h2><div class="stats"><div class="stat"><b id="homeStreak">0</b><span>🔥 يوم</span></div><div class="stat"><b id="homeDue">0</b><span>⏰ مستحق</span></div><div class="stat"><b id="homeReviews">0</b><span>✅ مراجعة</span></div><div class="stat"><b id="homeFocus">0</b><span>⏱️ دقيقة</span></div></div></div><div class="card"><h2>🌱 رفيق اليوم</h2><div id="dailyQuote" class="plan-box"></div></div><div class="card" style="border-color:rgba(212,175,55,.28);background:linear-gradient(145deg,var(--goldDim),var(--surface))"><h2>💌 رسالة اليوم</h2><div id="dailyMessage" class="plan-box" style="font-size:16px;line-height:2.05"></div></div><div class="card methodology-home" style="border-color:rgba(73,167,92,.24);background:linear-gradient(145deg,var(--successBg),var(--surface))"><div class="row" style="justify-content:space-between;gap:12px"><h2 style="margin:0">🌿 منهجيتي الشخصية للحفظ</h2><button class="action" onclick="openModal('guideModal')">فتح بالتفصيل</button></div><p class="small" style="margin:10px 0 0;line-height:1.95">الحصري → أمل ثابت (تثبيت وتربيط ومتـشابهات) → فارس عباد (السلاسة والانطلاق) → 10 تكرارات غيبًا → 7 أيام تثبيت → فهم ومراجعة ذكية.</p></div></div></div>
+    <div class="desktop-grid"><div><button class="main huge" onclick="toggleFocus()">▶ ابدأ جلسة المراجعة والتركيز</button><div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0;color:var(--text)">🆕 حفظ اليوم</h2><button class="action" onclick="openModal('addModal')">+ أضف</button></div><div id="newList" style="margin-top:16px"></div></div><div class="card"><div class="row" style="justify-content:space-between"><h2 style="margin:0;color:var(--warning)">🔄 مستحق اليوم</h2><span class="badge gold" id="dueCount">0</span></div><div id="dueList" style="margin-top:16px"></div></div></div><div><div class="card"><h2>📊 ملخص سريع</h2><div class="stats"><div class="stat"><b id="homeStreak">0</b><span>🔥 يوم</span></div><div class="stat"><b id="homeDue">0</b><span>⏰ مستحق</span></div><div class="stat"><b id="homeReviews">0</b><span>✅ مراجعة</span></div><div class="stat"><b id="homeFocus">0</b><span>⏱️ دقيقة</span></div></div></div><div class="card"><h2>🌱 رفيق اليوم</h2><div id="dailyQuote" class="plan-box"></div></div><div class="card" style="border-color:rgba(212,175,55,.28);background:linear-gradient(145deg,var(--goldDim),var(--surface))"><h2>💌 رسالة اليوم</h2><div id="dailyMessage" class="plan-box" style="font-size:16px;line-height:2.05"></div></div><div class="card home-tazkirah-card"><h2>⚖️ تذكرة اليوم</h2><div id="homeTazkirah" class="plan-box home-tazkirah-text">الصدقة ولو بالقليل، وركعتان بما حفظته، واجعل وردك بابًا للعمل لا للحفظ فقط.</div><div class="tazkirah-actions"><button class="action" onclick="openSadaqah()">🤲 صدقة ودعاء</button><button class="action" onclick="openDailyWelcome()">📖 آية اليوم</button></div></div><div class="card methodology-home" style="border-color:rgba(73,167,92,.24);background:linear-gradient(145deg,var(--successBg),var(--surface))"><div class="row" style="justify-content:space-between;gap:12px"><h2 style="margin:0">🌿 منهجيتي الشخصية للحفظ</h2><button class="action" onclick="openModal('guideModal')">فتح بالتفصيل</button></div><p class="small" style="margin:10px 0 0;line-height:1.95">الحصري → أمل ثابت (تثبيت وتربيط ومتـشابهات) → فارس عباد (السلاسة والانطلاق) → 10 تكرارات غيبًا → 7 أيام تثبيت → فهم ومراجعة ذكية.</p></div></div></div>
   </div>
   <div id="focusView" style="display:none"><div class="card" style="text-align:center;padding:44px 18px"><h2 style="justify-content:center;font-size:31px">⏱️ جلسة التركيز</h2><div id="sessionEntryLabel" class="quran" style="margin:12px 0"></div><div id="breatheGuide" style="display:none"><div id="breatheCircle" class="breathe-circle">تنفس</div><div id="breatheText" style="color:var(--gold);font-weight:800">استعد…</div></div><div id="timerContainer"><div id="mainTimer" class="timer">00:00</div><div class="row" style="justify-content:center"><button class="action" onclick="setTimer(15)">15 د</button><button class="action" onclick="setTimer(30)">30 د</button><button class="action" onclick="setTimer(45)">45 د</button><button class="action" onclick="setTimer(60)">60 د</button></div><div class="row" style="max-width:560px;margin:16px auto"><input id="customTimer" type="number" min="1" max="240" placeholder="دقائق" style="margin:0"><button class="action" onclick="setCustomTimer()">تخصيص</button></div><div class="row" style="max-width:560px;margin:10px auto"><button id="mainTimerBtn" class="main" onclick="startTimerWithBreathe()">▶ ابدأ بتركيز</button><button class="action danger" onclick="stopFocus()">✖ إنهاء</button></div><div class="row" style="justify-content:center"><button id="zenRainBtn" class="action info" onclick="toggleZenAudio('rain')">🌧️ مطر</button><button id="zenOceanBtn" class="action info" onclick="toggleZenAudio('ocean')">🌊 أمواج</button><button id="zenBrownBtn" class="action info" onclick="toggleZenAudio('brown')">🌌 عمق</button><button class="action" onclick="nextSessionEntry()">التالي ↷</button></div></div></div></div></div>
 </section>
@@ -502,7 +1606,7 @@ body.device-tablet .emoji-lamp{transform:scale(.82)}
 <script>
 'use strict';
 const STORAGE_KEY='rafiq-quran-ultimate-supreme-v10',LEGACY_KEYS=['rafiq-quran-ultimate-v9','rafiq-quran-ultimate-v8','rafiq-quran-ultimate-vfinal','rafiq-quran-ultimate-v2','rafiq-quran-master-v15','rafiq-quran-master-v14','rafiq-quran-master-v13','rafiq-quran-master-v12','rafiq-quran-master-v6','rafiq-quran-master-v5','rafiq-quran-master-v4','rafiq-quran-master-v2','hifz-core-v4'];
-const ADHKAR_KEY='rafiq-adhkar-v9',SPLASH_KEY='rafiq-splash-v9',LEADER_KEY='rafiq-leaderboards-v9',DISPLAY_KEY='rafiq-display-profile-v1';
+const ADHKAR_KEY='rafiq-adhkar-v9',SPLASH_KEY='rafiq-splash-v12',LEADER_KEY='rafiq-leaderboards-v9',DISPLAY_KEY='rafiq-display-profile-v1';
 const DEFAULT={userName:'',entries:[],dailyLog:{},streak:0,lastActive:'',goal:604,goalUnit:'صفحة',evalMode:'weekly',soundEnabled:true,sfxVolume:.8,graphicsLevel:1,displayProfile:'auto',theme:'dark',firstDate:'',totalFocusMinutes:0,restDays:[5],mistakes:[],streakFreezes:0,notifyEnabled:false,recitationVolume:1,ambientVolume:.08,ambientType:'none',reverseAmount:30,reverseUnit:'صفحة',reverseTarget:'',lastNotificationDate:'',notifyHour:20,dailyReviewTarget:3,dailyRepTarget:10,dailyFocusTarget:20,lastBackupAt:'',mistakeReviewed:0,tajweedMastery:{}};
 let data=structuredClone(DEFAULT),adhkarProgress={},poolVisible=20,calendarDate=new Date(),timer=null,timeLeft=0,sessionIndex=0,sessionQueue=[],mediaRecorder=null,audioChunks=[],recordAudioUrl=null,zenCtx=null,zenSource=null,zenGain=null;
 const $=id=>document.getElementById(id),fmt=n=>Number(n||0).toLocaleString('en-US'),esc=s=>{const d=document.createElement('div');d.textContent=s??'';return d.innerHTML};
@@ -868,9 +1972,23 @@ removeEntry=function(id){const e=data.entries.find(x=>x.id===id);if(!e)return;if
 const notifyCheckOriginal=notifyCheck;
 notifyCheck=function(){if(!data.notifyEnabled||!('Notification'in window)||Notification.permission!=='granted')return;const n=new Date(),key=today();if(n.getHours()!==Number(data.notifyHour??20)||data.lastNotificationDate===key)return;const l=data.dailyLog[key]||{};if((l.save||0)+(l.review||0)<=0){new Notification('رفيق القرآن',{body:'نبتة القرآن تنتظر من يسقيها 🌱'});data.lastNotificationDate=key;save()}};
 
+
+function buildDesktopShell(){
+  if(document.querySelector('.app-shell')) return;
+  const nav=document.querySelector('.nav');
+  const wrap=document.querySelector('main.wrap');
+  if(!nav||!wrap) return;
+  const shell=document.createElement('div');
+  shell.className='app-shell';
+  document.body.insertBefore(shell, nav);
+  shell.appendChild(nav);
+  shell.appendChild(wrap);
+}
+
 function init(){loadData();initAmbientDecor();data.displayProfile=localStorage.getItem(DISPLAY_KEY)||data.displayProfile||'auto';save();document.body.dataset.theme=data.theme;applyGraphicsMode();updateGreeting();renderSpiritual();renderSettings();restoreAmbientPreference();renderAdhkar();renderAll();renderDailyMessage();renderProgress();checkComeback();if(!data.userName)openModal('welcomeModal');else setTimeout(showDailySplash,450);setInterval(updateGreeting,60000);setInterval(notifyCheck,60000);window.addEventListener('resize',()=>{if(data.displayProfile==='auto')applyGraphicsMode();if($('progress').classList.contains('active'))drawChart()});}
 $('searchInput')?.addEventListener('input',renderPool);document.querySelectorAll('.modal,.splash').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('show')}));
 setupUltimateUX();
+buildDesktopShell();
 init();
 if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js?v=rafiq-v10',{updateViaCache:'none'}).catch(()=>{});
 window.addEventListener('hashchange',()=>{const h=location.hash;if(h.startsWith('#profile=')){const p=parseProfile(location.href);if(p){$('boardLink').value=location.href;switchTab('progress',document.querySelectorAll('.nav-item')[3])}history.replaceState(null,'',location.href.split('#')[0]);return}if(h==='#quick-review'){openQuickReview();history.replaceState(null,'',location.href.split('#')[0]);return}if(h==='#focus'){toggleFocus();history.replaceState(null,'',location.href.split('#')[0]);return}if(h==='#adhkar'){openSadaqah();history.replaceState(null,'',location.href.split('#')[0]);return}});
@@ -878,5 +1996,145 @@ if(location.hash==='#quick-review')setTimeout(()=>{openQuickReview();history.rep
 </script>
 
 <!-- BUILD: Rafiq Quran Ultimate merged final -->
+
+<script>
+/* ===== FINAL PATCH v11 ===== */
+(function(){
+  const NEW_SPLASH_KEY='rafiq-splash-v12';
+  function renderHomeCommandCenter(){
+    const elNew=document.getElementById('homeCommandNew');
+    const elSched=document.getElementById('homeCommandSchedule');
+    const elOld=document.getElementById('homeOldReviewSummary');
+    const elChips=document.getElementById('homeOldReviewChips');
+    const elPriority=document.getElementById('homePrioritySummary');
+    if(!elNew)return;
+    const t=today();
+    const newEntries=(data.entries||[]).filter(e=>e.date===t&&!e.hasBeenEvaluated);
+    const due=(data.entries||[]).filter(e=>(e.hasBeenEvaluated&&e.nextReviewDate<=t)||e.isICU);
+    const old=(data.entries||[]).filter(e=>e.date!==t&&e.hasBeenEvaluated);
+    const oldDue=old.filter(e=>e.nextReviewDate<=t);
+    const next7=old.filter(e=>e.nextReviewDate>t && e.nextReviewDate<=today(new Date(Date.now()+7*86400000)));
+    elNew.textContent=newEntries.length?newEntries.map(e=>e.label).join(' • '):'لا يوجد ورد جديد مضاف اليوم؛ أضف وردًا من زر «+ أضف».'.replace('؛','؛');
+    elSched.textContent=data.evalMode==='anki'?'بعد 7 أيام التثبيت: ينتقل للمراجعة المتباعدة ويحدد أنكي الموعد حسب تقييمك (سهل/تذكرته/بصعوبة/نسيت).':'بعد 7 أيام التثبيت: مراجعة أسبوعية على الأقل، ومع التعثر يعاد الموعد لليوم التالي.';
+    if(elOld){
+      elOld.textContent=old.length?`لديك ${old.length} وردًا محفوظًا سابقًا، منها ${oldDue.length} مستحق الآن و${next7.length} خلال الأيام السبعة القادمة.`:'أضف محفوظك السابق مرة واحدة، وسيبدأ في المراجعة مباشرة بدل أن تختلط المراجعة مع الحفظ الجديد.';
+    }
+    if(elChips){
+      elChips.innerHTML=(oldDue.length?`<span class="home-command-chip">⏰ ${oldDue.length} مستحق</span>`:'')+(next7.length?`<span class="home-command-chip">📆 ${next7.length} خلال 7 أيام</span>`:'')+(data.evalMode==='anki'?'<span class="home-command-chip">🧠 أنكي مفعّل</span>':'<span class="home-command-chip">🗓️ أسبوعي مفعّل</span>');
+    }
+    if(elPriority){
+      if(due.length) elPriority.textContent=`ابدأ بـ ${due.length} مراجعة مستحقة الآن، ثم انتقل إلى ${newEntries.length?newEntries.length+' ورد جديد':'الحفظ الجديد'}، ثم نفّذ 10 تكرارات غيبًا للورد الذي تحفظه.`;
+      else if(newEntries.length) elPriority.textContent=`ابدأ بالحفظ الجديد: ${newEntries.length} ورد، ثم 10 تكرارات غيبًا، ثم سجّل تقييم اليوم.`;
+      else if(old.length) elPriority.textContent='لا توجد مراجعات طارئة الآن. أنجز مراجعة المحفوظ القديم حسب المواعيد الظاهرة ثم استخدم جلسة التركيز.';
+      else elPriority.textContent='ابدأ بإضافة أول ورد لك، ثم اتبع خطوات التثبيت والمراجعة من هنا.';
+    }
+  }
+  function forceDailySplash(){
+    if(!data.userName)return;
+    const t=today();
+    /* only our new version key controls the daily entrance, so an old cached key cannot suppress it */
+    if(localStorage.getItem(NEW_SPLASH_KEY)===t)return;
+    const item=currentAyah();
+    const ay=document.getElementById('splashAyah'), ref=document.getElementById('splashRef'), audio=document.getElementById('splashAudio');
+    if(!ay||!ref||!audio)return;
+    ay.textContent=item.text;ref.textContent=`${item.ref} — بصوت ${item.name}`;
+    audio.src=`https://everyayah.com/data/${item.base}/${String(item.s).padStart(3,'0')}${String(item.a).padStart(3,'0')}.mp3`;
+    audio.volume=Math.max(0,Math.min(1,Number(data.recitationVolume??.8)));
+    audio.onended=function(){closeDailySplash();localStorage.setItem(NEW_SPLASH_KEY,t)};
+    audio.ontimeupdate=function(){const p=document.getElementById('splashProgress');if(p&&audio.duration)p.style.width=Math.min(100,audio.currentTime/audio.duration*100)+'%'};
+    const btn=document.getElementById('playAyahBtn');if(btn)btn.textContent='▶ تشغيل الآية';
+    const st=document.getElementById('splashStatus');if(st)st.textContent='اضغط تشغيل إذا منع المتصفح التشغيل التلقائي. وستبقى هذه الشاشة مرجعك اليومي للآية والصدقة.';
+    document.getElementById('dailySplash').classList.add('show');
+    /* Do not mark it seen before the user sees it. */
+    setTimeout(()=>{audio.play().then(()=>{if(btn)btn.textContent='🔊 التلاوة تعمل الآن';}).catch(()=>{});},350);
+  }
+  function wrapRenderAll(){
+    if(typeof window.renderAll==='function' && !window.renderAll.__v11){
+      const old=window.renderAll;
+      function wrapped(){old();renderHomeCommandCenter();}
+      wrapped.__v11=true;window.renderAll=wrapped;
+    }
+  }
+  function patchQuickCardColors(){document.querySelectorAll('.quick-card').forEach(b=>{b.style.color='var(--text)';const ico=b.querySelector('.q-ico'),txt=b.querySelector('b');if(ico)ico.style.color='var(--gold)';if(txt)txt.style.color='var(--text)';});}
+  function boot(){
+    wrapRenderAll();
+    patchQuickCardColors();
+    renderHomeCommandCenter();
+    setTimeout(forceDailySplash,650);
+    window.addEventListener('resize',()=>{patchQuickCardColors();renderHomeCommandCenter();});
+  }
+  /* Expose a replay action for future use */
+  window.replayDailyWelcome=function(){localStorage.removeItem(NEW_SPLASH_KEY);forceDailySplash()};
+  boot();
+})();
+</script>
+
+<script id="v12-final-patch">
+(function(){
+  const DAILY_KEY='rafiq-splash-v12';
+  function dailyItem(){return typeof currentAyah==='function'?currentAyah():dailyAyahs[doy(new Date())%dailyAyahs.length]}
+  function renderDailyVisible(){
+    try{
+      const a=dailyItem(),name=data.userName||'يا صديقي';
+      const nameEl=$('homeName'),welcome=$('homeWelcomeLine'),verse=$('dailyAyahHomeText'),ref=$('dailyAyahHomeRef'),sName=$('splashWelcomeName');
+      if(nameEl)nameEl.textContent=name;
+      if(welcome)welcome.textContent=`أهلًا يا ${name} — خذ وردك بهدوء، وثبّت القليل قبل أن تزيد.`;
+      if(verse)verse.textContent=a.text;
+      if(ref)ref.textContent=`${a.ref} — بصوت ${a.name}`;
+      if(sName)sName.textContent=`أهلًا بك يا ${name}`;
+      const t=document.getElementById('homeTazkirah');
+      if(t){const reminders=['الورد القليل المستمر أثبت من الاندفاع القصير.','بعد الحفظ: جوّد، افهم، اربط، ثم سمّع لنفسك.','اجعل ما حفظته طريقًا للعمل، لا مجرد رقم في الخطة.','المراجعة تحفظ تعبك القديم، والحفظ الجديد يبني ما بعده.'];t.textContent=reminders[doy(new Date())%reminders.length]}
+      if($('dailyMessage')&&typeof renderDailyMessage==='function')renderDailyMessage();
+    }catch(err){console.error('daily render',err)}
+  }
+  window.openDailyWelcome=function(){
+    try{
+      const a=dailyItem(),audio=$('splashAudio'),t=today();
+      if(!$('dailySplash'))return;
+      $('dailySplash').classList.add('show');
+      if($('splashWelcomeName'))$('splashWelcomeName').textContent=`أهلًا بك يا ${data.userName||'يا صديقي'}`;
+      $('splashAyah').textContent=a.text;
+      $('splashRef').textContent=`${a.ref} — بصوت ${a.name}`;
+      if(audio){audio.src=`https://everyayah.com/data/${a.base}/${String(a.s).padStart(3,'0')}${String(a.a).padStart(3,'0')}.mp3`;audio.volume=Number(data.recitationVolume??1);audio.ontimeupdate=()=>{const p=$('splashProgress');if(p&&audio.duration)p.style.width=Math.min(100,audio.currentTime/audio.duration*100)+'%'};audio.onended=()=>window.closeDailyWelcome(true)}
+      const btn=$('playAyahBtn');if(btn)btn.textContent='▶ تشغيل الآية';
+      const st=$('splashStatus');if(st)st.textContent='شغّل الآية واستقبل يومك بها. والصدقة الجارية والدعاء لأخيك موجودان هنا أيضًا.';
+      localStorage.setItem(DAILY_KEY,t);
+      setTimeout(()=>{audio?.play?.().then(()=>{if(btn)btn.textContent='🔊 التلاوة تعمل الآن'}).catch(()=>{})},250);
+    }catch(err){console.error('daily welcome',err);toast?.('تعذر فتح الترحيب اليومي، لكن بقية الصفحة تعمل.') }
+  };
+  window.closeDailyWelcome=function(){
+    const audio=$('splashAudio');if(audio){audio.pause();audio.currentTime=0;audio.onended=null}
+    $('dailySplash')?.classList.remove('show');
+  };
+  window.playDailyAyah=function(e){e?.stopPropagation();const audio=$('splashAudio');if(!audio)return;audio.play().then(()=>{if($('playAyahBtn'))$('playAyahBtn').textContent='🔊 التلاوة تعمل الآن'}).catch(()=>{if($('splashStatus'))$('splashStatus').textContent='اضغط زر التشغيل مرة أخرى إذا منع المتصفح التشغيل التلقائي.'})};
+  window.skipSplash=function(e){e?.stopPropagation();window.closeDailyWelcome(true)};
+  window.openDailyStudy=async function(){
+    const a=dailyItem();
+    if(!$('studyModal'))return;
+    currentStudyEntryId=null;currentStudyRefs=[{sura:a.s,aya:a.a}];
+    $('studyRefTitle').textContent=a.ref;
+    $('studyOnlineState').textContent=navigator.onLine?'🌐 اتصال متاح — التفسير الميسّر سيُحمّل ويُحفظ':'📴 أوفلاين — استخدم ما تم حفظه محليًا';
+    $('studyLoading').classList.add('show');$('studyContent').style.display='none';
+    $('studyModal').classList.add('show');switchStudyTab('all');
+    await loadStudyPayload();
+  };
+  window.openDailyTajweedStudy=function(){
+    try{currentTajweedIndex=doy(new Date())%tajweedData.length;openTajweed()}catch(err){console.error(err);toast?.('افتح زاد الحافظ لشرح التجويد.') }
+  };
+  // Make the new splash the only first-open entrance for this version.
+  window.showDailySplash=function(){
+    if(!data.userName)return;
+    if(localStorage.getItem(DAILY_KEY)===today())return;
+    window.openDailyWelcome();
+  };
+  renderDailyVisible();
+  // Refresh once after the original boot and again when the user saves their name.
+  setTimeout(function(){renderDailyVisible();if(data.userName&&localStorage.getItem(DAILY_KEY)!==today())window.showDailySplash()},700);
+  const oldSaveName=window.saveWelcomeName;
+  window.saveWelcomeName=function(){oldSaveName();renderDailyVisible();setTimeout(window.showDailySplash,350)};
+  // Replay button from home should always work even after today's splash was dismissed.
+  window.addEventListener('visibilitychange',()=>{if(!document.hidden)renderDailyVisible()});
+})();
+</script>
 </body>
 </html>
