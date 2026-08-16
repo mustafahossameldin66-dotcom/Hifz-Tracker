@@ -79,74 +79,175 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
 /* =========================================================
    PAPER EDITION — النسخة الورقية الفخمة
 ========================================================= */
+/* =========================================================
+   النسخة الورقية الفخمة — تطابق التطبيق 100%
+========================================================= */
+<!-- =========================================================
+   كود الطباعة الشامل (إصدار كامل التفاصيل والألوان)
+========================================================= -->
+<style>
 @media print {
-  * {
-    -webkit-print-color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  
-  html, body {
-    margin: 0 !important;
-    padding: 0 !important;
-    background: #050806 !important; /* خلفية التطبيق */
-  }
+    /* 1. إيقاف شاشة الطباعة القديمة وإظهار واجهة التطبيق الأصلية */
+    html body #printSheet { display: none !important; }
+    html body > *:not(#printSheet) { display: block !important; }
 
-  body > *:not(#printSheet) {
-    display: none !important;
-  }
+    /* 2. فرض طباعة كل الألوان والخلفيات والظلال (سر الحفاظ على الفخامة) */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
 
-  #printSheet {
-    display: block !important;
-    width: 100%;
-    background: #050806 !important;
-    color: #eef3ef !important;
-    font-family: Tajawal, Arial, sans-serif !important;
-    direction: rtl;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
+    /* 3. تهيئة الصفحة والخطوط */
+    @page { size: A4; margin: 10mm; }
+    html body {
+        background: var(--bg) !important;
+        color: var(--text) !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
 
-  /* وضع الأبيض والأسود */
-  #printSheet.print-bw {
-    filter: grayscale(100%) contrast(120%);
-    background: #ffffff !important;
-    color: #000000 !important;
-  }
-  #printSheet.print-bw .print-page { background: #fff !important; border-color: #555 !important; }
-  #printSheet.print-bw .print-box { background: #fff !important; border-color: #555 !important; color: #000 !important; }
-  #printSheet.print-bw .print-table th, #printSheet.print-bw .print-table td { border-color: #555 !important; color: #000 !important; background: transparent !important; }
+    /* 4. إخفاء الأزرار والقوائم التي لا نحتاجها على الورق */
+    .nav, .fab, .modal, .splash, .emoji-lamps, .golden-fog, .star-field, button.action, button.main, .quick-card {
+        display: none !important;
+    }
 
-  @page {
-    size: A4;
-    margin: 10mm;
-  }
+    /* 5. إظهار جميع التبويبات خلف بعضها (الرئيسية، المخزون، التقدم...) */
+    .view {
+        display: block !important;
+        position: relative !important;
+        opacity: 1 !important;
+        margin-bottom: 30px !important;
+        page-break-after: always !important; /* فاصل صفحات بين كل قسم */
+    }
 
-  .print-page {
-    page-break-after: always;
-    padding: 24px;
-    background: linear-gradient(145deg, #0d1912, #07100b) !important;
-    border: 1px solid #d4af37 !important;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .print-page:last-child { page-break-after: auto; }
+    /* 6. فك التخطيطات المعقدة لتجنب قص المحتوى على الورق */
+    .wrap, .desktop-grid, .grid2, .plan-grid, .stats, .study-tabs, .home-command-grid {
+        display: block !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+    }
 
-  .print-hero-art { text-align: center; color: #d4af37 !important; font-size: 24px; letter-spacing: 5px; margin-bottom: 18px; opacity: 0.8; }
-  .print-title { text-align: center; font: 700 32px/1.5 UthmanicHafs, Amiri, serif; color: #d4af37 !important; margin-bottom: 4px; text-shadow: 0 0 15px rgba(212,175,55,0.4); }
-  .print-sub { text-align: center; color: #9aa89b !important; font-size: 13px; margin-bottom: 24px; }
+    /* 7. حماية البطاقات والأوراد من أن تُقص بين صفحتين */
+    .card, .item, .plan-box, .stat, .mission, .tajweed-hero, .study-panel, .swipe-card {
+        page-break-inside: avoid !important;
+        display: block !important;
+        width: 100% !important;
+        margin-bottom: 12px !important;
+    }
 
-  .print-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
-  .print-box { border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 16px; padding: 16px; background: rgba(212,175,55,0.03) !important; margin-bottom: 16px; }
-  .print-box h3 { margin: 0 0 10px 0; color: #d4af37 !important; font-size: 18px; font-family: Amiri, serif; }
-  
-  .print-stat { text-align: center; }
-  .print-stat b { display: block; color: #d4af37 !important; font-size: 28px; margin-bottom: 4px; }
-  .print-stat span { color: #9aa89b !important; font-size: 12px; }
+    /* 8. إظهار الرسوم البيانية كاملة (مثل التقويم وخريطة الإنجاز) */
+    .heatmap, .constellation, .cal-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        overflow: visible !important;
+    }
+}
+</style>
 
-  .print-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-  .print-table th, .print-table td { border: 1px solid rgba(212,175,55,0.25) !important; padding: 10px; text-align: right; font-size: 13px; }
-  .print-table th { background: rgba(212,175,55,0.15) !important; color: #d4af37 !important; font-weight: bold; }
-  .print-table td { background: rgba(255,255,255,0.02) !important; }
+<script>
+// إجبار التطبيق على استخدام دالة الطباعة الجديدة بدلاً من القديمة
+window.printReport = function() {
+    // 1. فتح وعرض كل الأوراد المخفية في قسم "المخزون" لطباعتها
+    const currentPoolVisible = poolVisible;
+    poolVisible = data.entries.length; 
+    renderPool();
+    
+    // 2. تحديث الرسوم البيانية لضمان ظهورها بآخر دقة
+    if (typeof drawChart === 'function') drawChart();
+
+    // 3. إعطاء المتصفح ثانية واحدة لتجهيز التصميم ثم إطلاق أمر الطباعة
+    setTimeout(() => {
+        window.print();
+        
+        // 4. بعد الطباعة، إعادة إخفاء الأوراد لتسريع التطبيق كما كان
+        poolVisible = currentPoolVisible;
+        renderPool();
+    }, 800);
+};
+</script>
+    body {
+        background: #050806 !important;
+        color: #f0f3f0 !important;
+        min-height: auto !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+    }
+
+    /* إخفاء عناصر واجهة المستخدم غير الضرورية للطباعة (أزرار، قوائم ملاحة، نوافذ منبثقة) */
+    .nav, .fab, button.action, button.main, .modal, .splash, .emoji-lamps, .golden-fog, .star-field {
+        display: none !important;
+    }
+
+    /* إظهار جميع الأقسام (Views) بدلاً من القسم النشط فقط */
+    .view {
+        display: block !important;
+        opacity: 1 !important;
+        position: relative !important;
+        animation: none !important;
+        margin-bottom: 30px !important;
+        page-break-after: always; /* فاصل صفحات بين كل قسم رئيسي */
+    }
+
+    /* تفكيك التخطيطات المعقدة لتجنب قص المحتوى على الورق */
+    .wrap, body.device-laptop .wrap, body.device-tablet .wrap {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    .desktop-grid, .grid2, .plan-grid, .stats, .study-tabs, .home-command-grid {
+        display: block !important; /* تحويل الشبكات إلى كتل متتالية */
+    }
+
+    /* تصميم البطاقات والعناصر لتبدو فخمة ومناسبة للورق */
+    .card, .item, .plan-box, .stat, .home-command-step, .quick-card, .mission, .tajweed-hero, .study-panel {
+        background: linear-gradient(145deg, rgba(20,35,26,0.95), rgba(8,15,11,0.95)) !important;
+        border: 1px solid rgba(212,175,55,0.4) !important;
+        border-radius: 12px !important;
+        padding: 15px !important;
+        margin-bottom: 15px !important;
+        page-break-inside: avoid !important; /* منع قص البطاقة بين صفحتين */
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.05) !important;
+        width: 100% !important;
+        display: block !important;
+    }
+
+    /* ضبط النصوص والعناوين للطباعة */
+    h1, h2, h3 {
+        color: #d4af37 !important;
+        page-break-after: avoid !important;
+        border-bottom: 1px dashed rgba(212,175,55,0.3) !important;
+        padding-bottom: 8px !important;
+    }
+    .quran, .quran-font {
+        color: #d4af37 !important;
+        text-shadow: none !important; /* الظلال قد تتشوه في الطباعة */
+    }
+    .small, .sub, .muted {
+        color: #b0c0b4 !important;
+    }
+
+    /* الرسومات البيانية (التقويم، خريطة الإنجاز، الخ) */
+    .heatmap, .constellation, .cal-grid {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 2px !important;
+        page-break-inside: avoid !important;
+    }
+    .heat, .star, .cal-cell {
+        flex: 1 1 auto !important;
+        border: 1px solid rgba(212,175,55,0.2) !important;
+    }
+
+    /* إظهار محتوى الموديلات (مثل كشكول المتشابهات) إن أردت طباعته */
+    #notebookModal, #tajweedModal, #studyModal {
+        /* يمكنك تفعيل هذا الجزء إذا أردت طباعة محتوى النوافذ المنبثقة أيضاً */
+        /* display: block !important; position: static !important; background: transparent !important; */
+    }
 }
   /* =====================================================
      STATIC BACKGROUND
