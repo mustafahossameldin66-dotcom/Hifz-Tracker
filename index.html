@@ -76,88 +76,77 @@ body.mode-3 .nav{background:rgba(8,14,11,.68)!important;backdrop-filter:blur(22p
   display:none;
 }
 
-@media print{
-  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  html,body{margin:0!important;padding:0!important;background:#07100b!important}
-  body>*{display:none!important}
-
-  #printSheet{
-    display:block!important;
-    position:relative;
-    width:100%;
-    min-height:100vh;
-    overflow:hidden;
-    direction:rtl;
-    color:#eef3ef;
-    background:
-      radial-gradient(circle at 82% 6%,rgba(212,175,55,.13),transparent 26%),
-      radial-gradient(circle at 8% 92%,rgba(76,166,93,.08),transparent 27%),
-      linear-gradient(145deg,#07100b 0%,#0b1710 50%,#061009 100%);
-    padding:22px;
-    font-family:Tajawal,Arial,sans-serif;
+/* =========================================================
+   PAPER EDITION — النسخة الورقية الفخمة
+========================================================= */
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #050806 !important; /* خلفية التطبيق */
   }
 
-  .print-bg{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-  .print-mist{position:absolute;border-radius:50%;filter:blur(26px)}
-  .print-star{position:absolute;color:#f5d879;text-shadow:0 0 8px rgba(212,175,55,.9),0 0 18px rgba(212,175,55,.3)}
-  .print-lamp{position:absolute;display:flex;flex-direction:column;align-items:center;transform-origin:top center}
-  .print-lamp .wire{width:2px;height:86px;background:linear-gradient(#0000,rgba(212,175,55,.58))}
-  .print-lamp .body{font-size:40px;line-height:1;filter:drop-shadow(0 0 8px rgba(212,175,55,.95)) drop-shadow(0 0 24px rgba(212,175,55,.5))}
-  .print-lamp .glow{width:210px;height:210px;margin-top:-8px;border-radius:50%;background:radial-gradient(circle,rgba(255,210,70,.18) 0%,rgba(212,175,55,.08) 26%,transparent 70%);filter:blur(5px)}
-
-  .paper-page{position:relative;z-index:2;max-width:1050px;min-height:calc(100vh - 44px);margin:0 auto 14px;padding:26px;border:1px solid rgba(212,175,55,.18);border-radius:24px;background:linear-gradient(145deg,rgba(14,27,19,.92),rgba(7,16,11,.92));box-shadow:0 18px 55px rgba(0,0,0,.34),0 0 35px rgba(212,175,55,.045),inset 0 1px 0 rgba(255,255,255,.04);page-break-after:always;break-after:page}
-  .paper-page:last-child{page-break-after:auto;break-after:auto}
-  .paper-title{text-align:center;font:700 34px/1.5 UthmanicHafs,Amiri,serif;color:#d4af37;margin:0;text-shadow:0 0 16px rgba(212,175,55,.22)}
-  .paper-subtitle{text-align:center;color:#9ba99e;font-size:13px;margin-top:2px}
-  .paper-user{text-align:center;color:#ead47a;font-size:18px;font-weight:900;margin-top:8px}
-
-  .print-card{background:rgba(15,25,19,.66);border:1px solid rgba(212,175,55,.14);border-radius:20px;box-shadow:0 16px 42px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.035)}
-  .paper-section{margin-top:15px;padding:17px;page-break-inside:avoid;break-inside:avoid}
-  .paper-section-title{margin:0 0 11px;color:#d4af37;font:700 20px/1.5 UthmanicHafs,Amiri,serif}
-
-  .paper-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-  .paper-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-  .paper-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:11px}
-
-  .goal-wrap{display:grid;grid-template-columns:1fr 132px;gap:18px;align-items:center}
-  .goal-ring{width:108px;height:108px;border-radius:50%;background:conic-gradient(#d4af37 var(--pct),rgba(255,255,255,.07) 0);display:flex;align-items:center;justify-content:center;position:relative;margin:auto}
-  .goal-ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#0b1710}
-  .goal-ring span{position:relative;z-index:2;color:#ead47a;font-weight:900;font-size:18px}
-  .paper-progress{height:14px;border-radius:999px;background:rgba(255,255,255,.06);overflow:hidden;border:1px solid rgba(212,175,55,.15);margin-top:10px}
-  .paper-progress>div{height:100%;background:linear-gradient(90deg,#a77d08,#f1d97a)}
-
-  .check-item,.study-box,.method-box,.note-box,.werd-card,.metric-box{background:rgba(255,255,255,.02);border:1px solid rgba(212,175,55,.12);border-radius:14px}
-  .check-item{padding:11px;display:flex;gap:9px;align-items:flex-start;min-height:56px}
-  .checkmark{width:19px;height:19px;flex:0 0 19px;border:2px solid rgba(212,175,55,.56);border-radius:5px}
-  .check-item strong{display:block;color:#e1e8e2;font-size:12px}.check-item small{display:block;color:#8f9b92;font-size:10px;margin-top:2px;line-height:1.6}
-
-  .method-box{padding:13px;min-height:85px;background:linear-gradient(145deg,rgba(212,175,55,.065),rgba(255,255,255,.012))}
-  .method-num{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;background:#d4af37;color:#09100c;font-size:10px;font-weight:900;margin-left:5px}
-  .method-box strong{color:#e8d271;font-size:12px}.method-box p{margin:6px 0 0;color:#98a59c;font-size:10px;line-height:1.75}
-
-  .werd-card{padding:13px;background:linear-gradient(145deg,rgba(212,175,55,.055),rgba(255,255,255,.012))}
-  .werd-head{display:grid;grid-template-columns:minmax(0,1fr) 95px 95px;gap:9px;align-items:center}
-  .werd-name{font:700 18px/1.8 UthmanicHafs,Amiri,serif;color:#f0d77a}.paper-mini{padding:8px;border:1px solid rgba(212,175,55,.12);border-radius:10px;text-align:center;color:#a1aea5;font-size:10px}
-  .werd-meta{margin-top:8px;color:#99a69d;font-size:10px}.rep-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:5px;margin-top:8px}.rep-box{height:28px;border:1px solid rgba(212,175,55,.26);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#8e9a92;font-size:10px}.seven-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}.seven-box{padding:11px 6px;border:1px solid rgba(212,175,55,.13);border-radius:11px;text-align:center;color:#9aa69d;font-size:10px}.circle{width:23px;height:23px;border-radius:50%;border:2px solid rgba(212,175,55,.54);margin:5px auto}
-
-  .study-box{padding:13px}.study-box h4{margin:0 0 6px;color:#d4af37;font-size:13px}.study-box p{margin:0;color:#b0bbb2;font-size:10.5px;line-height:1.9}
-  .notes{display:grid;gap:10px}.line{height:30px;border-bottom:1px solid rgba(212,175,55,.16)}
-  .tracker{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}.tracker-cell{min-height:36px;border:1px solid rgba(212,175,55,.11);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#8e9a92;font-size:9px;text-align:center}
-  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.metric-box{padding:12px;text-align:center}.metric-box b{display:block;color:#d4af37;font-size:24px}.metric-box span{color:#8f9b92;font-size:10px}
-  .signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.signature{height:45px;padding-top:26px;border-bottom:1px solid rgba(212,175,55,.22);color:#89968d;font-size:10px}
-  .paper-footer{text-align:center;margin-top:14px;padding-top:10px;border-top:1px solid rgba(212,175,55,.10);color:#77847b;font-size:9px;line-height:1.8}
-
-  @page{size:A4;margin:8mm}
-
-  @media print and (max-width:800px){
-    #printSheet{padding:12px}
-    .paper-page{padding:17px;border-radius:18px}
-    .paper-grid-4{grid-template-columns:1fr 1fr}
-    .paper-grid-3{grid-template-columns:1fr 1fr}
-    .paper-grid-2,.goal-wrap{grid-template-columns:1fr}
-    .werd-head{grid-template-columns:1fr 82px}
-    .werd-head .hide-print-small{display:none}
+  body > *:not(#printSheet) {
+    display: none !important;
   }
+
+  #printSheet {
+    display: block !important;
+    width: 100%;
+    background: #050806 !important;
+    color: #eef3ef !important;
+    font-family: Tajawal, Arial, sans-serif !important;
+    direction: rtl;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* وضع الأبيض والأسود */
+  #printSheet.print-bw {
+    filter: grayscale(100%) contrast(120%);
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  #printSheet.print-bw .print-page { background: #fff !important; border-color: #555 !important; }
+  #printSheet.print-bw .print-box { background: #fff !important; border-color: #555 !important; color: #000 !important; }
+  #printSheet.print-bw .print-table th, #printSheet.print-bw .print-table td { border-color: #555 !important; color: #000 !important; background: transparent !important; }
+
+  @page {
+    size: A4;
+    margin: 10mm;
+  }
+
+  .print-page {
+    page-break-after: always;
+    padding: 24px;
+    background: linear-gradient(145deg, #0d1912, #07100b) !important;
+    border: 1px solid #d4af37 !important;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .print-page:last-child { page-break-after: auto; }
+
+  .print-hero-art { text-align: center; color: #d4af37 !important; font-size: 24px; letter-spacing: 5px; margin-bottom: 18px; opacity: 0.8; }
+  .print-title { text-align: center; font: 700 32px/1.5 UthmanicHafs, Amiri, serif; color: #d4af37 !important; margin-bottom: 4px; text-shadow: 0 0 15px rgba(212,175,55,0.4); }
+  .print-sub { text-align: center; color: #9aa89b !important; font-size: 13px; margin-bottom: 24px; }
+
+  .print-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 18px; }
+  .print-box { border: 1px solid rgba(212,175,55,0.3) !important; border-radius: 16px; padding: 16px; background: rgba(212,175,55,0.03) !important; margin-bottom: 16px; }
+  .print-box h3 { margin: 0 0 10px 0; color: #d4af37 !important; font-size: 18px; font-family: Amiri, serif; }
+  
+  .print-stat { text-align: center; }
+  .print-stat b { display: block; color: #d4af37 !important; font-size: 28px; margin-bottom: 4px; }
+  .print-stat span { color: #9aa89b !important; font-size: 12px; }
+
+  .print-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .print-table th, .print-table td { border: 1px solid rgba(212,175,55,0.25) !important; padding: 10px; text-align: right; font-size: 13px; }
+  .print-table th { background: rgba(212,175,55,0.15) !important; color: #d4af37 !important; font-weight: bold; }
+  .print-table td { background: rgba(255,255,255,0.02) !important; }
 }
   /* =====================================================
      STATIC BACKGROUND
