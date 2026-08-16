@@ -32,38 +32,38 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajaw
 h1, h2, h3, .quran, .quran-font { font-family: 'Amiri', serif; }
 
 /* =========================================
-   THE SPIRITUAL LAMP BACKGROUND 💡
+   THE SPIRITUAL LAMP BACKGROUND 💡 (BUG-FREE)
 ========================================= */
 .spiritual-lamp {
   position: fixed;
-  top: 10%; left: 50%;
-  transform: translateX(-50%) translateZ(0); /* Hardware Acceleration */
+  top: 5%; left: 50%;
+  transform: translateX(-50%);
   width: var(--lamp-size); height: var(--lamp-size);
   border-radius: 50%;
-  /* Using smooth radial gradient instead of buggy CSS blur */
-  background: radial-gradient(circle, var(--lamp-glow) 0%, rgba(212, 175, 55, 0.05) 30%, transparent 70%);
+  /* Pure CSS gradients, NO FILTER BLUR to avoid browser bleeding bugs */
+  background: radial-gradient(circle, var(--lamp-glow) 0%, rgba(212, 175, 55, 0.04) 40%, transparent 70%);
   opacity: var(--lamp-opacity);
   z-index: -2; pointer-events: none;
   transition: all 2s cubic-bezier(0.25, 1, 0.5, 1);
   animation: lampBreathe 8s infinite alternate ease-in-out;
 }
 @keyframes lampBreathe {
-  0% { transform: translateX(-50%) scale(0.95) translateZ(0); opacity: calc(var(--lamp-opacity) * 0.8); }
-  100% { transform: translateX(-50%) scale(1.05) translateZ(0); opacity: calc(var(--lamp-opacity) * 1.2); }
+  0% { transform: translateX(-50%) scale(0.9); opacity: calc(var(--lamp-opacity) * 0.7); }
+  100% { transform: translateX(-50%) scale(1.1); opacity: calc(var(--lamp-opacity) * 1.3); }
 }
 
 /* =========================================
    LUXURY GRAPHICS ENGINE & SMOOTHNESS 💎
 ========================================= */
 
-/* LEVEL 1: MOBILE */
+/* LEVEL 1: MOBILE (Static, Fast) */
 body.mode-1 { --card-radius: 18px; --transition-speed: 0s; --card-padding: 24px; --card-margin: 20px; }
 body.mode-1 * { animation-duration: 0s !important; transition-duration: 0s !important; }
 body.mode-1 .spiritual-lamp { display: none; }
 body.mode-1 .card, body.mode-1 .item { border-radius: var(--card-radius); background: var(--card); border: 1px solid var(--border); }
 body.mode-1 .ultra-icon { transform: none !important; filter: none !important; animation: none !important; }
 
-/* LEVEL 2: TABLET */
+/* LEVEL 2: TABLET (Balanced) */
 body.mode-2 { --card-radius: 20px; --transition-speed: 0.3s; --card-padding: 28px; --card-margin: 24px; }
 body.mode-2 .card, body.mode-2 .item { 
   border-radius: var(--card-radius); background: var(--card); 
@@ -72,11 +72,11 @@ body.mode-2 .card, body.mode-2 .item {
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); 
 }
 
-/* LEVEL 3: ULTRA LAPTOP (Deep Glassmorphism, Perfect Rendering) */
+/* LEVEL 3: ULTRA LAPTOP (Deep Glassmorphism, Zero-Bug Rendering) */
 body.mode-3 { --card-radius: 28px; --transition-speed: 0.4s; --card-padding: 32px; --card-margin: 32px; background: #030604; }
 [data-theme=light] body.mode-3 { background: #eef2f0; }
 
-/* Ambient Orbs - No blur to fix Chrome bleeding bug */
+/* Ambient Orbs - Pure gradients, zero blur */
 body.mode-3::before, body.mode-3::after {
   content: ""; position: fixed; border-radius: 50%; z-index: -3; pointer-events: none;
   animation: breatheOrbs 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
@@ -87,13 +87,13 @@ body.mode-3::after { width: 65vw; height: 65vw; bottom: -15%; right: -15%; backg
 [data-theme=light] body.mode-3::after { background: radial-gradient(circle, rgba(58,145,76,0.1) 0%, transparent 65%); }
 
 @keyframes breatheOrbs {
-  0% { transform: translate(0, 0) scale(1) translateZ(0); opacity: 0.7; }
-  100% { transform: translate(5vw, 5vh) scale(1.1) translateZ(0); opacity: 1; }
+  0% { transform: translate(0, 0) scale(1); opacity: 0.7; }
+  100% { transform: translate(5vw, 5vh) scale(1.1); opacity: 1; }
 }
 
 /* 🧊 Perfect Glass Cards */
 body.mode-3 .card, body.mode-3 .item {
-  background: linear-gradient(145deg, rgba(20, 35, 26, 0.75) 0%, rgba(10, 18, 13, 0.6) 100%);
+  background: linear-gradient(145deg, rgba(20, 35, 26, 0.7) 0%, rgba(10, 18, 13, 0.5) 100%);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border: 1px solid rgba(212,175,55,0.15);
   border-top: 1px solid rgba(255,255,255,0.05);
@@ -112,7 +112,7 @@ body.mode-3 .card, body.mode-3 .item {
 .card:hover, .item:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(212,175,55,0.1); border-color: rgba(212,175,55,0.25); }
 body.mode-3 .card:hover, body.mode-3 .item:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(212,175,55,0.15), 0 0 30px rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.3); }
 
-/* Buttons & Inputs (Rounded and glowing) */
+/* Buttons & Inputs */
 input, select { width: 100%; padding: 18px 22px; background: var(--input); color: var(--text); border: 1px solid var(--border); border-radius: 18px; margin-bottom: 16px; font: inherit; outline: none; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); font-size: 15px;}
 input:focus, select:focus { border-color: var(--gold); box-shadow: 0 0 15px rgba(212,175,55,0.15); transform: scale(1.01); background: rgba(212,175,55,0.03);}
 button { font: inherit; border: 0; cursor: pointer; outline: none; }
@@ -127,7 +127,7 @@ button { font: inherit; border: 0; cursor: pointer; outline: none; }
 /* 🌟 Relaxing Icon Animations */
 @keyframes iconFloatSlow {
   0% { transform: translateY(0px); filter: drop-shadow(0 4px 10px rgba(212,175,55,0.2)); }
-  50% { transform: translateY(-6px); filter: drop-shadow(0 12px 20px rgba(212,175,55,0.5)); }
+  50% { transform: translateY(-8px); filter: drop-shadow(0 12px 20px rgba(212,175,55,0.5)); }
   100% { transform: translateY(0px); filter: drop-shadow(0 4px 10px rgba(212,175,55,0.2)); }
 }
 @keyframes iconPulseSubtle {
@@ -141,8 +141,8 @@ body.mode-3 .badge-card.unlocked .badge-icon { display: inline-block; animation:
 /* =========================================
    GENERAL LAYOUT & SPACING (Clean & Airy)
 ========================================= */
-/* Added isolation and translateZ to fix Chrome blur bleeding bug */
-.wrap { max-width: 740px; margin: auto; padding: 30px 20px; position: relative; z-index: 10; isolation: isolate; transform: translateZ(0); }
+/* Removed isolation and translateZ to fix Chrome Blur Bleed Bug */
+.wrap { max-width: 740px; margin: auto; padding: 30px 20px; position: relative; }
 h1 { font: 700 30px 'Amiri', serif; color: var(--gold); margin: 0; line-height: 1.5; text-shadow: 0 4px 15px rgba(212,175,55,0.2);}
 .quran { font: 700 26px/2.2 'Amiri', serif; }
 .sub, .small { font-size: 14px; color: var(--muted); }
@@ -155,9 +155,14 @@ h1 { font: 700 30px 'Amiri', serif; color: var(--gold); margin: 0; line-height: 
 .item-title { flex: 1; }
 .item-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; font-size: 13px; color: var(--muted); margin-top: 14px; }
 .note-txt { font-size: 14px; color: var(--muted); margin-top: 8px; opacity: 0.9;}
+.item:before { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 6px; background: transparent; border-radius: 0 8px 8px 0;}
+.item.icu { background: var(--dangerDim); border-color: rgba(181,75,75,.2); }
+.item.icu:before { background: var(--danger); box-shadow: 0 0 10px var(--danger);}
+.item.due { background: var(--yellowDim); border-color: rgba(219,140,22,.2); }
+.item.due:before { background: var(--warning); box-shadow: 0 0 10px var(--warning);}
 
 /* =========================================
-   NAVIGATION BAR (FLOATING & CENTERED)
+   NAVIGATION BAR (FLEX CENTERED)
 ========================================= */
 .nav { 
   position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0; 
@@ -173,7 +178,7 @@ h1 { font: 700 30px 'Amiri', serif; color: var(--gold); margin: 0; line-height: 
   font-size: 12px; font-weight: 700; color: var(--muted); cursor: pointer; 
   padding: 12px 6px; border-radius: 16px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); 
 }
-.nav .ico { font-size: 24px; line-height: 1; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
+.nav .ico { font-size: 24px; line-height: 1; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); display: block;}
 .nav-item.active { color: var(--gold); background: var(--goldDim); }
 .nav-item.active .ico { transform: translateY(-4px) scale(1.2); filter: drop-shadow(0 6px 12px rgba(212,175,55,0.4)); }
 
@@ -191,7 +196,7 @@ body.mode-2 .nav, body.mode-3 .nav {
   body { padding-bottom: 0; display: flex; }
   .nav { top: 0; right: 0; left: auto; bottom: 0; width: 300px; height: 100vh; flex-direction: column; justify-content: flex-start; align-items: stretch; padding: 40px 24px; gap: 16px; border-top: none; border-left: 1px solid var(--border); border-radius: 0; }
   .nav-item { flex: none; width: 100%; flex-direction: row; justify-content: flex-start; gap: 18px; padding: 20px 24px; font-size: 16px; border-radius: 20px;}
-  .nav .ico { font-size: 28px; }
+  .nav .ico { font-size: 28px; margin: 0; }
   .nav-item:hover .ico { transform: scale(1.1); filter: drop-shadow(0 0 10px rgba(212,175,55,0.3));}
   .nav-item.active { border: 1px solid rgba(212,175,55,.2); box-shadow: 0 10px 30px rgba(212,175,55,0.1); }
   .nav-item.active .ico { transform: scale(1.2) translateY(0); }
@@ -220,11 +225,11 @@ body.mode-2 .nav, body.mode-3 .nav {
 [data-theme=light] .rep-counter-container { background: rgba(255,255,255,0.3); }
 .rep-counter-container:hover { border-color: rgba(212,175,55,0.3); background: rgba(212,175,55,0.02);}
 .rep-counter-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
-.rep-btn { background: var(--goldDim); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); padding: 12px 20px; border-radius: 16px; font-weight: 800; font-size: 15px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);}
+.rep-btn { background: var(--goldDim); color: var(--gold); border: 1px solid rgba(212,175,55,0.3); padding: 12px 20px; border-radius: 14px; font-weight: 800; font-size: 15px; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);}
 .rep-btn:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 8px 20px rgba(212,175,55,0.2);}
 .rep-btn.done { background: var(--success); color: #fff; border-color: var(--success); box-shadow: 0 4px 15px rgba(58,145,76,0.3);}
 .qbtns { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 18px; }
-.qbtns button { padding: 16px; border-radius: 16px; background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 15px; font-weight: 700; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);}
+.qbtns button { padding: 14px; border-radius: 14px; background: transparent; color: var(--text); border: 1px solid var(--border); font-size: 15px; font-weight: 700; transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);}
 .qbtns button:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); border-color: var(--gold); }
 .phase-badge { background: var(--goldDim); border: 1px solid rgba(212,175,55,0.3); color: var(--gold); font-size: 13px; padding: 6px 14px; border-radius: 24px; font-weight: 700; white-space: nowrap; }
 .phase-tracker { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
@@ -547,11 +552,10 @@ body.mode-2 .fab, body.mode-3 .fab { backdrop-filter: blur(20px); -webkit-backdr
     
     <div class="desktop">
       <div>
-        <!-- GRAPHICS ENGINE SETTING -->
         <div class="card" style="border-color:var(--gold); border-width: 2px;">
           <h2 style="font-size:22px;">✨ مستوى الجرافيك والأداء</h2>
           <p class="sub" style="margin-bottom:24px; font-size:16px; line-height:1.8; opacity:0.9;">اختر ما يناسب جهازك لضمان أداء سلس. (المستوى 3 يحتوي على خلفية المصباح الحيّة 💡).</p>
-          <select id="graphicsModeSelect" onchange="changeGraphicsMode()" style="font-weight:bold; border-color:var(--gold); background:rgba(212,175,55,0.05); font-size:17px; padding:20px; border-radius:20px;">
+          <select id="graphicsModeSelect" onchange="changeGraphicsMode()" style="font-weight:bold; border-color:var(--gold); background:rgba(212,175,55,0.08); font-size:17px; padding:20px; border-radius:20px;">
             <option value="1">🟢 المستوى 1: مسطح وسريع (موبايل)</option>
             <option value="2">🟡 المستوى 2: متوازن بظلال (تابلت)</option>
             <option value="3">🔴 المستوى 3: زجاج متحرك ومصباح حيّ (كمبيوتر)</option>
@@ -666,13 +670,12 @@ function updateSpiritualLamp() {
   const dayScore = (log.save || 0)*3 + (log.review || 0)*2 + (log.rep || 0)*0.15;
   const streak = data.streak || 0;
   
-  // Calculate intensity based on streak and today's activity
   let intensity = Math.min(100, (streak * 4) + (dayScore * 8)) / 100; 
-  intensity = Math.max(0.15, intensity); // Never fully dark
+  intensity = Math.max(0.15, intensity); 
   
-  const lampGlow = `rgba(212, 175, 55, ${0.08 + (intensity * 0.15)})`;
-  const lampSize = `${40 + (intensity * 45)}vw`;
-  const lampOpacity = 0.25 + (intensity * 0.75);
+  const lampGlow = `rgba(212, 175, 55, ${0.08 + (intensity * 0.12)})`;
+  const lampSize = `${40 + (intensity * 40)}vw`;
+  const lampOpacity = 0.3 + (intensity * 0.7);
 
   document.documentElement.style.setProperty('--lamp-glow', lampGlow);
   document.documentElement.style.setProperty('--lamp-size', lampSize);
