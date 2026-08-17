@@ -1,0 +1,29 @@
+[
+  {
+    "id": "alminshawi",
+    "name": "محمد المنشاوي",
+    "archive_id": "al-minshawi-mujawad",
+    "sources": [
+      { "source": "Archive.org (collection)", "url": "https://archive.org/details/al-minshawi-mujawad", "type": "archive", "note": "archive_id: al-minshawi-mujawad — يحتوي على ملفات MP3 قابلة للتنزيل دفعة" },
+      { "source": "MP3Quran.net", "url": "https://www.mp3quran.net/ar/minsh/downloads", "type": "page", "note": "صفحة تحميل المصحف كاملاً وآيات منفصلة" }
+    ]
+  },
+  {
+    "id": "alhasiry",
+    "name": "الحصري",
+    "archive_id": "al-husari",
+    "sources": [
+      { "source": "Archive.org (collection)", "url": "https://archive.org/details/al-husari", "type": "archive", "note": "archive_id: al-husari — مجموعة ملفات MP3" },
+      { "source": "MP3Quran.net", "url": "https://mp3quran.net/eng/husr", "type": "page", "note": "صفحة الحصري للمصحف المرتل (روابط تحميل لكل سورة)" }
+    ]
+  },
+  {
+    "id": "fares_abbad",
+    "name": "فارس عباد",
+    "archive_id": "Fares_Abbad_MP3_Quran",
+    "sources": [
+      { "source": "Archive.org (collection)", "url": "https://archive.org/details/Fares_Abbad_MP3_Quran", "type": "archive", "note": "archive_id: Fares_Abbad_MP3_Quran — مجموعة ملفات MP3" },
+      { "source": "MP3Quran.net", "url": "https://www.mp3quran.net/arb/fares_abbad.html", "type": "page", "note": "صفحة تحميل المصحف لسيد فارس عباد" }
+    ]
+  }
+]
