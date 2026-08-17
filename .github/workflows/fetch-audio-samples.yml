@@ -17,40 +17,20 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq curl
+          sudo apt-get install -y jq curl python3
 
       - name: Prepare output directories
-        run: mkdir -p public/audio
+        run: |
+          mkdir -p public/audio
 
-      - name: Fetch archive metadata & download MP3s
+      - name: Run fetch script
         env:
           DOWNLOAD_LIMIT: 5
         run: |
-          set -euo pipefail
-          targets=("al-minshawi-mujawad" "al-husari" "Fares_Abbad_MP3_Quran")
-          declare -A ids_to_dirs=( ["al-minshawi-mujawad"]="alminshawi" ["al-husari"]="alhasiry" ["Fares_Abbad_MP3_Quran"]="fares_abbad" )
+          chmod +x scripts/fetch_audio.sh
+          ./scripts/fetch_audio.sh
 
-          for id in "${targets[@]}"; do
-            dir="public/audio/${ids_to_dirs[$id]}"
-            mkdir -p "$dir"
-            echo "Fetching metadata for $id"
-            meta_file="/tmp/${id}.json"
-            curl -s "https://archive.org/metadata/${id}" -o "$meta_file"
-            if [ ! -s "$meta_file" ]; then
-              echo "No metadata for $id"
-              continue
-            fi
-            jq -r '.files[] | select(.format!=null and (("MP3" | test("MP3"; "i")) or (.format|test("MP3";"i"))) | .name' "$meta_file" \
-              | grep -v -E 'sample|thumb|jpg|png' \
-              | head -n "$DOWNLOAD_LIMIT" \
-              | while read -r fname; do
-                url="https://archive.org/download/${id}/$(echo "$fname" | sed -e 's/ /%20/g')"
-                echo "Downloading $url"
-                curl -s -L -o "$dir/$fname" "$url" || echo "Failed $url"
-              done
-          done
-
-          - name: Upload audio as artifact
+      - name: Upload audio as artifact
         uses: actions/upload-artifact@v4
         with:
           name: audio-samples
