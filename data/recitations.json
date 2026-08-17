@@ -1,8 +1,56 @@
 [
-  { "id": "alminshawi", "name": "محمد المنشاوي", "sample_url": "" },
-  { "id": "alhasiry", "name": "الحصري", "sample_url": "" },
-  { "id": "fares_abbad", "name": "فارس عباد", "sample_url": "" },
-  { "id": "yasser_aldosari", "name": "ياسر الدوسري", "sample_url": "" },
-  { "id": "nasser_alqatami", "name": "ناصر القطامي", "sample_url": "" },
-  { "id": "saad_alghamdi", "name": "سعد الغامدي", "sample_url": "" }
+  {
+    "id": "alminshawi",
+    "name": "محمد المنشاوي",
+    "sources": [
+      { "source": "MP3Quran.net", "url": "https://www.mp3quran.net/ar/minsh/downloads", "type": "page", "note": "صفحة تحميل المصحف كاملاً وآيات منفصلة (موقع شائع وموثوق)" },
+      { "source": "Internet Archive (Al-Minshawi Mujawwad)", "url": "https://archive.org/details/al-minshawi-mujawad", "type": "archive", "note": "أرشيف يوفّر ملفات MP3 قابلة للتنزيل دفعة أو منفصلة" },
+      { "source": "TVQuran / QuranicAudio mirror", "url": "https://www.tvquran.com/en/collection/105/%D9%85%D8%AD%D9%85%D8%AF-%D8%B5%D8%AF%D9%8A%D9%82-%D8%A7%D9%84%D9%85%D9%86%D8%B4%D8%A7%D9%88%D9%8A-%D8%A7%D9%84%D9%85%D8%B5%D8%AD%D9%81-%D8%A7%D9%84%D9%85%D8%AC%D9%88%D8%AF", "type": "page", "note": "واجهة للاستماع والتحميل حسب التوفر" }
+    ]
+  },
+  {
+    "id": "alhasiry",
+    "name": "الحصري",
+    "sources": [
+      { "source": "MP3Quran.net", "url": "https://mp3quran.net/eng/husr", "type": "page", "note": "صفحة الحصري للمصحف المرتل (روابط تحميل لكل سورة)" },
+      { "source": "Quranicaudio", "url": "https://quranicaudio.com/quran/16", "type": "page", "note": "مخزن CDN مع روابط تحميل مباشرة لكل سورة" },
+      { "source": "Internet Archive (Al-Husary)", "url": "https://archive.org/details/al-husari", "type": "archive", "note": "أرشيف مع ملفات قابلة للتحميل" }
+    ]
+  },
+  {
+    "id": "fares_abbad",
+    "name": "فارس عباد",
+    "sources": [
+      { "source": "MP3Quran.net", "url": "https://www.mp3quran.net/arb/fares_abbad.html", "type": "page", "note": "صفحة تحميل المصحف لسيد فارس عباد" },
+      { "source": "Quranicaudio", "url": "https://quranicaudio.com/qari/64", "type": "page", "note": "صفحة الاستماع والتحميل (surah-by-surah)" },
+      { "source": "Internet Archive (Fares Abbad)", "url": "https://archive.org/details/Fares_Abbad_MP3_Quran", "type": "archive", "note": "أرشيف مع ملف ZIP أو ملفات MP3 لكل سورة" }
+    ]
+  },
+  {
+    "id": "yasser_aldosari",
+    "name": "ياسر الدوسري",
+    "sources": [
+      { "source": "Internet Archive (Yasser Al-Dosari)", "url": "https://archive.org/details/YASSER_AL-DOSSARI_MP3_QURAN", "type": "archive", "note": "مجموعات MP3 قابلة للتنزيل دفعة أو سور منفصلة" },
+      { "source": "Quranicaudio", "url": "https://quranicaudio.com/qari/79", "type": "page", "note": "روابط تحميل مباشرة لكل سورة على CDN" },
+      { "source": "MP3Quran.net", "url": "https://www.mp3quran.net/dossary.html", "type": "page", "note": "صفحة الاستماع والتحميل لكل سور المصحف" }
+    ]
+  },
+  {
+    "id": "nasser_alqatami",
+    "name": "ناصر القطامي",
+    "sources": [
+      { "source": "MP3Quran.net", "url": "https://mp3quran.net/eng/qtm/downloads", "type": "page", "note": "صفحة تحميل المصحف للقارئ ناصر القطامي" },
+      { "source": "Quranicaudio", "url": "https://quranicaudio.com/qari/nasser-al-qatami", "type": "page", "note": "روابط استماع/تحميل لكل سورة" },
+      { "source": "Internet Archive (Nasser Al Qatami)", "url": "https://archive.org/details/nasser-al-qatami_202404", "type": "archive", "note": "أرشيف يحوي مجموعات MP3 قابلة للتحميل" }
+    ]
+  },
+  {
+    "id": "saad_alghamdi",
+    "name": "سعد الغامدي",
+    "sources": [
+      { "source": "MP3Quran.net", "url": "https://mp3quran.net/eng/s_gmd", "type": "page", "note": "صفحة تحميل المصحف لسعد الغامدي (surah-by-surah أو ZIP)" },
+      { "source": "Quranicaudio", "url": "https://quranicaudio.com/qari/87", "type": "page", "note": "روابط تحميل مباشرة لكل سورة" },
+      { "source": "Internet Archive (Saad Al-Ghamdi)", "url": "https://archive.org/details/Saad_Alghamdi_Quran", "type": "archive", "note": "أرشيف يحتوي على ملفات MP3 قابلة للتحميل دفعة أو منفردة" }
+    ]
+  }
 ]
