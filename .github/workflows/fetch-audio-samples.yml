@@ -38,21 +38,24 @@ jobs:
           if git diff --staged --quiet; then
             echo "No audio files were added"
           else
-            git commit -m "chore: add audio sample files (first $DOWNLOAD_LIMIT) for selected readers"
-            # زيادة buffers ومحاولة push مع إعادة المحاولة 3 مرات
+            git commit -m "chore: add audio sample files (first $DOWNLOAD_LIMIT) for selected readers" || true
+            # زيادة buffers ومحاولة push مع إعادة المحاولة 5 مرات
             git config --global http.postBuffer 524288000
             git config --global http.lowSpeedLimit 0
             git config --global http.lowSpeedTime 999999
-            n=0
-            until [ $n -ge 3 ]
+            retries=0
+            until [ $retries -ge 5 ]
             do
-              git push origin HEAD:feature/pwa-complete && break
-              n=$((n+1))
-              echo "Push failed, retrying ($n)..."
-              sleep 5
+              if git push origin HEAD:feature/pwa-complete; then
+                echo "Push succeeded"
+                break
+              fi
+              retries=$((retries+1))
+              echo "Push failed, retrying in 10s... (attempt $retries)"
+              sleep 10
             done
-            if [ $n -ge 3 ]; then
-              echo "Push failed after retries" >&2
+            if [ $retries -ge 5 ]; then
+              echo "Push failed after $retries attempts" >&2
               exit 1
             fi
           fi
