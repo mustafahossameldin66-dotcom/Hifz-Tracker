@@ -1,0 +1,22 @@
+{
+  "name": "rafiq-quran",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "svelte": "^4.0.0",
+    "dexie": "^3.2.2",
+    "praytimes": "^1.3.0",
+    "ummalqura-calendar-js": "^1.0.3",
+    "pouchdb-browser": "^7.3.0",
+    "workbox-window": "^6.5.4"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0",
+    "@sveltejs/vite-plugin-svelte": "^2.0.0"
+  }
+}
