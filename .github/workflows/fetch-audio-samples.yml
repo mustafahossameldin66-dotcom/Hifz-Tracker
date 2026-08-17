@@ -30,35 +30,8 @@ jobs:
           chmod +x scripts/fetch_audio.sh
           ./scripts/fetch_audio.sh
 
-       - name: Commit and push per-reader
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --global http.postBuffer 524288000
-          git config --global http.lowSpeedLimit 0
-          git config --global http.lowSpeedTime 999999
-
-          for dir in public/audio/*; do
-            if [ -d "$dir" ]; then
-              git add "$dir" || true
-              if git diff --staged --quiet; then
-                echo "No changes in $dir"
-              else
-                git commit -m "chore: add audio samples for $(basename "$dir")"
-                retries=0
-                until [ $retries -ge 5 ]; do
-                  if git push origin HEAD:feature/pwa-complete; then
-                    echo "Pushed $(basename "$dir")"
-                    break
-                  fi
-                  retries=$((retries+1))
-                  echo "Push failed for $(basename "$dir"), retrying ($retries)..."
-                  sleep 5
-                done
-                if [ $retries -ge 5 ]; then
-                  echo "Push failed after retries for $(basename "$dir")" >&2
-                  exit 1
-                fi
-              fi
-            fi
-          done
+        - name: Upload audio as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: audio-samples
+          path: public/audio
