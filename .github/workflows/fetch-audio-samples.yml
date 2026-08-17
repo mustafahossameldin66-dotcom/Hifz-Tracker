@@ -17,7 +17,7 @@ jobs:
       - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y jq curl
+          sudo apt-get install -y jq curl python3
 
       - name: Prepare output directories
         run: |
@@ -30,7 +30,7 @@ jobs:
           chmod +x scripts/fetch_audio.sh
           ./scripts/fetch_audio.sh
 
-           - name: Upload audio as artifact
+      - name: Upload audio as artifact
         uses: actions/upload-artifact@v4
         with:
           name: audio-samples
