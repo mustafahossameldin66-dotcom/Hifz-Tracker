@@ -50,9 +50,8 @@ jobs:
               done
           done
 
-        - name: Upload audio as artifact
+          - name: Upload audio as artifact
         uses: actions/upload-artifact@v4
         with:
           name: audio-samples
           path: public/audio
-          fi
