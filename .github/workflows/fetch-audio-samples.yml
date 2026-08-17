@@ -1,0 +1,63 @@
+name: fetch-audio-samples
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: feature/pwa-complete
+
+      - name: Install tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq curl
+
+      - name: Prepare output directories
+        run: mkdir -p public/audio
+
+      - name: Fetch archive metadata & download MP3s
+        env:
+          DOWNLOAD_LIMIT: 5
+        run: |
+          set -euo pipefail
+          targets=("al-minshawi-mujawad" "al-husari" "Fares_Abbad_MP3_Quran")
+          declare -A ids_to_dirs=( ["al-minshawi-mujawad"]="alminshawi" ["al-husari"]="alhasiry" ["Fares_Abbad_MP3_Quran"]="fares_abbad" )
+
+          for id in "${targets[@]}"; do
+            dir="public/audio/${ids_to_dirs[$id]}"
+            mkdir -p "$dir"
+            echo "Fetching metadata for $id"
+            meta_file="/tmp/${id}.json"
+            curl -s "https://archive.org/metadata/${id}" -o "$meta_file"
+            if [ ! -s "$meta_file" ]; then
+              echo "No metadata for $id"
+              continue
+            fi
+            jq -r '.files[] | select(.format!=null and (("MP3" | test("MP3"; "i")) or (.format|test("MP3";"i"))) | .name' "$meta_file" \
+              | grep -v -E 'sample|thumb|jpg|png' \
+              | head -n "$DOWNLOAD_LIMIT" \
+              | while read -r fname; do
+                url="https://archive.org/download/${id}/$(echo "$fname" | sed -e 's/ /%20/g')"
+                echo "Downloading $url"
+                curl -s -L -o "$dir/$fname" "$url" || echo "Failed $url"
+              done
+          done
+
+      - name: Commit and push audio samples
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/audio || true
+          if git diff --staged --quiet; then
+            echo "No audio files were added"
+          else
+            git commit -m "chore: add audio sample files (first $DOWNLOAD_LIMIT) for selected readers"
+            git push origin HEAD:feature/pwa-complete
+          fi
