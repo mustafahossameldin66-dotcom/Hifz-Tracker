@@ -1,48 +1,54 @@
-const CACHE_NAME = 'rafiq-cache-v11';
-const urlsToCache = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icon-192.png',
-  './icon-512.png'
+const CACHE_NAME = 'hifz-tracker-shell-v1';
+const AUDIO_CACHE = 'audio-assets';
+const ASSETS = [
+  '/',
+  '/index.html',
+  '/build/bundle.css',
+  '/build/bundle.js'
 ];
 
-// تنصيب التطبيق وتخزين الملفات
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
   );
-  self.skipWaiting();
 });
 
-// تفعيل وتحديث الكاش القديم
-self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-  self.clients.claim();
+self.addEventListener('activate', (event) => {
+  event.waitUntil(self.clients.claim());
 });
 
-// تشغيل التطبيق أوفلاين
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    }).catch(() => {
-      // لو النت فاصل والملف مش في الكاش، رجع الصفحة الرئيسية
-      if (event.request.mode === 'navigate') {
-        return caches.match('./index.html');
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  // Network-first for audio requests: try network, cache copy, fallback to cache
+  if (req.destination === 'audio' || /\.mp3$/.test(url.pathname)) {
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(req);
+        // clone and cache
+        const cache = await caches.open(AUDIO_CACHE);
+        try { cache.put(req, response.clone()); } catch (e) { /* ignore cache put errors */ }
+        return response;
+      } catch (err) {
+        // network failed -> fallback to cache
+        const cached = await caches.match(req);
+        if (cached) return cached;
+        return new Response('Audio unavailable', { status: 503 });
       }
-    })
-  );
+    })());
+    return;
+  }
+
+  // Default: cache-first for same-origin navigation/assets
+  if (url.origin === location.origin) {
+    event.respondWith(
+      caches.match(req).then(resp => resp || fetch(req))
+    );
+  } else {
+    // network-first for external requests
+    event.respondWith(
+      fetch(req).catch(() => caches.match(req))
+    );
+  }
 });

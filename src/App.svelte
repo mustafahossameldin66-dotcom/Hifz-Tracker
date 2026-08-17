@@ -4,8 +4,8 @@
   import { getTodaySnapshot } from './lib/prayTimesWrapper';
   import { hijriFromDate } from './lib/hijriWrapper';
   import readers from '../data/readers.json';
-  import { requestNotificationPermission, showLocalNotification, scheduleInAppReminder } from './lib/notifications';
-  import { downloadAudioForReader, isAudioCached } from './lib/audioManager';
+  import { requestNotificationPermission, showLocalNotification } from './lib/notifications';
+  import { downloadAudioForReader, isAudioCached, playRemote, prefetchAudio } from './lib/audioManager';
   import { scheduleNewItem, getDueForDate } from './lib/scheduler';
   import { APP_CONFIG } from './config';
 
@@ -21,6 +21,20 @@
     hijriDay = hijriFromDate(new Date());
     notificationGranted = Notification.permission === 'granted';
     dueItems = await getDueForDate(new Date());
+
+    // Prefetch: try to prefetch the "آية اليوم" or a small sample if configured
+    try {
+      const recs = (await import('../data/recitations.json')).default;
+      for (const r of recs) {
+        // if there is a provided sample_url, prefetch it (non-blocking)
+        if (r.sample_url && r.sample_url.length) {
+          prefetchAudio(r.sample_url);
+        }
+      }
+    } catch (e) {
+      // no samples provided — fine
+      console.log('no recitation samples to prefetch');
+    }
   });
 
   async function enableNotifications() {
@@ -30,15 +44,38 @@
   }
 
   async function downloadSample(reader) {
-    // NOTE: URLs are placeholders; in production replace with real audio URLs or allow user upload
-    const sampleUrl = `https://cdn.example.com/recitations/${reader.id}.mp3`;
-    const ok = await downloadAudioForReader(reader.id, sampleUrl);
-    if (ok) alert('تم تنزيل عينة صوتية (تجريبي)'); else alert('فشل تنزيل العينة');
+    // If recitations.json contains sample_url entries we use them. Otherwise prompt user for a URL.
+    const recs = (await import('../data/recitations.json')).default;
+    const found = recs.find(x => x.id === reader.id);
+    let url = found?.sample_url || '';
+    if (!url) {
+      url = prompt('أدخل رابط MP3 مباشر للتلاوة (أو اضغط إلغاء للإيقاف):');
+      if (!url) return;
+    }
+    const ok = await downloadAudioForReader(reader.id, url);
+    alert(ok ? 'تم تنزيل العينة وحفظها أوفلاين' : 'فشل تنزيل العينة');
+  }
+
+  async function playReaderSample(reader) {
+    // try to determine a sample URL from recitations.json (sample_url)
+    const recs = (await import('../data/recitations.json')).default;
+    const found = recs.find(x => x.id === reader.id);
+    let url = found?.sample_url || '';
+    if (!url) {
+      // if not available, ask user for a URL (for now)
+      url = prompt('أدخل رابط MP3 مباشر للتشغيل (أو اضغط إلغاء):');
+      if (!url) return;
+    }
+    try {
+      const result = await playRemote(url);
+      console.log('playRemote result', result);
+    } catch (e) {
+      alert('فشل التشغيل: ' + (e.message || e));
+    }
   }
 
   async function startNow(item) {
     alert('بدء جلسة: ' + (item.title || 'عنصر'));
-    // mark first schedule done for demo
   }
 </script>
 
@@ -66,7 +103,10 @@
     <h2>القراء المتاحون</h2>
     <ul>
       {#each readersList as r}
-        <li>{r.name} <button on:click={() => downloadSample(r)}>تحميل عينة</button></li>
+        <li>{r.name}
+          <button on:click={() => playReaderSample(r)}>تشغيل عند الطلب</button>
+          <button on:click={() => downloadSample(r)}>تحميل أوفلاين</button>
+        </li>
       {/each}
     </ul>
   </section>
